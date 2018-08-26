@@ -27,6 +27,7 @@
 		E47716522133069B00B7E2BE /* MOCK_DATA_10.json in Resources */ = {isa = PBXBuildFile; fileRef = E477164B2133069A00B7E2BE /* MOCK_DATA_10.json */; };
 		E47716532133069B00B7E2BE /* MOCK_DATA_50.json in Resources */ = {isa = PBXBuildFile; fileRef = E477164C2133069A00B7E2BE /* MOCK_DATA_50.json */; };
 		E47716542133069B00B7E2BE /* MOCK_DATA_50.json in Resources */ = {isa = PBXBuildFile; fileRef = E477164C2133069A00B7E2BE /* MOCK_DATA_50.json */; };
+		E47716572133094F00B7E2BE /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47716562133094F00B7E2BE /* Member.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		E477164A2133069A00B7E2BE /* MOCK_DATA_20.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MOCK_DATA_20.json; sourceTree = "<group>"; };
 		E477164B2133069A00B7E2BE /* MOCK_DATA_10.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MOCK_DATA_10.json; sourceTree = "<group>"; };
 		E477164C2133069A00B7E2BE /* MOCK_DATA_50.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MOCK_DATA_50.json; sourceTree = "<group>"; };
+		E47716562133094F00B7E2BE /* Member.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 		E47716272133054A00B7E2BE /* ModelTests */ = {
 			isa = PBXGroup;
 			children = (
+				E47716552133094F00B7E2BE /* Entity */,
 				E47716282133054A00B7E2BE /* ModelTests.swift */,
 				E477162A2133054A00B7E2BE /* Info.plist */,
 			);
@@ -135,6 +138,14 @@
 				E477164C2133069A00B7E2BE /* MOCK_DATA_50.json */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		E47716552133094F00B7E2BE /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				E47716562133094F00B7E2BE /* Member.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,6 +278,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4771646213305E700B7E2BE /* ModelSectionInfo.swift in Sources */,
+				E47716572133094F00B7E2BE /* Member.swift in Sources */,
 				E47716292133054A00B7E2BE /* ModelTests.swift in Sources */,
 				E4771644213305E700B7E2BE /* EntityProtocol.swift in Sources */,
 				E4771645213305E700B7E2BE /* Model.swift in Sources */,
