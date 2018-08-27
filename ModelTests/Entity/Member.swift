@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Model
 
 struct Member: GEntityProtocol, Hashable, Codable {
 	
@@ -53,6 +54,11 @@ struct Member: GEntityProtocol, Hashable, Codable {
 		case id, email, gender, country
 	}
 	
+	static func ==(left: Member, right: Member) -> Bool {
+		return left.id == right.id && left.fullName == right.fullName
+//		return left.id == right.id
+
+	}
 	
 	/*
 	{"id":1,"first_name":"Orland","last_name":"Stapleford","email":"ostapleford0@bluehost.com","gender":"Male","country":"Indonesia"}

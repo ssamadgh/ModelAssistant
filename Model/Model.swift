@@ -53,59 +53,11 @@ public extension ModelDelegate {
 		
 	}
 	
-	func model(didChange sectionInfo: ModelSectionInfo, atSectionIndex sectionIndex: Int, for type: ModelChangeType, newSectionIndex: Int) {
+	func model(didChange sectionInfo: ModelSectionInfo, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) {
 		
 	}
 	
 }
-
-//protocol ModelProtocol: class {
-//
-//	var lockManager: NSLock { get set }
-//
-//	var isEmpty: Bool { get }
-//
-//	var sectionName: String? { get set }
-//
-//	var hasSection: Bool! { get }
-//
-//	associatedtype Entity: EntityProtocol, Hashable
-//
-//	var delegate: ModelProtocolDelegate? { get set }
-//
-//	var entities: [Entity] { get set }
-//
-//	var sections: [GSectionInfo<Entity>]! { get set }
-//
-//	var currentIndex: Int { get }
-//	var nextIndex: Int { get }
-//	var fetchBatchSize: Int { get set }
-//	var numberOfSections: Int { get }
-//	var numberOfWholeEntities: Int { get }
-//
-//	func numberOfEntitesAt(_ sectionIndex: Int) -> Int
-//
-//	func removeAllEntities()
-//
-//	func entity(at indexPath: IndexPath) -> Entity?
-//
-//	func section(at sectionIndex: Int) -> GSectionInfo<Entity>?
-//
-//	func indexPath(of entity: Entity) -> IndexPath?
-//
-//	var filter: ((Entity) throws -> Bool)? { get set }
-//
-//	var sort: ((Entity, Entity) throws -> Bool)? { get set }
-//
-//	subscript(index: Int) -> Entity? { get set }
-//
-//}
-//
-//extension Model {
-//
-//
-//}
-
 
 //MARK: - Model class
 
@@ -144,7 +96,6 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 	private var entitiesId: Set<Int>
 	
 	public init(sectionName: String? = nil) {
-		//		entities = []
 		entitiesId = []
 		fetchBatchSize = 10
 		self.sectionKey = sectionName
@@ -166,15 +117,28 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 		return numberOfSections
 	}
 	
-	public var numberOfWholeEntities: Int {
-		var numberOfWholeEntities: Int!
+	public var numberOfFetchedEntities: Int {
+		var numberOfFetchedEntities: Int!
 		
 		self.dispatchQueue.sync {
-			numberOfWholeEntities = self.entitiesId.count
+			numberOfFetchedEntities = self.entitiesId.count
+		}
+		
+		return numberOfFetchedEntities
+	}
+	
+	public var numberOfWholeEntities: Int {
+		var numberOfWholeEntities: Int = 0
+		
+		self.dispatchQueue.sync {
+			for i in 0...self.numberOfSections-1 {
+				numberOfWholeEntities += self.numberOfEntites(at: i)
+			}
 		}
 		
 		return numberOfWholeEntities
 	}
+
 	
 	public func numberOfEntites(at sectionIndex: Int) -> Int {
 		var numberOfEntites: Int!
@@ -198,19 +162,19 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 	
 	public var lastIndex: Int {
 		guard fetchBatchSize != 0 else { return 0}
-		let subtract = numberOfWholeEntities/fetchBatchSize
-		return numberOfWholeEntities%fetchBatchSize == 0 ? subtract - 1 : subtract
+		let subtract = numberOfFetchedEntities/fetchBatchSize
+		return numberOfFetchedEntities%fetchBatchSize == 0 ? subtract - 1 : subtract
 	}
 	
 	public var nextIndex: Int {
 		guard fetchBatchSize != 0 else { return 0}
 		guard !entitiesIdIsEmpty else { return 0 }
-		return numberOfWholeEntities%fetchBatchSize == 0 ? lastIndex + 1 : lastIndex
+		return numberOfFetchedEntities%fetchBatchSize == 0 ? lastIndex + 1 : lastIndex
 	}
 	
 	private var numberOfLastFetchedEntities: Int {
-		guard fetchBatchSize != 0 else { return numberOfWholeEntities }
-		let numberOfEntities = self.numberOfWholeEntities
+		guard fetchBatchSize != 0 else { return numberOfFetchedEntities }
+		let numberOfEntities = self.numberOfFetchedEntities
 		if numberOfEntities == 0 { return 0 }
 		let lastCompleteIndex = Int(floor(Double(numberOfEntities)/Double(self.fetchBatchSize)))
 		let diff = numberOfEntities - lastCompleteIndex*self.fetchBatchSize
@@ -243,6 +207,20 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 			}
 			else {
 				indexPath = self.sectionsManager.indexPath(of: entity, withSectionName: sectionName)
+			}
+		}
+		
+		return indexPath
+	}
+	
+	public func indexPathOfEntity(withId id: Int) -> IndexPath? {
+		var indexPath: IndexPath?
+		
+		self.dispatchQueue.sync {
+			if self.entitiesId.contains(id) {
+				if let entity = self.filteredEntities(with: { $0.id == id }).first {
+					indexPath = self.indexPath(of: entity)
+				}
 			}
 		}
 		
@@ -670,7 +648,7 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 	}
 	
 	func filteredEntities(with filter: ((Entity) -> Bool)) -> [Entity] {
-		var entities: [Entity]!
+		var entities: [Entity] = []
 		
 		self.dispatchQueue.sync {
 			for i in 0...(self.numberOfSections-1) {
@@ -679,7 +657,7 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 			}
 		}
 		
-		return entities ?? []
+		return entities
 	}
 	
 	//MARK: - Delegate methods

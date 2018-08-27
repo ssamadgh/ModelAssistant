@@ -27,17 +27,6 @@ protocol GModelSectionInfo: ModelSectionInfo {
 	
 }
 
-struct SSectionInfo<Entity: GEntityProtocol & Hashable>: GModelSectionInfo {
-	
-	var entities: [Entity]
-	
-	var numberOfEntities: Int
-	
-	var name: String
-	
-	
-}
-
 public struct SectionInfo<Entity: GEntityProtocol & Hashable>: GModelSectionInfo, Equatable, Comparable {
 	
 	

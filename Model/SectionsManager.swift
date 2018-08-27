@@ -202,5 +202,5 @@ struct SectionsManager<Entity: GEntityProtocol & Hashable> {
 	func filteredEntities(atSection sectionIndex: Int, with filter: ((Entity) -> Bool)) -> [Entity] {
 		return self[sectionIndex].filter(by: filter)
 	}
-		
+	
 }

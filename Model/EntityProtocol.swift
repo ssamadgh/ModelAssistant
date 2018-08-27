@@ -25,25 +25,7 @@ public protocol GEntityProtocol: EntityProtocol {
 
 }
 
-struct Apple: GEntityProtocol {
-	
-	func update(with newFetechedEntity: Apple) {
-		
-	}
-	
-	var id: Int
-	
-	init?(data: [String : Any]) {
-		id = 0
-	}
-	
-	func update(with newFetechedEntity: EntityProtocol) {
-		
-	}
-	
-}
-
-extension EntityProtocol {
+public extension GEntityProtocol {
 	
 	var hashValue: Int {
 		return id.hashValue

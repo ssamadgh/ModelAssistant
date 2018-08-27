@@ -8,26 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		E47716242133054A00B7E2BE /* Model.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E477161A2133054900B7E2BE /* Model.framework */; };
-		E47716292133054A00B7E2BE /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47716282133054A00B7E2BE /* ModelTests.swift */; };
+		E47716292133054A00B7E2BE /* ModelTestsWithoutSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47716282133054A00B7E2BE /* ModelTestsWithoutSection.swift */; };
 		E477162B2133054A00B7E2BE /* Model.h in Headers */ = {isa = PBXBuildFile; fileRef = E477161D2133054900B7E2BE /* Model.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E47716382133058A00B7E2BE /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47716342133058A00B7E2BE /* Model.swift */; };
 		E477163A2133058A00B7E2BE /* EntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47716352133058A00B7E2BE /* EntityProtocol.swift */; };
 		E477163C2133058A00B7E2BE /* SectionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47716362133058A00B7E2BE /* SectionsManager.swift */; };
 		E477163E2133058A00B7E2BE /* ModelSectionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47716372133058A00B7E2BE /* ModelSectionInfo.swift */; };
 		E4771641213305D400B7E2BE /* IndexPath+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4771640213305D400B7E2BE /* IndexPath+Extensions.swift */; };
-		E4771644213305E700B7E2BE /* EntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47716352133058A00B7E2BE /* EntityProtocol.swift */; };
-		E4771645213305E700B7E2BE /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47716342133058A00B7E2BE /* Model.swift */; };
-		E4771646213305E700B7E2BE /* ModelSectionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47716372133058A00B7E2BE /* ModelSectionInfo.swift */; };
-		E4771647213305E700B7E2BE /* SectionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47716362133058A00B7E2BE /* SectionsManager.swift */; };
-		E477164D2133069B00B7E2BE /* MOCK_DATA_1.json in Resources */ = {isa = PBXBuildFile; fileRef = E47716492133069A00B7E2BE /* MOCK_DATA_1.json */; };
-		E477164E2133069B00B7E2BE /* MOCK_DATA_1.json in Resources */ = {isa = PBXBuildFile; fileRef = E47716492133069A00B7E2BE /* MOCK_DATA_1.json */; };
-		E477164F2133069B00B7E2BE /* MOCK_DATA_20.json in Resources */ = {isa = PBXBuildFile; fileRef = E477164A2133069A00B7E2BE /* MOCK_DATA_20.json */; };
-		E47716502133069B00B7E2BE /* MOCK_DATA_20.json in Resources */ = {isa = PBXBuildFile; fileRef = E477164A2133069A00B7E2BE /* MOCK_DATA_20.json */; };
-		E47716512133069B00B7E2BE /* MOCK_DATA_10.json in Resources */ = {isa = PBXBuildFile; fileRef = E477164B2133069A00B7E2BE /* MOCK_DATA_10.json */; };
-		E47716522133069B00B7E2BE /* MOCK_DATA_10.json in Resources */ = {isa = PBXBuildFile; fileRef = E477164B2133069A00B7E2BE /* MOCK_DATA_10.json */; };
-		E47716532133069B00B7E2BE /* MOCK_DATA_50.json in Resources */ = {isa = PBXBuildFile; fileRef = E477164C2133069A00B7E2BE /* MOCK_DATA_50.json */; };
-		E47716542133069B00B7E2BE /* MOCK_DATA_50.json in Resources */ = {isa = PBXBuildFile; fileRef = E477164C2133069A00B7E2BE /* MOCK_DATA_50.json */; };
 		E47716572133094F00B7E2BE /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47716562133094F00B7E2BE /* Member.swift */; };
+		E47716612133127A00B7E2BE /* MOCK_DATA_1.json in Resources */ = {isa = PBXBuildFile; fileRef = E47716492133069A00B7E2BE /* MOCK_DATA_1.json */; };
+		E47716622133127A00B7E2BE /* MOCK_DATA_10.json in Resources */ = {isa = PBXBuildFile; fileRef = E477164B2133069A00B7E2BE /* MOCK_DATA_10.json */; };
+		E47716632133127A00B7E2BE /* MOCK_DATA_50.json in Resources */ = {isa = PBXBuildFile; fileRef = E477164C2133069A00B7E2BE /* MOCK_DATA_50.json */; };
+		E47716642133127A00B7E2BE /* MOCK_DATA_20.json in Resources */ = {isa = PBXBuildFile; fileRef = E477164A2133069A00B7E2BE /* MOCK_DATA_20.json */; };
+		E477166F2133BC4E00B7E2BE /* ModelTestsWithSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E477166E2133BC4E00B7E2BE /* ModelTestsWithSection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,7 +38,7 @@
 		E477161D2133054900B7E2BE /* Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
 		E477161E2133054900B7E2BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E47716232133054A00B7E2BE /* ModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E47716282133054A00B7E2BE /* ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
+		E47716282133054A00B7E2BE /* ModelTestsWithoutSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTestsWithoutSection.swift; sourceTree = "<group>"; };
 		E477162A2133054A00B7E2BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E47716342133058A00B7E2BE /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		E47716352133058A00B7E2BE /* EntityProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityProtocol.swift; sourceTree = "<group>"; };
@@ -57,6 +50,7 @@
 		E477164B2133069A00B7E2BE /* MOCK_DATA_10.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MOCK_DATA_10.json; sourceTree = "<group>"; };
 		E477164C2133069A00B7E2BE /* MOCK_DATA_50.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MOCK_DATA_50.json; sourceTree = "<group>"; };
 		E47716562133094F00B7E2BE /* Member.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		E477166E2133BC4E00B7E2BE /* ModelTestsWithSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTestsWithSection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +94,6 @@
 			isa = PBXGroup;
 			children = (
 				E477161D2133054900B7E2BE /* Model.h */,
-				E47716482133069A00B7E2BE /* Resource */,
 				E47716352133058A00B7E2BE /* EntityProtocol.swift */,
 				E47716342133058A00B7E2BE /* Model.swift */,
 				E47716372133058A00B7E2BE /* ModelSectionInfo.swift */,
@@ -114,8 +107,10 @@
 		E47716272133054A00B7E2BE /* ModelTests */ = {
 			isa = PBXGroup;
 			children = (
+				E477166E2133BC4E00B7E2BE /* ModelTestsWithSection.swift */,
+				E47716482133069A00B7E2BE /* Resources */,
 				E47716552133094F00B7E2BE /* Entity */,
-				E47716282133054A00B7E2BE /* ModelTests.swift */,
+				E47716282133054A00B7E2BE /* ModelTestsWithoutSection.swift */,
 				E477162A2133054A00B7E2BE /* Info.plist */,
 			);
 			path = ModelTests;
@@ -129,7 +124,7 @@
 			path = Extenseions;
 			sourceTree = "<group>";
 		};
-		E47716482133069A00B7E2BE /* Resource */ = {
+		E47716482133069A00B7E2BE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				E47716492133069A00B7E2BE /* MOCK_DATA_1.json */,
@@ -137,7 +132,7 @@
 				E477164B2133069A00B7E2BE /* MOCK_DATA_10.json */,
 				E477164C2133069A00B7E2BE /* MOCK_DATA_50.json */,
 			);
-			path = Resource;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		E47716552133094F00B7E2BE /* Entity */ = {
@@ -240,10 +235,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E47716532133069B00B7E2BE /* MOCK_DATA_50.json in Resources */,
-				E477164D2133069B00B7E2BE /* MOCK_DATA_1.json in Resources */,
-				E477164F2133069B00B7E2BE /* MOCK_DATA_20.json in Resources */,
-				E47716512133069B00B7E2BE /* MOCK_DATA_10.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,10 +242,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E47716542133069B00B7E2BE /* MOCK_DATA_50.json in Resources */,
-				E477164E2133069B00B7E2BE /* MOCK_DATA_1.json in Resources */,
-				E47716502133069B00B7E2BE /* MOCK_DATA_20.json in Resources */,
-				E47716522133069B00B7E2BE /* MOCK_DATA_10.json in Resources */,
+				E47716622133127A00B7E2BE /* MOCK_DATA_10.json in Resources */,
+				E47716642133127A00B7E2BE /* MOCK_DATA_20.json in Resources */,
+				E47716612133127A00B7E2BE /* MOCK_DATA_1.json in Resources */,
+				E47716632133127A00B7E2BE /* MOCK_DATA_50.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,12 +268,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4771646213305E700B7E2BE /* ModelSectionInfo.swift in Sources */,
+				E477166F2133BC4E00B7E2BE /* ModelTestsWithSection.swift in Sources */,
 				E47716572133094F00B7E2BE /* Member.swift in Sources */,
-				E47716292133054A00B7E2BE /* ModelTests.swift in Sources */,
-				E4771644213305E700B7E2BE /* EntityProtocol.swift in Sources */,
-				E4771645213305E700B7E2BE /* Model.swift in Sources */,
-				E4771647213305E700B7E2BE /* SectionsManager.swift in Sources */,
+				E47716292133054A00B7E2BE /* ModelTestsWithoutSection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,6 +408,7 @@
 		E477162F2133054A00B7E2BE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
@@ -447,6 +436,7 @@
 		E47716302133054A00B7E2BE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
