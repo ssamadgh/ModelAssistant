@@ -54,6 +54,7 @@
 		E4069DBC213B0B5B009FCD7A /* MOCK_DATA_20_4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MOCK_DATA_20_4.json; sourceTree = "<group>"; };
 		E4069DBE213B0CF2009FCD7A /* ModelTestPagedDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTestPagedDatabase.swift; sourceTree = "<group>"; };
 		E4069DC0213B1217009FCD7A /* MOCK_DATA_20_3_2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MOCK_DATA_20_3_2.json; sourceTree = "<group>"; };
+		E4069F06213BE1BE009FCD7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E410FEEC21381964006F22EA /* ModelTestsBasicFiltered.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTestsBasicFiltered.swift; sourceTree = "<group>"; };
 		E410FEEE21381983006F22EA /* ModelTestsBasicSorted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ModelTestsBasicSorted.swift; path = Entity/ModelTestsBasicSorted.swift; sourceTree = "<group>"; };
 		E410FEF0213819B1006F22EA /* ModelTestsBasicSortedAndFiltered.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTestsBasicSortedAndFiltered.swift; sourceTree = "<group>"; };
@@ -62,7 +63,6 @@
 		E410FEF6213819F3006F22EA /* ModelTestsWithSectionFilteredAndSorted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTestsWithSectionFilteredAndSorted.swift; sourceTree = "<group>"; };
 		E477161A2133054900B7E2BE /* Model.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Model.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E477161D2133054900B7E2BE /* Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
-		E477161E2133054900B7E2BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E47716232133054A00B7E2BE /* ModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E47716282133054A00B7E2BE /* ModelTestsBasic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTestsBasic.swift; sourceTree = "<group>"; };
 		E477162A2133054A00B7E2BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -114,8 +114,8 @@
 		E47716102133054900B7E2BE = {
 			isa = PBXGroup;
 			children = (
-				E477161C2133054900B7E2BE /* Model */,
-				E47716272133054A00B7E2BE /* ModelTests */,
+				E477161C2133054900B7E2BE /* Source */,
+				E47716272133054A00B7E2BE /* Tests */,
 				E477161B2133054900B7E2BE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -129,21 +129,21 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E477161C2133054900B7E2BE /* Model */ = {
+		E477161C2133054900B7E2BE /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				E4771643213305DF00B7E2BE /* Extenseions */,
 				E477161D2133054900B7E2BE /* Model.h */,
 				E47716352133058A00B7E2BE /* EntityProtocol.swift */,
 				E47716342133058A00B7E2BE /* Model.swift */,
 				E47716372133058A00B7E2BE /* ModelSectionInfo.swift */,
 				E47716362133058A00B7E2BE /* SectionsManager.swift */,
-				E4771643213305DF00B7E2BE /* Extenseions */,
-				E477161E2133054900B7E2BE /* Info.plist */,
+				E4069F06213BE1BE009FCD7A /* Info.plist */,
 			);
-			path = Model;
+			path = Source;
 			sourceTree = "<group>";
 		};
-		E47716272133054A00B7E2BE /* ModelTests */ = {
+		E47716272133054A00B7E2BE /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				E47716482133069A00B7E2BE /* Resources */,
@@ -159,7 +159,7 @@
 				E4069DBE213B0CF2009FCD7A /* ModelTestPagedDatabase.swift */,
 				E477162A2133054A00B7E2BE /* Info.plist */,
 			);
-			path = ModelTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		E4771643213305DF00B7E2BE /* Extenseions */ = {
@@ -477,7 +477,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Model/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Source/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -505,7 +505,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Model/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Source/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
