@@ -17,7 +17,7 @@ struct SectionsManager<Entity: GEntityProtocol & Hashable> {
 	
 	func numberOfEntites(at sectionIndex: Int) -> Int {
 		guard !self.isEmpty else { return 0 }
-		return self.sections[sectionIndex].numberOfEntities
+		return self[sectionIndex].numberOfEntities
 	}
 	
 	var isEmpty: Bool {

@@ -49,7 +49,7 @@ public struct SectionInfo<Entity: GEntityProtocol & Hashable>: GModelSectionInfo
 	
 	var indexTitle: String?
 	
-	var isEmpty: Bool {
+	public var isEmpty: Bool {
 		return entities.isEmpty
 	}
 
@@ -109,8 +109,8 @@ public struct SectionInfo<Entity: GEntityProtocol & Hashable>: GModelSectionInfo
 	}
 	
 	mutating func insert(_ entity: Entity, at index: Int) {
-		if index < self.numberOfEntities {
-			self.entities[index] = entity
+		if index <= self.numberOfEntities {
+			self.entities.insert(entity, at: index)
 		}
 		else {
 			fatalError("Index out of range")
@@ -137,7 +137,6 @@ public struct SectionInfo<Entity: GEntityProtocol & Hashable>: GModelSectionInfo
 	
 	func index(of entity: Entity) -> Int? {
 		return self.entities.index(of: entity)
-		
 	}
 	
 	mutating func sort(by sort: (Entity, Entity) -> Bool) -> (oldIndexes: [Int], newIndexes: [Int]) {

@@ -27,12 +27,92 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ModelTests/ModelTestsWithoutSection.swift"
-            timestampString = "557044945.311293"
+            timestampString = "557321555.2294199"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
             landmarkName = "testSortAndReorder()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ModelTests/ModelTestsWithoutSection.swift"
+            timestampString = "557321555.2295099"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
+            landmarkName = "testMemberEqualable()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ModelTests.ModelTestsWithoutSection.testSortAndReorder() -&gt; ()"
+                  moduleName = "ModelTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/Model/ModelTests/ModelTestsWithoutSection.swift"
+                  timestampString = "557293702.9802639"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "125"
+                  endingLineNumber = "125"
+                  offsetFromSymbolStart = "546">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 () -&gt; () in ModelTests.ModelTestsWithoutSection.testSortAndReorder() -&gt; ()"
+                  moduleName = "ModelTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/Model/ModelTests/ModelTestsWithoutSection.swift"
+                  timestampString = "557293702.982229"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "125"
+                  endingLineNumber = "125"
+                  offsetFromSymbolStart = "4">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Model/Model.swift"
+            timestampString = "557547713.420855"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
+            landmarkName = "indexPath(of:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Model/Model.swift"
+            timestampString = "557547713.42092"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "463"
+            endingLineNumber = "463"
+            landmarkName = "moveEntity(at:to:isUserDriven:beginUpdate:endUpdate:finished:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

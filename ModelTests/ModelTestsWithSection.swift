@@ -7,10 +7,12 @@
 //
 
 import XCTest
+@testable import Model
 
-class ModelTestsWithSection: ModelTestsWithoutSection {
+class ModelTestsWithSection: ModelTestsBasic {
     
     override func setUp() {
+		self.sectionKey = "country"
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -19,22 +21,30 @@ class ModelTestsWithSection: ModelTestsWithoutSection {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
 	
-	override func testGetIndexPath() {
-		super.testGetIndexPath()
+	override func testModelAfterFetch() {
+		var members = self.members!
 		
+		if let filter = self.filter {
+			members = self.members.filter(filter)
+		}
+		
+
+		let countryArry = members.compactMap { $0.country }
+		let countrySet = Set(countryArry)
+		XCTAssertEqual(self.model.numberOfSections, countrySet.count)
+		
+		for country in countrySet {
+			var filtered = members.filter { $0.country == country }
+			if let sort = self.sort {
+				filtered = filtered.sorted(by: sort)
+			}
+
+			let index = self.model.indexOfSection(withSectionName: country)!
+			let section = self.model.section(at: index)
+			XCTAssertEqual(section.numberOfEntities, filtered.count)
+			XCTAssertEqual(Set(section.entities), Set(filtered))
+		}
 	}
     
 }

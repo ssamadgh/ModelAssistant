@@ -68,12 +68,18 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 	
 	public var fetchBatchSize: Int
 	
-	public subscript(indexPath: IndexPath) -> Entity? {
+	public subscript(indexPath: IndexPath) -> Entity {
 		get {
 			return self.entity(at: indexPath)
 		}
 	}
 	
+	public subscript(index: Int) -> SectionInfo<Entity> {
+		get {
+			return self.section(at: index)
+		}
+	}
+
 	
 	public var sectionKey: String? {
 		didSet {
@@ -191,13 +197,25 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 		return index
 	}
 	
-	public func indexPath(of entity: Entity) -> IndexPath? {
-		let sectionName = self.hasSection ? entity[self.sectionKey!] : nil
-		var indexPath: IndexPath?
+	func indexOfSection(withSectionName sectionName: String) -> Int? {
+		var index: Int?
 		
 		self.dispatchQueue.sync {
-			if self.hasSection, sectionName == nil {
-				for i in 0...(self.numberOfSections-1) {
+			index = self.sectionsManager.indexOfSection(withSectionName: sectionName)
+		}
+		
+		return index
+	}
+	
+	private func indexPath(of entity: Entity, synchronous: Bool) -> IndexPath? {
+		let sectionName = self.hasSection ? entity[self.sectionKey!] : nil
+		var indexPath: IndexPath?
+
+		func getIndexPath() {
+			indexPath = self.sectionsManager.indexPath(of: entity, withSectionName: sectionName)
+			
+			if self.hasSection, indexPath == nil {
+				for i in 0...(self.sectionsManager.numberOfSections-1) {
 					let sectionName = self.sectionsManager[i].name
 					if let path = self.sectionsManager.indexPath(of: entity, withSectionName: sectionName) {
 						indexPath = path
@@ -205,13 +223,28 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 					}
 				}
 			}
-			else {
-				indexPath = self.sectionsManager.indexPath(of: entity, withSectionName: sectionName)
+		}
+		
+		if synchronous {
+			self.dispatchQueue.sync {
+				getIndexPath()
 			}
+		}
+		else {
+			getIndexPath()
 		}
 		
 		return indexPath
 	}
+	
+	public func indexPath(of entity: Entity) -> IndexPath? {
+		return self.indexPath(of: entity, synchronous: true)
+	}
+	
+	private func privateIndexPath(of entity: Entity) -> IndexPath? {
+		return indexPath(of: entity, synchronous: false)
+	}
+
 	
 	public func indexPathOfEntity(withId id: Int) -> IndexPath? {
 		var indexPath: IndexPath?
@@ -234,8 +267,9 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 		self.insert(newEntity, at: IndexPath(row: 0, section: 0), beginUpdate: beginUpdate, endUpdate: endUpdate, finished: finished)
 	}
 	
-	
 	public func insert(_ newEntity: Entity, at indexPath: IndexPath, beginUpdate: Bool = true, endUpdate: Bool = true, finished:(() -> ())? = nil) {
+		let isMainThread = Thread.isMainThread
+		
 		self.dispatchQueue.async(flags: .barrier) {
 			
 			if beginUpdate {
@@ -258,9 +292,9 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 					self.model(didChange: [newEntity], at: nil, for: .insert, newIndexPaths: [indexPath])
 					
 					if self.sort != nil {
-						let oldIndexPath = self.indexPath(of: newEntity)!
+						let oldIndexPath = self.privateIndexPath(of: newEntity)!
 						_ = self.sectionsManager.sortEntities(atSection: sectionIndex, with: self.sort!)
-						let newIndexPath = self.indexPath(of: newEntity)!
+						let newIndexPath = self.privateIndexPath(of: newEntity)!
 						
 						self.model(didChange: [newEntity], at: [oldIndexPath], for: .move, newIndexPaths: [newIndexPath])
 					}
@@ -275,9 +309,15 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 				self.modelDidChangeContent(for: .insert)
 			}
 			
-			finished?()
+			self.checkIsMainThread(isMainThread, completion: finished)
 			
 		}
+	}
+	
+	public func insertAtLast(_ newEntity: Entity, beginUpdate: Bool = true, endUpdate: Bool = true, finished:(() -> ())? = nil) {
+		let section = self.numberOfSections - 1
+		let row = self.numberOfEntites(at: section)
+		self.insert(newEntity, at: IndexPath(row: row, section: section), beginUpdate: beginUpdate, endUpdate: endUpdate, finished: finished)
 	}
 	
 	public func fetch(_ entities: [Entity], finished:(() -> ())?) {
@@ -291,6 +331,8 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 	
 	private func insert(_ newEntities: [Entity], beginUpdate: Bool, endUpdate: Bool, callModelDelegateMethods: Bool, finished:(() -> ())?) {
 		
+		let isMainThread = Thread.isMainThread
+
 		self.dispatchQueue.async(flags: .barrier) {
 			
 			var newEntitiesId = Set(newEntities.map { $0.id })
@@ -400,14 +442,18 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 				self.modelDidChangeContent(for: .insert)
 			}
 			
-			finished?()
+			self.checkIsMainThread(isMainThread, completion: finished)
+			
 		}
 		
 	}
 	
-	//MARK: - Remove methods
+	//MARK: - Move methods
 
 	public func moveEntity(at indexPath: IndexPath, to newIndexPath: IndexPath, isUserDriven: Bool, beginUpdate: Bool = true, endUpdate: Bool = true, finished:(() -> ())? = nil) {
+		
+		let isMainThread = Thread.isMainThread
+
 		dispatchQueue.async(flags: .barrier) {
 
 			if beginUpdate, !isUserDriven {
@@ -424,6 +470,8 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 			if endUpdate, !isUserDriven {
 				self.modelDidChangeContent(for: .insert)
 			}
+			
+			self.checkIsMainThread(isMainThread, completion: finished)
 
 		}
 	}
@@ -446,6 +494,8 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 	
 	public func remove(at indexPath: IndexPath, removeEmptySection: Bool, beginUpdate: Bool = true, endUpdate: Bool = true, finished: ((Entity) -> ())? = nil) {
 		
+		let isMainThread = Thread.isMainThread
+
 		self.dispatchQueue.async(flags: .barrier) {
 			
 			if beginUpdate {
@@ -473,7 +523,9 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 				self.modelDidChangeContent(for: .delete)
 			}
 			
-			finished?(entity)
+			self.checkIsMainThread(isMainThread) {
+				finished?(entity)
+			}
 		}
 	}
 	
@@ -489,6 +541,8 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 
 	public func removeAllEntities(atSection sectionIndex: Int, beginUpdate: Bool = true, endUpdate: Bool = true, finished: (([Entity]) -> ())? = nil) {
 		
+		let isMainThread = Thread.isMainThread
+
 		self.dispatchQueue.async(flags: .barrier) {
 			
 			if beginUpdate {
@@ -506,12 +560,18 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 				self.modelDidChangeContent(for: .delete)
 			}
 			
-			finished?(removedEntities)
+			self.checkIsMainThread(isMainThread) {
+				finished?(removedEntities)
+			}
+
 		}
 		
 	}
 	
 	public func removeSection(at sectionIndex: Int, beginUpdate: Bool = true, endUpdate: Bool = true, finished: ((SectionInfo<Entity>) -> ())? = nil) {
+		
+		let isMainThread = Thread.isMainThread
+		
 		self.dispatchQueue.async(flags: .barrier) {
 			
 			if beginUpdate {
@@ -525,18 +585,26 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 				self.modelDidChangeContent(for: .delete)
 			}
 			
-			finished?(section)
+			self.checkIsMainThread(isMainThread) {
+				finished?(section)
+			}
+
 		}
 	}
 	
 	public func removeAll(finished: (() -> ())?) {
+		
+		let isMainThread = Thread.isMainThread
+
 		dispatchQueue.async(flags: .barrier) {
 			
 			self.sectionsManager.removeAll()
-			finished?()
+			self.checkIsMainThread(isMainThread, completion: finished)
 		}
 	}
 
+	//MARK: - Get Section
+	
 	public func section(at sectionIndex: Int) -> SectionInfo<Entity> {
 		
 		var section: SectionInfo<Entity>!
@@ -548,6 +616,8 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 		return section
 	}
 	
+	//MARK: - Get Entity
+
 	public func entity(at indexPath: IndexPath) -> Entity {
 		
 		var entity: Entity!
@@ -562,6 +632,9 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 	//MARK: - Sort methods
 
 	public func sortEntities(atSection sectionIndex: Int, with sort: @escaping ((Entity, Entity) -> Bool), beginUpdate: Bool = true, endUpdate: Bool = true, finished: ((_ newIndexPaths: [IndexPath]) -> Void)?) {
+		
+		let isMainThread = Thread.isMainThread
+
 		self.dispatchQueue.async(flags: .barrier) {
 			if beginUpdate {
 				self.modelWillChangeContent(for: .move)
@@ -575,7 +648,10 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 				self.modelDidChangeContent(for: .move)
 			}
 			
-			finished?(result.newIndexPaths)
+			self.checkIsMainThread(isMainThread) {
+				finished?(result.newIndexPaths)
+			}
+
 		}
 		
 	}
@@ -586,28 +662,37 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 		let firstIndex = 0
 		let lastIndex = self.numberOfSections-1
 		
+		let isMainThread = Thread.isMainThread
+		
 		self.dispatchQueue.async(flags: .barrier) {
-			
-			for index in firstIndex...lastIndex {
-				
-				if index == firstIndex {
-					self.sortEntities(atSection: index, with: self.sort!, beginUpdate: true, endUpdate: false, finished: nil)
+			if lastIndex == 0 {
+				self.sortEntities(atSection: firstIndex, with: self.sort!, beginUpdate: true, endUpdate: true, finished: nil)
+			}
+			else {
+				for index in firstIndex...lastIndex {
+					
+					if index == firstIndex {
+						self.sortEntities(atSection: index, with: self.sort!, beginUpdate: true, endUpdate: false, finished: nil)
+					}
+					else if index == lastIndex {
+						self.sortEntities(atSection: index, with: self.sort!, beginUpdate: false, endUpdate: true, finished: nil)
+					}
+					else {
+						self.sortEntities(atSection: index, with: self.sort!, beginUpdate: false, endUpdate: false, finished: nil)
+					}
+					
 				}
-				else if index == lastIndex {
-					self.sortEntities(atSection: index, with: self.sort!, beginUpdate: false, endUpdate: true, finished: nil)
-				}
-				else {
-					self.sortEntities(atSection: index, with: self.sort!, beginUpdate: false, endUpdate: false, finished: nil)
-				}
-				
 			}
 			
-			finished?()
+			self.checkIsMainThread(isMainThread, completion: finished)
 			
 		}
 	}
 	
 	public func sortSections(with sort: @escaping ((SectionInfo<Entity>, SectionInfo<Entity>) -> Bool), beginUpdate: Bool = true, endUpdate: Bool = true, finished: ((_ newIndexPaths: [Int]) -> Void)?) {
+		
+		let isMainThread = Thread.isMainThread
+
 		self.dispatchQueue.async(flags: .barrier) {
 			if beginUpdate {
 				self.modelWillChangeContent(for: .move)
@@ -631,7 +716,10 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 				self.modelDidChangeContent(for: .move)
 			}
 			
-			finished?(result.newIndexes)
+			self.checkIsMainThread(isMainThread) {
+				finished?(result.newIndexes)
+			}
+
 		}
 		
 	}
@@ -655,6 +743,23 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 				let filtered = self.sectionsManager.filteredEntities(atSection: i, with: filter)
 				entities.append(contentsOf: filtered)
 			}
+		}
+		
+		return entities
+	}
+	
+	public func allEntitiesForExport(sortedBy sort: ((Entity, Entity) -> Bool)?) -> [Entity] {
+		var entities: [Entity] = []
+		
+		self.dispatchQueue.sync {
+			for i in 0...(self.numberOfSections-1) {
+				let sectionEntities = self.sectionsManager.entities(atSection: i)
+				entities.append(contentsOf: sectionEntities)
+			}
+		}
+		
+		if sort != nil {
+			entities.sort(by: sort!)
 		}
 		
 		return entities
@@ -686,6 +791,19 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 			self.delegate?.model(didChange: sectionInfo, atSectionIndex: sectionIndex, for: type, newSectionIndex: newSectionIndex)
 		}
 	}
+	
+	private func checkIsMainThread(_ isMainThread: Bool, completion: (() -> Void)?) {
+		guard completion != nil else {
+			return
+		}
+		if isMainThread {
+			DispatchQueue.main.async(execute: completion!)
+		}
+		else {
+			DispatchQueue.global().async(execute: completion!)
+		}
+	}
+	
 
 }
 
