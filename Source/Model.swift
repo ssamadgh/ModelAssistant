@@ -98,19 +98,14 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 	
 	//	var entities: [Entity]
 	
-	private var entitiesId: Set<Int>
+	private var entitiesUniqueValue: Set<Int>
 	
 	public init(sectionName: String? = nil) {
-		entitiesId = []
+		entitiesUniqueValue = []
 		fetchBatchSize = 10
 		self.sectionKey = sectionName
 		self.hasSection = sectionName != nil
 		self.sectionsManager = SectionsManager()
-	}
-	
-	public func uniqueId() -> Int {
-		let max = self.entitiesId.max() ?? 0
-		return max + 1
 	}
 	
 	public var isEmpty: Bool {
@@ -131,7 +126,7 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 		var numberOfFetchedEntities: Int!
 		
 		self.dispatchQueue.sync {
-			numberOfFetchedEntities = self.entitiesId.count
+			numberOfFetchedEntities = self.entitiesUniqueValue.count
 		}
 		
 		return numberOfFetchedEntities
@@ -164,7 +159,7 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 		var isEmpty = false
 		
 		self.dispatchQueue.sync {
-			isEmpty = self.entitiesId.isEmpty
+			isEmpty = self.entitiesUniqueValue.isEmpty
 		}
 		
 		return isEmpty
@@ -250,12 +245,12 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 	}
 
 	
-	public func indexPathOfEntity(withId id: Int) -> IndexPath? {
+	public func indexPathOfEntity(withUniqueValue uniqueValue: Int) -> IndexPath? {
 		var indexPath: IndexPath?
 		
 		self.dispatchQueue.sync {
-			if self.entitiesId.contains(id) {
-				if let entity = self.filteredEntities(with: { $0.id == id }).first {
+			if self.entitiesUniqueValue.contains(uniqueValue) {
+				if let entity = self.filteredEntities(with: { $0.uniqueValue == uniqueValue }).first {
 					indexPath = self.indexPath(of: entity)
 				}
 			}
@@ -275,6 +270,8 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 		let isMainThread = Thread.isMainThread
 		
 		self.dispatchQueue.async(flags: .barrier) {
+			
+			self.entitiesUniqueValue.insert(newEntity.uniqueValue)
 			
 			if beginUpdate {
 				self.modelWillChangeContent(for: .delete)
@@ -340,11 +337,11 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 
 		self.dispatchQueue.async(flags: .barrier) {
 			
-			var newEntitiesId = Set(newEntities.map { $0.id })
+			var newEntitiesUniqueValue = Set(newEntities.map { $0.uniqueValue })
 			
-			newEntitiesId.subtract(self.entitiesId)
+			newEntitiesUniqueValue.subtract(self.entitiesUniqueValue)
 			
-			self.entitiesId.formUnion(newEntitiesId)
+			self.entitiesUniqueValue.formUnion(newEntitiesUniqueValue)
 			
 			var newEntities = newEntities
 			
@@ -511,8 +508,8 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 			
 			let entity = self.sectionsManager.remove(at: indexPath)
 			
-			if let index = self.entitiesId.index(of: entity.id) {
-				self.entitiesId.remove(at: index)
+			if let index = self.entitiesUniqueValue.index(of: entity.uniqueValue) {
+				self.entitiesUniqueValue.remove(at: index)
 			}
 			
 			if removeEmptySection, self.sectionsManager[sectionIndex].isEmpty {
