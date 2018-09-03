@@ -79,7 +79,6 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 			return self.section(at: index)
 		}
 	}
-
 	
 	public var sectionKey: String? {
 		didSet {
@@ -294,14 +293,15 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 				}
 				else {
 					self.sectionsManager.insert(newEntity, at: indexPath)
-					self.model(didChange: [newEntity], at: nil, for: .insert, newIndexPaths: [indexPath])
 					
 					if self.sort != nil, applySort {
-						let oldIndexPath = self.privateIndexPath(of: newEntity)!
 						_ = self.sectionsManager.sortEntities(atSection: sectionIndex, with: self.sort!)
 						let newIndexPath = self.privateIndexPath(of: newEntity)!
 						
-						self.model(didChange: [newEntity], at: [oldIndexPath], for: .move, newIndexPaths: [newIndexPath])
+						self.model(didChange: [newEntity], at: nil, for: .insert, newIndexPaths: [newIndexPath])
+					}
+					else {
+						self.model(didChange: [newEntity], at: nil, for: .insert, newIndexPaths: [indexPath])
 					}
 					
 				}

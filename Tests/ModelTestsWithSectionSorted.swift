@@ -11,7 +11,7 @@ import XCTest
 class ModelTestsWithSectionSorted: ModelTestsWithSection {
     
     override func setUp() {
-		self.sort = { $0.lastName < $1.lastName }
+		self.sort = { $0.firstName < $1.firstName }
 
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.

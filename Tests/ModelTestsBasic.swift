@@ -208,7 +208,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		
 		let indexPath = IndexPath(row: 0, section: 0)
 		self.delegateExpect =  expectation(description: "insert at First Expect")
-		self.model.insertAtFirst(member)
+		self.model.insertAtFirst(member, applySort: false)
 		waitForExpectations(timeout: 5, handler: nil)
 		
 		let memberIndexPath = self.model.indexPath(of: member)
@@ -229,7 +229,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		let indexPath = IndexPath(row: lastRow, section: lastSection)
 		
 		self.delegateExpect =  expectation(description: "insert at First Expect")
-		self.model.insertAtLast(member)
+		self.model.insertAtLast(member, applySort: false)
 		waitForExpectations(timeout: 5, handler: nil)
 		
 		let memberIndexPath = self.model.indexPath(of: member)
@@ -249,7 +249,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		
 		let indexPath = IndexPath(row: row, section: section)
 		self.delegateExpect =  expectation(description: "insert at indexPath Expect")
-		self.model.insert(member, at: indexPath)
+		self.model.insert(member, at: indexPath, applySort: false)
 		waitForExpectations(timeout: 5, handler: nil)
 		
 		let memberIndexPath = self.model.indexPath(of: member)
@@ -268,7 +268,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		
 		let indexPath = IndexPath(row: row, section: section)
 		self.delegateExpect =  expectation(description: "insert at Last Expect")
-		self.model.insert(member, at: indexPath)
+		self.model.insert(member, at: indexPath, applySort: false)
 		waitForExpectations(timeout: 5, handler: nil)
 		
 		let memberIndexPath = self.model.indexPath(of: member)

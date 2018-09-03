@@ -58,6 +58,7 @@ class SimplePhoneBookTVC: UITableViewController, ModelDelegate {
 		alertController.addTextField { (textField) in
 			textField.placeholder = "Phone Number"
 			phoneTextField = textField
+			phoneTextField.keyboardType = .phonePad
 		}
 
 		alertController.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action) in
