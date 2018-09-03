@@ -12,6 +12,10 @@ import Model
 struct Member: GEntityProtocol, Hashable, Codable {
 	
 	
+	var uniqueValue: Int {
+		return id
+	}
+
 	var id: Int
 	var firstName: String
 	var lastName: String

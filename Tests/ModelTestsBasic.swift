@@ -74,7 +74,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 	
 	func testIndexOfEntityWithId() {
 		let entity = Member(data: ["id":1])!
-		let indexPath = self.model.indexPathOfEntity(withId: entity.id)
+		let indexPath = self.model.indexPathOfEntity(withUniqueValue: entity.uniqueValue)
 		XCTAssertNotNil(indexPath)
 	}
 	
@@ -83,9 +83,9 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		let indexPath = self.model.indexPath(of: entity)
 		XCTAssertNotNil(indexPath)
 		
-		let indexPathWithId = self.model.indexPathOfEntity(withId: entity.id)
+		let indexPathWithUniqueValue = self.model.indexPathOfEntity(withUniqueValue: entity.uniqueValue)
 		
-		XCTAssertEqual(indexPath, indexPathWithId)
+		XCTAssertEqual(indexPath, indexPathWithUniqueValue)
 	}
 	
 	func testModelAfterFetch() {
@@ -128,7 +128,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		XCTAssertNotNil(indexPath1)
 		
 		let id = 3
-		let indexPath2 = self.model.indexPathOfEntity(withId: id)
+		let indexPath2 = self.model.indexPathOfEntity(withUniqueValue: id)
 		XCTAssertNotNil(indexPath2)
 
 		let entity = self.model[indexPath2!]
@@ -651,7 +651,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 			// Put the code you want to measure the time of here.
 			let entity = Member(data: ["id":1,"first_name":"Emma","last_name":"McGinty"])!
 			//			let indexPath = self.model.indexPath(of: entity)
-			_ = self.model.indexPathOfEntity(withId: entity.id)
+			_ = self.model.indexPathOfEntity(withUniqueValue: entity.uniqueValue)
 			
 		}
 	}

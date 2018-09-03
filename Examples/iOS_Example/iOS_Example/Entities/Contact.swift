@@ -10,6 +10,10 @@ import Model
 
 struct Contact: GEntityProtocol & Hashable, Codable {
 	
+	var uniqueValue: Int {
+		return Int(phone)!
+	}
+
 	let id: Int
 	var firstName: String
 	var lastName: String

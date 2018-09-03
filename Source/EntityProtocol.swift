@@ -10,7 +10,7 @@ import UIKit
 
 public protocol EntityProtocol {
 	
-	var id: Int { get }
+	var uniqueValue: Int { get }
 
 	init?(data: [String: Any])
 	
@@ -28,7 +28,7 @@ public protocol GEntityProtocol: EntityProtocol {
 public extension GEntityProtocol {
 	
 	var hashValue: Int {
-		return id.hashValue
+		return uniqueValue.hashValue
 	}
 	
 	subscript (key: String) -> String? {
@@ -36,7 +36,7 @@ public extension GEntityProtocol {
 	}
 	
 	static func ==(left: Self, right: Self) -> Bool {
-		return left.id == right.id
+		return left.uniqueValue == right.uniqueValue
 	}
 		
 }

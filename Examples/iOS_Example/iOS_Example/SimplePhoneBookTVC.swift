@@ -63,13 +63,13 @@ class SimplePhoneBookTVC: UITableViewController, ModelDelegate {
 
 		alertController.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action) in
 			
-			let dic = ["id" : self.model.uniqueId()]
+			let dic = ["id" : 0]
 			var contact = Contact(data: dic)!
 			contact.firstName = firstNameTextField.text!
 			contact.lastName = lastNameTextField.text!
 			contact.phone = phoneTextField.text!
 			
-			self.model.insertAtFirst(contact, applySort: true)
+			self.model.insertAtFirst(contact, applySort: false)
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
