@@ -109,6 +109,11 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 		self.sectionsManager = SectionsManager()
 	}
 	
+	public func uniqueId() -> Int {
+		let max = self.entitiesId.max() ?? 0
+		return max + 1
+	}
+	
 	public var isEmpty: Bool {
 		return sectionsManager.isEmpty
 	}
@@ -263,11 +268,11 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 	
 	//MARK: - Insert methods
 
-	public func insertAtFirst(_ newEntity: Entity, beginUpdate: Bool = true, endUpdate: Bool = true, finished:(() -> ())? = nil) {
-		self.insert(newEntity, at: IndexPath(row: 0, section: 0), beginUpdate: beginUpdate, endUpdate: endUpdate, finished: finished)
+	public func insertAtFirst(_ newEntity: Entity, applySort: Bool, beginUpdate: Bool = true, endUpdate: Bool = true, finished:(() -> ())? = nil) {
+		self.insert(newEntity, at: IndexPath(row: 0, section: 0), applySort: applySort, beginUpdate: beginUpdate, endUpdate: endUpdate, finished: finished)
 	}
 	
-	public func insert(_ newEntity: Entity, at indexPath: IndexPath, beginUpdate: Bool = true, endUpdate: Bool = true, finished:(() -> ())? = nil) {
+	public func insert(_ newEntity: Entity, at indexPath: IndexPath, applySort: Bool, beginUpdate: Bool = true, endUpdate: Bool = true, finished:(() -> ())? = nil) {
 		let isMainThread = Thread.isMainThread
 		
 		self.dispatchQueue.async(flags: .barrier) {
@@ -291,7 +296,7 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 					self.sectionsManager.insert(newEntity, at: indexPath)
 					self.model(didChange: [newEntity], at: nil, for: .insert, newIndexPaths: [indexPath])
 					
-					if self.sort != nil {
+					if self.sort != nil, applySort {
 						let oldIndexPath = self.privateIndexPath(of: newEntity)!
 						_ = self.sectionsManager.sortEntities(atSection: sectionIndex, with: self.sort!)
 						let newIndexPath = self.privateIndexPath(of: newEntity)!

@@ -66,6 +66,12 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		super.tearDown()
 	}
 	
+	func testUniqueId() {
+		let uniqueId = self.model.uniqueId()
+		
+		XCTAssertEqual(uniqueId, 11)
+	}
+	
 	func testIndexOfEntityWithId() {
 		let entity = Member(data: ["id":1])!
 		let indexPath = self.model.indexPathOfEntity(withId: entity.id)

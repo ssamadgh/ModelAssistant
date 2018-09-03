@@ -8,18 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		E4069F15213BE2FF009FCD7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F14213BE2FF009FCD7A /* AppDelegate.swift */; };
-		E4069F17213BE2FF009FCD7A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F16213BE2FF009FCD7A /* ViewController.swift */; };
 		E4069F1A213BE2FF009FCD7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4069F18213BE2FF009FCD7A /* Main.storyboard */; };
 		E4069F1C213BE300009FCD7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4069F1B213BE300009FCD7A /* Assets.xcassets */; };
 		E4069F1F213BE300009FCD7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4069F1D213BE300009FCD7A /* LaunchScreen.storyboard */; };
 		E4069F2A213BE300009FCD7A /* iOS_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F29213BE300009FCD7A /* iOS_ExampleTests.swift */; };
 		E4069F35213BE300009FCD7A /* iOS_ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F34213BE300009FCD7A /* iOS_ExampleUITests.swift */; };
-		E4069F4B213BE331009FCD7A /* Model.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4069F48213BE327009FCD7A /* Model.framework */; };
-		E4069F4C213BE331009FCD7A /* Model.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E4069F48213BE327009FCD7A /* Model.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E4069F51213BE5DC009FCD7A /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F50213BE5DC009FCD7A /* TableViewController.swift */; };
 		E4069F53213BE6A2009FCD7A /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F52213BE6A2009FCD7A /* CollectionViewController.swift */; };
 		E4069F55213BE70E009FCD7A /* ModelDelegateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F54213BE70E009FCD7A /* ModelDelegateManager.swift */; };
 		E4069F57213C3B78009FCD7A /* UITableViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F56213C3B78009FCD7A /* UITableViewController+Extension.swift */; };
+		E4069F5F213C6753009FCD7A /* UICollectionViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F5E213C6753009FCD7A /* UICollectionViewController+Extension.swift */; };
+		E4069F64213C68CC009FCD7A /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F63213C68CC009FCD7A /* MainTableViewController.swift */; };
+		E4069F66213C7087009FCD7A /* SimplePhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F65213C7087009FCD7A /* SimplePhoneBookTVC.swift */; };
+		E4069F69213C70BB009FCD7A /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F68213C70BB009FCD7A /* Contact.swift */; };
+		E47F1AAA213D0A6400708DFF /* PhoneBook.json in Resources */ = {isa = PBXBuildFile; fileRef = E47F1AA9213D0A6400708DFF /* PhoneBook.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,26 +39,19 @@
 			remoteGlobalIDString = E4069F10213BE2FF009FCD7A;
 			remoteInfo = iOS_Example;
 		};
-		E4069F47213BE327009FCD7A /* PBXContainerItemProxy */ = {
+		E47F1AA5213CF7F600708DFF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = E4069F42213BE327009FCD7A /* Model.xcodeproj */;
+			containerPortal = E47F1AA0213CF7F600708DFF /* Model.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = E477161A2133054900B7E2BE;
 			remoteInfo = Model;
 		};
-		E4069F49213BE327009FCD7A /* PBXContainerItemProxy */ = {
+		E47F1AA7213CF7F600708DFF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = E4069F42213BE327009FCD7A /* Model.xcodeproj */;
+			containerPortal = E47F1AA0213CF7F600708DFF /* Model.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = E47716232133054A00B7E2BE;
 			remoteInfo = ModelTests;
-		};
-		E4069F4D213BE331009FCD7A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E4069F42213BE327009FCD7A /* Model.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = E47716192133054900B7E2BE;
-			remoteInfo = Model;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -67,7 +62,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E4069F4C213BE331009FCD7A /* Model.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -77,7 +71,6 @@
 /* Begin PBXFileReference section */
 		E4069F11213BE2FF009FCD7A /* iOS_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4069F14213BE2FF009FCD7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E4069F16213BE2FF009FCD7A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E4069F19213BE2FF009FCD7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E4069F1B213BE300009FCD7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E4069F1E213BE300009FCD7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -88,11 +81,16 @@
 		E4069F30213BE300009FCD7A /* iOS_ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOS_ExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4069F34213BE300009FCD7A /* iOS_ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_ExampleUITests.swift; sourceTree = "<group>"; };
 		E4069F36213BE300009FCD7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E4069F42213BE327009FCD7A /* Model.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Model.xcodeproj; path = ../../Model.xcodeproj; sourceTree = "<group>"; };
 		E4069F50213BE5DC009FCD7A /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		E4069F52213BE6A2009FCD7A /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		E4069F54213BE70E009FCD7A /* ModelDelegateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDelegateManager.swift; sourceTree = "<group>"; };
 		E4069F56213C3B78009FCD7A /* UITableViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewController+Extension.swift"; sourceTree = "<group>"; };
+		E4069F5E213C6753009FCD7A /* UICollectionViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewController+Extension.swift"; sourceTree = "<group>"; };
+		E4069F63213C68CC009FCD7A /* MainTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewController.swift; sourceTree = "<group>"; };
+		E4069F65213C7087009FCD7A /* SimplePhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplePhoneBookTVC.swift; sourceTree = "<group>"; };
+		E4069F68213C70BB009FCD7A /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		E47F1AA0213CF7F600708DFF /* Model.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Model.xcodeproj; path = ../../Model.xcodeproj; sourceTree = "<group>"; };
+		E47F1AA9213D0A6400708DFF /* PhoneBook.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PhoneBook.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +98,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4069F4B213BE331009FCD7A /* Model.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,7 +125,7 @@
 				E4069F28213BE300009FCD7A /* iOS_ExampleTests */,
 				E4069F33213BE300009FCD7A /* iOS_ExampleUITests */,
 				E4069F12213BE2FF009FCD7A /* Products */,
-				E4069F42213BE327009FCD7A /* Model.xcodeproj */,
+				E47F1AA0213CF7F600708DFF /* Model.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -145,12 +142,16 @@
 		E4069F13213BE2FF009FCD7A /* iOS_Example */ = {
 			isa = PBXGroup;
 			children = (
+				E4069F60213C6876009FCD7A /* Resources */,
 				E4069F14213BE2FF009FCD7A /* AppDelegate.swift */,
-				E4069F16213BE2FF009FCD7A /* ViewController.swift */,
+				E4069F67213C70A7009FCD7A /* Entities */,
+				E4069F63213C68CC009FCD7A /* MainTableViewController.swift */,
+				E4069F65213C7087009FCD7A /* SimplePhoneBookTVC.swift */,
 				E4069F50213BE5DC009FCD7A /* TableViewController.swift */,
 				E4069F52213BE6A2009FCD7A /* CollectionViewController.swift */,
 				E4069F54213BE70E009FCD7A /* ModelDelegateManager.swift */,
 				E4069F56213C3B78009FCD7A /* UITableViewController+Extension.swift */,
+				E4069F5E213C6753009FCD7A /* UICollectionViewController+Extension.swift */,
 				E4069F18213BE2FF009FCD7A /* Main.storyboard */,
 				E4069F1B213BE300009FCD7A /* Assets.xcassets */,
 				E4069F1D213BE300009FCD7A /* LaunchScreen.storyboard */,
@@ -177,11 +178,27 @@
 			path = iOS_ExampleUITests;
 			sourceTree = "<group>";
 		};
-		E4069F43213BE327009FCD7A /* Products */ = {
+		E4069F60213C6876009FCD7A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				E4069F48213BE327009FCD7A /* Model.framework */,
-				E4069F4A213BE327009FCD7A /* ModelTests.xctest */,
+				E47F1AA9213D0A6400708DFF /* PhoneBook.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E4069F67213C70A7009FCD7A /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				E4069F68213C70BB009FCD7A /* Contact.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		E47F1AA1213CF7F600708DFF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E47F1AA6213CF7F600708DFF /* Model.framework */,
+				E47F1AA8213CF7F600708DFF /* ModelTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -201,7 +218,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				E4069F4E213BE331009FCD7A /* PBXTargetDependency */,
 			);
 			name = iOS_Example;
 			productName = iOS_Example;
@@ -280,8 +296,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = E4069F43213BE327009FCD7A /* Products */;
-					ProjectRef = E4069F42213BE327009FCD7A /* Model.xcodeproj */;
+					ProductGroup = E47F1AA1213CF7F600708DFF /* Products */;
+					ProjectRef = E47F1AA0213CF7F600708DFF /* Model.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -294,18 +310,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		E4069F48213BE327009FCD7A /* Model.framework */ = {
+		E47F1AA6213CF7F600708DFF /* Model.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Model.framework;
-			remoteRef = E4069F47213BE327009FCD7A /* PBXContainerItemProxy */;
+			remoteRef = E47F1AA5213CF7F600708DFF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E4069F4A213BE327009FCD7A /* ModelTests.xctest */ = {
+		E47F1AA8213CF7F600708DFF /* ModelTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = ModelTests.xctest;
-			remoteRef = E4069F49213BE327009FCD7A /* PBXContainerItemProxy */;
+			remoteRef = E47F1AA7213CF7F600708DFF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -318,6 +334,7 @@
 				E4069F1F213BE300009FCD7A /* LaunchScreen.storyboard in Resources */,
 				E4069F1C213BE300009FCD7A /* Assets.xcassets in Resources */,
 				E4069F1A213BE2FF009FCD7A /* Main.storyboard in Resources */,
+				E47F1AAA213D0A6400708DFF /* PhoneBook.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,12 +359,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4069F69213C70BB009FCD7A /* Contact.swift in Sources */,
 				E4069F55213BE70E009FCD7A /* ModelDelegateManager.swift in Sources */,
+				E4069F5F213C6753009FCD7A /* UICollectionViewController+Extension.swift in Sources */,
+				E4069F64213C68CC009FCD7A /* MainTableViewController.swift in Sources */,
 				E4069F57213C3B78009FCD7A /* UITableViewController+Extension.swift in Sources */,
 				E4069F53213BE6A2009FCD7A /* CollectionViewController.swift in Sources */,
-				E4069F17213BE2FF009FCD7A /* ViewController.swift in Sources */,
 				E4069F51213BE5DC009FCD7A /* TableViewController.swift in Sources */,
 				E4069F15213BE2FF009FCD7A /* AppDelegate.swift in Sources */,
+				E4069F66213C7087009FCD7A /* SimplePhoneBookTVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,11 +399,6 @@
 			isa = PBXTargetDependency;
 			target = E4069F10213BE2FF009FCD7A /* iOS_Example */;
 			targetProxy = E4069F31213BE300009FCD7A /* PBXContainerItemProxy */;
-		};
-		E4069F4E213BE331009FCD7A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Model;
-			targetProxy = E4069F4D213BE331009FCD7A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

@@ -15,7 +15,7 @@ extension UITableViewController: CollectionController {
 		self.tableView.insertRows(at: indexPaths, with: .bottom)
 	}
 	
-	func update(indexPath: IndexPath) {
+	func update(at indexPath: IndexPath) {
 		if let cell = self.tableView.cellForRow(at: indexPath) {
 			self.configure(cell, at: indexPath)
 			
@@ -26,7 +26,7 @@ extension UITableViewController: CollectionController {
 		self.tableView.deleteRows(at: indexPaths, with: .top)
 	}
 	
-	func moveRow(at indexPath: IndexPath, to newIndexPath: IndexPath) {
+	func move(at indexPath: IndexPath, to newIndexPath: IndexPath) {
 		self.tableView.moveRow(at: indexPath, to: newIndexPath)
 	}
 	
@@ -39,7 +39,15 @@ extension UITableViewController: CollectionController {
 	}
 	
 	func moveSection(_ section: Int, toSection newSection: Int) {
-		self.moveSection(section, toSection: newSection)
+		self.tableView.moveSection(section, toSection: newSection)
+	}
+	
+	func reloadSection(_ section: Int) {
+		self.tableView.reloadSections(IndexSet(integer: section), with: .fade)
+	}
+	
+	func performBatchUpdates(_ updates: (() -> Void)?, completion: ((Bool) -> Void)?) {
+		self.tableView.performBatchUpdates(updates, completion: completion)
 	}
 	
 	@objc func configure(_ cell: UITableViewCell, at indexPath: IndexPath) {
