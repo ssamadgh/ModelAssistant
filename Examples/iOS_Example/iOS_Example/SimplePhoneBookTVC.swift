@@ -68,7 +68,7 @@ class SimplePhoneBookTVC: UITableViewController, ModelDelegate {
 			contact.lastName = lastNameTextField.text!
 			contact.phone = phoneTextField.text!
 			
-			
+			self.model.insertAtFirst(contact, applySort: true)
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in

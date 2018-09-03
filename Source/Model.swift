@@ -319,10 +319,10 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 		}
 	}
 	
-	public func insertAtLast(_ newEntity: Entity, beginUpdate: Bool = true, endUpdate: Bool = true, finished:(() -> ())? = nil) {
+	public func insertAtLast(_ newEntity: Entity, applySort: Bool, beginUpdate: Bool = true, endUpdate: Bool = true, finished:(() -> ())? = nil) {
 		let section = self.numberOfSections - 1
 		let row = self.numberOfEntites(at: section)
-		self.insert(newEntity, at: IndexPath(row: row, section: section), beginUpdate: beginUpdate, endUpdate: endUpdate, finished: finished)
+		self.insert(newEntity, at: IndexPath(row: row, section: section), applySort: applySort, beginUpdate: beginUpdate, endUpdate: endUpdate, finished: finished)
 	}
 	
 	public func fetch(_ entities: [Entity], finished:(() -> ())?) {
