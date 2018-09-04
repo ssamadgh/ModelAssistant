@@ -9,29 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "iOS_Example/SimplePhoneBookTVC.swift"
-            timestampString = "557683808.262967"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
-            landmarkName = "addBarButtonAction(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "../../Source/Model.swift"
-            timestampString = "557683808.263397"
+            timestampString = "557742838.2728111"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "491"
-            endingLineNumber = "491"
-            landmarkName = "update(at:mutate:)"
+            startingLineNumber = "503"
+            endingLineNumber = "503"
+            landmarkName = "update(at:mutate:finished:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

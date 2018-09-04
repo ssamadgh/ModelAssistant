@@ -97,6 +97,16 @@ struct SectionsManager<Entity: GEntityProtocol & Hashable> {
 		return nil
 	}
 	
+	func indexPath(of entity: Entity, atSection sectionIndex: Int) -> IndexPath? {
+		
+		if let row = self.sections[sectionIndex].index(of: entity) {
+			return IndexPath(row: row, section: sectionIndex)
+		}
+
+		return nil
+	}
+
+	
 	func index(of section: SectionInfo<Entity>) -> Int? {
 		return self.sections.index(of: section)
 	}

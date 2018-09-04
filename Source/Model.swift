@@ -363,17 +363,27 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 				}
 				
 				if let inserted = result.inserted {
-					if callModelDelegateMethods {
-						self.model(didChange: inserted.entities, at: nil, for: .insert, newIndexPaths: inserted.indexPaths)
-					}
 					
-					if self.sort != nil {
+					
+					if self.sort == nil {
+						if callModelDelegateMethods {
+							self.model(didChange: inserted.entities, at: nil, for: .insert, newIndexPaths: inserted.indexPaths)
+						}
+					}
+					else {
 						let result = self.sectionsManager.sortEntities(atSection: sectionIndex, with: self.sort!)
 						if callModelDelegateMethods {
-							self.model(didChange: self.sectionsManager.entities(atSection: sectionIndex), at: result.oldIndexPaths, for: .move, newIndexPaths: result.newIndexPaths)
+							var newIndexPaths: [IndexPath] = []
+							
+							for entity in inserted.entities {
+								newIndexPaths.append(self.sectionsManager.indexPath(of: entity, atSection: sectionIndex)!)
+							}
+							self.model(didChange: inserted.entities, at: nil, for: .insert, newIndexPaths: newIndexPaths)
 							
 						}
 					}
+					
+					
 					
 				}
 				
@@ -480,8 +490,10 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 	
 	//MARK: - Update methods
 
-	public func update(at indexPath: IndexPath, mutate: @escaping (inout Entity) -> Void) {
+	public func update(at indexPath: IndexPath, mutate: @escaping (inout Entity) -> Void, finished: (() -> ())? = nil) {
 		
+		let isMainThread = Thread.isMainThread
+
 		dispatchQueue.async(flags: .barrier) {
 			
 			var entity = self.sectionsManager[indexPath]
@@ -489,6 +501,11 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 			self.sectionsManager[indexPath] = entity
 			
 			self.model(didChange: [entity], at: [indexPath], for: .update, newIndexPaths: nil)
+			
+			self.checkIsMainThread(isMainThread) {
+				finished?()
+			}
+
 		}
 	}
 	
@@ -728,7 +745,7 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 	
 	//MARK: - filter methods
 	
-	func filteredEntities(atSection sectionIndex: Int, with filter: ((Entity) -> Bool)) -> [Entity] {
+	public func filteredEntities(atSection sectionIndex: Int, with filter: ((Entity) -> Bool)) -> [Entity] {
 		var entities: [Entity]!
 		self.dispatchQueue.sync {
 			entities = self.sectionsManager.filteredEntities(atSection: sectionIndex, with: filter)
@@ -737,7 +754,7 @@ public class Model<Entity: GEntityProtocol & Hashable> {
 		return entities ?? []
 	}
 	
-	func filteredEntities(with filter: ((Entity) -> Bool)) -> [Entity] {
+	public func filteredEntities(with filter: ((Entity) -> Bool)) -> [Entity] {
 		var entities: [Entity] = []
 		
 		self.dispatchQueue.sync {

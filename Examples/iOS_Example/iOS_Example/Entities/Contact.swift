@@ -48,11 +48,11 @@ struct Contact: GEntityProtocol & Hashable, Codable {
 
 	subscript(key: String) -> String? {
 		if key == "firstName" {
-			return String(Array(self.firstName)[0])
+			return String(Array(self.firstName)[0]).uppercased()
 		}
 		
 		if key == "lastName" {
-			return String(Array(self.firstName)[0])
+			return String(Array(self.firstName)[0]).uppercased()
 		}
 
 		return nil
