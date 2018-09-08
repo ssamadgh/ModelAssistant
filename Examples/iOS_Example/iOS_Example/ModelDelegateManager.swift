@@ -44,9 +44,7 @@ class ModelDelegateManager: ModelDelegate {
 	func addToBlockOperation(_ operation: @escaping () -> Void) {
 		
 		let operation = BlockOperation {
-			DispatchQueue.main.async {
 				operation()
-			}
 		}
 		
 		blockOperations.append(operation)
@@ -146,11 +144,12 @@ class ModelDelegateManager: ModelDelegate {
 	}
 	
 	func modelDidChangeContent(for type: ModelChangeType) {
+		
 		self.controller.performBatchUpdates({
-			for operation in self.blockOperations {
+			for operation: BlockOperation in self.blockOperations {
 				operation.start()
 			}
-
+			
 		}) { (finished) in
 			self.blockOperations.removeAll(keepingCapacity: false)
 		}

@@ -27,7 +27,7 @@ protocol GModelSectionInfo: ModelSectionInfo {
 	
 }
 
-public struct SectionInfo<Entity: GEntityProtocol & Hashable>: GModelSectionInfo, Equatable, Comparable {
+public struct SectionInfo<Entity: EntityProtocol & Hashable>: GModelSectionInfo, Equatable, Comparable {
 	
 	
 	static public  func ==(lhs: SectionInfo<Entity>, rhs: SectionInfo<Entity>) -> Bool {

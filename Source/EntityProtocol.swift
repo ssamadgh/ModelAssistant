@@ -16,23 +16,15 @@ public protocol EntityProtocol {
 	
 	subscript (key: String) -> String? { get }
 	
+	mutating func update(with newFetechedEntity: EntityProtocol)
+
+	
 }
 
-public protocol GEntityProtocol: EntityProtocol {
-
-
-	mutating func update(with newFetechedEntity: Self)
-
-}
-
-public extension GEntityProtocol {
+public extension EntityProtocol {
 	
 	var hashValue: Int {
 		return uniqueValue.hashValue
-	}
-	
-	subscript (key: String) -> String? {
-		return nil
 	}
 	
 	static func ==(left: Self, right: Self) -> Bool {

@@ -1,73 +1,60 @@
 //
-//  PaginationTableViewController.swift
+//  CollectionViewController.swift
 //  iOS_Example
 //
-//  Created by Seyed Samad Gholamzadeh on 9/4/18.
+//  Created by Seyed Samad Gholamzadeh on 9/2/18.
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
 //
 
 import UIKit
 import Model
 
-class PaginationTableViewController: UITableViewController, ImageDownloaderDelegate {
-	
+private let reuseIdentifier = "Cell"
+
+class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
+
 	var imageDownloadsInProgress: [Int : ImageDownloader]!  // the set of IconDownloader objects for each app
 	
-	var insertingNewEntities = false
-	
 	var model = Model<Contact>()
-	
 	var manager: ModelDelegateManager!
-	
-	var searchResults: [Contact] = []
-	
-	var isSearching: Bool = false
-	
-	var searchController: UISearchController!
-	
 	var isSectioned: Bool = false
+	var insertingNewEntities = false
+
+	init() {
+		let layout = UICollectionViewFlowLayout()
+		layout.minimumInteritemSpacing = 1
+		layout.minimumLineSpacing = layout.minimumInteritemSpacing
+		let screenWidth = UIScreen.main.bounds.width
+		let itemWidth = screenWidth/3 - layout.minimumInteritemSpacing
+		layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
+		super.init(collectionViewLayout: layout)
+	}
 	
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+    override func viewDidLoad() {
+        super.viewDidLoad()
 		self.imageDownloadsInProgress = [:]
 		
-		self.title = "Pagination Table ViewController"
-		self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-		
+		self.title = " Phone Book CollectionView"
 		
 		let addButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBarButtonAction(_:)))
 		
 		let sortButtonItem = UIBarButtonItem(title: "Sort", style: .plain, target: self, action: #selector(sortBarButtonAction(_:)))
 		
 		self.navigationItem.rightBarButtonItems = [addButtonItem, self.editButtonItem, sortButtonItem]
-		
-		self.configureSearchController()
-		
+
+		self.collectionView?.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
+
+        // Do any additional setup after loading the view.
 		self.configureModel()
-		
-	}
-	
-	func configureSearchController() {
-		self.searchController = UISearchController(searchResultsController: nil)
-		self.searchController.searchResultsUpdater = self
-		
-		searchController.delegate = self
-		searchController.dimsBackgroundDuringPresentation = false // default is YES
-		searchController.searchBar.delegate = self    // so we can monitor text changes + others
-		
-		definesPresentationContext = true
-		
-		navigationController?.navigationBar.prefersLargeTitles = true
-		
-		navigationItem.searchController = searchController
-		
-		// We want the search bar visible all the time.
-		navigationItem.hidesSearchBarWhenScrolling = false
-	}
+
+    }
 	
 	func configureModel() {
-		let url = Bundle.main.url(forResource: "PhoneBook_0", withExtension: "json")!
+		let url = Bundle.main.url(forResource: "PhoneBook", withExtension: "json")!
 		let json = try! Data(contentsOf: url)
 		
 		let decoder = JSONDecoder()
@@ -75,13 +62,13 @@ class PaginationTableViewController: UITableViewController, ImageDownloaderDeleg
 		self.manager = ModelDelegateManager(controller: self)
 		self.model.delegate = self.manager
 		self.model.fetchBatchSize = 20
+
 		self.model.fetch(members) {
 			DispatchQueue.main.async {
-				self.tableView.reloadData()
+				self.collectionView?.reloadData()
 			}
 		}
 	}
-	
 	
 	func insertEntities(from fileName: String) {
 		
@@ -89,9 +76,9 @@ class PaginationTableViewController: UITableViewController, ImageDownloaderDeleg
 			return
 		}
 		
-		let tableViewHeight = self.tableView.bounds.height
-		let maxOffsetHeight = self.tableView.contentSize.height - tableViewHeight
-		let offsetY = self.tableView.contentOffset.y
+		let tableViewHeight = self.collectionView!.bounds.height
+		let maxOffsetHeight = self.collectionView!.contentSize.height - tableViewHeight
+		let offsetY = self.collectionView!.contentOffset.y
 		
 		if offsetY >= maxOffsetHeight {
 			
@@ -110,76 +97,82 @@ class PaginationTableViewController: UITableViewController, ImageDownloaderDeleg
 	@objc func addBarButtonAction(_ sender: UIBarButtonItem) {
 		self.contactDetailsAlertController(for: nil)
 	}
-	
-	
-	// MARK: - Table view data source
-	
-	override func numberOfSections(in tableView: UITableView) -> Int {
-		// #warning Incomplete implementation, return the number of sections
-		return self.isSearching ? 1 : self.model.numberOfSections
+
+
+
+	// MARK: UICollectionViewDataSource
+
+
+	override func numberOfSections(in collectionView: UICollectionView) -> Int {
+		return self.model.numberOfSections
 	}
-	
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		// #warning Incomplete implementation, return the number of rows
-		return self.isSearching ? self.searchResults.count : self.model.numberOfEntites(at: section)
-	}
-	
-	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-		
+
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of items
+        return self.model.numberOfEntites(at: section)
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CollectionViewCell
+    
+        // Configure the cell
 		self.configure(cell, at: indexPath)
-		
-		return cell
-	}
+    
+        return cell
+    }
 	
-	override func configure(_ cell: UITableViewCell, at indexPath: IndexPath) {
-		
-		let entity = self.isSearching ? self.searchResults[indexPath.row] : self.model[indexPath]
-		// Configure the cell...
-		cell.textLabel?.text =  entity.fullName
-		
-		// Only load cached images; defer new downloads until scrolling ends
-		if entity.image == nil
-		{
-			if (self.tableView.isDragging == false && self.tableView.isDecelerating == false)
-			{
-				self.startIconDownload(entity, for: indexPath)
-			}
+	override func configure(_ cell: UICollectionViewCell, at indexPath: IndexPath) {
+		if let cell  = cell as? CollectionViewCell {
+			let entity = self.model[indexPath]
+			cell.titleLabel.text = entity.fullName
 			
-			// if a download is deferred or in progress, return a placeholder image
-			cell.imageView?.image = UIImage(named: "Placeholder")
-		}
-		else
-		{
-			cell.imageView?.image = entity.image
-		}
-		cell.imageView?.contentMode = .center
-		
-	}
-	
-	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let contact = self.model[indexPath]
-		self.contactDetailsAlertController(for: contact)
-	}
-	
-	override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-		return true
-	}
-	
-	override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-		print("moved")
-		self.model.moveEntity(at: sourceIndexPath, to: destinationIndexPath, isUserDriven: true)
-	}
-	
-	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		return true
-	}
-	
-	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-		if editingStyle == .delete {
-			self.model.remove(at: indexPath, removeEmptySection: true)
+			// Only load cached images; defer new downloads until scrolling ends
+			if entity.image == nil
+			{
+				if (self.collectionView!.isDragging == false && self.collectionView!.isDecelerating == false)
+				{
+					self.startIconDownload(entity, for: indexPath)
+				}
+				
+				// if a download is deferred or in progress, return a placeholder image
+				cell.imageView?.image = UIImage(named: "Placeholder")
+			}
+			else
+			{
+				cell.imageView?.image = entity.image
+			}
+			cell.imageView?.contentMode = .center
+
+
 		}
 	}
+
+    // MARK: UICollectionViewDelegate
+
+    /*
+    // Uncomment this method to specify if the specified item should be highlighted during tracking
+    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    */
+
+    // Uncomment this method to specify if the specified item should be selected
+    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
+    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+        return false
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+    
+    }
 	
 	//MARK: - Table cell image support
 	func startIconDownload(_ entity: Contact, for indexPath: IndexPath) {
@@ -197,7 +190,7 @@ class PaginationTableViewController: UITableViewController, ImageDownloaderDeleg
 	// this method is used in case the user scrolled into a set of cells that don't have their app icons yet
 	func loadImagesForOnscreenRows() {
 		if self.model.numberOfFetchedEntities > 0 {
-			let visiblePaths = self.tableView.indexPathsForVisibleRows ?? []
+			let visiblePaths = self.collectionView?.indexPathsForVisibleItems ?? []
 			for indexPath in visiblePaths {
 				let entity = self.model[indexPath]
 				if entity.image == nil // avoid the app icon download if the app already has an icon
@@ -229,13 +222,13 @@ class PaginationTableViewController: UITableViewController, ImageDownloaderDeleg
 			self.loadImagesForOnscreenRows()
 			
 			self.insertEntities(from: "PhoneBook_\(self.model.nextIndex)")
-
+			
 		}
 	}
 	override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 		self.loadImagesForOnscreenRows()
 		self.insertEntities(from: "PhoneBook_\(self.model.nextIndex)")
-
+		
 	}
 	
 	func contactDetailsAlertController(for contact: Contact?) {
@@ -278,8 +271,8 @@ class PaginationTableViewController: UITableViewController, ImageDownloaderDeleg
 					contact.lastName = lastName
 					contact.phone = phone
 				}, finished: {
-					if let indexPath = self.tableView.indexPathForSelectedRow {
-						self.tableView.deselectRow(at: indexPath, animated: true)
+					if let indexPath = self.collectionView?.indexPathsForSelectedItems?.first {
+						self.collectionView?.deselectItem(at: indexPath, animated: true)
 					}
 				})
 			}
@@ -298,8 +291,8 @@ class PaginationTableViewController: UITableViewController, ImageDownloaderDeleg
 		
 		alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
 			
-			if let indexPath = self.tableView.indexPathForSelectedRow {
-				self.tableView.deselectRow(at: indexPath, animated: true)
+			if let indexPath = self.collectionView?.indexPathsForSelectedItems?.first {
+				self.collectionView?.deselectItem(at: indexPath, animated: true)
 			}
 			
 		}))
@@ -351,29 +344,6 @@ class PaginationTableViewController: UITableViewController, ImageDownloaderDeleg
 		self.present(alertController, animated: true, completion: nil)
 		
 	}
-	
-}
 
-extension PaginationTableViewController: UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
-	
-	func updateSearchResults(for searchController: UISearchController) {
-		if let text = searchController.searchBar.text {
-			if text.isEmpty {
-				self.searchResults = self.model.allEntitiesForExport(sortedBy: nil)
-			}
-			else {
-				self.searchResults = self.model.filteredEntities(with: { $0.fullName.contains(text) })
-			}
-			self.tableView.reloadData()
-		}
-	}
-	
-	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-		self.isSearching = false
-	}
-	
-	func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-		self.isSearching = true
-	}
-	
+
 }

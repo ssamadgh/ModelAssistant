@@ -9,7 +9,7 @@
 import Foundation
 import Model
 
-struct Member: GEntityProtocol, Hashable, Codable {
+struct Member: EntityProtocol, Hashable, Codable {
 	
 	
 	var uniqueValue: Int {

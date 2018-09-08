@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../Source/Model.swift"
-            timestampString = "557742838.2728111"
+            timestampString = "558042566.982661"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "503"
-            endingLineNumber = "503"
+            startingLineNumber = "495"
+            endingLineNumber = "495"
             landmarkName = "update(at:mutate:finished:)"
             landmarkType = "7">
          </BreakpointContent>

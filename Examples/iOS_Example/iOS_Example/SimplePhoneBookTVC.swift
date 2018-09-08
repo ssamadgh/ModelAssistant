@@ -9,7 +9,9 @@
 import UIKit
 import Model
 
-class SimplePhoneBookTVC: UITableViewController, ModelDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
+class SimplePhoneBookTVC: UITableViewController, ImageDownloaderDelegate {
+
+	var imageDownloadsInProgress: [Int : ImageDownloader]!  // the set of IconDownloader objects for each app
 
 	var model = Model<Contact>()
 	
@@ -24,34 +26,46 @@ class SimplePhoneBookTVC: UITableViewController, ModelDelegate, UISearchBarDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
 		
+		self.imageDownloadsInProgress = [:]
+
+		self.title = "Simple Phone Book"
+		self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+
+		
+		let addButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBarButtonAction(_:)))
+		
+		let sortButtonItem = UIBarButtonItem(title: "Sort", style: .plain, target: self, action: #selector(sortBarButtonAction(_:)))
+		
+		self.navigationItem.rightBarButtonItems = [addButtonItem, self.editButtonItem, sortButtonItem]
+		
+		self.configureSearchController()
+
+		self.configureModel()
+		
+	}
+	
+	func configureSearchController() {
 		self.searchController = UISearchController(searchResultsController: nil)
 		self.searchController.searchResultsUpdater = self
-
+		
 		searchController.delegate = self
 		searchController.dimsBackgroundDuringPresentation = false // default is YES
 		searchController.searchBar.delegate = self    // so we can monitor text changes + others
-
+		
 		definesPresentationContext = true
-
+		
 		navigationController?.navigationBar.prefersLargeTitles = true
 		
 		navigationItem.searchController = searchController
 		
 		// We want the search bar visible all the time.
 		navigationItem.hidesSearchBarWhenScrolling = false
-
-		
-		self.title = "Simple Phone Book"
-		self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-
-		let addButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBarButtonAction(_:)))
-		
-		let sortButtonItem = UIBarButtonItem(title: "Sort", style: .plain, target: self, action: #selector(sortBarButtonAction(_:)))
-		
-		self.navigationItem.rightBarButtonItems = [addButtonItem, self.editButtonItem, sortButtonItem]
+	}
+	
+	func configureModel() {
 		let url = Bundle.main.url(forResource: "PhoneBook", withExtension: "json")!
 		let json = try! Data(contentsOf: url)
-		
+
 		let decoder = JSONDecoder()
 		let members = try! decoder.decode([Contact].self, from: json)
 		
@@ -61,7 +75,6 @@ class SimplePhoneBookTVC: UITableViewController, ModelDelegate, UISearchBarDeleg
 				self.tableView.reloadData()
 			}
 		}
-
 	}
 
 	@objc func addBarButtonAction(_ sender: UIBarButtonItem) {
@@ -84,11 +97,35 @@ class SimplePhoneBookTVC: UITableViewController, ModelDelegate, UISearchBarDeleg
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
 
-        // Configure the cell...
-		cell.textLabel?.text =  self.isSearching ? self.searchResults[indexPath.row].fullName : self.model[indexPath].fullName
-
+		self.configure(cell, at: indexPath)
+		
         return cell
     }
+	
+	override func configure(_ cell: UITableViewCell, at indexPath: IndexPath) {
+		
+		let entity = self.isSearching ? self.searchResults[indexPath.row] : self.model[indexPath]
+		// Configure the cell...
+		cell.textLabel?.text =  entity.fullName
+		
+		// Only load cached images; defer new downloads until scrolling ends
+		if entity.image == nil
+		{
+			if (self.tableView.isDragging == false && self.tableView.isDecelerating == false)
+			{
+				self.startIconDownload(entity, for: indexPath)
+			}
+			
+			// if a download is deferred or in progress, return a placeholder image
+			cell.imageView?.image = UIImage(named: "Placeholder")
+		}
+		else
+		{
+			cell.imageView?.image = entity.image
+		}
+		cell.imageView?.contentMode = .center
+
+	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let contact = self.model[indexPath]
@@ -114,49 +151,54 @@ class SimplePhoneBookTVC: UITableViewController, ModelDelegate, UISearchBarDeleg
 		}
 	}
 	
-	func modelWillChangeContent(for type: ModelChangeType) {
-		self.tableView.beginUpdates()
-	}
-	
-	func modelDidChangeContent(for type: ModelChangeType) {
-		self.tableView.endUpdates()
-	}
-	
-	func model(didChange entities: [EntityProtocol], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) {
-		switch type {
-		case .insert:
-			self.tableView.insertRows(at: newIndexPaths!, with: .bottom)
-			
-		case .delete:
-			self.tableView.deleteRows(at: indexPaths!, with: .top)
-			
-		case .move:
-			for i in 0..<indexPaths!.count {
-				self.tableView.moveRow(at: indexPaths![i], to: newIndexPaths![i])
-			}
-		case .update:
-			let indexPath = indexPaths!.first!
-			if let cell = self.tableView.cellForRow(at: indexPath) {
-				cell.textLabel?.text = self.model[indexPath].fullName
-			}
-			
+	//MARK: - Table cell image support
+	func startIconDownload(_ entity: Contact, for indexPath: IndexPath) {
+		let uniqueValue = entity.uniqueValue
+		var imageDownloader: ImageDownloader! = imageDownloadsInProgress[uniqueValue]
+		if imageDownloader == nil {
+			imageDownloader = ImageDownloader()
+			imageDownloader.entity = entity
+			imageDownloader.delegate = self
+			imageDownloadsInProgress[uniqueValue] = imageDownloader
+			imageDownloader.startDownload()
 		}
 	}
 	
-	func model(didChange sectionInfo: ModelSectionInfo, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) {
-		switch type {
-		case .insert:
-			self.tableView.insertSections(IndexSet(integer: newSectionIndex!), with: .bottom)
-			
-		case .delete:
-			self.tableView.deleteSections(IndexSet(integer: newSectionIndex!), with: .bottom)
-
-		case .move:
-			self.tableView.moveSection(sectionIndex!, toSection: newSectionIndex!)
-			
-		case .update:
-			break
+	// this method is used in case the user scrolled into a set of cells that don't have their app icons yet
+	func loadImagesForOnscreenRows() {
+		if self.model.numberOfFetchedEntities > 0 {
+			let visiblePaths = self.tableView.indexPathsForVisibleRows ?? []
+			for indexPath in visiblePaths {
+				let entity = self.model[indexPath]
+				if entity.image == nil // avoid the app icon download if the app already has an icon
+				{
+					self.startIconDownload(entity, for: indexPath)
+				}
+			}
 		}
+	}
+	
+	// called by our ImageDownloader when an icon is ready to be displayed
+	func imageDidLoad(for entity: CustomEntityProtocol) {
+		
+		self.model.update(at: self.model.indexPath(of: entity as! Contact)!, mutate: { (contact) in
+			contact.image = entity.image
+		})
+		
+		// Remove the IconDownloader from the in progress list.
+		// This will result in it being deallocated.
+		self.imageDownloadsInProgress.removeValue(forKey: entity.uniqueValue)
+	}
+	
+	//MARK: - Deferred image loading (UIScrollViewDelegate)
+	
+	override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+		if !decelerate {
+			self.loadImagesForOnscreenRows()
+		}
+	}
+	override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+		self.loadImagesForOnscreenRows()
 	}
 	
 	func contactDetailsAlertController(for contact: Contact?) {
@@ -275,7 +317,7 @@ class SimplePhoneBookTVC: UITableViewController, ModelDelegate, UISearchBarDeleg
 	
 }
 
-extension SimplePhoneBookTVC {
+extension SimplePhoneBookTVC: UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
 	
 	func updateSearchResults(for searchController: UISearchController) {
 		if let text = searchController.searchBar.text {
@@ -295,6 +337,54 @@ extension SimplePhoneBookTVC {
 	
 	func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
 		self.isSearching = true
+	}
+
+}
+
+extension SimplePhoneBookTVC: ModelDelegate {
+	func modelWillChangeContent(for type: ModelChangeType) {
+		self.tableView.beginUpdates()
+	}
+	
+	func modelDidChangeContent(for type: ModelChangeType) {
+		self.tableView.endUpdates()
+	}
+	
+	func model(didChange entities: [EntityProtocol], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) {
+		switch type {
+		case .insert:
+			self.tableView.insertRows(at: newIndexPaths!, with: .bottom)
+			
+		case .delete:
+			self.tableView.deleteRows(at: indexPaths!, with: .top)
+			
+		case .move:
+			for i in 0..<indexPaths!.count {
+				self.tableView.moveRow(at: indexPaths![i], to: newIndexPaths![i])
+			}
+		case .update:
+			let indexPath = indexPaths!.first!
+			if let cell = self.tableView.cellForRow(at: indexPath) {
+				self.configure(cell, at: indexPath)
+			}
+			
+		}
+	}
+	
+	func model(didChange sectionInfo: ModelSectionInfo, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) {
+		switch type {
+		case .insert:
+			self.tableView.insertSections(IndexSet(integer: newSectionIndex!), with: .bottom)
+			
+		case .delete:
+			self.tableView.deleteSections(IndexSet(integer: newSectionIndex!), with: .bottom)
+			
+		case .move:
+			self.tableView.moveSection(sectionIndex!, toSection: newSectionIndex!)
+			
+		case .update:
+			break
+		}
 	}
 
 }

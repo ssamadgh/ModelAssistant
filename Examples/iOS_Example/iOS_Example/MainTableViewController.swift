@@ -9,17 +9,29 @@
 import UIKit
 
 enum MainVCData: Int {
-	case simplePhoneBook, sectionedPhoneBook
+	case simplePhoneBook, sectionedPhoneBook, paginationTVC, SimplePhoneBookCollectionVC, SectionedPhoneBookCollectionVC, PaginationCVC
 	
-	static let allValues: [MainVCData] = [simplePhoneBook, sectionedPhoneBook]
+	static let allValues: [MainVCData] = [simplePhoneBook, sectionedPhoneBook, paginationTVC, SimplePhoneBookCollectionVC, SectionedPhoneBookCollectionVC, PaginationCVC]
 	
 	var stringValue: String {
 		switch self {
 		case .simplePhoneBook:
-			return "Simple Phone Book"
+			return "Simple Phone Book TableView"
 			
 		case .sectionedPhoneBook:
-			return "Sectioned Phone Book"
+			return "Sectioned Phone Book TableView"
+			
+		case .paginationTVC:
+			return "Pagination Phone Book TableView"
+			
+		case .SimplePhoneBookCollectionVC:
+			return "Simple Phone Book CollectionView"
+			
+		case .SectionedPhoneBookCollectionVC:
+			return "Sectioned Phone Book CollectionView"
+			
+		case .PaginationCVC:
+			return "Pagination Phone Book CollectionView"
 		}
 	}
 	
@@ -30,6 +42,19 @@ enum MainVCData: Int {
 			
 		case .sectionedPhoneBook:
 			return SectionedPhoneBookTVC()
+			
+		case .paginationTVC:
+			return PaginationTableViewController()
+			
+		case .SimplePhoneBookCollectionVC:
+			return SimplePhoneBookCVC()
+			
+		case .SectionedPhoneBookCollectionVC:
+			return SectionedPhoneBookCVC()
+			
+		case .PaginationCVC:
+			return PaginationCollectionVC()
+			
 		}
 	}
 }

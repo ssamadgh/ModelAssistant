@@ -14,7 +14,7 @@
 		E4069F2A213BE300009FCD7A /* iOS_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F29213BE300009FCD7A /* iOS_ExampleTests.swift */; };
 		E4069F35213BE300009FCD7A /* iOS_ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F34213BE300009FCD7A /* iOS_ExampleUITests.swift */; };
 		E4069F51213BE5DC009FCD7A /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F50213BE5DC009FCD7A /* TableViewController.swift */; };
-		E4069F53213BE6A2009FCD7A /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F52213BE6A2009FCD7A /* CollectionViewController.swift */; };
+		E4069F53213BE6A2009FCD7A /* SimplePhoneBookCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F52213BE6A2009FCD7A /* SimplePhoneBookCVC.swift */; };
 		E4069F55213BE70E009FCD7A /* ModelDelegateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F54213BE70E009FCD7A /* ModelDelegateManager.swift */; };
 		E4069F57213C3B78009FCD7A /* UITableViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F56213C3B78009FCD7A /* UITableViewController+Extension.swift */; };
 		E4069F5F213C6753009FCD7A /* UICollectionViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F5E213C6753009FCD7A /* UICollectionViewController+Extension.swift */; };
@@ -24,6 +24,18 @@
 		E424DD8A213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E424DD89213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift */; };
 		E424DD8E213E7FCD002E20D8 /* PaginationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E424DD8D213E7FCD002E20D8 /* PaginationTableViewController.swift */; };
 		E47F1AAA213D0A6400708DFF /* PhoneBook.json in Resources */ = {isa = PBXBuildFile; fileRef = E47F1AA9213D0A6400708DFF /* PhoneBook.json */; };
+		E4B30771214117030034F169 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B3076E214117030034F169 /* ImageDownloader.swift */; };
+		E4B30773214117600034F169 /* CustomEntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B30772214117600034F169 /* CustomEntityProtocol.swift */; };
+		E4EC83502143DDDD0063B4BB /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC834E2143DDDD0063B4BB /* CollectionViewCell.swift */; };
+		E4EC83512143DDDD0063B4BB /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4EC834F2143DDDD0063B4BB /* CollectionViewCell.xib */; };
+		E4EC83582143EAC50063B4BB /* PhoneBook_5.json in Resources */ = {isa = PBXBuildFile; fileRef = E4EC83522143EAC50063B4BB /* PhoneBook_5.json */; };
+		E4EC83592143EAC50063B4BB /* PhoneBook_1.json in Resources */ = {isa = PBXBuildFile; fileRef = E4EC83532143EAC50063B4BB /* PhoneBook_1.json */; };
+		E4EC835A2143EAC50063B4BB /* PhoneBook_4.json in Resources */ = {isa = PBXBuildFile; fileRef = E4EC83542143EAC50063B4BB /* PhoneBook_4.json */; };
+		E4EC835B2143EAC50063B4BB /* PhoneBook_3.json in Resources */ = {isa = PBXBuildFile; fileRef = E4EC83552143EAC50063B4BB /* PhoneBook_3.json */; };
+		E4EC835C2143EAC50063B4BB /* PhoneBook_0.json in Resources */ = {isa = PBXBuildFile; fileRef = E4EC83562143EAC50063B4BB /* PhoneBook_0.json */; };
+		E4EC835D2143EAC50063B4BB /* PhoneBook_2.json in Resources */ = {isa = PBXBuildFile; fileRef = E4EC83572143EAC50063B4BB /* PhoneBook_2.json */; };
+		E4EC835F2143ECF10063B4BB /* PaginationCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC835E2143ECF10063B4BB /* PaginationCollectionVC.swift */; };
+		E4EC83612143EDE20063B4BB /* SectionedPhoneBookCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC83602143EDE20063B4BB /* SectionedPhoneBookCVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,7 +96,7 @@
 		E4069F34213BE300009FCD7A /* iOS_ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_ExampleUITests.swift; sourceTree = "<group>"; };
 		E4069F36213BE300009FCD7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E4069F50213BE5DC009FCD7A /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
-		E4069F52213BE6A2009FCD7A /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		E4069F52213BE6A2009FCD7A /* SimplePhoneBookCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplePhoneBookCVC.swift; sourceTree = "<group>"; };
 		E4069F54213BE70E009FCD7A /* ModelDelegateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDelegateManager.swift; sourceTree = "<group>"; };
 		E4069F56213C3B78009FCD7A /* UITableViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewController+Extension.swift"; sourceTree = "<group>"; };
 		E4069F5E213C6753009FCD7A /* UICollectionViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewController+Extension.swift"; sourceTree = "<group>"; };
@@ -95,6 +107,18 @@
 		E424DD8D213E7FCD002E20D8 /* PaginationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationTableViewController.swift; sourceTree = "<group>"; };
 		E47F1AA0213CF7F600708DFF /* Model.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Model.xcodeproj; path = ../../Model.xcodeproj; sourceTree = "<group>"; };
 		E47F1AA9213D0A6400708DFF /* PhoneBook.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PhoneBook.json; sourceTree = "<group>"; };
+		E4B3076E214117030034F169 /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
+		E4B30772214117600034F169 /* CustomEntityProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEntityProtocol.swift; sourceTree = "<group>"; };
+		E4EC834E2143DDDD0063B4BB /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		E4EC834F2143DDDD0063B4BB /* CollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
+		E4EC83522143EAC50063B4BB /* PhoneBook_5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PhoneBook_5.json; sourceTree = "<group>"; };
+		E4EC83532143EAC50063B4BB /* PhoneBook_1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PhoneBook_1.json; sourceTree = "<group>"; };
+		E4EC83542143EAC50063B4BB /* PhoneBook_4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PhoneBook_4.json; sourceTree = "<group>"; };
+		E4EC83552143EAC50063B4BB /* PhoneBook_3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PhoneBook_3.json; sourceTree = "<group>"; };
+		E4EC83562143EAC50063B4BB /* PhoneBook_0.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PhoneBook_0.json; sourceTree = "<group>"; };
+		E4EC83572143EAC50063B4BB /* PhoneBook_2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PhoneBook_2.json; sourceTree = "<group>"; };
+		E4EC835E2143ECF10063B4BB /* PaginationCollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationCollectionVC.swift; sourceTree = "<group>"; };
+		E4EC83602143EDE20063B4BB /* SectionedPhoneBookCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionedPhoneBookCVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,11 +174,16 @@
 				E4069F14213BE2FF009FCD7A /* AppDelegate.swift */,
 				E4069F67213C70A7009FCD7A /* Entities */,
 				E4069F63213C68CC009FCD7A /* MainTableViewController.swift */,
+				E4B3076E214117030034F169 /* ImageDownloader.swift */,
 				E4069F65213C7087009FCD7A /* SimplePhoneBookTVC.swift */,
 				E424DD89213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift */,
 				E424DD8D213E7FCD002E20D8 /* PaginationTableViewController.swift */,
 				E4069F50213BE5DC009FCD7A /* TableViewController.swift */,
-				E4069F52213BE6A2009FCD7A /* CollectionViewController.swift */,
+				E4069F52213BE6A2009FCD7A /* SimplePhoneBookCVC.swift */,
+				E4EC83602143EDE20063B4BB /* SectionedPhoneBookCVC.swift */,
+				E4EC835E2143ECF10063B4BB /* PaginationCollectionVC.swift */,
+				E4EC834E2143DDDD0063B4BB /* CollectionViewCell.swift */,
+				E4EC834F2143DDDD0063B4BB /* CollectionViewCell.xib */,
 				E4069F54213BE70E009FCD7A /* ModelDelegateManager.swift */,
 				E4069F56213C3B78009FCD7A /* UITableViewController+Extension.swift */,
 				E4069F5E213C6753009FCD7A /* UICollectionViewController+Extension.swift */,
@@ -188,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				E47F1AA9213D0A6400708DFF /* PhoneBook.json */,
+				E4EC834321424F510063B4BB /* Pagination Phone Book */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -196,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				E4069F68213C70BB009FCD7A /* Contact.swift */,
+				E4B30772214117600034F169 /* CustomEntityProtocol.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -207,6 +238,19 @@
 				E47F1AA8213CF7F600708DFF /* ModelTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E4EC834321424F510063B4BB /* Pagination Phone Book */ = {
+			isa = PBXGroup;
+			children = (
+				E4EC83562143EAC50063B4BB /* PhoneBook_0.json */,
+				E4EC83532143EAC50063B4BB /* PhoneBook_1.json */,
+				E4EC83572143EAC50063B4BB /* PhoneBook_2.json */,
+				E4EC83552143EAC50063B4BB /* PhoneBook_3.json */,
+				E4EC83542143EAC50063B4BB /* PhoneBook_4.json */,
+				E4EC83522143EAC50063B4BB /* PhoneBook_5.json */,
+			);
+			path = "Pagination Phone Book";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -337,9 +381,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4EC835B2143EAC50063B4BB /* PhoneBook_3.json in Resources */,
+				E4EC835A2143EAC50063B4BB /* PhoneBook_4.json in Resources */,
+				E4EC835C2143EAC50063B4BB /* PhoneBook_0.json in Resources */,
 				E4069F1F213BE300009FCD7A /* LaunchScreen.storyboard in Resources */,
 				E4069F1C213BE300009FCD7A /* Assets.xcassets in Resources */,
+				E4EC835D2143EAC50063B4BB /* PhoneBook_2.json in Resources */,
 				E4069F1A213BE2FF009FCD7A /* Main.storyboard in Resources */,
+				E4EC83582143EAC50063B4BB /* PhoneBook_5.json in Resources */,
+				E4EC83592143EAC50063B4BB /* PhoneBook_1.json in Resources */,
+				E4EC83512143DDDD0063B4BB /* CollectionViewCell.xib in Resources */,
 				E47F1AAA213D0A6400708DFF /* PhoneBook.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -365,14 +416,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4B30773214117600034F169 /* CustomEntityProtocol.swift in Sources */,
 				E4069F69213C70BB009FCD7A /* Contact.swift in Sources */,
 				E4069F55213BE70E009FCD7A /* ModelDelegateManager.swift in Sources */,
 				E4069F5F213C6753009FCD7A /* UICollectionViewController+Extension.swift in Sources */,
+				E4B30771214117030034F169 /* ImageDownloader.swift in Sources */,
+				E4EC83612143EDE20063B4BB /* SectionedPhoneBookCVC.swift in Sources */,
+				E4EC835F2143ECF10063B4BB /* PaginationCollectionVC.swift in Sources */,
 				E4069F64213C68CC009FCD7A /* MainTableViewController.swift in Sources */,
 				E424DD8E213E7FCD002E20D8 /* PaginationTableViewController.swift in Sources */,
 				E4069F57213C3B78009FCD7A /* UITableViewController+Extension.swift in Sources */,
-				E4069F53213BE6A2009FCD7A /* CollectionViewController.swift in Sources */,
+				E4069F53213BE6A2009FCD7A /* SimplePhoneBookCVC.swift in Sources */,
 				E4069F51213BE5DC009FCD7A /* TableViewController.swift in Sources */,
+				E4EC83502143DDDD0063B4BB /* CollectionViewCell.swift in Sources */,
 				E4069F15213BE2FF009FCD7A /* AppDelegate.swift in Sources */,
 				E424DD8A213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift in Sources */,
 				E4069F66213C7087009FCD7A /* SimplePhoneBookTVC.swift in Sources */,

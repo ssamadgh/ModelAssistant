@@ -9,7 +9,7 @@
 import UIKit
 import Model
 
-class TableViewController<Entity: GEntityProtocol & Hashable>: UITableViewController {
+class TableViewController<Entity: EntityProtocol & Hashable>: UITableViewController {
 	
 	var model: Model<Entity>!
 	

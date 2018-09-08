@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SectionsManager<Entity: GEntityProtocol & Hashable> {
+struct SectionsManager<Entity: EntityProtocol & Hashable> {
 	
 	var numberOfSections: Int {
 		guard !self.isEmpty else { return 0 }

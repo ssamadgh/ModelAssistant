@@ -8,7 +8,8 @@
 
 import Model
 
-struct Contact: GEntityProtocol & Hashable, Codable {
+struct Contact: CustomEntityProtocol & Hashable, Codable {
+	
 	
 	var uniqueValue: Int {
 		return Int(phone)!
@@ -18,9 +19,10 @@ struct Contact: GEntityProtocol & Hashable, Codable {
 	var firstName: String
 	var lastName: String
 	var phone: String
-	var avatarString: String?
-	var avatarURL: URL {
-		let string = avatarString ?? "https://robohash.org/\(firstName)\(lastName)\(id).jpg?size=30x30&set=set1"
+	var imageURLString: String?
+	var image: UIImage?
+	var imageURL: URL {
+		let string = imageURLString ?? "https://robohash.org/\(firstName)\(lastName)\(id).jpg?size=30x30&set=set1"
 		return URL(string: string)!
 	}
 	
@@ -37,13 +39,13 @@ struct Contact: GEntityProtocol & Hashable, Codable {
 		self.firstName = data["firstName"] as? String ?? ""
 		self.lastName = data["lastName"] as? String ?? ""
 		self.phone = data["phone"] as? String ?? ""
-		self.avatarString = data["avatar"] as? String
+		self.imageURLString = data["avatar"] as? String
 	}
 	
-	mutating func update(with newFetechedEntity: Contact) {
-		self.firstName = newFetechedEntity.firstName
-		self.lastName = newFetechedEntity.lastName
-		self.phone = newFetechedEntity.phone
+	mutating func update(with newFetechedEntity: EntityProtocol) {
+		let entity = newFetechedEntity as! Contact
+		self.firstName = entity.firstName
+		self.lastName = entity.lastName
 	}
 
 	subscript(key: String) -> String? {
@@ -60,7 +62,7 @@ struct Contact: GEntityProtocol & Hashable, Codable {
 	
 	enum CodingKeys: String, CodingKey {
 		case id, firstName, lastName, phone
-		case avatarString = "avatar"
+		case imageURLString = "avatar"
 	}
 	
 }

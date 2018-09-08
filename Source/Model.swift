@@ -61,7 +61,7 @@ public extension ModelDelegate {
 
 //MARK: - Model class
 
-public class Model<Entity: GEntityProtocol & Hashable> {
+public class Model<Entity: EntityProtocol & Hashable> {
 	
 	private let dispatchQueue = DispatchQueue(label: "com.model.ConcirrentGCD.DispatchQueue", attributes: DispatchQueue.Attributes.concurrent)
 	
