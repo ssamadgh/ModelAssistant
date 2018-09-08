@@ -1,8 +1,8 @@
 //
-//  PaginationCollectionViewController.swift
+//  CollectionViewController.swift
 //  iOS_Example
 //
-//  Created by Seyed Samad Gholamzadeh on 9/8/18.
+//  Created by Seyed Samad Gholamzadeh on 9/2/18.
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
 //
 
@@ -11,14 +11,15 @@ import Model
 
 private let reuseIdentifier = "Cell"
 
-class PaginationCollectionVC: UICollectionViewController, ImageDownloaderDelegate {
-	
+class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
+
 	var imageDownloadsInProgress: [Int : ImageDownloader]!  // the set of IconDownloader objects for each app
 	
 	var model = Model<Contact>()
 	var manager: ModelDelegateManager!
 	var isSectioned: Bool = false
 	var insertingNewEntities = false
+	var resourceFileName: String = "PhoneBook"
 	
 	init() {
 		let layout = UICollectionViewFlowLayout()
@@ -34,8 +35,8 @@ class PaginationCollectionVC: UICollectionViewController, ImageDownloaderDelegat
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	override func viewDidLoad() {
-		super.viewDidLoad()
+    override func viewDidLoad() {
+        super.viewDidLoad()
 		self.imageDownloadsInProgress = [:]
 		
 		self.title = " Phone Book CollectionView"
@@ -45,24 +46,23 @@ class PaginationCollectionVC: UICollectionViewController, ImageDownloaderDelegat
 		let sortButtonItem = UIBarButtonItem(title: "Sort", style: .plain, target: self, action: #selector(sortBarButtonAction(_:)))
 		
 		self.navigationItem.rightBarButtonItems = [addButtonItem, self.editButtonItem, sortButtonItem]
-		
+
 		self.collectionView?.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
-		
-		// Do any additional setup after loading the view.
+
+        // Do any additional setup after loading the view.
 		self.configureModel()
-		
-	}
+
+    }
 	
 	func configureModel() {
-		let url = Bundle.main.url(forResource: "PhoneBook_0", withExtension: "json")!
+		let url = Bundle.main.url(forResource: resourceFileName, withExtension: "json")!
 		let json = try! Data(contentsOf: url)
 		
 		let decoder = JSONDecoder()
 		let members = try! decoder.decode([Contact].self, from: json)
 		self.manager = ModelDelegateManager(controller: self)
 		self.model.delegate = self.manager
-		self.model.fetchBatchSize = 20
-		
+
 		self.model.fetch(members) {
 			DispatchQueue.main.async {
 				self.collectionView?.reloadData()
@@ -70,68 +70,44 @@ class PaginationCollectionVC: UICollectionViewController, ImageDownloaderDelegat
 		}
 	}
 	
-	func insertEntities(from fileName: String) {
-		
-		guard !insertingNewEntities else {
-			return
-		}
-		
-		let tableViewHeight = self.collectionView!.bounds.height
-		let maxOffsetHeight = self.collectionView!.contentSize.height - tableViewHeight
-		let offsetY = self.collectionView!.contentOffset.y
-		
-		if offsetY >= maxOffsetHeight {
-			
-			guard let url = Bundle.main.url(forResource: fileName, withExtension: "json") else { return }
-			let json = try! Data(contentsOf: url)
-			
-			let decoder = JSONDecoder()
-			let members = try! decoder.decode([Contact].self, from: json)
-			self.insertingNewEntities = true
-			self.model.insert(members) {
-				self.insertingNewEntities = false
-			}
-		}
-	}
-	
 	@objc func addBarButtonAction(_ sender: UIBarButtonItem) {
 		self.contactDetailsAlertController(for: nil)
 	}
-	
-	
-	
+
+
+
 	// MARK: UICollectionViewDataSource
-	
-	
+
+
 	override func numberOfSections(in collectionView: UICollectionView) -> Int {
 		return self.model.numberOfSections
 	}
-	
-	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		// #warning Incomplete implementation, return the number of items
-		return self.model.numberOfEntites(at: section)
-	}
-	
-	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CollectionViewCell
-		
-		// Configure the cell
+
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of items
+        return self.model.numberOfEntites(at: section)
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CollectionViewCell
+    
+        // Configure the cell
 		self.configure(cell, at: indexPath)
-		
-		return cell
-	}
+    
+        return cell
+    }
 	
 	override func configure(_ cell: UICollectionViewCell, at indexPath: IndexPath) {
 		if let cell  = cell as? CollectionViewCell {
 			let entity = self.model[indexPath]
-			cell.titleLabel.text = entity.fullName
+			cell.titleLabel.text = entity?.fullName
 			
 			// Only load cached images; defer new downloads until scrolling ends
-			if entity.image == nil
+			if entity?.image == nil
 			{
 				if (self.collectionView!.isDragging == false && self.collectionView!.isDecelerating == false)
 				{
-					self.startIconDownload(entity, for: indexPath)
+					self.startIconDownload(entity!, for: indexPath)
 				}
 				
 				// if a download is deferred or in progress, return a placeholder image
@@ -139,40 +115,40 @@ class PaginationCollectionVC: UICollectionViewController, ImageDownloaderDelegat
 			}
 			else
 			{
-				cell.imageView?.image = entity.image
+				cell.imageView?.image = entity?.image
 			}
 			cell.imageView?.contentMode = .center
-			
-			
+
+
 		}
 	}
-	
-	// MARK: UICollectionViewDelegate
-	
-	/*
-	// Uncomment this method to specify if the specified item should be highlighted during tracking
-	override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-	return true
-	}
-	*/
-	
-	// Uncomment this method to specify if the specified item should be selected
-	override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-		return true
-	}
-	
-	// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-	override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-		return false
-	}
-	
-	override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-		return false
-	}
-	
-	override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-		
-	}
+
+    // MARK: UICollectionViewDelegate
+
+    /*
+    // Uncomment this method to specify if the specified item should be highlighted during tracking
+    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    */
+
+    // Uncomment this method to specify if the specified item should be selected
+    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
+    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+        return false
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+    
+    }
 	
 	//MARK: - Table cell image support
 	func startIconDownload(_ entity: Contact, for indexPath: IndexPath) {
@@ -193,9 +169,9 @@ class PaginationCollectionVC: UICollectionViewController, ImageDownloaderDelegat
 			let visiblePaths = self.collectionView?.indexPathsForVisibleItems ?? []
 			for indexPath in visiblePaths {
 				let entity = self.model[indexPath]
-				if entity.image == nil // avoid the app icon download if the app already has an icon
+				if entity?.image == nil // avoid the app icon download if the app already has an icon
 				{
-					self.startIconDownload(entity, for: indexPath)
+					self.startIconDownload(entity!, for: indexPath)
 				}
 			}
 		}
@@ -221,14 +197,10 @@ class PaginationCollectionVC: UICollectionViewController, ImageDownloaderDelegat
 		if !decelerate {
 			self.loadImagesForOnscreenRows()
 			
-			self.insertEntities(from: "PhoneBook_\(self.model.nextIndex)")
-			
 		}
 	}
 	override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-		self.loadImagesForOnscreenRows()
-		self.insertEntities(from: "PhoneBook_\(self.model.nextIndex)")
-		
+		self.loadImagesForOnscreenRows()		
 	}
 	
 	func contactDetailsAlertController(for contact: Contact?) {
@@ -315,24 +287,24 @@ class PaginationCollectionVC: UICollectionViewController, ImageDownloaderDelegat
 		}
 		
 		alertController.addAction(UIAlertAction(title: "First Name A-Z", style: .default, handler: { (action) in
-			self.model.sort = { $0.firstName < $1.firstName }
+			self.model.sortEntities = { $0.firstName < $1.firstName }
 			self.model.reorder(finished: nil)
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "First Name Z-A", style: .default, handler: { (action) in
-			self.model.sort = { $0.firstName > $1.firstName }
+			self.model.sortEntities = { $0.firstName > $1.firstName }
 			self.model.reorder(finished: nil)
 			
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "Last Name A-Z", style: .default, handler: { (action) in
-			self.model.sort = { $0.lastName < $1.lastName }
+			self.model.sortEntities = { $0.lastName < $1.lastName }
 			self.model.reorder(finished: nil)
 			
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "Last Name Z-A", style: .default, handler: { (action) in
-			self.model.sort = { $0.lastName > $1.lastName }
+			self.model.sortEntities = { $0.lastName > $1.lastName }
 			self.model.reorder(finished: nil)
 			
 		}))
@@ -344,6 +316,6 @@ class PaginationCollectionVC: UICollectionViewController, ImageDownloaderDelegat
 		self.present(alertController, animated: true, completion: nil)
 		
 	}
-	
-	
+
+
 }

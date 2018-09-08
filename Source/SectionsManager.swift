@@ -16,8 +16,8 @@ struct SectionsManager<Entity: EntityProtocol & Hashable> {
 	}
 	
 	func numberOfEntites(at sectionIndex: Int) -> Int {
-		guard !self.isEmpty else { return 0 }
-		return self[sectionIndex].numberOfEntities
+		guard !self.isEmpty, let section = self[sectionIndex] else { return 0 }
+		return section.numberOfEntities
 	}
 	
 	var isEmpty: Bool {
@@ -119,27 +119,26 @@ struct SectionsManager<Entity: EntityProtocol & Hashable> {
 		return nil
 	}
 	
-	subscript(index: Int) -> SectionInfo<Entity> {
+	subscript(index: Int) -> SectionInfo<Entity>? {
 		get {
 			if index < self.numberOfSections {
 				return self.sections[index]
 			}
 			else {
-				fatalError("sectionIndex out of range")
+				return nil
 			}
 		}
 		
 		set {
 			if index < self.numberOfSections {
-				self.sections[index] = newValue
-			}
-			else {
-				fatalError("sectionIndex out of range")
+				if newValue != nil {
+					self.sections[index] = newValue!
+				}
 			}
 		}
 	}
 	
-	subscript(indexPath: IndexPath) -> Entity {
+	subscript(indexPath: IndexPath) -> Entity? {
 		get {
 			if indexPath.section < self.numberOfSections {
 				let section = self.sections[indexPath.section]
@@ -148,12 +147,12 @@ struct SectionsManager<Entity: EntityProtocol & Hashable> {
 					return section[indexPath.row]
 				}
 				else {
-					fatalError("Index out of range")
+					return nil
 				}
 				
 			}
 			else {
-				fatalError("sectionIndex out of range")
+				return nil
 			}
 		}
 		
@@ -162,16 +161,14 @@ struct SectionsManager<Entity: EntityProtocol & Hashable> {
 				let numberOfSectionEntities = self.sections[indexPath.section].numberOfEntities
 				
 				if indexPath.row < numberOfSectionEntities {
-					self.sections[indexPath.section][indexPath.row] = newValue
+					if newValue != nil {
+						self.sections[indexPath.section][indexPath.row] = newValue!
+					}
 				}
-				else {
-					fatalError("Index out of range")
-				}
+
 				
 			}
-			else {
-				fatalError("sectionIndex out of range")
-			}
+
 		}
 		
 		
@@ -195,9 +192,9 @@ struct SectionsManager<Entity: EntityProtocol & Hashable> {
 	}
 	
 	mutating func sortEntities(atSection sectionIndex: Int, with sort: ((Entity, Entity) -> Bool)) -> (oldIndexPaths: [IndexPath], newIndexPaths: [IndexPath]) {
-		let result = self[sectionIndex].sort(by: sort)
-		let oldIndexPaths = result.oldIndexes.map { IndexPath(row: $0, section: sectionIndex) }
-		let newIndexPaths = result.newIndexes.map { IndexPath(row: $0, section: sectionIndex) }
+		let result = self[sectionIndex]?.sort(by: sort)
+		let oldIndexPaths = result?.oldIndexes.map { IndexPath(row: $0, section: sectionIndex) } ?? []
+		let newIndexPaths = result?.newIndexes.map { IndexPath(row: $0, section: sectionIndex) } ?? []
 		return (oldIndexPaths: oldIndexPaths, newIndexPaths: newIndexPaths)
 	}
 	
@@ -210,7 +207,7 @@ struct SectionsManager<Entity: EntityProtocol & Hashable> {
 	}
 	
 	func filteredEntities(atSection sectionIndex: Int, with filter: ((Entity) -> Bool)) -> [Entity] {
-		return self[sectionIndex].filter(by: filter)
+		return self[sectionIndex]?.filter(by: filter) ?? []
 	}
 	
 }

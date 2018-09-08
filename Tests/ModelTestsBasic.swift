@@ -31,7 +31,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		self.model.delegate = self
 		self.model.sectionKey = sectionKey
 		self.model.filter = filter
-		self.model.sort = sort
+		self.model.sortEntities = sort
 		self.setMembers()
 		
 		let expect = expectation(description: "insertExpect")
@@ -147,7 +147,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 	}
 	
 	func testSortAndReorder() {
-		self.model.sort = { $0.lastName < $1.lastName }
+		self.model.sortEntities = { $0.lastName < $1.lastName }
 		
 		self.delegateExpect = expectation(description: "Reorder")
 		self.model.reorder {
@@ -527,7 +527,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 	func testSortSections() {
 		self.delegateExpect = expectation(description: "remove all entities at Section")
 		
-		self.model.sortSections(with: { $0.name < $1.name }) { (indexes) in
+		self.model.sortEntitiesSections(with: { $0.name < $1.name }) { (indexes) in
 			
 		}
 		

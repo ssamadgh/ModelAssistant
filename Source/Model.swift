@@ -68,13 +68,13 @@ public class Model<Entity: EntityProtocol & Hashable> {
 	
 	public var fetchBatchSize: Int
 	
-	public subscript(indexPath: IndexPath) -> Entity {
+	public subscript(indexPath: IndexPath) -> Entity? {
 		get {
 			return self.entity(at: indexPath)
 		}
 	}
 	
-	public subscript(index: Int) -> SectionInfo<Entity> {
+	public subscript(index: Int) -> SectionInfo<Entity>? {
 		get {
 			return self.section(at: index)
 		}
@@ -86,8 +86,10 @@ public class Model<Entity: EntityProtocol & Hashable> {
 		}
 	}
 	
-	public var sort: ((Entity, Entity) -> Bool)?
+	public var sortEntities: ((Entity, Entity) -> Bool)?
 	
+	public var sortSections: ((SectionInfo<Entity>, SectionInfo<Entity>) -> Bool)?
+
 	public var filter: ((Entity) -> Bool)?
 	
 	private var hasSection: Bool
@@ -215,7 +217,7 @@ public class Model<Entity: EntityProtocol & Hashable> {
 			
 			if self.hasSection, indexPath == nil {
 				for i in 0...(self.sectionsManager.numberOfSections-1) {
-					let sectionName = self.sectionsManager[i].name
+					let sectionName = self.sectionsManager[i]?.name
 					if let path = self.sectionsManager.indexPath(of: entity, withSectionName: sectionName) {
 						indexPath = path
 						break
@@ -357,13 +359,15 @@ public class Model<Entity: EntityProtocol & Hashable> {
 				if let inserted = result.inserted {
 					
 					
-					if self.sort == nil {
+					if self.sortEntities == nil {
 						if callModelDelegateMethods {
 							self.model(didChange: inserted.entities, at: nil, for: .insert, newIndexPaths: inserted.indexPaths)
 						}
 					}
 					else {
-						let result = self.sectionsManager.sortEntities(atSection: sectionIndex, with: self.sort!)
+						
+						_ = self.sectionsManager.sortEntities(atSection: sectionIndex, with: self.sortEntities!)
+						
 						if callModelDelegateMethods {
 							var newIndexPaths: [IndexPath] = []
 							
@@ -382,21 +386,23 @@ public class Model<Entity: EntityProtocol & Hashable> {
 			}
 			
 			func insert(_ newEntities: [Entity], toNewSectionWithName sectionName: String?) {
+				var newEntities = newEntities
+				
+				if let sortEntities = self.sortEntities {
+					newEntities.sort(by: sortEntities)
+				}
+				
 				let section = self.sectionsManager.newSection(with: newEntities, name: sectionName ?? "")
 				self.sectionsManager.append(section)
+				
+				if let sortSections = self.sortSections {
+					_ = self.sectionsManager.sortSections(with: sortSections)
+				}
 				
 				let sectionIndex = self.sectionsManager.index(of: section)!
 				
 				if callModelDelegateMethods {
 					self.model(didChange: section, atSectionIndex: nil, for: .insert, newSectionIndex: sectionIndex)
-				}
-				
-				if self.sort != nil {
-					let result = self.sectionsManager.sortEntities(atSection: sectionIndex, with: self.sort!)
-					if callModelDelegateMethods {
-						self.model(didChange: self.sectionsManager.entities(atSection: sectionIndex), at: result.oldIndexPaths, for: .move, newIndexPaths: result.newIndexPaths)
-						
-					}
 				}
 				
 			}
@@ -488,7 +494,9 @@ public class Model<Entity: EntityProtocol & Hashable> {
 
 		dispatchQueue.async(flags: .barrier) {
 			
-			var entity = self.sectionsManager[indexPath]
+			guard var entity = self.sectionsManager[indexPath] else {
+				fatalError("IndexPath is Out of range")
+			}
 			mutate(&entity)
 			self.sectionsManager[indexPath] = entity
 			
@@ -521,7 +529,7 @@ public class Model<Entity: EntityProtocol & Hashable> {
 				self.entitiesUniqueValue.remove(at: index)
 			}
 			
-			if removeEmptySection, self.sectionsManager[sectionIndex].isEmpty {
+			if removeEmptySection, let section = self.sectionsManager[sectionIndex], section.isEmpty {
 				let section = self.sectionsManager.remove(at: sectionIndex)
 				self.model(didChange: section, atSectionIndex: sectionIndex, for: .delete, newSectionIndex: nil)
 			}
@@ -560,8 +568,9 @@ public class Model<Entity: EntityProtocol & Hashable> {
 				self.modelWillChangeContent(for: .delete)
 			}
 			
-			let removedEntities = self.sectionsManager[sectionIndex].entities
-			let removedIndexPaths = IndexPath.indexPaths(in: 0...removedEntities.count-1, atSection: sectionIndex)
+			let removedEntities = self.sectionsManager[sectionIndex]?.entities ?? []
+			let lastIndex = removedEntities.isEmpty ? 0 : removedEntities.count-1
+			let removedIndexPaths = IndexPath.indexPaths(in: 0...lastIndex, atSection: sectionIndex)
 			
 			self.sectionsManager.remvoeAllEntities(atSection: sectionIndex)
 			
@@ -616,9 +625,9 @@ public class Model<Entity: EntityProtocol & Hashable> {
 
 	//MARK: - Get Section
 	
-	public func section(at sectionIndex: Int) -> SectionInfo<Entity> {
+	public func section(at sectionIndex: Int) -> SectionInfo<Entity>? {
 		
-		var section: SectionInfo<Entity>!
+		var section: SectionInfo<Entity>?
 		
 		self.dispatchQueue.sync {
 			section = self.sectionsManager[sectionIndex]
@@ -629,9 +638,9 @@ public class Model<Entity: EntityProtocol & Hashable> {
 	
 	//MARK: - Get Entity
 
-	public func entity(at indexPath: IndexPath) -> Entity {
+	public func entity(at indexPath: IndexPath) -> Entity? {
 		
-		var entity: Entity!
+		var entity: Entity?
 		
 		self.dispatchQueue.sync {
 			entity = self.sectionsManager[indexPath]
@@ -668,7 +677,7 @@ public class Model<Entity: EntityProtocol & Hashable> {
 	}
 	
 	public func reorder(finished: (() -> Void)?) {
-		guard self.sort != nil else { return }
+		guard self.sortEntities != nil else { return }
 		
 		let firstIndex = 0
 		let lastIndex = self.numberOfSections-1
@@ -677,19 +686,19 @@ public class Model<Entity: EntityProtocol & Hashable> {
 		
 		self.dispatchQueue.async(flags: .barrier) {
 			if lastIndex == 0 {
-				self.sortEntities(atSection: firstIndex, with: self.sort!, beginUpdate: true, endUpdate: true, finished: nil)
+				self.sortEntities(atSection: firstIndex, with: self.sortEntities!, beginUpdate: true, endUpdate: true, finished: nil)
 			}
 			else {
 				for index in firstIndex...lastIndex {
 					
 					if index == firstIndex {
-						self.sortEntities(atSection: index, with: self.sort!, beginUpdate: true, endUpdate: false, finished: nil)
+						self.sortEntities(atSection: index, with: self.sortEntities!, beginUpdate: true, endUpdate: false, finished: nil)
 					}
 					else if index == lastIndex {
-						self.sortEntities(atSection: index, with: self.sort!, beginUpdate: false, endUpdate: true, finished: nil)
+						self.sortEntities(atSection: index, with: self.sortEntities!, beginUpdate: false, endUpdate: true, finished: nil)
 					}
 					else {
-						self.sortEntities(atSection: index, with: self.sort!, beginUpdate: false, endUpdate: false, finished: nil)
+						self.sortEntities(atSection: index, with: self.sortEntities!, beginUpdate: false, endUpdate: false, finished: nil)
 					}
 					
 				}
@@ -759,7 +768,7 @@ public class Model<Entity: EntityProtocol & Hashable> {
 		return entities
 	}
 	
-	public func allEntitiesForExport(sortedBy sort: ((Entity, Entity) -> Bool)?) -> [Entity] {
+	public func getAllEntities(sortedBy sort: ((Entity, Entity) -> Bool)?) -> [Entity] {
 		var entities: [Entity] = []
 		
 		self.dispatchQueue.sync {

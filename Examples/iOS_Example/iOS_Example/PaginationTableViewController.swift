@@ -136,14 +136,14 @@ class PaginationTableViewController: UITableViewController, ImageDownloaderDeleg
 		
 		let entity = self.isSearching ? self.searchResults[indexPath.row] : self.model[indexPath]
 		// Configure the cell...
-		cell.textLabel?.text =  entity.fullName
+		cell.textLabel?.text =  entity?.fullName
 		
 		// Only load cached images; defer new downloads until scrolling ends
-		if entity.image == nil
+		if entity?.image == nil
 		{
 			if (self.tableView.isDragging == false && self.tableView.isDecelerating == false)
 			{
-				self.startIconDownload(entity, for: indexPath)
+				self.startIconDownload(entity!, for: indexPath)
 			}
 			
 			// if a download is deferred or in progress, return a placeholder image
@@ -151,7 +151,7 @@ class PaginationTableViewController: UITableViewController, ImageDownloaderDeleg
 		}
 		else
 		{
-			cell.imageView?.image = entity.image
+			cell.imageView?.image = entity?.image
 		}
 		cell.imageView?.contentMode = .center
 		
@@ -200,9 +200,9 @@ class PaginationTableViewController: UITableViewController, ImageDownloaderDeleg
 			let visiblePaths = self.tableView.indexPathsForVisibleRows ?? []
 			for indexPath in visiblePaths {
 				let entity = self.model[indexPath]
-				if entity.image == nil // avoid the app icon download if the app already has an icon
+				if entity?.image == nil // avoid the app icon download if the app already has an icon
 				{
-					self.startIconDownload(entity, for: indexPath)
+					self.startIconDownload(entity!, for: indexPath)
 				}
 			}
 		}
@@ -322,24 +322,24 @@ class PaginationTableViewController: UITableViewController, ImageDownloaderDeleg
 		}
 		
 		alertController.addAction(UIAlertAction(title: "First Name A-Z", style: .default, handler: { (action) in
-			self.model.sort = { $0.firstName < $1.firstName }
+			self.model.sortEntities = { $0.firstName < $1.firstName }
 			self.model.reorder(finished: nil)
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "First Name Z-A", style: .default, handler: { (action) in
-			self.model.sort = { $0.firstName > $1.firstName }
+			self.model.sortEntities = { $0.firstName > $1.firstName }
 			self.model.reorder(finished: nil)
 			
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "Last Name A-Z", style: .default, handler: { (action) in
-			self.model.sort = { $0.lastName < $1.lastName }
+			self.model.sortEntities = { $0.lastName < $1.lastName }
 			self.model.reorder(finished: nil)
 			
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "Last Name Z-A", style: .default, handler: { (action) in
-			self.model.sort = { $0.lastName > $1.lastName }
+			self.model.sortEntities = { $0.lastName > $1.lastName }
 			self.model.reorder(finished: nil)
 			
 		}))
@@ -359,7 +359,7 @@ extension PaginationTableViewController: UISearchBarDelegate, UISearchController
 	func updateSearchResults(for searchController: UISearchController) {
 		if let text = searchController.searchBar.text {
 			if text.isEmpty {
-				self.searchResults = self.model.allEntitiesForExport(sortedBy: nil)
+				self.searchResults = self.model.getAllEntities(sortedBy: nil)
 			}
 			else {
 				self.searchResults = self.model.filteredEntities(with: { $0.fullName.contains(text) })

@@ -53,23 +53,22 @@ public struct SectionInfo<Entity: EntityProtocol & Hashable>: GModelSectionInfo,
 		return entities.isEmpty
 	}
 
-	subscript(index: Int) -> Entity {
+	subscript(index: Int) -> Entity? {
 		
 		get {
 			if index < self.numberOfEntities {
 				return entities[index]
 			}
 			else {
-				fatalError("Index out of range")
+				return nil
 			}
 		}
 		
 		set {
 			if index < self.numberOfEntities {
-				self.entities[index] = newValue
-			}
-			else {
-				fatalError("Index out of range")
+				if newValue != nil {
+					self.entities[index] = newValue!
+				}
 			}
 		}
 	}

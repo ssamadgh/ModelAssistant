@@ -21,17 +21,17 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="hh3-gi-sLl">
-                        <rect key="frame" x="12" y="5.5" width="76" height="88.5"/>
+                        <rect key="frame" x="5" y="5.5" width="90" height="88.5"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5Mw-1m-O1q">
-                                <rect key="frame" x="14" y="0.0" width="48" height="48"/>
+                                <rect key="frame" x="21" y="0.0" width="48" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="7hk-hQ-dNe"/>
                                     <constraint firstAttribute="width" secondItem="5Mw-1m-O1q" secondAttribute="height" multiplier="1:1" id="Utg-vI-WTR"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label dog" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4WI-IV-PhZ">
-                                <rect key="frame" x="0.0" y="68" width="76" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label dog" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="4WI-IV-PhZ">
+                                <rect key="frame" x="7" y="68" width="76" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -42,6 +42,8 @@
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="hh3-gi-sLl" secondAttribute="trailing" constant="5" id="I9d-n0-FV6"/>
+                <constraint firstItem="hh3-gi-sLl" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="Qy2-Yo-xIG"/>
                 <constraint firstItem="hh3-gi-sLl" firstAttribute="centerY" secondItem="ZTg-uK-7eu" secondAttribute="centerY" id="bE6-vj-9Ti"/>
                 <constraint firstItem="hh3-gi-sLl" firstAttribute="centerX" secondItem="ZTg-uK-7eu" secondAttribute="centerX" id="jPr-Ze-dpv"/>
             </constraints>
