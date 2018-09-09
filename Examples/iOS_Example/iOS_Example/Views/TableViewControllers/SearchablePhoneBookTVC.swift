@@ -28,13 +28,10 @@ class SearchablePhoneBookTVC: SimplePhoneBookTVC {
 		self.model.sectionKey = "firstName"
 		self.model.delegate = self
 		
-		let members: [Contact] = JsonService.getEntities(fromFile: resourceFileName)
-		
 		self.model.sortEntities = { $0.firstName < $1.firstName }
 		self.model.sortSections = { $0.name < $1.name }
-		self.model.fetch(members) {
-			self.tableView.reloadData()
-		}
+		
+		super.configureModel()
 	}
 	
 	func configureSearchController() {

@@ -9,9 +9,9 @@
 import UIKit
 
 private enum TableViews: Int {
-	case simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, SearchablePhoneBookTable, paginationPhoneBookTable
+	case simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, SearchablePhoneBookTable, MutablePhoneBookTable, paginationPhoneBookTable
 	
-	static let allValues: [TableViews] = [simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, SearchablePhoneBookTable, paginationPhoneBookTable]
+	static let allValues: [TableViews] = [simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, SearchablePhoneBookTable, MutablePhoneBookTable, paginationPhoneBookTable]
 	
 	var stringValue: String {
 		switch self {
@@ -26,6 +26,9 @@ private enum TableViews: Int {
 			
 		case .SearchablePhoneBookTable:
 			return "Searchable Phone Book TableView"
+			
+		case .MutablePhoneBookTable:
+			return "Mutable Phone Book TableView"
 			
 		case .paginationPhoneBookTable:
 			return "Pagination Phone Book TableView"
@@ -46,11 +49,15 @@ private enum TableViews: Int {
 		case .SearchablePhoneBookTable:
 			return SearchablePhoneBookTVC()
 			
+		case .MutablePhoneBookTable:
+			return MutablePhoneBookTVC()
+			
 		case .paginationPhoneBookTable:
-			return PaginationTableViewController()
+			return PaginationPhoneBookTVC()
 			
 		}
 	}
+	
 }
 
 private enum CollectionViews: Int {

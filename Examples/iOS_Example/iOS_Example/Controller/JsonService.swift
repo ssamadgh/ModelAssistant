@@ -11,12 +11,28 @@ import Model
 
 class JsonService {
 	
-	class func getEntities<Entity: EntityProtocol & Hashable & Decodable>(fromFile fileName: String) -> [Entity] {
-		let url = Bundle.main.url(forResource: fileName, withExtension: "json")!
+	static var documentURL: URL = {
+		return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+	}()
+	
+	class func getEntities<Entity: EntityProtocol & Hashable & Decodable>(fromURL url: URL) -> [Entity] {
+//		let url = Bundle.main.url(forResource: fileName, withExtension: "json")!
 		let json = try! Data(contentsOf: url)
 		
 		let decoder = JSONDecoder()
 		let entities = try! decoder.decode([Entity].self, from: json)
 		return entities
 	}
+	
+	class func saveEntities<Entity: EntityProtocol & Hashable & Encodable>(_ entities: [Entity], toURL url: URL, finished: (() -> Void)?) {
+		let encoder = JSONEncoder()
+		encoder.outputFormatting = .prettyPrinted
+		let data = try! encoder.encode(entities)
+		
+//		let url = Bundle.main.url(forResource: fileName, withExtension: "json")!
+		FileManager.default.createFile(atPath: url.path, contents: data, attributes: nil)
+		print("Saved in ", url.path)
+		finished?()
+	}
+	
 }
