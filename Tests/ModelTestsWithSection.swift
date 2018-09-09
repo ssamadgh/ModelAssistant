@@ -42,8 +42,8 @@ class ModelTestsWithSection: ModelTestsBasic {
 
 			let index = self.model.indexOfSection(withSectionName: country)!
 			let section = self.model.section(at: index)
-			XCTAssertEqual(section.numberOfEntities, filtered.count)
-			XCTAssertEqual(Set(section.entities), Set(filtered))
+			XCTAssertEqual(section!.numberOfEntities, filtered.count)
+			XCTAssertEqual(Set(section!.entities), Set(filtered))
 		}
 	}
     

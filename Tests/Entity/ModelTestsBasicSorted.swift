@@ -24,7 +24,7 @@ class ModelTestsBasicSorted: ModelTestsBasic {
     }
 	
 	func testPrint() {
-		let names = self.model.allEntitiesForExport(sortedBy: nil).map { $0.firstName }
+		let names = self.model.getAllEntities(sortedBy: nil).map { $0.firstName }
 		
 		for name in names {
 			print("\(name)\n")

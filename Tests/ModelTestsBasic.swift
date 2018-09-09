@@ -66,12 +66,6 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		super.tearDown()
 	}
 	
-	func testUniqueId() {
-		let uniqueId = self.model.uniqueId()
-		
-		XCTAssertEqual(uniqueId, 11)
-	}
-	
 	func testIndexOfEntityWithId() {
 		let entity = Member(data: ["id":1])!
 		let indexPath = self.model.indexPathOfEntity(withUniqueValue: entity.uniqueValue)
@@ -99,8 +93,8 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 			members = members.sorted(by: sort)
 		}
 		
-		XCTAssert(self.model.section(at: 0).name == "")
-		XCTAssert(self.model.section(at: 0).entities == members)
+		XCTAssert(self.model.section(at: 0)!.name == "")
+		XCTAssert(self.model.section(at: 0)!.entities == members)
 	}
 	
 	func entities(forFileWithName fileName: String) -> [Member] {
@@ -131,7 +125,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		let indexPath2 = self.model.indexPathOfEntity(withUniqueValue: id)
 		XCTAssertNotNil(indexPath2)
 
-		let entity = self.model[indexPath2!]
+		let entity = self.model[indexPath2!]!
 		XCTAssertEqual(entity.id, id)
 	}
 	
@@ -208,7 +202,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		
 		let indexPath = IndexPath(row: 0, section: 0)
 		self.delegateExpect =  expectation(description: "insert at First Expect")
-		self.model.insertAtFirst(member, applySort: false)
+		self.model.insertAtFirst(member, beginUpdate: false)
 		waitForExpectations(timeout: 5, handler: nil)
 		
 		let memberIndexPath = self.model.indexPath(of: member)
@@ -229,7 +223,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		let indexPath = IndexPath(row: lastRow, section: lastSection)
 		
 		self.delegateExpect =  expectation(description: "insert at First Expect")
-		self.model.insertAtLast(member, applySort: false)
+		self.model.insertAtLast(member, beginUpdate: false)
 		waitForExpectations(timeout: 5, handler: nil)
 		
 		let memberIndexPath = self.model.indexPath(of: member)
@@ -249,7 +243,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		
 		let indexPath = IndexPath(row: row, section: section)
 		self.delegateExpect =  expectation(description: "insert at indexPath Expect")
-		self.model.insert(member, at: indexPath, applySort: false)
+		self.model.insert(member, at: indexPath)
 		waitForExpectations(timeout: 5, handler: nil)
 		
 		let memberIndexPath = self.model.indexPath(of: member)
@@ -268,7 +262,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		
 		let indexPath = IndexPath(row: row, section: section)
 		self.delegateExpect =  expectation(description: "insert at Last Expect")
-		self.model.insert(member, at: indexPath, applySort: false)
+		self.model.insert(member, at: indexPath)
 		waitForExpectations(timeout: 5, handler: nil)
 		
 		let memberIndexPath = self.model.indexPath(of: member)
@@ -308,7 +302,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		
 		let expect = expectation(description: "moving from first IndexPath to the last indexPath")
 		self.model.moveEntity(at: oldIndexPath, to: newIndexPath, isUserDriven: true) {
-			let currentIndexPath = self.model.indexPath(of: entity)
+			let currentIndexPath = self.model.indexPath(of: entity!)
 			let expectedSection = self.model.numberOfSections-1
 			let expectedRow = self.model.numberOfEntites(at: expectedSection) - 1
 			let expectedIndexPath = IndexPath(row: expectedRow, section: expectedSection)
@@ -342,7 +336,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 
 		let expect = expectation(description: "moving from first IndexPath to the User derived indexPath")
 		self.model.moveEntity(at: oldIndexPath, to: newIndexPath, isUserDriven: true) {
-			let currentIndexPath = self.model.indexPath(of: entity)
+			let currentIndexPath = self.model.indexPath(of: entity!)
 			let expectedIndexPath = newIndexPath
 			XCTAssertEqual(currentIndexPath, expectedIndexPath)
 
@@ -374,7 +368,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		self.delegateExpect =  expectation(description: "moving from first IndexPath to the user not derived indexPath")
 		self.model.moveEntity(at: oldIndexPath, to: newIndexPath, isUserDriven: false)
 		waitForExpectations(timeout: 5, handler: nil)
-		let currentIndexPath = self.model.indexPath(of: entity)
+		let currentIndexPath = self.model.indexPath(of: entity!)
 		let expectedIndexPath = newIndexPath
 		XCTAssertEqual(currentIndexPath, expectedIndexPath)
 
@@ -390,10 +384,11 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		
 		self.updateDelegateExpect = expectation(description: "update IndexPath ")
 		
-		self.model.update(at: indexPath) { (entity) in
+		self.model.update(at: indexPath, mutate: { (entity) in
 			entity.firstName = "Gholam"
 			entity.lastName = "Shishlool"
-		}
+		})
+		
 		waitForExpectations(timeout: 5, handler: nil)
 		
 		let newEntity = self.model[indexPath]
@@ -477,11 +472,11 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		
 		self.delegateExpect = expectation(description: "remove IndexPath")
 		
-		self.model.remove(entity, removeEmptySection: true)
+		self.model.remove(entity!, removeEmptySection: true)
 		
 		waitForExpectations(timeout: 5, handler: nil)
 		
-		XCTAssertNil(self.model.indexPath(of: entity))
+		XCTAssertNil(self.model.indexPath(of: entity!))
 	}
 	
 	func testRemoveAllEntitiesAtSection() {
@@ -493,7 +488,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		
 		waitForExpectations(timeout: 5, handler: nil)
 		
-		XCTAssert(self.model[section].isEmpty)
+		XCTAssert(self.model[section]!.isEmpty)
 	}
 	
 	func testRemoveSection() {
@@ -527,7 +522,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 	func testSortSections() {
 		self.delegateExpect = expectation(description: "remove all entities at Section")
 		
-		self.model.sortEntitiesSections(with: { $0.name < $1.name }) { (indexes) in
+		self.model.sortSections(with: { $0.name < $1.name }) { (indexes) in
 			
 		}
 		
@@ -541,10 +536,10 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		let last = self.model[lastIndex]
 		
 		if lastIndex == firstIndex {
-			XCTAssert(last.name == first.name)
+			XCTAssert(last!.name == first!.name)
 		}
 		else {
-			XCTAssert(last.name > first.name)
+			XCTAssert(last!.name > first!.name)
 		}
 		
 		
@@ -568,7 +563,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 			members = self.members.filter(filter!)
 		}
 		
-		let entities = self.model.allEntitiesForExport(sortedBy: {$0.lastName < $1.lastName})
+		let entities = self.model.getAllEntities(sortedBy: {$0.lastName < $1.lastName})
 		XCTAssertEqual(entities.count, members.count)
 	}
 	
@@ -588,7 +583,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 
 		let section = self.model[sectionIndex]
 		
-		XCTAssertEqual(self.model.index(of: section), sectionIndex)
+		XCTAssertEqual(self.model.index(of: section!), sectionIndex)
 	}
 	
 	func model(didChange entities: [EntityProtocol], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) {

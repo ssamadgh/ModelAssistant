@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../Tests/ModelTestsBasic.swift"
-            timestampString = "558133865.518168"
+            timestampString = "558195794.43348"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "615"
-            endingLineNumber = "615"
+            startingLineNumber = "610"
+            endingLineNumber = "610"
             landmarkName = "model(didChange:at:for:newIndexPaths:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../Tests/ModelTestsBasic.swift"
-            timestampString = "558133865.5182149"
+            timestampString = "558195794.434046"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "595"
-            endingLineNumber = "595"
+            startingLineNumber = "590"
+            endingLineNumber = "590"
             landmarkName = "model(didChange:at:for:newIndexPaths:)"
             landmarkType = "7">
          </BreakpointContent>
