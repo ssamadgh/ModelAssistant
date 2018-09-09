@@ -196,14 +196,14 @@ struct SectionsManager<Entity: EntityProtocol & Hashable> {
 		return section
 	}
 	
-	mutating func sortEntities(atSection sectionIndex: Int, with sort: ((Entity, Entity) -> Bool)) -> (oldIndexPaths: [IndexPath], newIndexPaths: [IndexPath]) {
+	mutating func sortEntities(atSection sectionIndex: Int, by sort: ((Entity, Entity) -> Bool)) -> (oldIndexPaths: [IndexPath], newIndexPaths: [IndexPath]) {
 		let result = self[sectionIndex]?.sort(by: sort)
 		let oldIndexPaths = result?.oldIndexes.map { IndexPath(row: $0, section: sectionIndex) } ?? []
 		let newIndexPaths = result?.newIndexes.map { IndexPath(row: $0, section: sectionIndex) } ?? []
 		return (oldIndexPaths: oldIndexPaths, newIndexPaths: newIndexPaths)
 	}
 	
-	mutating func sortSections(with sort: ((SectionInfo<Entity>, SectionInfo<Entity>) -> Bool)) -> (oldIndexes: [Int], newIndexes: [Int]) {
+	mutating func sortSections(by sort: ((SectionInfo<Entity>, SectionInfo<Entity>) -> Bool)) -> (oldIndexes: [Int], newIndexes: [Int]) {
 		let oldSections = self.sections
 		self.sections.sort(by: sort)
 		let oldIndexes = Array(0..<oldSections.count)

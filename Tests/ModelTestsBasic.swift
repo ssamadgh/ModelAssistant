@@ -522,7 +522,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 	func testSortSections() {
 		self.delegateExpect = expectation(description: "remove all entities at Section")
 		
-		self.model.sortSections(with: { $0.name < $1.name }) { (indexes) in
+		self.model.sortSections(by: { $0.name < $1.name }) { (indexes) in
 			
 		}
 		

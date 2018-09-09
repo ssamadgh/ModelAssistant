@@ -278,11 +278,11 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 		
 		if isSectioned {
 			alertController.addAction(UIAlertAction(title: "Section A-Z", style: .default, handler: { (action) in
-				self.model.sortSections(with: { $0.name < $1.name }, finished: nil)
+				self.model.sortSections(by: { $0.name < $1.name }, finished: nil)
 			}))
 			
 			alertController.addAction(UIAlertAction(title: "Section Z-A", style: .default, handler: { (action) in
-				self.model.sortSections(with: { $0.name < $1.name }, finished: nil)
+				self.model.sortSections(by: { $0.name < $1.name }, finished: nil)
 			}))
 		}
 		

@@ -33,11 +33,11 @@ class SectionedPhoneBookTVC: SortablePhoneBookTVC {
 		let alertController = UIAlertController(title: nil, message: "Sort by", preferredStyle: .actionSheet)
 		
 		alertController.addAction(UIAlertAction(title: "Section A-Z", style: .default, handler: { (action) in
-			self.model.sortSections(with: { $0.name < $1.name }, finished: nil)
+			self.model.sortSections(by: { $0.name < $1.name }, finished: nil)
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "Section Z-A", style: .default, handler: { (action) in
-			self.model.sortSections(with: { $0.name > $1.name }, finished: nil)
+			self.model.sortSections(by: { $0.name > $1.name }, finished: nil)
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "First Name A-Z", style: .default, handler: { (action) in

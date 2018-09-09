@@ -367,7 +367,7 @@ public class Model<Entity: EntityProtocol & Hashable> {
 					}
 					else {
 						
-						_ = self.sectionsManager.sortEntities(atSection: sectionIndex, with: self.sortEntities!)
+						_ = self.sectionsManager.sortEntities(atSection: sectionIndex, by: self.sortEntities!)
 						
 						if callModelDelegateMethods {
 							var newIndexPaths: [IndexPath] = []
@@ -452,7 +452,7 @@ public class Model<Entity: EntityProtocol & Hashable> {
 				self.sectionsManager.append(contentsOf: newSections)
 				
 				if let sortSections = self.sortSections {
-					_ = self.sectionsManager.sortSections(with: sortSections)
+					_ = self.sectionsManager.sortSections(by: sortSections)
 				}
 
 				if callModelDelegateMethods {
@@ -686,7 +686,7 @@ public class Model<Entity: EntityProtocol & Hashable> {
 	
 	//MARK: - Sort methods
 
-	public func sortEntities(atSection sectionIndex: Int, with sort: @escaping ((Entity, Entity) -> Bool), beginUpdate: Bool = true, endUpdate: Bool = true, finished: ((_ newIndexPaths: [IndexPath]) -> Void)?) {
+	public func sortEntities(atSection sectionIndex: Int, by sort: @escaping ((Entity, Entity) -> Bool), beginUpdate: Bool = true, endUpdate: Bool = true, finished: ((_ newIndexPaths: [IndexPath]) -> Void)?) {
 		
 		let isMainThread = Thread.isMainThread
 
@@ -696,7 +696,7 @@ public class Model<Entity: EntityProtocol & Hashable> {
 			}
 			
 			let entities = self.sectionsManager.entities(atSection: sectionIndex)
-			let result = self.sectionsManager.sortEntities(atSection: sectionIndex, with: sort)
+			let result = self.sectionsManager.sortEntities(atSection: sectionIndex, by: sort)
 			self.model(didChange: entities, at: result.oldIndexPaths, for: .move, newIndexPaths: result.newIndexPaths)
 			
 			if endUpdate {
@@ -721,19 +721,19 @@ public class Model<Entity: EntityProtocol & Hashable> {
 		
 		self.dispatchQueue.async(flags: .barrier) {
 			if lastIndex == 0 {
-				self.sortEntities(atSection: firstIndex, with: self.sortEntities!, beginUpdate: true, endUpdate: true, finished: nil)
+				self.sortEntities(atSection: firstIndex, by: self.sortEntities!, beginUpdate: true, endUpdate: true, finished: nil)
 			}
 			else {
 				for index in firstIndex...lastIndex {
 					
 					if index == firstIndex {
-						self.sortEntities(atSection: index, with: self.sortEntities!, beginUpdate: true, endUpdate: false, finished: nil)
+						self.sortEntities(atSection: index, by: self.sortEntities!, beginUpdate: true, endUpdate: false, finished: nil)
 					}
 					else if index == lastIndex {
-						self.sortEntities(atSection: index, with: self.sortEntities!, beginUpdate: false, endUpdate: true, finished: nil)
+						self.sortEntities(atSection: index, by: self.sortEntities!, beginUpdate: false, endUpdate: true, finished: nil)
 					}
 					else {
-						self.sortEntities(atSection: index, with: self.sortEntities!, beginUpdate: false, endUpdate: false, finished: nil)
+						self.sortEntities(atSection: index, by: self.sortEntities!, beginUpdate: false, endUpdate: false, finished: nil)
 					}
 					
 				}
@@ -744,7 +744,7 @@ public class Model<Entity: EntityProtocol & Hashable> {
 		}
 	}
 	
-	public func sortSections(with sort: @escaping ((SectionInfo<Entity>, SectionInfo<Entity>) -> Bool), beginUpdate: Bool = true, endUpdate: Bool = true, finished: ((_ newIndexPaths: [Int]) -> Void)?) {
+	public func sortSections(by sort: @escaping ((SectionInfo<Entity>, SectionInfo<Entity>) -> Bool), beginUpdate: Bool = true, endUpdate: Bool = true, finished: ((_ newIndexPaths: [Int]) -> Void)?) {
 		
 		let isMainThread = Thread.isMainThread
 
@@ -755,7 +755,7 @@ public class Model<Entity: EntityProtocol & Hashable> {
 			
 			let oldSections = self.sectionsManager.sections
 			
-			let result = self.sectionsManager.sortSections(with: sort)
+			let result = self.sectionsManager.sortSections(by: sort)
 			
 			let oldIndexes = result.oldIndexes
 			let newIndexes = result.newIndexes
