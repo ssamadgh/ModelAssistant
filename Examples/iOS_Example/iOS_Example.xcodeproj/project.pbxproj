@@ -43,6 +43,7 @@
 		E4EC8370214437680063B4BB /* SortablePhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC836F214437680063B4BB /* SortablePhoneBookTVC.swift */; };
 		E4EC837321443CCA0063B4BB /* SearchablePhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC837221443CCA0063B4BB /* SearchablePhoneBookTVC.swift */; };
 		E4EC837521443D4D0063B4BB /* JsonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC837421443D4D0063B4BB /* JsonService.swift */; };
+		E4EC8385214566A70063B4BB /* PaginationTableViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC8382214566A70063B4BB /* PaginationTableViewController2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +134,7 @@
 		E4EC836F214437680063B4BB /* SortablePhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortablePhoneBookTVC.swift; sourceTree = "<group>"; };
 		E4EC837221443CCA0063B4BB /* SearchablePhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchablePhoneBookTVC.swift; sourceTree = "<group>"; };
 		E4EC837421443D4D0063B4BB /* JsonService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonService.swift; sourceTree = "<group>"; };
+		E4EC8382214566A70063B4BB /* PaginationTableViewController2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaginationTableViewController2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -296,6 +298,7 @@
 				E4EC837221443CCA0063B4BB /* SearchablePhoneBookTVC.swift */,
 				E4EC836D214435960063B4BB /* PhoneBookTVC.swift */,
 				E424DD8D213E7FCD002E20D8 /* PaginationTableViewController.swift */,
+				E4EC8382214566A70063B4BB /* PaginationTableViewController2.swift */,
 				E4069F50213BE5DC009FCD7A /* TableViewController.swift */,
 			);
 			path = TableViewControllers;
@@ -497,6 +500,7 @@
 				E4EC8365214404B70063B4BB /* CollectionReusableView.swift in Sources */,
 				E4069F15213BE2FF009FCD7A /* AppDelegate.swift in Sources */,
 				E424DD8A213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift in Sources */,
+				E4EC8385214566A70063B4BB /* PaginationTableViewController2.swift in Sources */,
 				E4EC836E214435960063B4BB /* PhoneBookTVC.swift in Sources */,
 				E4EC836A214430440063B4BB /* BasicTableViewController.swift in Sources */,
 				E4069F66213C7087009FCD7A /* SimplePhoneBookTVC.swift in Sources */,

@@ -396,9 +396,9 @@ public class Model<Entity: EntityProtocol & Hashable> {
 				let section = self.sectionsManager.newSection(with: newEntities, name: sectionName ?? "")
 				self.sectionsManager.append(section)
 				
-				if let sortSections = self.sortSections {
-					_ = self.sectionsManager.sortSections(with: sortSections)
-				}
+//				if let sortSections = self.sortSections {
+//					_ = self.sectionsManager.sortSections(with: sortSections)
+//				}
 				
 				let sectionIndex = self.sectionsManager.index(of: section)!
 				
