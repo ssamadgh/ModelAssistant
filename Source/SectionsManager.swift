@@ -54,6 +54,11 @@ struct SectionsManager<Entity: EntityProtocol & Hashable> {
 	mutating func append(_ section: SectionInfo<Entity>) {
 		self.sections.append(section)
 	}
+
+	mutating func append(contentsOf sections: [SectionInfo<Entity>]) {
+		self.sections.append(contentsOf: sections)
+	}
+
 	
 	mutating func insert(_ section: SectionInfo<Entity>, at index: Int) {
 		self.sections.insert(section, at: index)

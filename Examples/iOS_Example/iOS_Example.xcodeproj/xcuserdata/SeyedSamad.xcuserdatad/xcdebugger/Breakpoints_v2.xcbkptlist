@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../Source/Model.swift"
-            timestampString = "558202419.294222"
+            timestampString = "558206544.395334"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "537"
-            endingLineNumber = "537"
+            startingLineNumber = "562"
+            endingLineNumber = "562"
             landmarkName = "remove(at:removeEmptySection:beginUpdate:endUpdate:finished:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,7 +58,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iOS_Example/Views/TableViewControllers/PaginationTableViewController2.swift"
-            timestampString = "558202419.2946759"
+            timestampString = "558206544.395434"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "408"
@@ -74,7 +74,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iOS_Example/Views/TableViewControllers/PaginationTableViewController2.swift"
-            timestampString = "558202419.294733"
+            timestampString = "558206544.39548"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "369"
@@ -90,7 +90,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iOS_Example/Views/TableViewControllers/PaginationTableViewController2.swift"
-            timestampString = "558202419.294781"
+            timestampString = "558206544.395521"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "375"
@@ -106,7 +106,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iOS_Example/Views/TableViewControllers/PaginationTableViewController2.swift"
-            timestampString = "558202419.294825"
+            timestampString = "558206544.39556"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "379"
@@ -122,28 +122,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iOS_Example/Views/TableViewControllers/PaginationTableViewController2.swift"
-            timestampString = "558202419.294871"
+            timestampString = "558206544.3956"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "400"
             endingLineNumber = "400"
             landmarkName = "model(didChange:atSectionIndex:for:newSectionIndex:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../../Source/Model.swift"
-            timestampString = "558202419.2949179"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "467"
-            endingLineNumber = "467"
-            landmarkName = "insert(_:beginUpdate:endUpdate:callModelDelegateMethods:finished:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

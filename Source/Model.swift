@@ -396,23 +396,11 @@ public class Model<Entity: EntityProtocol & Hashable> {
 				let section = self.sectionsManager.newSection(with: newEntities, name: sectionName ?? "")
 				self.sectionsManager.append(section)
 				
-//				if let sortSections = self.sortSections {
-//					_ = self.sectionsManager.sortSections(with: sortSections)
-//				}
-				
 				let sectionIndex = self.sectionsManager.index(of: section)!
 				
 				if callModelDelegateMethods {
 					self.model(didChange: section, atSectionIndex: nil, for: .insert, newSectionIndex: sectionIndex)
 					
-					if endUpdate, self.sortSections != nil {
-						self.modelDidChangeContent(for: .insert)
-					}
-
-					if beginUpdate, self.sortSections != nil {
-						self.modelWillChangeContent(for: .insert)
-					}
-
 				}
 				
 			}
@@ -432,27 +420,64 @@ public class Model<Entity: EntityProtocol & Hashable> {
 				
 			}
 			else {
+
+				var newSectionNames = Set(newEntities.compactMap {  $0[self.sectionKey!] })
 				
-				while !newEntities.isEmpty {
+				let containsSectionNames = Set(self.sectionsManager.sections.compactMap { $0.name })
+				
+				newSectionNames.subtract(containsSectionNames)
+				
+				var newSections = [SectionInfo<Entity>]()
+				
+				while !newSectionNames.isEmpty {
 					
-					let firstEntity = newEntities.first!
-					let sectionName = firstEntity[self.sectionKey!]!
-					let filtered = newEntities.filter { $0[self.sectionKey!] == sectionName }
-					
-					if self.sectionsManager.containsSection(with: sectionName) {
-						let sectionIndex = self.sectionsManager.indexOfSection(withSectionName: sectionName)!
-						insert(filtered, toSectionWithName: sectionName, sectionIndex: sectionIndex)
-						
+					let sectionName = newSectionNames.first!
+					var filtered = newEntities.filter { $0[self.sectionKey!] == sectionName }
+
+					if let sortEntities = self.sortEntities {
+						filtered.sort(by: sortEntities)
 					}
-					else {
-						insert(filtered, toNewSectionWithName: sectionName)
-					}
+
+					let newSection = self.sectionsManager.newSection(with: filtered, name: sectionName)
+					newSections.append(newSection)
 					
+					newSectionNames.remove(sectionName)
 					
 					for entity in filtered {
 						newEntities.remove(at: newEntities.index(of: entity)!)
 					}
-					
+
+				}
+				
+				self.sectionsManager.append(contentsOf: newSections)
+				
+				if let sortSections = self.sortSections {
+					_ = self.sectionsManager.sortSections(with: sortSections)
+				}
+
+				if callModelDelegateMethods {
+					for section in newSections {
+						let sectionIndex = self.sectionsManager.index(of: section)
+						self.model(didChange: section, atSectionIndex: nil, for: .insert, newSectionIndex: sectionIndex)
+					}
+				}
+				
+				while !newEntities.isEmpty {
+
+					let firstEntity = newEntities.first!
+					let sectionName = firstEntity[self.sectionKey!]!
+					let filtered = newEntities.filter { $0[self.sectionKey!] == sectionName }
+
+					if self.sectionsManager.containsSection(with: sectionName) {
+						let sectionIndex = self.sectionsManager.indexOfSection(withSectionName: sectionName)!
+						insert(filtered, toSectionWithName: sectionName, sectionIndex: sectionIndex)
+
+					}
+
+					for entity in filtered {
+						newEntities.remove(at: newEntities.index(of: entity)!)
+					}
+
 				}
 				
 			}

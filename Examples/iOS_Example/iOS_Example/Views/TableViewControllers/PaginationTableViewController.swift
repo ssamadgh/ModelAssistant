@@ -75,7 +75,7 @@ class PaginationTableViewController: UITableViewController, ImageDownloaderDeleg
 		self.manager = ModelDelegateManager(controller: self)
 		self.model.delegate = self.manager
 		self.model.fetchBatchSize = 20
-//		self.model.sortEntities = { $0.firstName < $1.firstName }
+		self.model.sortEntities = { $0.firstName < $1.firstName }
 		self.model.sortSections = { $0.name < $1.name }
 		self.model.sectionKey = "firstName"
 		
