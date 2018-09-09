@@ -55,10 +55,6 @@ class ModelTestPagedDatabase: ModelTestsBasic {
 
 	}
 	
-	override func testUniqueId() {
-		
-	}
-	
 	override func testInsertSameEntities() {
 		
 	}

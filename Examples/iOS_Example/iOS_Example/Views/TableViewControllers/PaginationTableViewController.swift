@@ -75,7 +75,7 @@ class PaginationTableViewController: UITableViewController, ImageDownloaderDeleg
 		self.manager = ModelDelegateManager(controller: self)
 		self.model.delegate = self.manager
 		self.model.fetchBatchSize = 20
-//		self.model.sortEntities = { $0.firstName < $1.firstName }
+		self.model.sortEntities = { $0.firstName < $1.firstName }
 		self.model.sortSections = { $0.name < $1.name }
 		self.model.sectionKey = "firstName"
 		
@@ -321,11 +321,11 @@ class PaginationTableViewController: UITableViewController, ImageDownloaderDeleg
 		
 		if isSectioned {
 			alertController.addAction(UIAlertAction(title: "Section A-Z", style: .default, handler: { (action) in
-				self.model.sortSections(with: { $0.name < $1.name }, finished: nil)
+				self.model.sortSections(by: { $0.name < $1.name }, finished: nil)
 			}))
 			
 			alertController.addAction(UIAlertAction(title: "Section Z-A", style: .default, handler: { (action) in
-				self.model.sortSections(with: { $0.name < $1.name }, finished: nil)
+				self.model.sortSections(by: { $0.name < $1.name }, finished: nil)
 			}))
 		}
 		

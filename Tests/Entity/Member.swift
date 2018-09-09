@@ -35,8 +35,8 @@ struct Member: EntityProtocol, Hashable, Codable {
 		self.country = data["country"] as? String ?? ""
 	}
 	
-	mutating func update(with newFetechedEntity: Member) {
-		let entity = newFetechedEntity
+	mutating func update(with newFetechedEntity: EntityProtocol) {
+		let entity = newFetechedEntity as! Member
 		self.firstName = entity.firstName
 		self.lastName = entity.lastName
 		self.email = entity.email
