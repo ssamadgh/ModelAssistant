@@ -353,6 +353,7 @@ public class Model<Entity: EntityProtocol & Hashable> {
 				
 				let result = self.sectionsManager.insert(newEntities, toSectionWithName: sectionName)
 				if let updated = result.updated, callModelDelegateMethods {
+					
 					self.model(didChange: updated.entities, at: updated.indexPaths, for: .update, newIndexPaths: nil)
 				}
 				
@@ -403,6 +404,15 @@ public class Model<Entity: EntityProtocol & Hashable> {
 				
 				if callModelDelegateMethods {
 					self.model(didChange: section, atSectionIndex: nil, for: .insert, newSectionIndex: sectionIndex)
+					
+					if endUpdate, self.sortSections != nil {
+						self.modelDidChangeContent(for: .insert)
+					}
+
+					if beginUpdate, self.sortSections != nil {
+						self.modelWillChangeContent(for: .insert)
+					}
+
 				}
 				
 			}

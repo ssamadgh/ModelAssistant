@@ -188,20 +188,7 @@
 				E4069F14213BE2FF009FCD7A /* AppDelegate.swift */,
 				E4EC836B214431D60063B4BB /* Model */,
 				E4EC836C214431E90063B4BB /* Controller */,
-				E4069F63213C68CC009FCD7A /* MainTableViewController.swift */,
-				E4B3076E214117030034F169 /* ImageDownloader.swift */,
-				E4EC8369214430440063B4BB /* BasicTableViewController.swift */,
-				E4069F65213C7087009FCD7A /* SimplePhoneBookTVC.swift */,
-				E4EC836F214437680063B4BB /* SortablePhoneBookTVC.swift */,
-				E424DD89213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift */,
-				E4EC837221443CCA0063B4BB /* SearchablePhoneBookTVC.swift */,
-				E4EC836D214435960063B4BB /* PhoneBookTVC.swift */,
-				E424DD8D213E7FCD002E20D8 /* PaginationTableViewController.swift */,
-				E4069F50213BE5DC009FCD7A /* TableViewController.swift */,
-				E4EC837121443A8B0063B4BB /* CollectionViews */,
-				E4069F18213BE2FF009FCD7A /* Main.storyboard */,
-				E4069F1B213BE300009FCD7A /* Assets.xcassets */,
-				E4069F1D213BE300009FCD7A /* LaunchScreen.storyboard */,
+				E4EC837E2144AFE20063B4BB /* Views */,
 				E4069F20213BE300009FCD7A /* Info.plist */,
 			);
 			path = iOS_Example;
@@ -277,11 +264,12 @@
 			isa = PBXGroup;
 			children = (
 				E4EC837421443D4D0063B4BB /* JsonService.swift */,
+				E4B3076E214117030034F169 /* ImageDownloader.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		E4EC837121443A8B0063B4BB /* CollectionViews */ = {
+		E4EC837121443A8B0063B4BB /* CollectionViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				E4069F52213BE6A2009FCD7A /* SimplePhoneBookCVC.swift */,
@@ -295,7 +283,35 @@
 				E4069F56213C3B78009FCD7A /* UITableViewController+Extension.swift */,
 				E4069F5E213C6753009FCD7A /* UICollectionViewController+Extension.swift */,
 			);
-			path = CollectionViews;
+			path = CollectionViewControllers;
+			sourceTree = "<group>";
+		};
+		E4EC837A2144A9FB0063B4BB /* TableViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				E4EC8369214430440063B4BB /* BasicTableViewController.swift */,
+				E4069F65213C7087009FCD7A /* SimplePhoneBookTVC.swift */,
+				E4EC836F214437680063B4BB /* SortablePhoneBookTVC.swift */,
+				E424DD89213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift */,
+				E4EC837221443CCA0063B4BB /* SearchablePhoneBookTVC.swift */,
+				E4EC836D214435960063B4BB /* PhoneBookTVC.swift */,
+				E424DD8D213E7FCD002E20D8 /* PaginationTableViewController.swift */,
+				E4069F50213BE5DC009FCD7A /* TableViewController.swift */,
+			);
+			path = TableViewControllers;
+			sourceTree = "<group>";
+		};
+		E4EC837E2144AFE20063B4BB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E4069F63213C68CC009FCD7A /* MainTableViewController.swift */,
+				E4EC837A2144A9FB0063B4BB /* TableViewControllers */,
+				E4EC837121443A8B0063B4BB /* CollectionViewControllers */,
+				E4069F18213BE2FF009FCD7A /* Main.storyboard */,
+				E4069F1B213BE300009FCD7A /* Assets.xcassets */,
+				E4069F1D213BE300009FCD7A /* LaunchScreen.storyboard */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

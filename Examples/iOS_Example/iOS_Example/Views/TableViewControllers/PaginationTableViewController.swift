@@ -75,6 +75,10 @@ class PaginationTableViewController: UITableViewController, ImageDownloaderDeleg
 		self.manager = ModelDelegateManager(controller: self)
 		self.model.delegate = self.manager
 		self.model.fetchBatchSize = 20
+//		self.model.sortEntities = { $0.firstName < $1.firstName }
+		self.model.sortSections = { $0.name < $1.name }
+		self.model.sectionKey = "firstName"
+		
 		self.model.fetch(members) {
 			DispatchQueue.main.async {
 				self.tableView.reloadData()
@@ -113,6 +117,10 @@ class PaginationTableViewController: UITableViewController, ImageDownloaderDeleg
 	
 	
 	// MARK: - Table view data source
+	
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		return self.model[section]?.name
+	}
 	
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		// #warning Incomplete implementation, return the number of sections
