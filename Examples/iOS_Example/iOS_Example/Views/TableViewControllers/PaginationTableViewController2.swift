@@ -73,7 +73,7 @@ class PaginationTableViewController2: UITableViewController, ImageDownloaderDele
 		let decoder = JSONDecoder()
 		let members = try! decoder.decode([Contact].self, from: json)
 		self.manager = ModelDelegateManager(controller: self)
-		self.model.delegate = self.manager
+		self.model.delegate = self
 		self.model.fetchBatchSize = 20
 		//		self.model.sortEntities = { $0.firstName < $1.firstName }
 		self.model.sortSections = { $0.name < $1.name }
@@ -365,10 +365,13 @@ class PaginationTableViewController2: UITableViewController, ImageDownloaderDele
 extension PaginationTableViewController2: ModelDelegate {
 	
 	func modelWillChangeContent(for type: ModelChangeType) {
+		print("Will Change with type: \(type)")
 		self.tableView.beginUpdates()
 	}
 	
 	func modelDidChangeContent(for type: ModelChangeType) {
+		print("Did Change with type: \(type)")
+
 		self.tableView.endUpdates()
 	}
 	
