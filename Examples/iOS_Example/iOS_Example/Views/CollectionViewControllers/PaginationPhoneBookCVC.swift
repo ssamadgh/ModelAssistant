@@ -7,15 +7,18 @@
 //
 
 import UIKit
-import Model
 
 private let reuseIdentifier = "Cell"
 
-class PaginationCollectionVC: SimplePhoneBookCVC {
+class PaginationPhoneBookCVC: SectionedPhoneBookCVC {
 	
+	var insertingNewEntities = false
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		self.navigationItem.rightBarButtonItem = nil
+
 		self.title = "Pagination Phone Book"
 	}
 	

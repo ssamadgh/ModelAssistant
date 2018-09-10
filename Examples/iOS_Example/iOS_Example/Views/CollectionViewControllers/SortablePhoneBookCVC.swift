@@ -1,44 +1,33 @@
 //
-//  SectionedPhoneBookTVC.swift
+//  SortablePhoneBookCVC.swift
 //  iOS_Example
 //
-//  Created by Seyed Samad Gholamzadeh on 9/4/18.
+//  Created by Seyed Samad Gholamzadeh on 9/10/18.
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
 //
 
 import UIKit
 
-class SectionedPhoneBookTVC: SortablePhoneBookTVC {
+class SortablePhoneBookCVC: SimplePhoneBookCVC {
 
-
-    override func viewDidLoad() {
-
-        super.viewDidLoad()
-		self.title = "Sectioned Phone Book"
-
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		self.title = "Sortable Phone Book"
+		
+		let sortButtonItem = UIBarButtonItem(title: "Sort", style: .plain, target: self, action: #selector(sortBarButtonAction(_:)))
+		
+		self.navigationItem.rightBarButtonItem = sortButtonItem
+		
 	}
 	
 	override func configureModel() {
-		self.model.sectionKey = "firstName"
-		self.model.sortSections = { $0.name < $1.name }
+		self.model.sortEntities = { $0.firstName < $1.firstName }
 		super.configureModel()
 	}
-
-	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		let section = self.model[section]
-		return section?.name
-	}
 	
-	override func sortBarButtonAction(_ sender: UIBarButtonItem) {
+	@objc func sortBarButtonAction(_ sender: UIBarButtonItem) {
 		let alertController = UIAlertController(title: nil, message: "Sort by", preferredStyle: .actionSheet)
-		
-		alertController.addAction(UIAlertAction(title: "Section A-Z", style: .default, handler: { (action) in
-			self.model.sortSections(by: { $0.name < $1.name }, finished: nil)
-		}))
-		
-		alertController.addAction(UIAlertAction(title: "Section Z-A", style: .default, handler: { (action) in
-			self.model.sortSections(by: { $0.name > $1.name }, finished: nil)
-		}))
 		
 		alertController.addAction(UIAlertAction(title: "First Name A-Z", style: .default, handler: { (action) in
 			self.model.sortEntities = { $0.firstName < $1.firstName }
@@ -70,5 +59,5 @@ class SectionedPhoneBookTVC: SortablePhoneBookTVC {
 		self.present(alertController, animated: true, completion: nil)
 		
 	}
-
+	
 }

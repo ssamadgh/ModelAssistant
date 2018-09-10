@@ -9,29 +9,33 @@
 import UIKit
 
 private enum TableViews: Int {
-	case simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, SearchablePhoneBookTable, MutablePhoneBookTable, paginationPhoneBookTable
+	case simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable
 	
-	static let allValues: [TableViews] = [simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, SearchablePhoneBookTable, MutablePhoneBookTable, paginationPhoneBookTable]
+	static let allValues: [TableViews] = [simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable]
 	
 	var stringValue: String {
+		let suffix = " Phone Book TableView"
 		switch self {
 		case .simplePhoneBookTable:
-			return "Simple Phone Book TableView"
+			return "Simple" + suffix
 			
 		case .sortablePhoneBookTable:
-			return "Sortable Phone Book TableView"
+			return "Sortable" + suffix
 			
 		case .sectionedPhoneBookTable:
-			return "Sectioned Phone Book TableView"
+			return "Sectioned" + suffix
 			
-		case .SearchablePhoneBookTable:
-			return "Searchable Phone Book TableView"
+		case .filteredPhoneBookTable:
+			return "Filtered" + suffix
 			
-		case .MutablePhoneBookTable:
-			return "Mutable Phone Book TableView"
+		case .searchablePhoneBookTable:
+			return "Searchable" + suffix
+			
+		case .mutablePhoneBookTable:
+			return "Mutable" + suffix
 			
 		case .paginationPhoneBookTable:
-			return "Pagination Phone Book TableView"
+			return "Pagination" + suffix
 		}
 	}
 	
@@ -46,10 +50,13 @@ private enum TableViews: Int {
 		case .sectionedPhoneBookTable:
 			return SectionedPhoneBookTVC()
 			
-		case .SearchablePhoneBookTable:
+		case .filteredPhoneBookTable:
+			return FilteredPhoneBookTVC()
+			
+		case .searchablePhoneBookTable:
 			return SearchablePhoneBookTVC()
 			
-		case .MutablePhoneBookTable:
+		case .mutablePhoneBookTable:
 			return MutablePhoneBookTVC()
 			
 		case .paginationPhoneBookTable:
@@ -61,33 +68,59 @@ private enum TableViews: Int {
 }
 
 private enum CollectionViews: Int {
-	case SimplePhoneBookCollection, SectionedPhoneBookCollection, PaginationCollection
+	case simplePhoneBookCollection, sortablePhoneBookCollection, sectionedPhoneBookCollection, filteredPhoneBookCollection, searchablePhoneBookCollection, mutablePhoneBookCollection, paginationPhoneBookCollection
 	
-	static let allValues: [CollectionViews] = [SimplePhoneBookCollection, SectionedPhoneBookCollection, PaginationCollection]
+	static let allValues: [CollectionViews] = [simplePhoneBookCollection, sortablePhoneBookCollection, sectionedPhoneBookCollection, filteredPhoneBookCollection, mutablePhoneBookCollection, searchablePhoneBookCollection, paginationPhoneBookCollection]
 	
 	var stringValue: String {
+		let suffix = " Phone Book CollectionView"
+
 		switch self {
-		case .SimplePhoneBookCollection:
-			return "Simple Phone Book CollectionView"
+		case .simplePhoneBookCollection:
+			return "Simple" + suffix
 			
-		case .SectionedPhoneBookCollection:
-			return "Sectioned Phone Book CollectionView"
+		case .sortablePhoneBookCollection:
+			return "Sortable" + suffix
 			
-		case .PaginationCollection:
-			return "Pagination Phone Book CollectionView"
+		case .sectionedPhoneBookCollection:
+			return "Sectioned" + suffix
+			
+		case .filteredPhoneBookCollection:
+			return "Filtered" + suffix
+
+		case .searchablePhoneBookCollection:
+			return "Searchable" + suffix
+
+		case .mutablePhoneBookCollection:
+			return "Mutable" + suffix
+
+		case .paginationPhoneBookCollection:
+			return "Pagination" + suffix
 		}
 	}
 	
 	var viewController: UIViewController {
 		switch self {
-		case .SimplePhoneBookCollection:
+		case .simplePhoneBookCollection:
 			return SimplePhoneBookCVC()
 			
-		case .SectionedPhoneBookCollection:
+		case .sortablePhoneBookCollection:
+			return SortablePhoneBookCVC()
+			
+		case .sectionedPhoneBookCollection:
 			return SectionedPhoneBookCVC()
 			
-		case .PaginationCollection:
-			return PaginationCollectionVC()
+		case .filteredPhoneBookCollection:
+			return FilteredPhoneBookCVC()
+
+		case .searchablePhoneBookCollection:
+			return SearchablePhoneBookCVC()
+
+		case .mutablePhoneBookCollection:
+			return MutablePhoneBookCVC()
+
+		case .paginationPhoneBookCollection:
+			return PaginationPhoneBookCVC()
 			
 		}
 	}
