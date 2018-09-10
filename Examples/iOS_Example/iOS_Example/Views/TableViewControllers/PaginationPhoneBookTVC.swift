@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Model
 
 class PaginationPhoneBookTVC: BasicTableViewController {
 	
@@ -17,8 +16,7 @@ class PaginationPhoneBookTVC: BasicTableViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.title = "Pagination Table ViewController"
-
+		self.title = "Pagination Phone Book"
 	}
 	
 	override func configureModel() {

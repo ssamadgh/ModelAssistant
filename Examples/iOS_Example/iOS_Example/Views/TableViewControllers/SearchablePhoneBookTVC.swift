@@ -15,7 +15,7 @@ class SearchablePhoneBookTVC: SimplePhoneBookTVC {
 	var isSearching: Bool = false
 	
 	var searchController: UISearchController!
-	//
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.title = "Searchable Phone Book"
@@ -96,7 +96,22 @@ class SearchablePhoneBookTVC: SimplePhoneBookTVC {
 		
 	}
 	
-	
+	// called by our ImageDownloader when an icon is ready to be displayed
+	override func imageDidLoad(for entity: CustomEntityProtocol) {
+		
+		if isSearching {
+			if let index = self.searchResults.index(of: entity as! Contact) {
+				self.searchResults[index].image = entity.image
+				let indexPath = IndexPath(row: index, section: 0)
+				if let cell = self.tableView.cellForRow(at: indexPath) {
+					self.configure(cell, at: indexPath)
+				}
+			}
+		}
+		
+		super.imageDidLoad(for: entity)
+	}
+
 }
 
 extension SearchablePhoneBookTVC: UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {

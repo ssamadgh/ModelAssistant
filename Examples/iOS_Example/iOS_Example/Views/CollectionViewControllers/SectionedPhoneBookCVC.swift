@@ -7,11 +7,10 @@
 //
 
 import UIKit
-import Model
 
 private let reuseIdentifier = "Cell"
 
-class SectionedPhoneBookCVC: SimplePhoneBookCVC {
+class SectionedPhoneBookCVC: SortablePhoneBookCVC {
 	
 	override init() {
 		super.init()
@@ -24,25 +23,71 @@ class SectionedPhoneBookCVC: SimplePhoneBookCVC {
 	}
 	
 	override func viewDidLoad() {
-		self.title = "Sectioned Phone Book"
 		
-		self.model.sectionKey = "firstName"
-		self.isSectioned = true
 		self.collectionView?.register(UINib(nibName: "CollectionReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "header")
+		
 		super.viewDidLoad()
+		self.title = "Sectioned Phone Book"
+
 	}
+	
+	override func configureModel() {
+		self.model.sectionKey = "firstName"
+		self.model.sortSections = { $0.name < $1.name }
+		super.configureModel()
+	}
+
 	
 	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 		let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as! CollectionReusableView
 		
 		let section = self.model[indexPath.section]
 
-		print("indexPath is section \(indexPath.section) and name \(section?.name)")
 		headerView.titleLabel.text = section?.name
 		
 		return headerView
 	}
 	
-
+	override func sortBarButtonAction(_ sender: UIBarButtonItem) {
+		let alertController = UIAlertController(title: nil, message: "Sort by", preferredStyle: .actionSheet)
+		
+		alertController.addAction(UIAlertAction(title: "Section A-Z", style: .default, handler: { (action) in
+			self.model.sortSections(by: { $0.name < $1.name }, finished: nil)
+		}))
+		
+		alertController.addAction(UIAlertAction(title: "Section Z-A", style: .default, handler: { (action) in
+			self.model.sortSections(by: { $0.name > $1.name }, finished: nil)
+		}))
+		
+		alertController.addAction(UIAlertAction(title: "First Name A-Z", style: .default, handler: { (action) in
+			self.model.sortEntities = { $0.firstName < $1.firstName }
+			self.model.reorder(finished: nil)
+		}))
+		
+		alertController.addAction(UIAlertAction(title: "First Name Z-A", style: .default, handler: { (action) in
+			self.model.sortEntities = { $0.firstName > $1.firstName }
+			self.model.reorder(finished: nil)
+			
+		}))
+		
+		alertController.addAction(UIAlertAction(title: "Last Name A-Z", style: .default, handler: { (action) in
+			self.model.sortEntities = { $0.lastName < $1.lastName }
+			self.model.reorder(finished: nil)
+			
+		}))
+		
+		alertController.addAction(UIAlertAction(title: "Last Name Z-A", style: .default, handler: { (action) in
+			self.model.sortEntities = { $0.lastName > $1.lastName }
+			self.model.reorder(finished: nil)
+			
+		}))
+		
+		alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+			//...
+		}))
+		
+		self.present(alertController, animated: true, completion: nil)
+		
+	}
 	
 }

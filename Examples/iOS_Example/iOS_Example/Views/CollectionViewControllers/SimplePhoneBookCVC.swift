@@ -17,8 +17,6 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 	
 	var model = Model<Contact>()
 	var manager: ModelDelegateManager!
-	var isSectioned: Bool = false
-	var insertingNewEntities = false
 	var resourceFileName: String = "PhoneBook"
 	
 	init() {
@@ -29,6 +27,7 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 		let itemWidth = screenWidth/3 - layout.minimumInteritemSpacing
 		layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
 		super.init(collectionViewLayout: layout)
+		self.collectionView?.backgroundColor = UIColor(red: 118/255, green: 214/255, blue: 255/255, alpha: 1)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -39,29 +38,21 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
         super.viewDidLoad()
 		self.imageDownloadsInProgress = [:]
 		
-		self.title = " Phone Book CollectionView"
+		self.title = "Simple Phone Book"
 		
-		let addButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBarButtonAction(_:)))
-		
-		let sortButtonItem = UIBarButtonItem(title: "Sort", style: .plain, target: self, action: #selector(sortBarButtonAction(_:)))
-		
-		self.navigationItem.rightBarButtonItems = [addButtonItem, self.editButtonItem, sortButtonItem]
-
 		self.collectionView?.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
 
-        // Do any additional setup after loading the view.
 		self.configureModel()
 
     }
 	
 	func configureModel() {
-		let url = Bundle.main.url(forResource: resourceFileName, withExtension: "json")!
-		let json = try! Data(contentsOf: url)
 		
-		let decoder = JSONDecoder()
-		let members = try! decoder.decode([Contact].self, from: json)
 		self.manager = ModelDelegateManager(controller: self)
 		self.model.delegate = self.manager
+
+		let url = Bundle.main.url(forResource: resourceFileName, withExtension: "json")!
+		let members: [Contact] = JsonService.getEntities(fromURL: url)
 
 		self.model.fetch(members) {
 			DispatchQueue.main.async {
@@ -69,11 +60,6 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 			}
 		}
 	}
-	
-	@objc func addBarButtonAction(_ sender: UIBarButtonItem) {
-		self.contactDetailsAlertController(for: nil)
-	}
-
 
 
 	// MARK: UICollectionViewDataSource
@@ -122,33 +108,6 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 
 		}
 	}
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
 	
 	//MARK: - Table cell image support
 	func startIconDownload(_ entity: Contact, for indexPath: IndexPath) {
@@ -199,123 +158,9 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 			
 		}
 	}
+	
 	override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 		self.loadImagesForOnscreenRows()		
 	}
-	
-	func contactDetailsAlertController(for contact: Contact?) {
-		
-		var firstNameTextField: UITextField!
-		var lastNameTextField: UITextField!
-		var phoneTextField: UITextField!
-		
-		let alertController = UIAlertController(title: "Add Contact", message: nil, preferredStyle: .alert)
-		alertController.addTextField { (textField) in
-			firstNameTextField = textField
-			firstNameTextField.placeholder = "First Name"
-			firstNameTextField.text = contact?.firstName
-			
-		}
-		
-		alertController.addTextField { (textField) in
-			lastNameTextField = textField
-			lastNameTextField.placeholder = "Last Name"
-			lastNameTextField.text = contact?.lastName
-		}
-		
-		alertController.addTextField { (textField) in
-			phoneTextField = textField
-			phoneTextField.placeholder = "Phone Number"
-			phoneTextField.text = contact?.phone
-			phoneTextField.keyboardType = .phonePad
-		}
-		
-		let doneButtonTitle = contact == nil ? "Add" : "Update"
-		alertController.addAction(UIAlertAction(title: doneButtonTitle, style: .default, handler: { (action) in
-			if contact != nil {
-				let indexPath = self.model.indexPath(of: contact!)!
-				let firstName = firstNameTextField.text!
-				let lastName = lastNameTextField.text!
-				let phone = phoneTextField.text!
-				
-				self.model.update(at: indexPath, mutate: { (contact) in
-					contact.firstName = firstName
-					contact.lastName = lastName
-					contact.phone = phone
-				}, finished: {
-					if let indexPath = self.collectionView?.indexPathsForSelectedItems?.first {
-						self.collectionView?.deselectItem(at: indexPath, animated: true)
-					}
-				})
-			}
-			else {
-				let dic = ["id" : 0]
-				var contact = Contact(data: dic)!
-				contact.firstName = firstNameTextField.text!
-				contact.lastName = lastNameTextField.text!
-				contact.phone = phoneTextField.text!
-				
-				//				self.model.insertAtFirst(contact, applySort: false)
-				self.model.insert([contact])
-			}
-			
-		}))
-		
-		alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-			
-			if let indexPath = self.collectionView?.indexPathsForSelectedItems?.first {
-				self.collectionView?.deselectItem(at: indexPath, animated: true)
-			}
-			
-		}))
-		
-		self.present(alertController, animated: true, completion: nil)
-		
-	}
-	
-	@objc func sortBarButtonAction(_ sender: UIBarButtonItem) {
-		let alertController = UIAlertController(title: nil, message: "Sort by", preferredStyle: .actionSheet)
-		
-		if isSectioned {
-			alertController.addAction(UIAlertAction(title: "Section A-Z", style: .default, handler: { (action) in
-				self.model.sortSections(by: { $0.name < $1.name }, finished: nil)
-			}))
-			
-			alertController.addAction(UIAlertAction(title: "Section Z-A", style: .default, handler: { (action) in
-				self.model.sortSections(by: { $0.name < $1.name }, finished: nil)
-			}))
-		}
-		
-		alertController.addAction(UIAlertAction(title: "First Name A-Z", style: .default, handler: { (action) in
-			self.model.sortEntities = { $0.firstName < $1.firstName }
-			self.model.reorder(finished: nil)
-		}))
-		
-		alertController.addAction(UIAlertAction(title: "First Name Z-A", style: .default, handler: { (action) in
-			self.model.sortEntities = { $0.firstName > $1.firstName }
-			self.model.reorder(finished: nil)
-			
-		}))
-		
-		alertController.addAction(UIAlertAction(title: "Last Name A-Z", style: .default, handler: { (action) in
-			self.model.sortEntities = { $0.lastName < $1.lastName }
-			self.model.reorder(finished: nil)
-			
-		}))
-		
-		alertController.addAction(UIAlertAction(title: "Last Name Z-A", style: .default, handler: { (action) in
-			self.model.sortEntities = { $0.lastName > $1.lastName }
-			self.model.reorder(finished: nil)
-			
-		}))
-		
-		alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-			//...
-		}))
-		
-		self.present(alertController, animated: true, completion: nil)
-		
-	}
-
 
 }

@@ -1,33 +1,34 @@
 //
-//  MutablePhoneBookTVC.swift
+//  MutablePhoneBookCVC.swift
 //  iOS_Example
 //
-//  Created by Seyed Samad Gholamzadeh on 9/9/18.
+//  Created by Seyed Samad Gholamzadeh on 9/10/18.
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
 //
 
 import UIKit
 
-class MutablePhoneBookTVC: SimplePhoneBookTVC {
+class MutablePhoneBookCVC: SimplePhoneBookCVC {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
 		self.title = "Mutable Phone Book"
-
+		
 		let addButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBarButtonAction(_:)))
 		
 		let saveButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveBarButtonAction(_:)))
-
+		
 		
 		self.navigationItem.rightBarButtonItems = [saveButtonItem, addButtonItem, self.editButtonItem]
+		
 	}
 	
 	override func configureModel() {
-		self.resourceFileName = "PhoneBook"
+		self.manager = ModelDelegateManager(controller: self)
+		self.model.delegate = self.manager
 
-		self.model.delegate = self
-		
 		let documenturl = JsonService.documentURL.appendingPathComponent(self.resourceFileName + ".json")
 		
 		let url: URL
@@ -42,10 +43,10 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 		let members: [Contact] = JsonService.getEntities(fromURL: url)
 		
 		self.model.fetch(members) {
-			self.tableView.reloadData()
+			self.collectionView?.reloadData()
 		}
 	}
-
+	
 	@objc func addBarButtonAction(_ sender: UIBarButtonItem) {
 		self.contactDetailsAlertController(for: nil)
 	}
@@ -57,31 +58,52 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 			
 		}
 	}
-	
-	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let contact = self.model[indexPath]
-		self.contactDetailsAlertController(for: contact)
+
+		if self.isEditing {
+			self.deletAlertController(for: contact!)
+		}
+		else {
+			self.contactDetailsAlertController(for: contact)
+		}
 	}
 	
-	override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+	override func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
 		return true
 	}
 	
-	override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-
+	override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+		
 		self.model.moveEntity(at: sourceIndexPath, to: destinationIndexPath, isUserDriven: true)
 	}
 	
-	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		return true
-	}
-	
-	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-		if editingStyle == .delete {
-			self.model.remove(at: indexPath, removeEmptySection: true)
-		}
-	}
+	func deletAlertController(for contact: Contact) {
+		let title = "Are you sure you want to delete “\(contact.fullName)” contact information ?"
+		let message = "You can't undo this action."
+		
+		let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+		
+		alertController.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
+			if let indexPath = self.model.indexPath(of: contact) {
+				self.model.remove(at: indexPath, removeEmptySection: true)
+			}
 
+		}))
+		
+		
+		alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+			
+			if let indexPath = self.collectionView?.indexPathsForSelectedItems?.first {
+				self.collectionView?.deselectItem(at: indexPath, animated: true)
+			}
+			
+		}))
+		
+		self.present(alertController, animated: true, completion: nil)
+		
+	}
 	
 	func contactDetailsAlertController(for contact: Contact?) {
 		
@@ -123,8 +145,9 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 					contact.lastName = lastName
 					contact.phone = phone
 				}, finished: {
-					if let indexPath = self.tableView.indexPathForSelectedRow {
-						self.tableView.deselectRow(at: indexPath, animated: true)
+					
+					if let indexPath = self.collectionView?.indexPathsForSelectedItems?.first {
+						self.collectionView?.deselectItem(at: indexPath, animated: true)
 					}
 				})
 			}
@@ -135,7 +158,6 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 				contact.lastName = lastNameTextField.text!
 				contact.phone = phoneTextField.text!
 				
-				//				self.model.insertAtFirst(contact, applySort: false)
 				self.model.insert([contact])
 			}
 			
@@ -143,8 +165,8 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 		
 		alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
 			
-			if let indexPath = self.tableView.indexPathForSelectedRow {
-				self.tableView.deselectRow(at: indexPath, animated: true)
+			if let indexPath = self.collectionView?.indexPathsForSelectedItems?.first {
+				self.collectionView?.deselectItem(at: indexPath, animated: true)
 			}
 			
 		}))
