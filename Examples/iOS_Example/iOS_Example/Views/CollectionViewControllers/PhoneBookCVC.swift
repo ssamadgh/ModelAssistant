@@ -184,7 +184,7 @@ class PhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 		
 		self.model.update(at: self.model.indexPath(of: entity as! Contact)!, mutate: { (contact) in
 			contact.image = entity.image
-		})
+		}, completion: nil)
 		
 		// Remove the IconDownloader from the in progress list.
 		// This will result in it being deallocated.
@@ -244,7 +244,7 @@ class PhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 					contact.firstName = firstName
 					contact.lastName = lastName
 					contact.phone = phone
-				}, finished: {
+				}, completion: {
 					if let indexPath = self.collectionView?.indexPathsForSelectedItems?.first {
 						self.collectionView?.deselectItem(at: indexPath, animated: true)
 					}
@@ -280,34 +280,34 @@ class PhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 		
 		if isSectioned {
 			alertController.addAction(UIAlertAction(title: "Section A-Z", style: .default, handler: { (action) in
-				self.model.sortSections(by: { $0.name < $1.name }, finished: nil)
+				self.model.sortSections(by: { $0.name < $1.name }, completion: nil)
 			}))
 			
 			alertController.addAction(UIAlertAction(title: "Section Z-A", style: .default, handler: { (action) in
-				self.model.sortSections(by: { $0.name < $1.name }, finished: nil)
+				self.model.sortSections(by: { $0.name < $1.name }, completion: nil)
 			}))
 		}
 		
 		alertController.addAction(UIAlertAction(title: "First Name A-Z", style: .default, handler: { (action) in
 			self.model.sortEntities = { $0.firstName < $1.firstName }
-			self.model.reorder(finished: nil)
+			self.model.reorder(completion: nil)
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "First Name Z-A", style: .default, handler: { (action) in
 			self.model.sortEntities = { $0.firstName > $1.firstName }
-			self.model.reorder(finished: nil)
+			self.model.reorder(completion: nil)
 			
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "Last Name A-Z", style: .default, handler: { (action) in
 			self.model.sortEntities = { $0.lastName < $1.lastName }
-			self.model.reorder(finished: nil)
+			self.model.reorder(completion: nil)
 			
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "Last Name Z-A", style: .default, handler: { (action) in
 			self.model.sortEntities = { $0.lastName > $1.lastName }
-			self.model.reorder(finished: nil)
+			self.model.reorder(completion: nil)
 			
 		}))
 		

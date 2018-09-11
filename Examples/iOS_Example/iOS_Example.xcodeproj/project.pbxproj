@@ -44,18 +44,16 @@
 		E4EC83CA2145948B0063B4BB /* MutablePhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC83C92145948B0063B4BB /* MutablePhoneBookTVC.swift */; };
 		E4EC83CC214596140063B4BB /* PhoneBook_Mutable.json in Resources */ = {isa = PBXBuildFile; fileRef = E4EC83CB214596140063B4BB /* PhoneBook_Mutable.json */; };
 		E4EC83CE21462CC50063B4BB /* FilteredPhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC83CD21462CC50063B4BB /* FilteredPhoneBookTVC.swift */; };
-<<<<<<< HEAD
-=======
+
 		E4EC83D12146355B0063B4BB /* PhoneBookCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC83D02146355B0063B4BB /* PhoneBookCVC.swift */; };
->>>>>>> 30617f2d6fef745b44c857447ace41e0c7a9c199
+
 		E4EC83D5214638C90063B4BB /* SortablePhoneBookCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC83D4214638C90063B4BB /* SortablePhoneBookCVC.swift */; };
 		E4EC83D921463ECF0063B4BB /* FilteredPhoneBookCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC83D821463ECF0063B4BB /* FilteredPhoneBookCVC.swift */; };
 		E4EC83DB21463FD50063B4BB /* SearchablePhoneBookCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC83DA21463FD50063B4BB /* SearchablePhoneBookCVC.swift */; };
 		E4EC83DD214642360063B4BB /* MutablePhoneBookCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC83DC214642360063B4BB /* MutablePhoneBookCVC.swift */; };
-<<<<<<< HEAD
+
 		E4EC83E1214687FE0063B4BB /* ThreadSafePhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC83E0214687FE0063B4BB /* ThreadSafePhoneBookTVC.swift */; };
-=======
->>>>>>> 30617f2d6fef745b44c857447ace41e0c7a9c199
+
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,18 +145,18 @@
 		E4EC83C92145948B0063B4BB /* MutablePhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutablePhoneBookTVC.swift; sourceTree = "<group>"; };
 		E4EC83CB214596140063B4BB /* PhoneBook_Mutable.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PhoneBook_Mutable.json; sourceTree = "<group>"; };
 		E4EC83CD21462CC50063B4BB /* FilteredPhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredPhoneBookTVC.swift; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
+
+
 		E4EC83D02146355B0063B4BB /* PhoneBookCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneBookCVC.swift; sourceTree = "<group>"; };
->>>>>>> 30617f2d6fef745b44c857447ace41e0c7a9c199
+
 		E4EC83D4214638C90063B4BB /* SortablePhoneBookCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortablePhoneBookCVC.swift; sourceTree = "<group>"; };
 		E4EC83D821463ECF0063B4BB /* FilteredPhoneBookCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredPhoneBookCVC.swift; sourceTree = "<group>"; };
 		E4EC83DA21463FD50063B4BB /* SearchablePhoneBookCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchablePhoneBookCVC.swift; sourceTree = "<group>"; };
 		E4EC83DC214642360063B4BB /* MutablePhoneBookCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutablePhoneBookCVC.swift; sourceTree = "<group>"; };
-<<<<<<< HEAD
+
 		E4EC83E0214687FE0063B4BB /* ThreadSafePhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadSafePhoneBookTVC.swift; sourceTree = "<group>"; };
-=======
->>>>>>> 30617f2d6fef745b44c857447ace41e0c7a9c199
+
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -301,10 +299,10 @@
 			children = (
 				E4EC83D721463EB10063B4BB /* CollectionViewCell */,
 				E4EC83D621463E980063B4BB /* CollectionReusableView */,
-<<<<<<< HEAD
-=======
+
+
 				E4EC83D02146355B0063B4BB /* PhoneBookCVC.swift */,
->>>>>>> 30617f2d6fef745b44c857447ace41e0c7a9c199
+
 				E4069F52213BE6A2009FCD7A /* SimplePhoneBookCVC.swift */,
 				E4EC83D4214638C90063B4BB /* SortablePhoneBookCVC.swift */,
 				E4EC83602143EDE20063B4BB /* SectionedPhoneBookCVC.swift */,
@@ -327,10 +325,10 @@
 				E4EC837221443CCA0063B4BB /* SearchablePhoneBookTVC.swift */,
 				E4EC83C92145948B0063B4BB /* MutablePhoneBookTVC.swift */,
 				E424DD8D213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift */,
-<<<<<<< HEAD
+
 				E4EC83E0214687FE0063B4BB /* ThreadSafePhoneBookTVC.swift */,
-=======
->>>>>>> 30617f2d6fef745b44c857447ace41e0c7a9c199
+
+
 			);
 			path = TableViewControllers;
 			sourceTree = "<group>";
@@ -567,10 +565,10 @@
 				E424DD8A213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift in Sources */,
 				E4EC836A214430440063B4BB /* BasicTableViewController.swift in Sources */,
 				E4EC83CE21462CC50063B4BB /* FilteredPhoneBookTVC.swift in Sources */,
-<<<<<<< HEAD
-=======
+
+
 				E4EC83D12146355B0063B4BB /* PhoneBookCVC.swift in Sources */,
->>>>>>> 30617f2d6fef745b44c857447ace41e0c7a9c199
+
 				E4EC83D921463ECF0063B4BB /* FilteredPhoneBookCVC.swift in Sources */,
 				E4069F66213C7087009FCD7A /* SimplePhoneBookTVC.swift in Sources */,
 			);
