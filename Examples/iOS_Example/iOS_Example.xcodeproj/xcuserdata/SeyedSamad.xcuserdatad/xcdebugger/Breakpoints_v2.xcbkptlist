@@ -122,7 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iOS_Example/Views/TableViewControllers/MutablePhoneBookTVC.swift"
+<<<<<<< HEAD
             timestampString = "558366921.39204"
+=======
+            timestampString = "558254935.3621579"
+>>>>>>> 30617f2d6fef745b44c857447ace41e0c7a9c199
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "81"
