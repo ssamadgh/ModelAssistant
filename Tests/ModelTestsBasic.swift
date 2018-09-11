@@ -567,12 +567,12 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		XCTAssertEqual(entities.count, members.count)
 	}
 	
-	func modelWillChangeContent(for type: ModelChangeType) {
+	func modelWillChangeContent() {
 		XCTAssert(self.delegateCalledBalance >= 0)
 		self.delegateCalledBalance += 1
 	}
 	
-	func modelDidChangeContent(for type: ModelChangeType) {
+	func modelDidChangeContent() {
 		XCTAssert(self.delegateCalledBalance > 0)
 		self.delegateCalledBalance -= 1
 		self.delegateExpect.fulfill()

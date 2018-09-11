@@ -1,29 +1,70 @@
 //
-//  SimplePhoneBookTVC.swift
+//  ModernPhoneBookTVC.swift
 //  iOS_Example
 //
-//  Created by Seyed Samad Gholamzadeh on 9/2/18.
+//  Created by Seyed Samad Gholamzadeh on 9/10/18.
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
 //
 
 import UIKit
 import Model
 
-class SimplePhoneBookTVC: BasicTableViewController {
+class ThreadSafePhoneBookTVC: BasicTableViewController {
+	
+	private let dispatchQueue = DispatchQueue(label: "com.ThreadSafePhoneBookTVC.ConcirrentGCD.DispatchQueue", attributes: DispatchQueue.Attributes.concurrent)
+	
+	var manager: ModelDelegateManager!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.title = "Simple Phone Book"
+		self.title = "Thread Safe Phone Book"
+		
+		let doMagicButtonItem = UIBarButtonItem(title: "Do Magic!", style: .plain, target: self, action: #selector(doMagicBarButtonAction(_:)))
+		
+		self.navigationItem.rightBarButtonItems = [doMagicButtonItem]
+		
 	}
 	
 	override func configureModel() {
+		self.manager = ModelDelegateManager(controller: self)
+		//		self.model.delegate = self.manager
 		self.model.delegate = self
 		super.configureModel()
 	}
+	
+	@objc func doMagicBarButtonAction(_ sender: UIBarButtonItem) {
+		let dic = ["id" : 0]
+		var contact = Contact(data: dic)!
+		contact.firstName = "Samad"
+		contact.lastName = "Khatar"
+		contact.phone = "9934243243"
+		
+		self.dispatchQueue.async {
+			self.model.insertAtFirst(contact)
+		}
+		
+		self.dispatchQueue.async {
+			contact.firstName = "Abbas"
+			contact.phone = "9342432432"
+			self.model.insertAtFirst(contact)
+		}
+		
+		self.dispatchQueue.async {
+			self.model.remove(at: IndexPath(row: 2, section: 0), removeEmptySection: true)
+		}
+		
+		self.dispatchQueue.async {
+			self.model.update(at: IndexPath(row: 3, section: 0), mutate:  { (contact) in
+				contact.firstName = "Joooooojoooo"
+				contact.lastName = "Talaaaaaaaieeeee"
+			}, completion: nil)
+		}
+		
+	}
+	
 }
 
-
-extension SimplePhoneBookTVC: ModelDelegate {
+extension ThreadSafePhoneBookTVC: ModelDelegate {
 	func modelWillChangeContent() {
 		self.tableView.beginUpdates()
 	}
@@ -68,5 +109,5 @@ extension SimplePhoneBookTVC: ModelDelegate {
 			break
 		}
 	}
-
+	
 }

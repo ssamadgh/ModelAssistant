@@ -68,7 +68,7 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 		{
 			if (self.tableView.isDragging == false && self.tableView.isDecelerating == false)
 			{
-				self.startIconDownload(entity!, for: indexPath)
+				self.startIconDownload(entity!)
 			}
 			
 			// if a download is deferred or in progress, return a placeholder image
@@ -86,7 +86,7 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 	
 	//MARK: - Table cell image support
 	
-	func startIconDownload(_ entity: Contact, for indexPath: IndexPath) {
+	func startIconDownload(_ entity: Contact) {
 		let uniqueValue = entity.uniqueValue
 		var imageDownloader: ImageDownloader! = imageDownloadsInProgress[uniqueValue]
 		if imageDownloader == nil {
@@ -106,7 +106,7 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 				guard let entity = self.model[indexPath] else { return }
 				if entity.image == nil // avoid the app icon download if the app already has an icon
 				{
-					self.startIconDownload(entity, for: indexPath)
+					self.startIconDownload(entity)
 				}
 			}
 		}
@@ -115,10 +115,11 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 	// called by our ImageDownloader when an icon is ready to be displayed
 	func imageDidLoad(for entity: CustomEntityProtocol) {
 		
-		self.model.update(at: self.model.indexPath(of: entity as! Contact)!, mutate: { (contact) in
-			contact.image = entity.image
-		})
 		
+		self.model.update(entity as! Contact, mutate: { (contact) in
+			contact.image = entity.image
+		}, completion: nil)
+
 		// Remove the IconDownloader from the in progress list.
 		// This will result in it being deallocated.
 		self.imageDownloadsInProgress.removeValue(forKey: entity.uniqueValue)

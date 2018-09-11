@@ -50,7 +50,7 @@ class ModelDelegateManager: ModelDelegate {
 		blockOperations.append(operation)
 	}
 	
-	func modelWillChangeContent(for type: ModelChangeType) {
+	func modelWillChangeContent() {
 		
 	}
 	
@@ -143,7 +143,7 @@ class ModelDelegateManager: ModelDelegate {
 		}
 	}
 	
-	func modelDidChangeContent(for type: ModelChangeType) {
+	func modelDidChangeContent() {
 		
 		self.controller.performBatchUpdates({
 			for operation: BlockOperation in self.blockOperations {
