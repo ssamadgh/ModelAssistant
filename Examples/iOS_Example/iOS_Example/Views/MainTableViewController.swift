@@ -9,9 +9,15 @@
 import UIKit
 
 private enum TableViews: Int {
+<<<<<<< HEAD
 	case simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable, ModernPhoneBookTable
 	
 	static let allValues: [TableViews] = [simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable, ModernPhoneBookTable]
+=======
+	case simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable
+	
+	static let allValues: [TableViews] = [simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable]
+>>>>>>> 30617f2d6fef745b44c857447ace41e0c7a9c199
 	
 	var stringValue: String {
 		let suffix = " Phone Book TableView"
@@ -36,9 +42,12 @@ private enum TableViews: Int {
 			
 		case .paginationPhoneBookTable:
 			return "Pagination" + suffix
+<<<<<<< HEAD
 			
 		case .ModernPhoneBookTable:
 			return "Thread Safe" + suffix
+=======
+>>>>>>> 30617f2d6fef745b44c857447ace41e0c7a9c199
 		}
 	}
 	
@@ -84,6 +93,7 @@ private enum CollectionViews: Int {
 		switch self {
 		case .simplePhoneBookCollection:
 			return "Simple" + suffix
+<<<<<<< HEAD
 			
 		case .sortablePhoneBookCollection:
 			return "Sortable" + suffix
@@ -91,6 +101,15 @@ private enum CollectionViews: Int {
 		case .sectionedPhoneBookCollection:
 			return "Sectioned" + suffix
 			
+=======
+			
+		case .sortablePhoneBookCollection:
+			return "Sortable" + suffix
+			
+		case .sectionedPhoneBookCollection:
+			return "Sectioned" + suffix
+			
+>>>>>>> 30617f2d6fef745b44c857447ace41e0c7a9c199
 		case .filteredPhoneBookCollection:
 			return "Filtered" + suffix
 
