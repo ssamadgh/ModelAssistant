@@ -52,33 +52,33 @@ class SectionedPhoneBookCVC: SortablePhoneBookCVC {
 		let alertController = UIAlertController(title: nil, message: "Sort by", preferredStyle: .actionSheet)
 		
 		alertController.addAction(UIAlertAction(title: "Section A-Z", style: .default, handler: { (action) in
-			self.model.sortSections(by: { $0.name < $1.name }, finished: nil)
+			self.model.sortSections(by: { $0.name < $1.name }, completion: nil)
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "Section Z-A", style: .default, handler: { (action) in
-			self.model.sortSections(by: { $0.name > $1.name }, finished: nil)
+			self.model.sortSections(by: { $0.name > $1.name }, completion: nil)
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "First Name A-Z", style: .default, handler: { (action) in
 			self.model.sortEntities = { $0.firstName < $1.firstName }
-			self.model.reorder(finished: nil)
+			self.model.reorder(completion: nil)
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "First Name Z-A", style: .default, handler: { (action) in
 			self.model.sortEntities = { $0.firstName > $1.firstName }
-			self.model.reorder(finished: nil)
+			self.model.reorder(completion: nil)
 			
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "Last Name A-Z", style: .default, handler: { (action) in
 			self.model.sortEntities = { $0.lastName < $1.lastName }
-			self.model.reorder(finished: nil)
+			self.model.reorder(completion: nil)
 			
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "Last Name Z-A", style: .default, handler: { (action) in
 			self.model.sortEntities = { $0.lastName > $1.lastName }
-			self.model.reorder(finished: nil)
+			self.model.reorder(completion: nil)
 			
 		}))
 		

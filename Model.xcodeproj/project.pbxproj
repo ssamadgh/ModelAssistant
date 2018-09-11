@@ -34,6 +34,24 @@
 		E47716632133127A00B7E2BE /* MOCK_DATA_50.json in Resources */ = {isa = PBXBuildFile; fileRef = E477164C2133069A00B7E2BE /* MOCK_DATA_50.json */; };
 		E47716642133127A00B7E2BE /* MOCK_DATA_20.json in Resources */ = {isa = PBXBuildFile; fileRef = E477164A2133069A00B7E2BE /* MOCK_DATA_20.json */; };
 		E477166F2133BC4E00B7E2BE /* ModelTestsWithSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E477166E2133BC4E00B7E2BE /* ModelTestsWithSection.swift */; };
+		E4EC842021469DD20063B4BB /* NSLock+MyOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC840B21469DD10063B4BB /* NSLock+MyOperations.swift */; };
+		E4EC842121469DD20063B4BB /* Foundation.Operation+Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC840C21469DD10063B4BB /* Foundation.Operation+Operation.swift */; };
+		E4EC842221469DD20063B4BB /* URLSessionTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC840E21469DD10063B4BB /* URLSessionTaskManager.swift */; };
+		E4EC842321469DD20063B4BB /* GroupOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC840F21469DD10063B4BB /* GroupOperation.swift */; };
+		E4EC842421469DD20063B4BB /* AOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC841021469DD10063B4BB /* AOperation.swift */; };
+		E4EC842521469DD20063B4BB /* BlockOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC841121469DD10063B4BB /* BlockOperation.swift */; };
+		E4EC842621469DD20063B4BB /* URLSessionTaskOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC841221469DD10063B4BB /* URLSessionTaskOperation.swift */; };
+		E4EC842721469DD20063B4BB /* AlertOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC841321469DD10063B4BB /* AlertOperation.swift */; };
+		E4EC842821469DD20063B4BB /* ReachabilityCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC841521469DD10063B4BB /* ReachabilityCondition.swift */; };
+		E4EC842921469DD20063B4BB /* MutuallyExclusive.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC841621469DD10063B4BB /* MutuallyExclusive.swift */; };
+		E4EC842A21469DD20063B4BB /* OperationCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC841721469DD10063B4BB /* OperationCondition.swift */; };
+		E4EC842B21469DD20063B4BB /* OperationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC841821469DD10063B4BB /* OperationErrors.swift */; };
+		E4EC842C21469DD20063B4BB /* OperationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC841A21469DD10063B4BB /* OperationObserver.swift */; };
+		E4EC842D21469DD20063B4BB /* NetworkObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC841B21469DD10063B4BB /* NetworkObserver.swift */; };
+		E4EC842E21469DD20063B4BB /* BlockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC841C21469DD10063B4BB /* BlockObserver.swift */; };
+		E4EC842F21469DD20063B4BB /* AOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC841E21469DD10063B4BB /* AOperationQueue.swift */; };
+		E4EC843021469DD20063B4BB /* ExclusivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC841F21469DD10063B4BB /* ExclusivityController.swift */; };
+		E4EC843321469FFB0063B4BB /* ModelOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC843221469FFB0063B4BB /* ModelOperation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +95,24 @@
 		E477164C2133069A00B7E2BE /* MOCK_DATA_50.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MOCK_DATA_50.json; sourceTree = "<group>"; };
 		E47716562133094F00B7E2BE /* Member.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		E477166E2133BC4E00B7E2BE /* ModelTestsWithSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTestsWithSection.swift; sourceTree = "<group>"; };
+		E4EC840B21469DD10063B4BB /* NSLock+MyOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLock+MyOperations.swift"; sourceTree = "<group>"; };
+		E4EC840C21469DD10063B4BB /* Foundation.Operation+Operation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Foundation.Operation+Operation.swift"; sourceTree = "<group>"; };
+		E4EC840E21469DD10063B4BB /* URLSessionTaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionTaskManager.swift; sourceTree = "<group>"; };
+		E4EC840F21469DD10063B4BB /* GroupOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupOperation.swift; sourceTree = "<group>"; };
+		E4EC841021469DD10063B4BB /* AOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AOperation.swift; sourceTree = "<group>"; };
+		E4EC841121469DD10063B4BB /* BlockOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockOperation.swift; sourceTree = "<group>"; };
+		E4EC841221469DD10063B4BB /* URLSessionTaskOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionTaskOperation.swift; sourceTree = "<group>"; };
+		E4EC841321469DD10063B4BB /* AlertOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertOperation.swift; sourceTree = "<group>"; };
+		E4EC841521469DD10063B4BB /* ReachabilityCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityCondition.swift; sourceTree = "<group>"; };
+		E4EC841621469DD10063B4BB /* MutuallyExclusive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MutuallyExclusive.swift; sourceTree = "<group>"; };
+		E4EC841721469DD10063B4BB /* OperationCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationCondition.swift; sourceTree = "<group>"; };
+		E4EC841821469DD10063B4BB /* OperationErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationErrors.swift; sourceTree = "<group>"; };
+		E4EC841A21469DD10063B4BB /* OperationObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationObserver.swift; sourceTree = "<group>"; };
+		E4EC841B21469DD10063B4BB /* NetworkObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkObserver.swift; sourceTree = "<group>"; };
+		E4EC841C21469DD10063B4BB /* BlockObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockObserver.swift; sourceTree = "<group>"; };
+		E4EC841E21469DD10063B4BB /* AOperationQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AOperationQueue.swift; sourceTree = "<group>"; };
+		E4EC841F21469DD10063B4BB /* ExclusivityController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExclusivityController.swift; sourceTree = "<group>"; };
+		E4EC843221469FFB0063B4BB /* ModelOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelOperation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,9 +168,11 @@
 		E477161C2133054900B7E2BE /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				E4EC83E421469D5F0063B4BB /* Libraries */,
 				E4771643213305DF00B7E2BE /* Extenseions */,
 				E477161D2133054900B7E2BE /* Model.h */,
 				E47716352133058A00B7E2BE /* EntityProtocol.swift */,
+				E4EC843221469FFB0063B4BB /* ModelOperation.swift */,
 				E47716342133058A00B7E2BE /* Model.swift */,
 				E47716372133058A00B7E2BE /* ModelSectionInfo.swift */,
 				E47716362133058A00B7E2BE /* SectionsManager.swift */,
@@ -188,6 +226,70 @@
 				E47716562133094F00B7E2BE /* Member.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		E4EC83E421469D5F0063B4BB /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				E4EC840A21469DD10063B4BB /* AOperation */,
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
+		E4EC840A21469DD10063B4BB /* AOperation */ = {
+			isa = PBXGroup;
+			children = (
+				E4EC840B21469DD10063B4BB /* NSLock+MyOperations.swift */,
+				E4EC840C21469DD10063B4BB /* Foundation.Operation+Operation.swift */,
+				E4EC840D21469DD10063B4BB /* Operations */,
+				E4EC841421469DD10063B4BB /* Conditions */,
+				E4EC841921469DD10063B4BB /* Observers */,
+				E4EC841D21469DD10063B4BB /* OperationQueue */,
+			);
+			path = AOperation;
+			sourceTree = "<group>";
+		};
+		E4EC840D21469DD10063B4BB /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				E4EC840E21469DD10063B4BB /* URLSessionTaskManager.swift */,
+				E4EC840F21469DD10063B4BB /* GroupOperation.swift */,
+				E4EC841021469DD10063B4BB /* AOperation.swift */,
+				E4EC841121469DD10063B4BB /* BlockOperation.swift */,
+				E4EC841221469DD10063B4BB /* URLSessionTaskOperation.swift */,
+				E4EC841321469DD10063B4BB /* AlertOperation.swift */,
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
+		E4EC841421469DD10063B4BB /* Conditions */ = {
+			isa = PBXGroup;
+			children = (
+				E4EC841521469DD10063B4BB /* ReachabilityCondition.swift */,
+				E4EC841621469DD10063B4BB /* MutuallyExclusive.swift */,
+				E4EC841721469DD10063B4BB /* OperationCondition.swift */,
+				E4EC841821469DD10063B4BB /* OperationErrors.swift */,
+			);
+			path = Conditions;
+			sourceTree = "<group>";
+		};
+		E4EC841921469DD10063B4BB /* Observers */ = {
+			isa = PBXGroup;
+			children = (
+				E4EC841A21469DD10063B4BB /* OperationObserver.swift */,
+				E4EC841B21469DD10063B4BB /* NetworkObserver.swift */,
+				E4EC841C21469DD10063B4BB /* BlockObserver.swift */,
+			);
+			path = Observers;
+			sourceTree = "<group>";
+		};
+		E4EC841D21469DD10063B4BB /* OperationQueue */ = {
+			isa = PBXGroup;
+			children = (
+				E4EC841E21469DD10063B4BB /* AOperationQueue.swift */,
+				E4EC841F21469DD10063B4BB /* ExclusivityController.swift */,
+			);
+			path = OperationQueue;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,8 +414,26 @@
 				E477163A2133058A00B7E2BE /* EntityProtocol.swift in Sources */,
 				E47716382133058A00B7E2BE /* Model.swift in Sources */,
 				E477163C2133058A00B7E2BE /* SectionsManager.swift in Sources */,
+				E4EC842221469DD20063B4BB /* URLSessionTaskManager.swift in Sources */,
+				E4EC842321469DD20063B4BB /* GroupOperation.swift in Sources */,
+				E4EC842521469DD20063B4BB /* BlockOperation.swift in Sources */,
+				E4EC842421469DD20063B4BB /* AOperation.swift in Sources */,
+				E4EC843021469DD20063B4BB /* ExclusivityController.swift in Sources */,
+				E4EC842F21469DD20063B4BB /* AOperationQueue.swift in Sources */,
+				E4EC842621469DD20063B4BB /* URLSessionTaskOperation.swift in Sources */,
+				E4EC842821469DD20063B4BB /* ReachabilityCondition.swift in Sources */,
+				E4EC842E21469DD20063B4BB /* BlockObserver.swift in Sources */,
 				E477163E2133058A00B7E2BE /* ModelSectionInfo.swift in Sources */,
+				E4EC842921469DD20063B4BB /* MutuallyExclusive.swift in Sources */,
+				E4EC842C21469DD20063B4BB /* OperationObserver.swift in Sources */,
+				E4EC842A21469DD20063B4BB /* OperationCondition.swift in Sources */,
+				E4EC842721469DD20063B4BB /* AlertOperation.swift in Sources */,
+				E4EC842121469DD20063B4BB /* Foundation.Operation+Operation.swift in Sources */,
+				E4EC843321469FFB0063B4BB /* ModelOperation.swift in Sources */,
+				E4EC842B21469DD20063B4BB /* OperationErrors.swift in Sources */,
 				E4771641213305D400B7E2BE /* IndexPath+Extensions.swift in Sources */,
+				E4EC842D21469DD20063B4BB /* NetworkObserver.swift in Sources */,
+				E4EC842021469DD20063B4BB /* NSLock+MyOperations.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

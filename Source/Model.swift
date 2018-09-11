@@ -29,9 +29,9 @@ public enum ModelChangeType {
 
 public protocol ModelDelegate: class {
 	
-	func modelWillChangeContent(for type: ModelChangeType)
+	func modelWillChangeContent()
 	
-	func modelDidChangeContent(for type: ModelChangeType)
+	func modelDidChangeContent()
 	
 	func model(didChange entities: [EntityProtocol], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?)
 	
@@ -41,11 +41,11 @@ public protocol ModelDelegate: class {
 
 public extension ModelDelegate {
 	
-	func modelWillChangeContent(for type: ModelChangeType) {
+	func modelWillChangeContent() {
 		
 	}
 	
-	func modelDidChangeContent(for type: ModelChangeType) {
+	func modelDidChangeContent() {
 		
 	}
 	
@@ -65,6 +65,7 @@ public class Model<Entity: EntityProtocol & Hashable> {
 	
 	private let dispatchQueue = DispatchQueue(label: "com.model.ConcirrentGCD.DispatchQueue", attributes: DispatchQueue.Attributes.concurrent)
 	
+	private let operationQueue = AOperationQueue()
 	
 	public var fetchBatchSize: Int
 	
@@ -103,6 +104,7 @@ public class Model<Entity: EntityProtocol & Hashable> {
 	private var entitiesUniqueValue: Set<Int>
 	
 	public init(sectionName: String? = nil) {
+		operationQueue.maxConcurrentOperationCount = 1
 		entitiesUniqueValue = []
 		fetchBatchSize = 10
 		self.sectionKey = sectionName
@@ -263,73 +265,70 @@ public class Model<Entity: EntityProtocol & Hashable> {
 	
 	
 	//MARK: - Insert methods
-
-	public func insertAtFirst(_ newEntity: Entity, beginUpdate: Bool = true, endUpdate: Bool = true, finished:(() -> ())? = nil) {
-		self.insert(newEntity, at: IndexPath(row: 0, section: 0), beginUpdate: beginUpdate, endUpdate: endUpdate, finished: finished)
+	
+	public func insertAtFirst(_ newEntity: Entity, completion:(() -> ())? = nil) {
+		self.insert(newEntity, at: IndexPath(row: 0, section: 0), completion: completion)
 	}
 	
-	public func insert(_ newEntity: Entity, at indexPath: IndexPath, beginUpdate: Bool = true, endUpdate: Bool = true, finished:(() -> ())? = nil) {
+	public func insert(_ newEntity: Entity, at indexPath: IndexPath, completion:(() -> ())? = nil) {
+		
 		let isMainThread = Thread.isMainThread
 		
-		self.dispatchQueue.async(flags: .barrier) {
+		self.addModelOperation(with: BlockOperation(block: { (finished) in
 			
-			self.entitiesUniqueValue.insert(newEntity.uniqueValue)
-			
-			if beginUpdate {
-				self.modelWillChangeContent(for: .delete)
-			}
-			
-			let sectionIndex = indexPath.section
-			let diff = self.sectionsManager.numberOfSections - sectionIndex
-			
-			if diff >= 0 {
-				if diff == 0 {
-					let sectionName = self.hasSection ? newEntity[self.sectionKey!]! : ""
-					let section = self.sectionsManager.newSection(with: [newEntity], name: sectionName)
-					self.sectionsManager.insert(section, at: sectionIndex)
-					
-					self.model(didChange: section, atSectionIndex: nil, for: .insert, newSectionIndex: sectionIndex)
+			self.dispatchQueue.async(flags: .barrier) {
+				
+				let sectionIndex = indexPath.section
+				let diff = self.sectionsManager.numberOfSections - sectionIndex
+				
+				if diff >= 0 {
+					if diff == 0 {
+						let sectionName = self.hasSection ? newEntity[self.sectionKey!]! : ""
+						let section = self.sectionsManager.newSection(with: [newEntity], name: sectionName)
+						self.sectionsManager.insert(section, at: sectionIndex)
+						
+						self.model(didChange: section, atSectionIndex: nil, for: .insert, newSectionIndex: sectionIndex)
+					}
+					else {
+						self.sectionsManager.insert(newEntity, at: indexPath)
+						
+						self.model(didChange: [newEntity], at: nil, for: .insert, newIndexPaths: [indexPath])
+					}
 				}
 				else {
-					self.sectionsManager.insert(newEntity, at: indexPath)
-					
-					self.model(didChange: [newEntity], at: nil, for: .insert, newIndexPaths: [indexPath])
-
+					fatalError("section Index out of range")
 				}
+				
+				finished()
+				
 			}
-			else {
-				fatalError("section Index out of range")
-			}
-			
-			if endUpdate {
-				self.modelDidChangeContent(for: .insert)
-			}
-			
-			self.checkIsMainThread(isMainThread, completion: finished)
-			
+		})) {
+			self.checkIsMainThread(isMainThread, completion: completion)
 		}
+		
 	}
 	
-	public func insertAtLast(_ newEntity: Entity, beginUpdate: Bool = true, endUpdate: Bool = true, finished:(() -> ())? = nil) {
+	public func insertAtLast(_ newEntity: Entity, completion:(() -> ())? = nil) {
 		let section = self.numberOfSections - 1
 		let row = self.numberOfEntites(at: section)
-		self.insert(newEntity, at: IndexPath(row: row, section: section), beginUpdate: beginUpdate, endUpdate: endUpdate, finished: finished)
+		self.insert(newEntity, at: IndexPath(row: row, section: section), completion: completion)
 	}
 	
-	public func fetch(_ entities: [Entity], finished:(() -> ())?) {
-		self.insert(entities, beginUpdate: false, endUpdate: false, callModelDelegateMethods: false, finished: finished)
+	public func fetch(_ entities: [Entity], completion:(() -> ())?) {
+		self.insert(entities, callModelDelegateMethods: false, completion: completion)
 	}
 	
-	public func insert(_ newEntities: [Entity], beginUpdate: Bool = true, endUpdate: Bool = true, finished:(() -> ())? = nil) {
-		self.insert(newEntities, beginUpdate: beginUpdate, endUpdate: endUpdate, callModelDelegateMethods: true, finished: finished)
+	public func insert(_ newEntities: [Entity], completion:(() -> ())? = nil) {
+		self.insert(newEntities, callModelDelegateMethods: true, completion: completion)
 	}
 	
 	
-	private func insert(_ newEntities: [Entity], beginUpdate: Bool, endUpdate: Bool, callModelDelegateMethods: Bool, finished:(() -> ())?) {
+	
+	private func insert(_ newEntities: [Entity], callModelDelegateMethods: Bool, completion:(() -> ())?) {
 		
 		let isMainThread = Thread.isMainThread
-
-		self.dispatchQueue.async(flags: .barrier) {
+		
+		func inserMethod() {
 			
 			var newEntitiesUniqueValue = Set(newEntities.map { $0.uniqueValue })
 			
@@ -342,12 +341,6 @@ public class Model<Entity: EntityProtocol & Hashable> {
 			if self.filter != nil {
 				newEntities = newEntities.filter(self.filter!)
 			}
-			
-			
-			if beginUpdate, callModelDelegateMethods {
-				self.modelWillChangeContent(for: .insert)
-			}
-			
 			
 			func insert(_ newEntities: [Entity], toSectionWithName sectionName: String?, sectionIndex: Int) {
 				
@@ -420,7 +413,7 @@ public class Model<Entity: EntityProtocol & Hashable> {
 				
 			}
 			else {
-
+				
 				var newSectionNames = Set(newEntities.compactMap {  $0[self.sectionKey!] })
 				
 				let containsSectionNames = Set(self.sectionsManager.sections.compactMap { $0.name })
@@ -433,11 +426,11 @@ public class Model<Entity: EntityProtocol & Hashable> {
 					
 					let sectionName = newSectionNames.first!
 					var filtered = newEntities.filter { $0[self.sectionKey!] == sectionName }
-
+					
 					if let sortEntities = self.sortEntities {
 						filtered.sort(by: sortEntities)
 					}
-
+					
 					let newSection = self.sectionsManager.newSection(with: filtered, name: sectionName)
 					newSections.append(newSection)
 					
@@ -446,7 +439,7 @@ public class Model<Entity: EntityProtocol & Hashable> {
 					for entity in filtered {
 						newEntities.remove(at: newEntities.index(of: entity)!)
 					}
-
+					
 				}
 				
 				self.sectionsManager.append(contentsOf: newSections)
@@ -454,7 +447,7 @@ public class Model<Entity: EntityProtocol & Hashable> {
 				if let sortSections = self.sortSections {
 					_ = self.sectionsManager.sortSections(by: sortSections)
 				}
-
+				
 				if callModelDelegateMethods {
 					for section in newSections {
 						let sectionIndex = self.sectionsManager.index(of: section)
@@ -463,255 +456,281 @@ public class Model<Entity: EntityProtocol & Hashable> {
 				}
 				
 				while !newEntities.isEmpty {
-
+					
 					let firstEntity = newEntities.first!
 					let sectionName = firstEntity[self.sectionKey!]!
 					let filtered = newEntities.filter { $0[self.sectionKey!] == sectionName }
-
+					
 					if self.sectionsManager.containsSection(with: sectionName) {
 						let sectionIndex = self.sectionsManager.indexOfSection(withSectionName: sectionName)!
 						insert(filtered, toSectionWithName: sectionName, sectionIndex: sectionIndex)
-
+						
 					}
-
+					
 					for entity in filtered {
 						newEntities.remove(at: newEntities.index(of: entity)!)
 					}
-
+					
 				}
 				
 			}
 			
-			
-			if endUpdate, callModelDelegateMethods {
-				self.modelDidChangeContent(for: .insert)
+		}
+		
+		if callModelDelegateMethods {
+			self.addModelOperation(with: BlockOperation(block: { (finished) in
+				self.dispatchQueue.async(flags: .barrier) {
+					inserMethod()
+					finished()
+				}
+			})) {
+				self.checkIsMainThread(isMainThread, completion: completion)
 			}
 			
-			self.checkIsMainThread(isMainThread, completion: finished)
-			
+		}
+		else {
+			self.addModelOperation(with: BlockOperation(block: { (finished) in
+				self.dispatchQueue.async(flags: .barrier) {
+					inserMethod()
+					finished()
+				}
+			}), callDelegate: false) {
+				self.checkIsMainThread(isMainThread, completion: completion)
+			}
 		}
 		
 	}
 	
 	//MARK: - Move methods
 
-	public func moveEntity(at indexPath: IndexPath, to newIndexPath: IndexPath, isUserDriven: Bool, beginUpdate: Bool = true, endUpdate: Bool = true, finished:(() -> ())? = nil) {
+	public func moveEntity(at indexPath: IndexPath, to newIndexPath: IndexPath, isUserDriven: Bool, completion:(() -> ())? = nil) {
 		
 		let isMainThread = Thread.isMainThread
 
-		dispatchQueue.async(flags: .barrier) {
+		func moveMethod() {
 
-			if beginUpdate, !isUserDriven {
-				self.modelWillChangeContent(for: .insert)
+			let entity = self.sectionsManager.remove(at: indexPath)
+				self.sectionsManager.insert(entity, at: newIndexPath)
+				
+				if !isUserDriven {
+					self.model(didChange: [entity], at: [indexPath], for: .move, newIndexPaths: [newIndexPath])
+				}
+				
+		}
+		
+		if isUserDriven {
+			self.addModelOperation(with: BlockOperation(block: { (finished) in
+				self.dispatchQueue.async(flags: .barrier) {
+					moveMethod()
+					finished()
+				}
+			}), callDelegate: false) {
+				self.checkIsMainThread(isMainThread, completion: completion)
 			}
-
-		let entity = self.sectionsManager.remove(at: indexPath)
-		self.sectionsManager.insert(entity, at: newIndexPath)
 			
-			if !isUserDriven {
-				self.model(didChange: [entity], at: [indexPath], for: .move, newIndexPaths: [newIndexPath])
+		}
+		else {
+			self.addModelOperation(with: BlockOperation(block: { (finished) in
+				self.dispatchQueue.async(flags: .barrier) {
+					moveMethod()
+					finished()
+				}
+			})) {
+				self.checkIsMainThread(isMainThread, completion: completion)
 			}
-			
-			if endUpdate, !isUserDriven {
-				self.modelDidChangeContent(for: .insert)
-			}
-			
-			self.checkIsMainThread(isMainThread, completion: finished)
-
 		}
 	}
 	
 	//MARK: - Update methods
 
-	public func update(at indexPath: IndexPath, mutate: @escaping (inout Entity) -> Void, finished: (() -> ())? = nil) {
+	public func update(at indexPath: IndexPath, mutate: @escaping (inout Entity) -> Void, completion: (() -> Void)?) {
 		
 		let isMainThread = Thread.isMainThread
 
-		dispatchQueue.async(flags: .barrier) {
-			
-			guard var entity = self.sectionsManager[indexPath] else {
-				fatalError("IndexPath is Out of range")
-			}
-			mutate(&entity)
-			self.sectionsManager[indexPath] = entity
-			
-			self.model(didChange: [entity], at: [indexPath], for: .update, newIndexPaths: nil)
-			
-			self.checkIsMainThread(isMainThread) {
-				finished?()
-			}
+		self.addModelOperation(with: BlockOperation(block: { (finished) in
+			self.dispatchQueue.async(flags: .barrier) {
+				
+				guard var entity = self.sectionsManager[indexPath] else {
+					fatalError("IndexPath is Out of range")
+				}
+				mutate(&entity)
 
+				self.sectionsManager[indexPath] = entity
+				
+				self.model(didChange: [entity], at: [indexPath], for: .update, newIndexPaths: nil)
+				
+				finished()
+			}
+		}), callDelegate: false) {
+			self.checkIsMainThread(isMainThread) {
+				completion?()
+			}
 		}
+
 	}
+	
+	public func update(_ entity: Entity, mutate: @escaping (inout Entity) -> Void, completion: (() -> Void)?) {
+		let isMainThread = Thread.isMainThread
+		
+		self.addModelOperation(with: BlockOperation(block: { (finished) in
+			self.dispatchQueue.async(flags: .barrier) {
+				var entity = entity
+
+				mutate(&entity)
+				let indexPath = self.privateIndexPath(of: entity)!
+				self.sectionsManager[indexPath] = entity
+				self.model(didChange: [entity], at: [indexPath], for: .update, newIndexPaths: nil)
+				
+				finished()
+			}
+		}), callDelegate: false) {
+			self.checkIsMainThread(isMainThread) {
+				completion?()
+			}
+		}
+
+	}
+	
 	
 	//MARK: - Remove methods
 	
-	public func remove(at indexPath: IndexPath, removeEmptySection: Bool, beginUpdate: Bool = true, endUpdate: Bool = true, finished: ((Entity) -> ())? = nil) {
+	public func remove(at indexPath: IndexPath, removeEmptySection: Bool, completion: ((Entity) -> ())? = nil) {
 		
 		let isMainThread = Thread.isMainThread
 
-		self.dispatchQueue.async(flags: .barrier) {
-			
-			if beginUpdate {
-				self.modelWillChangeContent(for: .delete)
+		var removedEntity: Entity!
+		
+		self.addModelOperation(with: BlockOperation(block: { (finished) in
+			self.dispatchQueue.async(flags: .barrier) {
+				
+				let sectionIndex = indexPath.section
+				
+				let entity = self.sectionsManager.remove(at: indexPath)
+				removedEntity = entity
+				
+				if let index = self.entitiesUniqueValue.index(of: entity.uniqueValue) {
+					self.entitiesUniqueValue.remove(at: index)
+				}
+				
+				if removeEmptySection, let section = self.sectionsManager[sectionIndex], section.isEmpty {
+					let section = self.sectionsManager.remove(at: sectionIndex)
+					self.model(didChange: section, atSectionIndex: sectionIndex, for: .delete, newSectionIndex: nil)
+				}
+				else {
+					self.model(didChange: [entity], at: [indexPath], for: .delete, newIndexPaths: nil)
+				}
+				
+				finished()
 			}
-			
-			let sectionIndex = indexPath.section
-			
-			let entity = self.sectionsManager.remove(at: indexPath)
-			
-			if let index = self.entitiesUniqueValue.index(of: entity.uniqueValue) {
-				self.entitiesUniqueValue.remove(at: index)
-			}
-			
-			if removeEmptySection, let section = self.sectionsManager[sectionIndex], section.isEmpty {
-				let section = self.sectionsManager.remove(at: sectionIndex)
-				self.model(didChange: section, atSectionIndex: sectionIndex, for: .delete, newSectionIndex: nil)
-			}
-			else {
-				self.model(didChange: [entity], at: [indexPath], for: .delete, newIndexPaths: nil)
-			}
-			
-			
-			if endUpdate {
-				self.modelDidChangeContent(for: .delete)
-			}
-			
+		})) {
 			self.checkIsMainThread(isMainThread) {
-				finished?(entity)
+				completion?(removedEntity)
 			}
 		}
+
 	}
 	
-	public func remove(_ entity: Entity, removeEmptySection: Bool, beginUpdate: Bool = true, endUpdate: Bool = true, finished: ((Entity) -> ())? = nil) {
+	public func remove(_ entity: Entity, removeEmptySection: Bool, completion: ((Entity) -> ())? = nil) {
 		
 		if let indexPath = self.indexPath(of: entity) {
-			self.remove(at: indexPath, removeEmptySection: removeEmptySection, beginUpdate: beginUpdate, endUpdate: endUpdate, finished: finished)
+			self.remove(at: indexPath, removeEmptySection: removeEmptySection, completion: completion)
 		}
 		else {
 			print("Index out of range")
 		}
 	}
 
-	public func removeAllEntities(atSection sectionIndex: Int, beginUpdate: Bool = true, endUpdate: Bool = true, finished: (([Entity]) -> ())? = nil) {
+	public func removeAllEntities(atSection sectionIndex: Int, completion: (() -> ())? = nil) {
 		
 		let isMainThread = Thread.isMainThread
-
-		self.dispatchQueue.async(flags: .barrier) {
-			
-			if beginUpdate {
-				self.modelWillChangeContent(for: .delete)
+		
+		
+		self.addModelOperation(with: BlockOperation(block: { (finished) in
+			self.dispatchQueue.async(flags: .barrier) {
+				
+				let entitiesToRemove = self.sectionsManager[sectionIndex]?.entities ?? []
+				let lastIndex = entitiesToRemove.isEmpty ? 0 : entitiesToRemove.count-1
+				let removedIndexPaths = IndexPath.indexPaths(in: 0...lastIndex, atSection: sectionIndex)
+				
+				self.sectionsManager.remvoeAllEntities(atSection: sectionIndex)
+				
+				self.model(didChange: entitiesToRemove, at: removedIndexPaths, for: .delete, newIndexPaths: nil)
+				
+				finished()
+				
 			}
-			
-			let removedEntities = self.sectionsManager[sectionIndex]?.entities ?? []
-			let lastIndex = removedEntities.isEmpty ? 0 : removedEntities.count-1
-			let removedIndexPaths = IndexPath.indexPaths(in: 0...lastIndex, atSection: sectionIndex)
-			
-			self.sectionsManager.remvoeAllEntities(atSection: sectionIndex)
-			
-			self.model(didChange: removedEntities, at: removedIndexPaths, for: .delete, newIndexPaths: nil)
-			
-			if endUpdate {
-				self.modelDidChangeContent(for: .delete)
-			}
-			
+		})) {
 			self.checkIsMainThread(isMainThread) {
-				finished?(removedEntities)
+				completion?()
 			}
-
 		}
-		
+
 	}
 	
-	public func removeSection(at sectionIndex: Int, beginUpdate: Bool = true, endUpdate: Bool = true, finished: ((SectionInfo<Entity>) -> ())? = nil) {
+	public func removeSection(at sectionIndex: Int, completion: ((SectionInfo<Entity>) -> ())? = nil) {
 		
 		let isMainThread = Thread.isMainThread
 		
-		self.dispatchQueue.async(flags: .barrier) {
-			
-			if beginUpdate {
-				self.modelWillChangeContent(for: .delete)
+		var removedSection: SectionInfo<Entity>!
+		
+		self.addModelOperation(with: BlockOperation(block: { (finished) in
+			self.dispatchQueue.async(flags: .barrier) {
+				
+				let section = self.sectionsManager.remove(at: sectionIndex)
+				self.model(didChange: section, atSectionIndex: sectionIndex, for: .delete, newSectionIndex: nil)
+				removedSection = section
+				finished()
 			}
-			
-			let section = self.sectionsManager.remove(at: sectionIndex)
-			self.model(didChange: section, atSectionIndex: sectionIndex, for: .delete, newSectionIndex: nil)
-			
-			if endUpdate {
-				self.modelDidChangeContent(for: .delete)
-			}
-			
+
+		})) {
 			self.checkIsMainThread(isMainThread) {
-				finished?(section)
+				completion?(removedSection)
 			}
-
 		}
+
 	}
 	
-	public func removeAll(finished: (() -> ())?) {
+	public func removeAll(completion: (() -> ())?) {
 		
 		let isMainThread = Thread.isMainThread
-
-		dispatchQueue.async(flags: .barrier) {
-			
-			self.sectionsManager.removeAll()
-			self.checkIsMainThread(isMainThread, completion: finished)
+		
+		self.addModelOperation(with: BlockOperation(block: { (finished) in
+			self.dispatchQueue.async(flags: .barrier) {
+				
+				self.sectionsManager.removeAll()
+				finished()
+			}
+		}), callDelegate: false) {
+			self.checkIsMainThread(isMainThread, completion: completion)
 		}
-	}
 
-	//MARK: - Get Section
-	
-	public func section(at sectionIndex: Int) -> SectionInfo<Entity>? {
-		
-		var section: SectionInfo<Entity>?
-		
-		self.dispatchQueue.sync {
-			section = self.sectionsManager[sectionIndex]
-		}
-		
-		return section
-	}
-	
-	//MARK: - Get Entity
-
-	public func entity(at indexPath: IndexPath) -> Entity? {
-		
-		var entity: Entity?
-		
-		self.dispatchQueue.sync {
-			entity = self.sectionsManager[indexPath]
-		}
-		
-		return entity
 	}
 	
 	//MARK: - Sort methods
 
-	public func sortEntities(atSection sectionIndex: Int, by sort: @escaping ((Entity, Entity) -> Bool), beginUpdate: Bool = true, endUpdate: Bool = true, finished: ((_ newIndexPaths: [IndexPath]) -> Void)?) {
+	public func sortEntities(atSection sectionIndex: Int, by sort: @escaping ((Entity, Entity) -> Bool), completion: (() -> Void)? = nil) {
 		
 		let isMainThread = Thread.isMainThread
-
-		self.dispatchQueue.async(flags: .barrier) {
-			if beginUpdate {
-				self.modelWillChangeContent(for: .move)
-			}
-			
+		
+		func sortMethod() {
 			let entities = self.sectionsManager.entities(atSection: sectionIndex)
 			let result = self.sectionsManager.sortEntities(atSection: sectionIndex, by: sort)
 			self.model(didChange: entities, at: result.oldIndexPaths, for: .move, newIndexPaths: result.newIndexPaths)
-			
-			if endUpdate {
-				self.modelDidChangeContent(for: .move)
-			}
-			
-			self.checkIsMainThread(isMainThread) {
-				finished?(result.newIndexPaths)
-			}
-
 		}
 		
+		self.addModelOperation(with: BlockOperation(block: { (finished) in
+			self.dispatchQueue.async(flags: .barrier) {
+				sortMethod()
+				finished()
+			}
+		})) {
+			self.checkIsMainThread(isMainThread) {
+				completion?()
+			}
+		}
 	}
 	
-	public func reorder(finished: (() -> Void)?) {
+	public func reorder(completion: (() -> Void)?) {
 		guard self.sortEntities != nil else { return }
 		
 		let firstIndex = 0
@@ -719,62 +738,58 @@ public class Model<Entity: EntityProtocol & Hashable> {
 		
 		let isMainThread = Thread.isMainThread
 		
-		self.dispatchQueue.async(flags: .barrier) {
-			if lastIndex == 0 {
-				self.sortEntities(atSection: firstIndex, by: self.sortEntities!, beginUpdate: true, endUpdate: true, finished: nil)
-			}
-			else {
-				for index in firstIndex...lastIndex {
-					
-					if index == firstIndex {
-						self.sortEntities(atSection: index, by: self.sortEntities!, beginUpdate: true, endUpdate: false, finished: nil)
-					}
-					else if index == lastIndex {
-						self.sortEntities(atSection: index, by: self.sortEntities!, beginUpdate: false, endUpdate: true, finished: nil)
-					}
-					else {
-						self.sortEntities(atSection: index, by: self.sortEntities!, beginUpdate: false, endUpdate: false, finished: nil)
-					}
-					
-				}
-			}
-			
-			self.checkIsMainThread(isMainThread, completion: finished)
-			
+		func sortMethod(forSection sectionIndex: Int) {
+			let entities = self.sectionsManager.entities(atSection: sectionIndex)
+			let result = self.sectionsManager.sortEntities(atSection: sectionIndex, by: self.sortEntities!)
+			self.model(didChange: entities, at: result.oldIndexPaths, for: .move, newIndexPaths: result.newIndexPaths)
 		}
+		
+		
+		self.addModelOperation(with: BlockOperation(block: { (finished) in
+			self.dispatchQueue.async(flags: .barrier) {
+				if lastIndex == 0 {
+					sortMethod(forSection: firstIndex)
+				}
+				else {
+					for index in firstIndex...lastIndex {
+						sortMethod(forSection: index)
+					}
+				}
+				
+				finished()
+			}
+		})) {
+			self.checkIsMainThread(isMainThread, completion: completion)
+		}
+		
 	}
 	
-	public func sortSections(by sort: @escaping ((SectionInfo<Entity>, SectionInfo<Entity>) -> Bool), beginUpdate: Bool = true, endUpdate: Bool = true, finished: ((_ newIndexPaths: [Int]) -> Void)?) {
+	public func sortSections(by sort: @escaping ((SectionInfo<Entity>, SectionInfo<Entity>) -> Bool), completion: (() -> Void)? = nil) {
 		
 		let isMainThread = Thread.isMainThread
 
-		self.dispatchQueue.async(flags: .barrier) {
-			if beginUpdate {
-				self.modelWillChangeContent(for: .move)
+		self.addModelOperation(with: BlockOperation(block: { (finished) in
+			self.dispatchQueue.async(flags: .barrier) {
+				let oldSections = self.sectionsManager.sections
+				
+				let result = self.sectionsManager.sortSections(by: sort)
+				
+				let oldIndexes = result.oldIndexes
+				let newIndexes = result.newIndexes
+				
+				for i in 0...(oldSections.count-1) {
+					let section = oldSections[i]
+					let oldIndex = oldIndexes[i]
+					let newIndex = newIndexes[i]
+					self.model(didChange: section, atSectionIndex: oldIndex, for: .move, newSectionIndex: newIndex)
+				}
+				
+				finished()
 			}
-			
-			let oldSections = self.sectionsManager.sections
-			
-			let result = self.sectionsManager.sortSections(by: sort)
-			
-			let oldIndexes = result.oldIndexes
-			let newIndexes = result.newIndexes
-			
-			for i in 0...(oldSections.count-1) {
-				let section = oldSections[i]
-				let oldIndex = oldIndexes[i]
-				let newIndex = newIndexes[i]
-				self.model(didChange: section, atSectionIndex: oldIndex, for: .move, newSectionIndex: newIndex)
-			}
-			
-			if endUpdate {
-				self.modelDidChangeContent(for: .move)
-			}
-			
+		})) {
 			self.checkIsMainThread(isMainThread) {
-				finished?(result.newIndexes)
+				completion?()
 			}
-
 		}
 		
 	}
@@ -820,19 +835,44 @@ public class Model<Entity: EntityProtocol & Hashable> {
 		return entities
 	}
 	
+	//MARK: - Get Section
+	
+	public func section(at sectionIndex: Int) -> SectionInfo<Entity>? {
+		
+		var section: SectionInfo<Entity>?
+		
+		self.dispatchQueue.sync {
+			section = self.sectionsManager[sectionIndex]
+		}
+		
+		return section
+	}
+	
+	//MARK: - Get Entity
+	
+	public func entity(at indexPath: IndexPath) -> Entity? {
+		
+		var entity: Entity?
+		
+		self.dispatchQueue.sync {
+			entity = self.sectionsManager[indexPath]
+		}
+		
+		return entity
+	}
+	
 	//MARK: - Delegate methods
 	
-	private func modelWillChangeContent(for type: ModelChangeType) {
+	private func modelWillChangeContent() {
 		DispatchQueue.main.async {
-			self.delegate?.modelWillChangeContent(for: type)
+			self.delegate?.modelWillChangeContent()
 		}
 	}
 	
-	private func modelDidChangeContent(for type: ModelChangeType) {
+	private func modelDidChangeContent() {
 		DispatchQueue.main.async {
-			self.delegate?.modelDidChangeContent(for: type)
+			self.delegate?.modelDidChangeContent()
 		}
-		
 	}
 	
 	private func model(didChange entities: [EntityProtocol], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) {
@@ -845,6 +885,17 @@ public class Model<Entity: EntityProtocol & Hashable> {
 		DispatchQueue.main.async {
 			self.delegate?.model(didChange: sectionInfo, atSectionIndex: sectionIndex, for: type, newSectionIndex: newSectionIndex)
 		}
+	}
+	
+	private func addModelOperation(with blockOperation: BlockOperation, callDelegate: Bool = true, completion: @escaping (() -> Void)) {
+		let modelOperation: AOperation
+		if callDelegate {
+			modelOperation = ModelOperation(delegate: self.delegate, blockOperation: blockOperation, completion: completion)
+		}
+		else {
+			modelOperation = blockOperation
+		}
+		self.operationQueue.addOperation(modelOperation)
 	}
 	
 	private func checkIsMainThread(_ isMainThread: Bool, completion: (() -> Void)?) {

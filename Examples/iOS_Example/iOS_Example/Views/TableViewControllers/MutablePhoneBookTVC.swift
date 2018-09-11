@@ -122,7 +122,7 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 					contact.firstName = firstName
 					contact.lastName = lastName
 					contact.phone = phone
-				}, finished: {
+				}, completion: {
 					if let indexPath = self.tableView.indexPathForSelectedRow {
 						self.tableView.deselectRow(at: indexPath, animated: true)
 					}

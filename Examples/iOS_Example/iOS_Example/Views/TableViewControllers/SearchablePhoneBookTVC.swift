@@ -82,7 +82,7 @@ class SearchablePhoneBookTVC: SimplePhoneBookTVC {
 		{
 			if (self.tableView.isDragging == false && self.tableView.isDecelerating == false)
 			{
-				self.startIconDownload(entity!, for: indexPath)
+				self.startIconDownload(entity!)
 			}
 			
 			// if a download is deferred or in progress, return a placeholder image

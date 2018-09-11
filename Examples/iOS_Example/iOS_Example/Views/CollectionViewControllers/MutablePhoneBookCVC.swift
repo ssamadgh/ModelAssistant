@@ -144,7 +144,7 @@ class MutablePhoneBookCVC: SimplePhoneBookCVC {
 					contact.firstName = firstName
 					contact.lastName = lastName
 					contact.phone = phone
-				}, finished: {
+				}, completion: {
 					
 					if let indexPath = self.collectionView?.indexPathsForSelectedItems?.first {
 						self.collectionView?.deselectItem(at: indexPath, animated: true)

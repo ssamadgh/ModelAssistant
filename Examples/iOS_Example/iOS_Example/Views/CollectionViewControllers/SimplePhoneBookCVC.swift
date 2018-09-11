@@ -141,7 +141,7 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 		
 		self.model.update(at: self.model.indexPath(of: entity as! Contact)!, mutate: { (contact) in
 			contact.image = entity.image
-		})
+		}, completion: nil)
 		
 		// Remove the IconDownloader from the in progress list.
 		// This will result in it being deallocated.

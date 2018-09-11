@@ -31,24 +31,24 @@ class SortablePhoneBookTVC: SimplePhoneBookTVC {
 				
 		alertController.addAction(UIAlertAction(title: "First Name A-Z", style: .default, handler: { (action) in
 			self.model.sortEntities = { $0.firstName < $1.firstName }
-			self.model.reorder(finished: nil)
+			self.model.reorder(completion: nil)
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "First Name Z-A", style: .default, handler: { (action) in
 			self.model.sortEntities = { $0.firstName > $1.firstName }
-			self.model.reorder(finished: nil)
+			self.model.reorder(completion: nil)
 			
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "Last Name A-Z", style: .default, handler: { (action) in
 			self.model.sortEntities = { $0.lastName < $1.lastName }
-			self.model.reorder(finished: nil)
+			self.model.reorder(completion: nil)
 			
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "Last Name Z-A", style: .default, handler: { (action) in
 			self.model.sortEntities = { $0.lastName > $1.lastName }
-			self.model.reorder(finished: nil)
+			self.model.reorder(completion: nil)
 			
 		}))
 		
