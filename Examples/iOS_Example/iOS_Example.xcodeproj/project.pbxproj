@@ -20,6 +20,7 @@
 		E4069F64213C68CC009FCD7A /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F63213C68CC009FCD7A /* MainTableViewController.swift */; };
 		E4069F66213C7087009FCD7A /* SimplePhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F65213C7087009FCD7A /* SimplePhoneBookTVC.swift */; };
 		E4069F69213C70BB009FCD7A /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F68213C70BB009FCD7A /* Contact.swift */; };
+		E415B74A214A2AA10064B041 /* CoreDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415B749214A2AA00064B041 /* CoreDataModel.swift */; };
 		E424DD8A213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E424DD89213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift */; };
 		E424DD8E213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E424DD8D213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift */; };
 		E47F1AAA213D0A6400708DFF /* PhoneBook.json in Resources */ = {isa = PBXBuildFile; fileRef = E47F1AA9213D0A6400708DFF /* PhoneBook.json */; };
@@ -44,16 +45,12 @@
 		E4EC83CA2145948B0063B4BB /* MutablePhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC83C92145948B0063B4BB /* MutablePhoneBookTVC.swift */; };
 		E4EC83CC214596140063B4BB /* PhoneBook_Mutable.json in Resources */ = {isa = PBXBuildFile; fileRef = E4EC83CB214596140063B4BB /* PhoneBook_Mutable.json */; };
 		E4EC83CE21462CC50063B4BB /* FilteredPhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC83CD21462CC50063B4BB /* FilteredPhoneBookTVC.swift */; };
-
 		E4EC83D12146355B0063B4BB /* PhoneBookCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC83D02146355B0063B4BB /* PhoneBookCVC.swift */; };
-
 		E4EC83D5214638C90063B4BB /* SortablePhoneBookCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC83D4214638C90063B4BB /* SortablePhoneBookCVC.swift */; };
 		E4EC83D921463ECF0063B4BB /* FilteredPhoneBookCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC83D821463ECF0063B4BB /* FilteredPhoneBookCVC.swift */; };
 		E4EC83DB21463FD50063B4BB /* SearchablePhoneBookCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC83DA21463FD50063B4BB /* SearchablePhoneBookCVC.swift */; };
 		E4EC83DD214642360063B4BB /* MutablePhoneBookCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC83DC214642360063B4BB /* MutablePhoneBookCVC.swift */; };
-
 		E4EC83E1214687FE0063B4BB /* ThreadSafePhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC83E0214687FE0063B4BB /* ThreadSafePhoneBookTVC.swift */; };
-
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,6 +117,7 @@
 		E4069F63213C68CC009FCD7A /* MainTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewController.swift; sourceTree = "<group>"; };
 		E4069F65213C7087009FCD7A /* SimplePhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplePhoneBookTVC.swift; sourceTree = "<group>"; };
 		E4069F68213C70BB009FCD7A /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		E415B749214A2AA00064B041 /* CoreDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataModel.swift; sourceTree = "<group>"; };
 		E424DD89213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionedPhoneBookTVC.swift; sourceTree = "<group>"; };
 		E424DD8D213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationPhoneBookTVC.swift; sourceTree = "<group>"; };
 		E47F1AA0213CF7F600708DFF /* Model.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Model.xcodeproj; path = ../../Model.xcodeproj; sourceTree = "<group>"; };
@@ -145,18 +143,12 @@
 		E4EC83C92145948B0063B4BB /* MutablePhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutablePhoneBookTVC.swift; sourceTree = "<group>"; };
 		E4EC83CB214596140063B4BB /* PhoneBook_Mutable.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PhoneBook_Mutable.json; sourceTree = "<group>"; };
 		E4EC83CD21462CC50063B4BB /* FilteredPhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredPhoneBookTVC.swift; sourceTree = "<group>"; };
-
-
 		E4EC83D02146355B0063B4BB /* PhoneBookCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneBookCVC.swift; sourceTree = "<group>"; };
-
 		E4EC83D4214638C90063B4BB /* SortablePhoneBookCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortablePhoneBookCVC.swift; sourceTree = "<group>"; };
 		E4EC83D821463ECF0063B4BB /* FilteredPhoneBookCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredPhoneBookCVC.swift; sourceTree = "<group>"; };
 		E4EC83DA21463FD50063B4BB /* SearchablePhoneBookCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchablePhoneBookCVC.swift; sourceTree = "<group>"; };
 		E4EC83DC214642360063B4BB /* MutablePhoneBookCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutablePhoneBookCVC.swift; sourceTree = "<group>"; };
-
 		E4EC83E0214687FE0063B4BB /* ThreadSafePhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadSafePhoneBookTVC.swift; sourceTree = "<group>"; };
-
-
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -280,6 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				E4B30772214117600034F169 /* CustomEntityProtocol.swift */,
+				E415B749214A2AA00064B041 /* CoreDataModel.swift */,
 				E4069F67213C70A7009FCD7A /* Entities */,
 			);
 			path = Model;
@@ -299,10 +292,7 @@
 			children = (
 				E4EC83D721463EB10063B4BB /* CollectionViewCell */,
 				E4EC83D621463E980063B4BB /* CollectionReusableView */,
-
-
 				E4EC83D02146355B0063B4BB /* PhoneBookCVC.swift */,
-
 				E4069F52213BE6A2009FCD7A /* SimplePhoneBookCVC.swift */,
 				E4EC83D4214638C90063B4BB /* SortablePhoneBookCVC.swift */,
 				E4EC83602143EDE20063B4BB /* SectionedPhoneBookCVC.swift */,
@@ -325,10 +315,7 @@
 				E4EC837221443CCA0063B4BB /* SearchablePhoneBookTVC.swift */,
 				E4EC83C92145948B0063B4BB /* MutablePhoneBookTVC.swift */,
 				E424DD8D213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift */,
-
 				E4EC83E0214687FE0063B4BB /* ThreadSafePhoneBookTVC.swift */,
-
-
 			);
 			path = TableViewControllers;
 			sourceTree = "<group>";
@@ -559,16 +546,14 @@
 				E4069F57213C3B78009FCD7A /* UITableViewController+Extension.swift in Sources */,
 				E4069F53213BE6A2009FCD7A /* SimplePhoneBookCVC.swift in Sources */,
 				E4EC83502143DDDD0063B4BB /* CollectionViewCell.swift in Sources */,
+				E415B74A214A2AA10064B041 /* CoreDataModel.swift in Sources */,
 				E4EC837521443D4D0063B4BB /* JsonService.swift in Sources */,
 				E4EC8365214404B70063B4BB /* CollectionReusableView.swift in Sources */,
 				E4069F15213BE2FF009FCD7A /* AppDelegate.swift in Sources */,
 				E424DD8A213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift in Sources */,
 				E4EC836A214430440063B4BB /* BasicTableViewController.swift in Sources */,
 				E4EC83CE21462CC50063B4BB /* FilteredPhoneBookTVC.swift in Sources */,
-
-
 				E4EC83D12146355B0063B4BB /* PhoneBookCVC.swift in Sources */,
-
 				E4EC83D921463ECF0063B4BB /* FilteredPhoneBookCVC.swift in Sources */,
 				E4069F66213C7087009FCD7A /* SimplePhoneBookTVC.swift in Sources */,
 			);

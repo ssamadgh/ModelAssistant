@@ -61,7 +61,8 @@ public extension ModelDelegate {
 
 //MARK: - Model class
 
-public class Model<Entity: EntityProtocol & Hashable> {
+public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
+	
 	
 	private let dispatchQueue = DispatchQueue(label: "com.model.ConcirrentGCD.DispatchQueue", attributes: DispatchQueue.Attributes.concurrent)
 	
@@ -75,7 +76,7 @@ public class Model<Entity: EntityProtocol & Hashable> {
 		}
 	}
 	
-	public subscript(index: Int) -> SectionInfo<Entity>? {
+	public subscript(index: Int) -> ModelSectionInfo? {
 		get {
 			return self.section(at: index)
 		}
@@ -89,7 +90,7 @@ public class Model<Entity: EntityProtocol & Hashable> {
 	
 	public var sortEntities: ((Entity, Entity) -> Bool)?
 	
-	public var sortSections: ((SectionInfo<Entity>, SectionInfo<Entity>) -> Bool)?
+	public var sortSections: ((ModelSectionInfo, ModelSectionInfo) -> Bool)?
 
 	public var filter: ((Entity) -> Bool)?
 	
@@ -126,7 +127,7 @@ public class Model<Entity: EntityProtocol & Hashable> {
 		return numberOfSections
 	}
 	
-	public var numberOfFetchedEntities: Int {
+	var numberOfFetchedEntities: Int {
 		var numberOfFetchedEntities: Int!
 		
 		self.dispatchQueue.sync {
@@ -190,11 +191,11 @@ public class Model<Entity: EntityProtocol & Hashable> {
 		return diff == 0 ? self.fetchBatchSize : diff
 	}
 	
-	public func index(of section: SectionInfo<Entity>) -> Int? {
+	public func index(of section: ModelSectionInfo) -> Int? {
 		var index: Int?
 		
 		self.dispatchQueue.sync {
-			index = self.sectionsManager.index(of: section)
+			index = self.sectionsManager.index(of: section as! SectionInfo<Entity>)
 		}
 		
 		return index
@@ -667,7 +668,7 @@ public class Model<Entity: EntityProtocol & Hashable> {
 
 	}
 	
-	public func removeSection(at sectionIndex: Int, completion: ((SectionInfo<Entity>) -> ())? = nil) {
+	public func removeSection(at sectionIndex: Int, completion: ((ModelSectionInfo) -> ())? = nil) {
 		
 		let isMainThread = Thread.isMainThread
 		
@@ -764,7 +765,7 @@ public class Model<Entity: EntityProtocol & Hashable> {
 		
 	}
 	
-	public func sortSections(by sort: @escaping ((SectionInfo<Entity>, SectionInfo<Entity>) -> Bool), completion: (() -> Void)? = nil) {
+	public func sortSections(by sort: @escaping ((ModelSectionInfo, ModelSectionInfo) -> Bool), completion: (() -> Void)? = nil) {
 		
 		let isMainThread = Thread.isMainThread
 
@@ -818,26 +819,9 @@ public class Model<Entity: EntityProtocol & Hashable> {
 		return entities
 	}
 	
-	public func getAllEntities(sortedBy sort: ((Entity, Entity) -> Bool)?) -> [Entity] {
-		var entities: [Entity] = []
-		
-		self.dispatchQueue.sync {
-			for i in 0...(self.numberOfSections-1) {
-				let sectionEntities = self.sectionsManager.entities(atSection: i)
-				entities.append(contentsOf: sectionEntities)
-			}
-		}
-		
-		if sort != nil {
-			entities.sort(by: sort!)
-		}
-		
-		return entities
-	}
-	
 	//MARK: - Get Section
 	
-	public func section(at sectionIndex: Int) -> SectionInfo<Entity>? {
+	public func section(at sectionIndex: Int) -> ModelSectionInfo? {
 		
 		var section: SectionInfo<Entity>?
 		
@@ -861,6 +845,23 @@ public class Model<Entity: EntityProtocol & Hashable> {
 		return entity
 	}
 	
+	public func getAllEntities(sortedBy sort: ((Entity, Entity) -> Bool)?) -> [Entity] {
+		var entities: [Entity] = []
+		
+		self.dispatchQueue.sync {
+			for i in 0...(self.numberOfSections-1) {
+				let sectionEntities = self.sectionsManager.entities(atSection: i)
+				entities.append(contentsOf: sectionEntities)
+			}
+		}
+		
+		if sort != nil {
+			entities.sort(by: sort!)
+		}
+		
+		return entities
+	}
+
 	//MARK: - Delegate methods
 	
 	private func modelWillChangeContent() {

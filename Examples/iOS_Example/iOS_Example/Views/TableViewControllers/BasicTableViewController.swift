@@ -100,7 +100,7 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 	
 	// this method is used in case the user scrolled into a set of cells that don't have their app icons yet
 	func loadImagesForOnscreenRows() {
-		if self.model.numberOfFetchedEntities > 0 {
+		if !self.model.isEmpty {
 			let visiblePaths = self.tableView.indexPathsForVisibleRows ?? []
 			for indexPath in visiblePaths {
 				guard let entity = self.model[indexPath] else { return }

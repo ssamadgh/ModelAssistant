@@ -167,7 +167,8 @@ class PhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 	
 	// this method is used in case the user scrolled into a set of cells that don't have their app icons yet
 	func loadImagesForOnscreenRows() {
-		if self.model.numberOfFetchedEntities > 0 {
+		
+		if !self.model.isEmpty {
 			let visiblePaths = self.collectionView?.indexPathsForVisibleItems ?? []
 			for indexPath in visiblePaths {
 				let entity = self.model[indexPath]

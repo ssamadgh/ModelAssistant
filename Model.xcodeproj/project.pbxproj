@@ -20,6 +20,7 @@
 		E410FEF3213819D8006F22EA /* ModelTestsWithSectionFiltered.swift in Sources */ = {isa = PBXBuildFile; fileRef = E410FEF2213819D8006F22EA /* ModelTestsWithSectionFiltered.swift */; };
 		E410FEF5213819E0006F22EA /* ModelTestsWithSectionSorted.swift in Sources */ = {isa = PBXBuildFile; fileRef = E410FEF4213819E0006F22EA /* ModelTestsWithSectionSorted.swift */; };
 		E410FEF7213819F3006F22EA /* ModelTestsWithSectionFilteredAndSorted.swift in Sources */ = {isa = PBXBuildFile; fileRef = E410FEF6213819F3006F22EA /* ModelTestsWithSectionFilteredAndSorted.swift */; };
+		E415B74E214A2C890064B041 /* ModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415B74D214A2C890064B041 /* ModelProtocol.swift */; };
 		E47716242133054A00B7E2BE /* Model.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E477161A2133054900B7E2BE /* Model.framework */; };
 		E47716292133054A00B7E2BE /* ModelTestsBasic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47716282133054A00B7E2BE /* ModelTestsBasic.swift */; };
 		E477162B2133054A00B7E2BE /* Model.h in Headers */ = {isa = PBXBuildFile; fileRef = E477161D2133054900B7E2BE /* Model.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -79,6 +80,7 @@
 		E410FEF2213819D8006F22EA /* ModelTestsWithSectionFiltered.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTestsWithSectionFiltered.swift; sourceTree = "<group>"; };
 		E410FEF4213819E0006F22EA /* ModelTestsWithSectionSorted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTestsWithSectionSorted.swift; sourceTree = "<group>"; };
 		E410FEF6213819F3006F22EA /* ModelTestsWithSectionFilteredAndSorted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTestsWithSectionFilteredAndSorted.swift; sourceTree = "<group>"; };
+		E415B74D214A2C890064B041 /* ModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelProtocol.swift; sourceTree = "<group>"; };
 		E477161A2133054900B7E2BE /* Model.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Model.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E477161D2133054900B7E2BE /* Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
 		E47716232133054A00B7E2BE /* ModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -173,6 +175,7 @@
 				E477161D2133054900B7E2BE /* Model.h */,
 				E47716352133058A00B7E2BE /* EntityProtocol.swift */,
 				E4EC843221469FFB0063B4BB /* ModelOperation.swift */,
+				E415B74D214A2C890064B041 /* ModelProtocol.swift */,
 				E47716342133058A00B7E2BE /* Model.swift */,
 				E47716372133058A00B7E2BE /* ModelSectionInfo.swift */,
 				E47716362133058A00B7E2BE /* SectionsManager.swift */,
@@ -412,6 +415,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E477163A2133058A00B7E2BE /* EntityProtocol.swift in Sources */,
+				E415B74E214A2C890064B041 /* ModelProtocol.swift in Sources */,
 				E47716382133058A00B7E2BE /* Model.swift in Sources */,
 				E477163C2133058A00B7E2BE /* SectionsManager.swift in Sources */,
 				E4EC842221469DD20063B4BB /* URLSessionTaskManager.swift in Sources */,
