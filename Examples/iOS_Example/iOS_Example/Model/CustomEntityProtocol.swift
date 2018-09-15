@@ -11,6 +11,7 @@ import Model
 
 protocol CustomEntityProtocol: EntityProtocol {
 	
+	init?(data: [String : Any])
 	var image: UIImage? { get set}
 	var imageURL: URL { get }
 	

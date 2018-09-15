@@ -12,7 +12,7 @@ public protocol EntityProtocol {
 	
 	var uniqueValue: Int { get }
 
-	init?(data: [String: Any])
+//	init?(data: [String: Any])
 	
 	subscript (key: String) -> String? { get }
 	

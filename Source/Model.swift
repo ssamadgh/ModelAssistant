@@ -59,10 +59,88 @@ public extension ModelDelegate {
 	
 }
 
+
+
+import CoreData
+
+protocol SortProtocol {
+	
+}
+
+struct Sorten<Entity: EntityProtocol & Hashable>: SortProtocol {
+	var sort: ((Entity, Entity) -> Bool)?
+}
+
+struct CoreDataSort: SortProtocol {
+	
+	var sort: [NSSortDescriptor]
+}
+
+protocol Apple {
+	associatedtype Sort
+	
+	var sort: Sort? { get set }
+}
+
+class MYPro<Entity: EntityProtocol & Hashable>: Apple {
+		
+	
+	var sort: ((Entity, Entity) -> Bool)?
+	
+	func test() {
+//		self.sort = Sort(sort: { $0.uniqueValue > $1.uniqueValue })
+	}
+}
+
+
+class YourPro<Entity: EntityProtocol & Hashable>: Apple {
+	
+//	typealias Sort = CoreDataSort
+	
+	var sort: CoreDataSort?
+	
+	func test() {
+
+	}
+	
+}
+
+
+class View {
+	
+	var pro = MYPro<Member>()
+	
+	func prod() {
+//		self.pro.sort = CoreDataSort(sort: [])
+		
+		
+	}
+	
+}
+
+
+
+struct Member: EntityProtocol & Hashable {
+	
+	var uniqueValue: Int = 0
+	
+	subscript(key: String) -> String? {
+		return nil
+	}
+	
+	func update(with newFetechedEntity: EntityProtocol) {
+		
+	}
+	
+}
+
+
+
+
+
 //MARK: - Model class
 
 public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
-	
 	
 	private let dispatchQueue = DispatchQueue(label: "com.model.ConcirrentGCD.DispatchQueue", attributes: DispatchQueue.Attributes.concurrent)
 	
@@ -82,11 +160,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		}
 	}
 	
-	public var sectionKey: String? {
-		didSet {
-			self.hasSection = self.sectionKey != nil
-		}
-	}
+	public private (set) var sectionKey: String?
 	
 	public var sortEntities: ((Entity, Entity) -> Bool)?
 	
@@ -104,12 +178,12 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	
 	private var entitiesUniqueValue: Set<Int>
 	
-	public init(sectionName: String? = nil) {
+	public init(sectionKey: String?) {
 		operationQueue.maxConcurrentOperationCount = 1
 		entitiesUniqueValue = []
 		fetchBatchSize = 10
-		self.sectionKey = sectionName
-		self.hasSection = sectionName != nil
+		self.sectionKey = sectionKey
+		self.hasSection = sectionKey != nil
 		self.sectionsManager = SectionsManager()
 	}
 	
@@ -267,9 +341,9 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	
 	//MARK: - Insert methods
 	
-	public func insertAtFirst(_ newEntity: Entity, completion:(() -> ())? = nil) {
-		self.insert(newEntity, at: IndexPath(row: 0, section: 0), completion: completion)
-	}
+//	public func insertAtFirst(_ newEntity: Entity, completion:(() -> ())? = nil) {
+//		self.insert(newEntity, at: IndexPath(row: 0, section: 0), completion: completion)
+//	}
 	
 	public func insert(_ newEntity: Entity, at indexPath: IndexPath, completion:(() -> ())? = nil) {
 		
@@ -309,11 +383,11 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		
 	}
 	
-	public func insertAtLast(_ newEntity: Entity, completion:(() -> ())? = nil) {
-		let section = self.numberOfSections - 1
-		let row = self.numberOfEntites(at: section)
-		self.insert(newEntity, at: IndexPath(row: row, section: section), completion: completion)
-	}
+//	public func insertAtLast(_ newEntity: Entity, completion:(() -> ())? = nil) {
+//		let section = self.numberOfSections - 1
+//		let row = self.numberOfEntites(at: section)
+//		self.insert(newEntity, at: IndexPath(row: row, section: section), completion: completion)
+//	}
 	
 	public func fetch(_ entities: [Entity], completion:(() -> ())?) {
 		self.insert(entities, callModelDelegateMethods: false, completion: completion)
@@ -595,8 +669,8 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	
 	//MARK: - Remove methods
 	
-	public func remove(at indexPath: IndexPath, removeEmptySection: Bool, completion: ((Entity) -> ())? = nil) {
-		
+	public func remove(at indexPath: IndexPath, completion: ((Entity) -> ())? = nil) {
+		let removeEmptySection: Bool = true
 		let isMainThread = Thread.isMainThread
 
 		var removedEntity: Entity!
@@ -631,42 +705,42 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 
 	}
 	
-	public func remove(_ entity: Entity, removeEmptySection: Bool, completion: ((Entity) -> ())? = nil) {
+	public func remove(_ entity: Entity, completion: ((Entity) -> ())? = nil) {
 		
 		if let indexPath = self.indexPath(of: entity) {
-			self.remove(at: indexPath, removeEmptySection: removeEmptySection, completion: completion)
+			self.remove(at: indexPath, completion: completion)
 		}
 		else {
 			print("Index out of range")
 		}
 	}
 
-	public func removeAllEntities(atSection sectionIndex: Int, completion: (() -> ())? = nil) {
-		
-		let isMainThread = Thread.isMainThread
-		
-		
-		self.addModelOperation(with: BlockOperation(block: { (finished) in
-			self.dispatchQueue.async(flags: .barrier) {
-				
-				let entitiesToRemove = self.sectionsManager[sectionIndex]?.entities ?? []
-				let lastIndex = entitiesToRemove.isEmpty ? 0 : entitiesToRemove.count-1
-				let removedIndexPaths = IndexPath.indexPaths(in: 0...lastIndex, atSection: sectionIndex)
-				
-				self.sectionsManager.remvoeAllEntities(atSection: sectionIndex)
-				
-				self.model(didChange: entitiesToRemove, at: removedIndexPaths, for: .delete, newIndexPaths: nil)
-				
-				finished()
-				
-			}
-		})) {
-			self.checkIsMainThread(isMainThread) {
-				completion?()
-			}
-		}
-
-	}
+//	public func removeAllEntities(atSection sectionIndex: Int, completion: (() -> ())? = nil) {
+//		
+//		let isMainThread = Thread.isMainThread
+//		
+//		
+//		self.addModelOperation(with: BlockOperation(block: { (finished) in
+//			self.dispatchQueue.async(flags: .barrier) {
+//				
+//				let entitiesToRemove = self.sectionsManager[sectionIndex]?.entities ?? []
+//				let lastIndex = entitiesToRemove.isEmpty ? 0 : entitiesToRemove.count-1
+//				let removedIndexPaths = IndexPath.indexPaths(in: 0...lastIndex, atSection: sectionIndex)
+//				
+//				self.sectionsManager.remvoeAllEntities(atSection: sectionIndex)
+//				
+//				self.model(didChange: entitiesToRemove, at: removedIndexPaths, for: .delete, newIndexPaths: nil)
+//				
+//				finished()
+//				
+//			}
+//		})) {
+//			self.checkIsMainThread(isMainThread) {
+//				completion?()
+//			}
+//		}
+//
+//	}
 	
 	public func removeSection(at sectionIndex: Int, completion: ((ModelSectionInfo) -> ())? = nil) {
 		
@@ -796,26 +870,25 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	}
 	
 	//MARK: - filter methods
-	
-	public func filteredEntities(atSection sectionIndex: Int, with filter: ((Entity) -> Bool)) -> [Entity] {
+	public func filteredEntities(atSection sectionIndex: Int, with filter: @escaping ((Entity) -> Bool)) -> [Entity] {
 		var entities: [Entity]!
 		self.dispatchQueue.sync {
 			entities = self.sectionsManager.filteredEntities(atSection: sectionIndex, with: filter)
 		}
-		
+
 		return entities ?? []
 	}
-	
-	public func filteredEntities(with filter: ((Entity) -> Bool)) -> [Entity] {
+
+	public func filteredEntities(with filter: @escaping ((Entity) -> Bool)) -> [Entity] {
 		var entities: [Entity] = []
-		
+
 		self.dispatchQueue.sync {
 			for i in 0...(self.numberOfSections-1) {
 				let filtered = self.sectionsManager.filteredEntities(atSection: i, with: filter)
 				entities.append(contentsOf: filtered)
 			}
 		}
-		
+
 		return entities
 	}
 	

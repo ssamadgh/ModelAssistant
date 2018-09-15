@@ -117,7 +117,7 @@
 		E4069F63213C68CC009FCD7A /* MainTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewController.swift; sourceTree = "<group>"; };
 		E4069F65213C7087009FCD7A /* SimplePhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplePhoneBookTVC.swift; sourceTree = "<group>"; };
 		E4069F68213C70BB009FCD7A /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
-		E415B749214A2AA00064B041 /* CoreDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataModel.swift; sourceTree = "<group>"; };
+		E415B749214A2AA00064B041 /* CoreDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoreDataModel.swift; path = ../../../../Source/CoreDataModel.swift; sourceTree = "<group>"; };
 		E424DD89213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionedPhoneBookTVC.swift; sourceTree = "<group>"; };
 		E424DD8D213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationPhoneBookTVC.swift; sourceTree = "<group>"; };
 		E47F1AA0213CF7F600708DFF /* Model.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Model.xcodeproj; path = ../../Model.xcodeproj; sourceTree = "<group>"; };

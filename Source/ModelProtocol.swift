@@ -10,21 +10,29 @@ import Foundation
 
 public protocol ModelProtocol {
 	
-	associatedtype Entity: EntityProtocol & Hashable
+	associatedtype Entity
+	
+	associatedtype SortEntities
+
+	associatedtype SortSections
+
+	associatedtype Section
+	
+	associatedtype Filter
 	
 	var fetchBatchSize: Int { get set }
 	
 	subscript(indexPath: IndexPath) -> Entity? { get }
 	
-	subscript(index: Int) -> ModelSectionInfo?  { get }
+	subscript(index: Int) -> Section?  { get }
 	
-	var sectionKey: String? { get set }
+	var sectionKey: String? { get }
 	
-	var sortEntities: ((Entity, Entity) -> Bool)? { get set }
+	var sortEntities: SortEntities? { get set }
 	
-	var sortSections: ((ModelSectionInfo, ModelSectionInfo) -> Bool)? { get set }
+	var sortSections: SortSections? { get set }
 	
-	var filter: ((Entity) -> Bool)? { get set }
+	var filter: Filter? { get set }
 	
 	var delegate: ModelDelegate? { get set }
 	
@@ -36,24 +44,24 @@ public protocol ModelProtocol {
 	
 	func numberOfEntites(at sectionIndex: Int) -> Int
 	
-	var lastIndex: Int { get }
+//	var lastIndex: Int { get }
+//	
+//	var nextIndex: Int { get }
 	
-	var nextIndex: Int { get }
-	
-	func index(of section: ModelSectionInfo) -> Int?
+	func index(of section: Section) -> Int?
 	
 	func indexPath(of entity: Entity) -> IndexPath?
 	
-	func indexPathOfEntity(withUniqueValue uniqueValue: Int) -> IndexPath?
+//	func indexPathOfEntity(withUniqueValue uniqueValue: Int) -> IndexPath?
 	
 	
 	//MARK: - Insert methods
 
-	func insertAtFirst(_ newEntity: Entity, completion:(() -> ())?)
+//	func insertAtFirst(_ newEntity: Entity, completion:(() -> ())?)
 	
 	func insert(_ newEntity: Entity, at indexPath: IndexPath, completion:(() -> ())?)
 	
-	func insertAtLast(_ newEntity: Entity, completion:(() -> ())?)
+//	func insertAtLast(_ newEntity: Entity, completion:(() -> ())?)
 	
 	func fetch(_ entities: [Entity], completion:(() -> ())?)
 	
@@ -74,44 +82,60 @@ public protocol ModelProtocol {
 	
 	//MARK: - Remove methods
 
-	func remove(at indexPath: IndexPath, removeEmptySection: Bool, completion: ((Entity) -> ())?)
+	func remove(at indexPath: IndexPath, completion: ((Entity) -> ())?)
 	
-	func remove(_ entity: Entity, removeEmptySection: Bool, completion: ((Entity) -> ())?)
+	func remove(_ entity: Entity, completion: ((Entity) -> ())?)
 	
-	func removeAllEntities(atSection sectionIndex: Int, completion: (() -> ())?)
+//	func removeAllEntities(atSection sectionIndex: Int, completion: (() -> ())?)
 	
-	func removeSection(at sectionIndex: Int, completion: ((ModelSectionInfo) -> ())?)
+	func removeSection(at sectionIndex: Int, completion: ((Section) -> ())?)
 	
 	func removeAll(completion: (() -> ())?)
 	
 	
 	//MARK: - Sort methods
 
-	func sortEntities(atSection sectionIndex: Int, by sort: @escaping ((Entity, Entity) -> Bool), completion: (() -> Void)?)
+	func sortEntities(atSection sectionIndex: Int, by sort: SortEntities, completion: (() -> Void)?)
 	
 	func reorder(completion: (() -> Void)?)
 	
-	func sortSections(by sort: @escaping ((ModelSectionInfo, ModelSectionInfo) -> Bool), completion: (() -> Void)?)
+	func sortSections(by sort: SortSections, completion: (() -> Void)?)
 
 	
 	//MARK: - filter methods
 
-	func filteredEntities(atSection sectionIndex: Int, with filter: ((Entity) -> Bool)) -> [Entity]
-	
-	func filteredEntities(with filter: ((Entity) -> Bool)) -> [Entity]
+	func filteredEntities(atSection sectionIndex: Int, with filter: Filter) -> [Entity]
+
+	func filteredEntities(with filter: Filter) -> [Entity]
 	
 	
 	//MARK: - Get Section
 	
-	func section(at sectionIndex: Int) -> ModelSectionInfo?
+	func section(at sectionIndex: Int) -> Section?
 
 	
 	//MARK: - Get Entity
 
 	func entity(at indexPath: IndexPath) -> Entity?
 	
-	func getAllEntities(sortedBy sort: ((Entity, Entity) -> Bool)?) -> [Entity]
+	func getAllEntities(sortedBy sort: SortEntities?) -> [Entity]
+	
+}
 
+extension ModelProtocol {
+	
+	public subscript(indexPath: IndexPath) -> Entity? {
+		get {
+			return self.entity(at: indexPath)
+		}
+	}
+	
+	public subscript(index: Int) -> Section? {
+		get {
+			return self.section(at: index)
+		}
+	}
 	
 	
 }
+

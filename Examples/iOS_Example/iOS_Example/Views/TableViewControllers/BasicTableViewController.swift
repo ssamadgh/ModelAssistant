@@ -137,4 +137,12 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 		self.loadImagesForOnscreenRows()
 	}
 	
+	override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+		return  nil
+	}
+	
+	override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
+		return 0
+	}
+	
 }
