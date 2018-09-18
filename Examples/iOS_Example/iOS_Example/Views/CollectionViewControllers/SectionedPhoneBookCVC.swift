@@ -26,14 +26,14 @@ class SectionedPhoneBookCVC: SortablePhoneBookCVC {
 	override func viewDidLoad() {
 		
 		self.collectionView?.register(UINib(nibName: "CollectionReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
-		
+		self.model = Model(sectionKey: "firstName")
+
 		super.viewDidLoad()
 		self.title = "Sectioned Phone Book"
 
 	}
 	
 	override func configureModel() {
-		self.model = Model(sectionKey: "firstName")
 		self.model.sortSections = { $0.name < $1.name }
 		super.configureModel()
 	}

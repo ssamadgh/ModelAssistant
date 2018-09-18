@@ -14,7 +14,8 @@ class FilteredPhoneBookTVC: SectionedPhoneBookTVC {
 		
 		super.viewDidLoad()
 		self.title = "Filtered Phone Book"
-		
+		self.navigationItem.rightBarButtonItem = nil
+
 	}
 	
 	override func configureModel() {

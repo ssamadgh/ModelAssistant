@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol ModelProtocol {
+protocol ModelProtocol {
 	
 	associatedtype Entity
 	

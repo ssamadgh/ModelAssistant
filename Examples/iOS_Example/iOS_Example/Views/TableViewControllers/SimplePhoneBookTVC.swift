@@ -54,7 +54,8 @@ extension SimplePhoneBookTVC: ModelDelegate {
 		}
 	}
 	
-	func model(didChange sectionInfo: ModelSectionInfo, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) {
+	func model<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) where Entity : EntityProtocol, Entity : Hashable {
+		
 		switch type {
 		case .insert:
 			self.tableView.insertSections(IndexSet(integer: newSectionIndex!), with: .bottom)
@@ -69,5 +70,5 @@ extension SimplePhoneBookTVC: ModelDelegate {
 			break
 		}
 	}
-
+	
 }

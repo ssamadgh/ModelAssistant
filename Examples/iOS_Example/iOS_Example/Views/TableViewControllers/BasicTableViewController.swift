@@ -14,7 +14,7 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 	
 	var imageDownloadsInProgress: [Int : ImageDownloader<Contact>]!  // the set of IconDownloader objects for each app
 	
-	var model: Model<Contact>!
+	var model = Model<Contact>(sectionKey: nil)
 	var resourceFileName: String = "PhoneBook"
 	
 	override func viewDidLoad() {
@@ -23,7 +23,6 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 		self.imageDownloadsInProgress = [:]
 		
 		self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-		self.model = Model<Contact>(sectionKey: nil)
 
 		self.configureModel()
 		

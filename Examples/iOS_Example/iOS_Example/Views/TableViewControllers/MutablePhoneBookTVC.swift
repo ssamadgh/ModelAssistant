@@ -25,7 +25,7 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 	
 	override func configureModel() {
 		self.resourceFileName = "PhoneBook"
-
+		self.model.sortEntities = { $0.firstName < $1.firstName }
 		self.model.delegate = self
 		
 		let documenturl = JsonService.documentURL.appendingPathComponent(self.resourceFileName + ".json")

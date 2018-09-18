@@ -101,7 +101,7 @@ class ModelDelegateManager: ModelDelegate {
 		}
 	}
 	
-	func model(didChange sectionInfo: ModelSectionInfo, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) {
+	func model<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) where Entity : EntityProtocol, Entity : Hashable {
 		
 		switch type {
 		case .insert:
@@ -153,7 +153,10 @@ class ModelDelegateManager: ModelDelegate {
 			self.blockOperations.removeAll(keepingCapacity: false)
 		}
 	}
-
+	
+	func model(sectionIndexTitleForSectionName sectionName: String) -> String? {
+		return String(Array(sectionName)[0]).uppercased()
+	}
 	
 }
 

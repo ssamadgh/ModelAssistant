@@ -35,7 +35,7 @@ public protocol ModelDelegate: class {
 	
 	func model(didChange entities: [EntityProtocol], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?)
 	
-	func model(didChange sectionInfo: ModelSectionInfo, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?)
+	func model<Entity: EntityProtocol & Hashable>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?)
 	
 	func model(sectionIndexTitleForSectionName sectionName: String) -> String?
 }
@@ -55,7 +55,7 @@ public extension ModelDelegate {
 		
 	}
 	
-	func model(didChange sectionInfo: ModelSectionInfo, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) {
+	func model<Entity: EntityProtocol & Hashable>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) {
 		
 	}
 	
@@ -68,7 +68,7 @@ public extension ModelDelegate {
 
 //MARK: - Model class
 
-public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
+public class Model<Entity: EntityProtocol & Hashable> {
 	
 	public typealias Section = SectionInfo<Entity>
 	
@@ -105,7 +105,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	public var sortEntities: ((Entity, Entity) -> Bool)?
 	
 	public var sortSections: ((SectionInfo<Entity>, SectionInfo<Entity>) -> Bool)?
-
+	
 	public var filter: ((Entity) -> Bool)?
 	
 	private var hasSection: Bool
@@ -163,7 +163,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		
 		return numberOfWholeEntities
 	}
-
+	
 	
 	public func numberOfEntites(at sectionIndex: Int) -> Int {
 		var numberOfEntites: Int!
@@ -229,7 +229,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	private func indexPath(of entity: Entity, synchronous: Bool) -> IndexPath? {
 		let sectionName = self.hasSection ? entity[self.sectionKey!] : nil
 		var indexPath: IndexPath?
-
+		
 		func getIndexPath() {
 			indexPath = self.sectionsManager.indexPath(of: entity, withSectionName: sectionName)
 			
@@ -263,7 +263,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	private func privateIndexPath(of entity: Entity) -> IndexPath? {
 		return indexPath(of: entity, synchronous: false)
 	}
-
+	
 	
 	public func indexPathOfEntity(withUniqueValue uniqueValue: Int) -> IndexPath? {
 		var indexPath: IndexPath?
@@ -282,9 +282,9 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	
 	//MARK: - Insert methods
 	
-//	public func insertAtFirst(_ newEntity: Entity, completion:(() -> ())?) {
-//		self.insert(newEntity, at: IndexPath(row: 0, section: 0), completion: completion)
-//	}
+	//	public func insertAtFirst(_ newEntity: Entity, completion:(() -> ())?) {
+	//		self.insert(newEntity, at: IndexPath(row: 0, section: 0), completion: completion)
+	//	}
 	
 	public func insert(_ newEntity: Entity, at indexPath: IndexPath, completion:(() -> ())?) {
 		
@@ -325,11 +325,11 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		
 	}
 	
-//	public func insertAtLast(_ newEntity: Entity, completion:(() -> ())?) {
-//		let section = self.numberOfSections - 1
-//		let row = self.numberOfEntites(at: section)
-//		self.insert(newEntity, at: IndexPath(row: row, section: section), completion: completion)
-//	}
+	//	public func insertAtLast(_ newEntity: Entity, completion:(() -> ())?) {
+	//		let section = self.numberOfSections - 1
+	//		let row = self.numberOfEntites(at: section)
+	//		self.insert(newEntity, at: IndexPath(row: row, section: section), completion: completion)
+	//	}
 	
 	public func fetch(_ entities: [Entity], completion:(() -> ())?) {
 		self.insert(entities, callModelDelegateMethods: false, completion: completion)
@@ -521,20 +521,20 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	}
 	
 	//MARK: - Move methods
-
+	
 	public func moveEntity(at indexPath: IndexPath, to newIndexPath: IndexPath, isUserDriven: Bool, completion:(() -> ())?) {
 		
 		let isMainThread = Thread.isMainThread
-
+		
 		func moveMethod() {
-
+			
 			let entity = self.sectionsManager.remove(at: indexPath)
-				self.sectionsManager.insert(entity, at: newIndexPath)
-				
-				if !isUserDriven {
-					self.model(didChange: [entity], at: [indexPath], for: .move, newIndexPaths: [newIndexPath])
-				}
-				
+			self.sectionsManager.insert(entity, at: newIndexPath)
+			
+			if !isUserDriven {
+				self.model(didChange: [entity], at: [indexPath], for: .move, newIndexPaths: [newIndexPath])
+			}
+			
 		}
 		
 		if isUserDriven {
@@ -561,11 +561,11 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	}
 	
 	//MARK: - Update methods
-
+	
 	public func update(at indexPath: IndexPath, mutate: @escaping (inout Entity) -> Void, completion: (() -> Void)?) {
 		
 		let isMainThread = Thread.isMainThread
-
+		
 		self.addModelOperation(with: BlockOperation(block: { (finished) in
 			self.dispatchQueue.async(flags: .barrier) {
 				
@@ -573,7 +573,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 					fatalError("IndexPath is Out of range")
 				}
 				mutate(&entity)
-
+				
 				self.sectionsManager[indexPath] = entity
 				
 				self.model(didChange: [entity], at: [indexPath], for: .update, newIndexPaths: nil)
@@ -585,7 +585,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 				completion?()
 			}
 		}
-
+		
 	}
 	
 	public func update(_ entity: Entity, mutate: @escaping (inout Entity) -> Void, completion: (() -> Void)?) {
@@ -594,7 +594,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		self.addModelOperation(with: BlockOperation(block: { (finished) in
 			self.dispatchQueue.async(flags: .barrier) {
 				var entity = entity
-
+				
 				mutate(&entity)
 				let indexPath = self.privateIndexPath(of: entity)!
 				self.sectionsManager[indexPath] = entity
@@ -607,7 +607,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 				completion?()
 			}
 		}
-
+		
 	}
 	
 	
@@ -616,7 +616,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	public func remove(at indexPath: IndexPath, completion: ((Entity) -> ())?) {
 		let removeEmptySection: Bool = true
 		let isMainThread = Thread.isMainThread
-
+		
 		var removedEntity: Entity!
 		
 		self.addModelOperation(with: BlockOperation(block: { (finished) in
@@ -646,7 +646,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 				completion?(removedEntity)
 			}
 		}
-
+		
 	}
 	
 	public func remove(_ entity: Entity, completion: ((Entity) -> ())?) {
@@ -658,33 +658,33 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 			print("Index out of range")
 		}
 	}
-
-//	public func removeAllEntities(atSection sectionIndex: Int, completion: (() -> ())?) {
-//		
-//		let isMainThread = Thread.isMainThread
-//		
-//		
-//		self.addModelOperation(with: BlockOperation(block: { (finished) in
-//			self.dispatchQueue.async(flags: .barrier) {
-//				
-//				let entitiesToRemove = self.sectionsManager[sectionIndex]?.entities ?? []
-//				let lastIndex = entitiesToRemove.isEmpty ? 0 : entitiesToRemove.count-1
-//				let removedIndexPaths = IndexPath.indexPaths(in: 0...lastIndex, atSection: sectionIndex)
-//				
-//				self.sectionsManager.remvoeAllEntities(atSection: sectionIndex)
-//				
-//				self.model(didChange: entitiesToRemove, at: removedIndexPaths, for: .delete, newIndexPaths: nil)
-//				
-//				finished()
-//				
-//			}
-//		})) {
-//			self.checkIsMainThread(isMainThread) {
-//				completion?()
-//			}
-//		}
-//
-//	}
+	
+	//	public func removeAllEntities(atSection sectionIndex: Int, completion: (() -> ())?) {
+	//
+	//		let isMainThread = Thread.isMainThread
+	//
+	//
+	//		self.addModelOperation(with: BlockOperation(block: { (finished) in
+	//			self.dispatchQueue.async(flags: .barrier) {
+	//
+	//				let entitiesToRemove = self.sectionsManager[sectionIndex]?.entities ?? []
+	//				let lastIndex = entitiesToRemove.isEmpty ? 0 : entitiesToRemove.count-1
+	//				let removedIndexPaths = IndexPath.indexPaths(in: 0...lastIndex, atSection: sectionIndex)
+	//
+	//				self.sectionsManager.remvoeAllEntities(atSection: sectionIndex)
+	//
+	//				self.model(didChange: entitiesToRemove, at: removedIndexPaths, for: .delete, newIndexPaths: nil)
+	//
+	//				finished()
+	//
+	//			}
+	//		})) {
+	//			self.checkIsMainThread(isMainThread) {
+	//				completion?()
+	//			}
+	//		}
+	//
+	//	}
 	
 	public func removeSection(at sectionIndex: Int, completion: ((SectionInfo<Entity>) -> ())?) {
 		
@@ -700,13 +700,13 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 				removedSection = section
 				finished()
 			}
-
+			
 		})) {
 			self.checkIsMainThread(isMainThread) {
 				completion?(removedSection)
 			}
 		}
-
+		
 	}
 	
 	public func removeAll(completion: (() -> ())?) {
@@ -722,11 +722,11 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		}), callDelegate: false) {
 			self.checkIsMainThread(isMainThread, completion: completion)
 		}
-
+		
 	}
 	
 	//MARK: - Sort methods
-
+	
 	public func sortEntities(atSection sectionIndex: Int, by sort: @escaping ((Entity, Entity) -> Bool), completion: (() -> Void)?) {
 		
 		let isMainThread = Thread.isMainThread
@@ -786,7 +786,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	public func sortSections(by sort: @escaping ((SectionInfo<Entity>, SectionInfo<Entity>) -> Bool), completion: (() -> Void)?) {
 		
 		let isMainThread = Thread.isMainThread
-
+		
 		self.addModelOperation(with: BlockOperation(block: { (finished) in
 			self.dispatchQueue.async(flags: .barrier) {
 				let oldSections = self.sectionsManager.sections
@@ -819,20 +819,20 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		self.dispatchQueue.sync {
 			entities = self.sectionsManager.filteredEntities(atSection: sectionIndex, with: filter)
 		}
-
+		
 		return entities ?? []
 	}
-
+	
 	public func filteredEntities(with filter: @escaping ((Entity) -> Bool)) -> [Entity] {
 		var entities: [Entity] = []
-
+		
 		self.dispatchQueue.sync {
 			for i in 0...(self.numberOfSections-1) {
 				let filtered = self.sectionsManager.filteredEntities(atSection: i, with: filter)
 				entities.append(contentsOf: filtered)
 			}
 		}
-
+		
 		return entities
 	}
 	
@@ -851,7 +851,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	
 	public func sectionIndexTitle(forSectionName sectionName: String) -> String? {
 		guard self.sortSections != nil,
-		 !sectionName.isEmpty else { return nil }
+			!sectionName.isEmpty else { return nil }
 		return self.delegate?.model(sectionIndexTitleForSectionName: sectionName)
 	}
 	
@@ -874,7 +874,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		
 		return index
 	}
-		
+	
 	
 	//MARK: - Get Entity
 	
@@ -905,7 +905,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		
 		return entities
 	}
-
+	
 	//MARK: - Delegate methods
 	
 	private func modelWillChangeContent() {
@@ -934,7 +934,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	
 	private func addModelOperation(with blockOperation: BlockOperation, callDelegate: Bool = true, completion: @escaping (() -> Void)) {
 		let modelOperation = ModelOperation(delegate: self.delegate, callDelegate: callDelegate, blockOperation: blockOperation, completion: completion)
-
+		
 		self.operationQueue.addOperation(modelOperation)
 	}
 	
@@ -950,5 +950,5 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		}
 	}
 	
-
+	
 }
