@@ -15,7 +15,7 @@ public protocol ModelSectionInfo {
 	
 	var name: String  { get }
 	
-	//	var indexTitle: String?  { get }
+	var indexTitle: String?  { get }
 	
 }
 
@@ -38,7 +38,7 @@ public struct SectionInfo<Entity: EntityProtocol & Hashable>: GModelSectionInfo,
 		return lhs.name < rhs.name
 	}
 	
-	var entities: [Entity] = []
+	public var entities: [Entity] = []
 	
 	public var numberOfEntities: Int {
 		guard !self.isEmpty else { return 0 }
@@ -47,7 +47,7 @@ public struct SectionInfo<Entity: EntityProtocol & Hashable>: GModelSectionInfo,
 	
 	public var name: String
 	
-	var indexTitle: String?
+	public var indexTitle: String?
 	
 	public var isEmpty: Bool {
 		return entities.isEmpty

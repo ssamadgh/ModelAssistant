@@ -33,9 +33,10 @@ public protocol ModelDelegate: class {
 	
 	func modelDidChangeContent()
 	
-	func model(didChange entities: [EntityProtocol], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?)
+	func model<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?)
 	
-	func model(didChange sectionInfo: ModelSectionInfo, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?)
+	func model<Section>(didChange sectionInfo: Section, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?)
+	
 }
 
 
@@ -49,102 +50,29 @@ public extension ModelDelegate {
 		
 	}
 	
-	func model(didChange entities: [EntityProtocol], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) {
+	func model<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) {
 		
 	}
 	
-	func model(didChange sectionInfo: ModelSectionInfo, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) {
-		
-	}
-	
-}
-
-
-
-import CoreData
-
-protocol SortProtocol {
-	
-}
-
-struct Sorten<Entity: EntityProtocol & Hashable>: SortProtocol {
-	var sort: ((Entity, Entity) -> Bool)?
-}
-
-struct CoreDataSort: SortProtocol {
-	
-	var sort: [NSSortDescriptor]
-}
-
-protocol Apple {
-	associatedtype Sort
-	
-	var sort: Sort? { get set }
-}
-
-class MYPro<Entity: EntityProtocol & Hashable>: Apple {
-		
-	
-	var sort: ((Entity, Entity) -> Bool)?
-	
-	func test() {
-//		self.sort = Sort(sort: { $0.uniqueValue > $1.uniqueValue })
-	}
-}
-
-
-class YourPro<Entity: EntityProtocol & Hashable>: Apple {
-	
-//	typealias Sort = CoreDataSort
-	
-	var sort: CoreDataSort?
-	
-	func test() {
-
-	}
-	
-}
-
-
-class View {
-	
-	var pro = MYPro<Member>()
-	
-	func prod() {
-//		self.pro.sort = CoreDataSort(sort: [])
-		
+	func model<Section>(didChange sectionInfo: Section, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) {
 		
 	}
 	
 }
-
-
-
-struct Member: EntityProtocol & Hashable {
-	
-	var uniqueValue: Int = 0
-	
-	subscript(key: String) -> String? {
-		return nil
-	}
-	
-	func update(with newFetechedEntity: EntityProtocol) {
-		
-	}
-	
-}
-
-
-
 
 
 //MARK: - Model class
 
 public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	
+	public typealias Section = SectionInfo<Entity>
+	
 	private let dispatchQueue = DispatchQueue(label: "com.model.ConcirrentGCD.DispatchQueue", attributes: DispatchQueue.Attributes.concurrent)
 	
 	private let operationQueue = AOperationQueue()
+	
+	
+	public var myValue: Int = 0
 	
 	public var fetchBatchSize: Int
 	
@@ -154,7 +82,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		}
 	}
 	
-	public subscript(index: Int) -> ModelSectionInfo? {
+	public subscript(index: Int) -> SectionInfo<Entity>? {
 		get {
 			return self.section(at: index)
 		}
@@ -164,7 +92,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	
 	public var sortEntities: ((Entity, Entity) -> Bool)?
 	
-	public var sortSections: ((ModelSectionInfo, ModelSectionInfo) -> Bool)?
+	public var sortSections: ((SectionInfo<Entity>, SectionInfo<Entity>) -> Bool)?
 
 	public var filter: ((Entity) -> Bool)?
 	
@@ -185,6 +113,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		self.sectionKey = sectionKey
 		self.hasSection = sectionKey != nil
 		self.sectionsManager = SectionsManager()
+		
 	}
 	
 	public var isEmpty: Bool {
@@ -265,11 +194,11 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		return diff == 0 ? self.fetchBatchSize : diff
 	}
 	
-	public func index(of section: ModelSectionInfo) -> Int? {
+	public func index(of section: SectionInfo<Entity>) -> Int? {
 		var index: Int?
 		
 		self.dispatchQueue.sync {
-			index = self.sectionsManager.index(of: section as! SectionInfo<Entity>)
+			index = self.sectionsManager.index(of: section)
 		}
 		
 		return index
@@ -742,7 +671,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 //
 //	}
 	
-	public func removeSection(at sectionIndex: Int, completion: ((ModelSectionInfo) -> ())? = nil) {
+	public func removeSection(at sectionIndex: Int, completion: ((SectionInfo<Entity>) -> ())? = nil) {
 		
 		let isMainThread = Thread.isMainThread
 		
@@ -839,7 +768,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		
 	}
 	
-	public func sortSections(by sort: @escaping ((ModelSectionInfo, ModelSectionInfo) -> Bool), completion: (() -> Void)? = nil) {
+	public func sortSections(by sort: @escaping ((SectionInfo<Entity>, SectionInfo<Entity>) -> Bool), completion: (() -> Void)? = nil) {
 		
 		let isMainThread = Thread.isMainThread
 
@@ -894,7 +823,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	
 	//MARK: - Get Section
 	
-	public func section(at sectionIndex: Int) -> ModelSectionInfo? {
+	public func section(at sectionIndex: Int) -> SectionInfo<Entity>? {
 		
 		var section: SectionInfo<Entity>?
 		
@@ -955,7 +884,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		}
 	}
 	
-	private func model(didChange sectionInfo: ModelSectionInfo, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) {
+	private func model(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) {
 		DispatchQueue.main.async {
 			self.delegate?.model(didChange: sectionInfo, atSectionIndex: sectionIndex, for: type, newSectionIndex: newSectionIndex)
 		}
@@ -986,5 +915,3 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	
 
 }
-
-

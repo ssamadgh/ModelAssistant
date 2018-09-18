@@ -54,7 +54,8 @@ class ModelDelegateManager: ModelDelegate {
 		
 	}
 	
-	func model(didChange entities: [EntityProtocol], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) {
+	func model<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) {
+		
 		switch type {
 			
 		case .insert:
@@ -101,7 +102,7 @@ class ModelDelegateManager: ModelDelegate {
 		}
 	}
 	
-	func model(didChange sectionInfo: ModelSectionInfo, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) {
+	func model<Section>(didChange sectionInfo: Section, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) {
 		
 		switch type {
 		case .insert:
@@ -143,8 +144,7 @@ class ModelDelegateManager: ModelDelegate {
 		}
 	}
 	
-	func modelDidChangeContent() {
-		
+	func modelDidChangeContent() {		
 		self.controller.performBatchUpdates({
 			for operation: BlockOperation in self.blockOperations {
 				operation.start()

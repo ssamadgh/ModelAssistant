@@ -12,21 +12,33 @@ Abstract: Helper object for managing the downloading of a particular object's ic
 import UIKit
 
 protocol ImageDownloaderDelegate {
-	func imageDidLoad(for entity: CustomEntityProtocol)
+	
+	func downloaded<T>(_ image: UIImage?, forEntity entity: T)
+	
 }
 
 let kAppIconSize: CGFloat = 48
 
-class ImageDownloader: NSObject {
+class ImageDownloader<T>: NSObject {
 
-	var entity: CustomEntityProtocol!
+	
 	var delegate: ImageDownloaderDelegate!
-//	var activeDownload: Data!
 	var imageTask: URLSessionTask!
 	
+	let imageURL: URL
+	let entity: T
+	
+	init(from imageURL: URL, forEntity entity: T) {
+		self.imageURL = imageURL
+		self.entity = entity
+	}
+
 	func startDownload() {
 
-		let task = URLSession.shared.dataTask(with: URLRequest(url: entity.imageURL)) { (data, responce, error) in
+		let task = URLSession.shared.dataTask(with: URLRequest(url: imageURL)) { (data, responce, error) in
+			
+			var resultImage: UIImage?
+			
 			if error == nil {
 
 				guard data != nil,
@@ -40,18 +52,18 @@ class ImageDownloader: NSObject {
 					UIGraphicsBeginImageContext(itemSize)
 					let imageRect = CGRect(x: 0.0, y: 0.0, width: itemSize.width, height: itemSize.height)
 					image.draw(in: imageRect)
-					self.entity.image = UIGraphicsGetImageFromCurrentImageContext()
+					resultImage = UIGraphicsGetImageFromCurrentImageContext()
 					UIGraphicsEndImageContext()
 
 				}
 				else {
-					self.entity.image = image
+					resultImage = image
 				}
 			}
 			
 			// call our delegate and tell it that our icon is ready for display
 			DispatchQueue.main.async {
-				self.delegate.imageDidLoad(for: self.entity)
+				self.delegate.downloaded(resultImage, forEntity: self.entity)
 			}
 		}
 		

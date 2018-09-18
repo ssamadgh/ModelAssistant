@@ -1,61 +1,86 @@
 //
-//  MutablePhoneBookTVC.swift
+//  MYNewCoreDataMutateTVC.swift
 //  iOS_Example
 //
-//  Created by Seyed Samad Gholamzadeh on 9/9/18.
+//  Created by Seyed Samad Gholamzadeh on 9/17/18.
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
 //
 
 import UIKit
+import Model
 
-class MutablePhoneBookTVC: SimplePhoneBookTVC {
+class MYNewCoreDataMutateTVC: MyNewCoreDataIdeaTableViewController {
+	
+	struct MoveInfo {
+		public let movingEntity: ContactEntity
+		public let oldIndexPath: IndexPath
+		public let newIndexPath: IndexPath
+	}
+	
+	private var changeIsUserDriven: Bool = false
+	
+	public var updateMovingEntity: ((MoveInfo) -> Void)?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-		self.title = "Mutable Phone Book"
-
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		// Uncomment the following line to preserve selection between presentations
+		// self.clearsSelectionOnViewWillAppear = false
+		
+		// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+		// self.navigationItem.rightBarButtonItem = self.editButtonItem
+		
 		let addButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBarButtonAction(_:)))
 		
 		let saveButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveBarButtonAction(_:)))
-
 		
 		self.navigationItem.rightBarButtonItems = [saveButtonItem, addButtonItem, self.editButtonItem]
+		
+	
+//		self.updateMovingEntity = { movingInfo in
+//			
+//			let movingEntity = movingInfo.movingEntity
+//			let oldIndexPath = movingInfo.oldIndexPath
+//			let newIndexPath = movingInfo.newIndexPath
+//			
+//			func orderEntities(forEntities entities: [ContactEntity]) {
+//				let count = entities.count
+//				for i in 0..<count {
+//					let entity = entities[i]
+//					entity.displayOrder = Int64(i)
+//				}
+//			}
+//			
+//			var oldSectionEntities = self.model[oldIndexPath.section] as! SectionInfo<ContactEntity>
+//			
+//			oldSectionEntities.remove(at: oldIndexPath.row)
+//			
+//			var newSectionEntities: [ContactEntity]
+//			
+//			if newIndexPath.section != oldIndexPath.section {
+//				newSectionEntities = model[newIndexPath.section]?.objects as! [ContactEntity]
+//			}
+//			else {
+//				newSectionEntities = oldSectionEntities
+//			}
+//			
+//			newSectionEntities.insert(movingEntity, at: newIndexPath.row)
+//			
+//			orderEntities(forEntities: newSectionEntities)
+//			
+//		}
+
+			
 	}
 	
-	override func configureModel() {
-		self.resourceFileName = "PhoneBook"
-
-		self.model.delegate = self
-		
-		let documenturl = JsonService.documentURL.appendingPathComponent(self.resourceFileName + ".json")
-		
-		let url: URL
-		if FileManager.default.fileExists(atPath: documenturl.path) {
-			url = documenturl
-		}
-		else {
-			let mainUrl = Bundle.main.url(forResource: resourceFileName, withExtension: "json")!
-			url = mainUrl
-		}
-		
-		let members: [Contact] = JsonService.getEntities(fromURL: url)
-		
-		self.model.fetch(members) {
-			self.tableView.reloadData()
-		}
-	}
-
 	@objc func addBarButtonAction(_ sender: UIBarButtonItem) {
 		self.contactDetailsAlertController(for: nil)
 	}
 	
 	@objc func saveBarButtonAction(_ sender: UIBarButtonItem) {
-		let entities = self.model.getAllEntities(sortedBy: nil)
-		let url = JsonService.documentURL.appendingPathComponent(self.resourceFileName + ".json")
-		JsonService.saveEntities(entities, toURL: url) {
-			
-		}
+		
+		try? self.context.save()
 	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -68,8 +93,8 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 	}
 	
 	override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-
-		self.model.moveEntity(at: sourceIndexPath, to: destinationIndexPath, isUserDriven: true)
+		
+		self.model.moveEntity(at: sourceIndexPath, to: destinationIndexPath, isUserDriven: true, completion: nil)
 	}
 	
 	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -78,12 +103,12 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 	
 	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
-			self.model.remove(at: indexPath)
+			self.model.remove(at: indexPath, completion: nil)
 		}
 	}
-
 	
-	func contactDetailsAlertController(for contact: Contact?) {
+	
+	func contactDetailsAlertController(for contact: ContactEntity?) {
 		
 		var firstNameTextField: UITextField!
 		var lastNameTextField: UITextField!
@@ -129,14 +154,19 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 				})
 			}
 			else {
-				let dic = ["id" : 0]
-				var contact = Contact(data: dic)!
+				
+				
+				let contact = ContactEntity(context: self.context)
+				contact.id = 0
 				contact.firstName = firstNameTextField.text!
 				contact.lastName = lastNameTextField.text!
 				contact.phone = phoneTextField.text!
+
 				
-				//				self.model.insertAtFirst(contact, applySort: false)
-				self.model.insert([contact])
+				
+				self.model.insert([contact], completion: {
+					self.context.insert(contact)
+				})
 			}
 			
 		}))
@@ -152,5 +182,6 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 		self.present(alertController, animated: true, completion: nil)
 		
 	}
-
+	
+	
 }

@@ -1,21 +1,28 @@
 //
-//  BasicTableViewController.swift
+//  CoreDataTableViewController.swift
 //  iOS_Example
 //
-//  Created by Seyed Samad Gholamzadeh on 9/8/18.
+//  Created by Seyed Samad Gholamzadeh on 9/15/18.
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
 //
 
 import UIKit
 import Model
+import CoreData
 
-class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
+class BasicCoreDataTableViewController: UITableViewController, ImageDownloaderDelegate {
 	
+	typealias ModelAlias = CoreDataModel
+	typealias EntityAlias = ContactEntity
 	
-	var imageDownloadsInProgress: [Int : ImageDownloader<Contact>]!  // the set of IconDownloader objects for each app
+	var imageDownloadsInProgress: [Int : ImageDownloader<EntityAlias>]!  // the set of IconDownloader objects for each app
 	
-	var model: Model<Contact>!
+	var model: ModelAlias<EntityAlias>!
 	var resourceFileName: String = "PhoneBook"
+	
+	var manager: ModelDelegateManager!
+
+	var context: NSManagedObjectContext!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -25,21 +32,82 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 		self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 		
 		self.configureModel()
+	}
+	
+	func configureModel(for model: CoreDataModel<ContactEntity>) {
 		
 	}
 	
 	func configureModel() {
 		let url = Bundle.main.url(forResource: resourceFileName, withExtension: "json")!
-		let members: [Contact] = JsonService.getEntities(fromURL: url)
+		let fetchedMembers: [Contact] = JsonService.getEntities(fromURL: url)
 		
-		self.model = Model<Contact>(sectionKey: nil)
+		let container = (UIApplication.shared.delegate as! AppDelegate).coreDataController.container
+		let context = container.viewContext
+		self.context = context
+		
+		let displayOrderSort = NSSortDescriptor(key: "displayOrder", ascending: true)
+//		let index = NSSortDescriptor(key: "index", ascending: true)
+		let firstNameSort = NSSortDescriptor(key: "firstName", ascending: true)
+
+		let model: Any
+		
+		if ModelAlias<EntityAlias>.self == CoreDataModel<ContactEntity>.self {
+			model = CoreDataModel<ContactEntity>(context: context, sortDescriptors: [firstNameSort, displayOrderSort], predicate: nil, sectionKey: "index", cacheName: nil)
+		}
+		else {
+			model = Model<Contact>(sectionKey: nil)
+		}
+		
+		self.model = (model as! ModelAlias<EntityAlias>)
+		
+		self.manager = ModelDelegateManager(controller: self)
+		self.model.delegate = self.manager
+
+		
+		var members: [EntityAlias] = []
+		
+		if EntityAlias.self == ContactEntity.self {
+			if !isFetchedCoreData {
+				var anyMembers: [Any] = []
+				for member in fetchedMembers {
+					let memberEnttiy = ContactEntity(context: context)
+					memberEnttiy.id = Int32(member.id)
+					memberEnttiy.firstName = member.firstName
+					memberEnttiy.lastName = member.lastName
+					memberEnttiy.phone = member.phone
+					memberEnttiy.imageURLString = member.imageURLString
+					anyMembers.append(memberEnttiy)
+				}
+				
+				members = anyMembers as! [EntityAlias]
+
+				self.isFetchedCoreData = true
+			}
+		}
+		else {
+			let anyMembers: [Any] = fetchedMembers
+			members = anyMembers as! [EntityAlias]
+		}
+
+		
 		self.model.fetch(members) {
 			self.tableView.reloadData()
 		}
 		
 	}
-	
 
+	var isFetchedCoreData: Bool {
+		
+		get {
+			return UserDefaults.standard.bool(forKey: "isFetchedCoreData")
+		}
+		
+		set {
+			UserDefaults.standard.set(newValue, forKey: "isFetchedCoreData")
+		}
+	}
+	
 	// MARK: - Table view data source
 	
 	override func numberOfSections(in tableView: UITableView) -> Int {
@@ -60,6 +128,11 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 		return cell
 	}
 	
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		let section = self.model[section]
+		return section?.name
+	}
+
 	override func configure(_ cell: UITableViewCell, at indexPath: IndexPath) {
 		
 		let entity = self.model[indexPath]
@@ -89,8 +162,9 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 	
 	//MARK: - Table cell image support
 	
-	func startIconDownload(_ entity: Contact) {
+	func startIconDownload(_ entity: EntityAlias) {
 		let uniqueValue = entity.uniqueValue
+
 		var imageDownloader: ImageDownloader! = imageDownloadsInProgress[uniqueValue]
 		if imageDownloader == nil {
 			imageDownloader = ImageDownloader(from: entity.imageURL, forEntity: entity)
@@ -115,16 +189,29 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 	}
 	
 	// called by our ImageDownloader when an icon is ready to be displayed
+	
+	
 	func downloaded<T>(_ image: UIImage?, forEntity entity: T) {
-
-		
-		self.model.update(entity as! Contact, mutate: { (contact) in
+		let entity = entity as! EntityAlias
+		self.model.update(entity, mutate: { (contact) in
 			contact.image = image
-		}, completion: nil)
+			
+		}, completion: {
+			if ModelAlias<EntityAlias>.self == CoreDataModel<ContactEntity>.self {
+				if let indexPath = self.model.indexPath(of: entity),
+					let cell = self.tableView.cellForRow(at: indexPath) {
+					self.configure(cell, at: indexPath)
+				}
+			}
 
+		})
+		
 		// Remove the IconDownloader from the in progress list.
 		// This will result in it being deallocated.
-		self.imageDownloadsInProgress.removeValue(forKey: (entity as! Contact).uniqueValue)
+		
+		let uniqueValue = entity.uniqueValue
+		self.imageDownloadsInProgress.removeValue(forKey: uniqueValue)
+
 	}
 	
 	//MARK: - Deferred image loading (UIScrollViewDelegate)

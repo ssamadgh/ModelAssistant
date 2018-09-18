@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Model
 
 class SectionedPhoneBookTVC: SortablePhoneBookTVC {
 
@@ -19,7 +20,7 @@ class SectionedPhoneBookTVC: SortablePhoneBookTVC {
 	}
 	
 	override func configureModel() {
-		self.model.sectionKey = "firstName"
+		self.model = Model(sectionKey: "firstName")
 		self.model.sortSections = { $0.name < $1.name }
 		super.configureModel()
 	}

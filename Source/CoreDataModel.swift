@@ -9,8 +9,6 @@
 import Foundation
 import CoreData
 
-
-
 /*
 var fetchRequest: NSFetchRequest<Entity> {
 return fetchedResultsController.fetchRequest
@@ -72,18 +70,20 @@ typealias Section = NSFetchedResultsSectionInfo
 */
 
 public class CoreDataModel<Entity: NSManagedObject>: NSObject, NSFetchedResultsControllerDelegate, ModelProtocol {
-	
 
+	
 	public struct MoveInfo {
-		let movingEntity: Entity
-		let oldIndexPath: IndexPath
-		let newIndexPath: IndexPath
+		public let movingEntity: Entity
+		public let oldIndexPath: IndexPath
+		public let newIndexPath: IndexPath
 	}
 	
-	var updateMovingEntity: ((MoveInfo) -> Void)?
-
+	private var changeIsUserDriven: Bool = false
 	
-	var fetchRequest: NSFetchRequest<Entity> {
+	public var updateMovingEntity: ((MoveInfo) -> Void)?
+	
+	
+	private var fetchRequest: NSFetchRequest<Entity> {
 		return controller.fetchRequest
 	}
 
@@ -96,12 +96,13 @@ public class CoreDataModel<Entity: NSManagedObject>: NSObject, NSFetchedResultsC
 			fetchRequest.fetchBatchSize = newValue
 		}
 	}
-
+//
 	private var controller: NSFetchedResultsController<Entity>!
 
-	private var context: NSManagedObjectContext!
+	private var context: NSManagedObjectContext
 
-	init(context: NSManagedObjectContext, sortDescriptors: [NSSortDescriptor],  predicate: NSPredicate?, sectionKey: String?, cacheName: String?) {
+	public init(context: NSManagedObjectContext, sortDescriptors: [NSSortDescriptor],  predicate: NSPredicate?, sectionKey: String?, cacheName: String?) {
+		self.context = context
 		super.init()
 
 		// Set up the fetched results controller if needed.
@@ -115,9 +116,10 @@ public class CoreDataModel<Entity: NSManagedObject>: NSObject, NSFetchedResultsC
 		// nil for section name key path means "no sections".
 		let controller = NSFetchedResultsController<Entity>(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: sectionKey, cacheName: cacheName)
 
+		self.controller = controller
+
 		self.controller.delegate = self
 
-		self.controller = controller
 
 	}
 
@@ -131,13 +133,13 @@ public class CoreDataModel<Entity: NSManagedObject>: NSObject, NSFetchedResultsC
 	public var sortSections: (NSSortDescriptor)?
 
 	public var filter: NSPredicate?
-	
+
 //	var filter: ((Entity) -> Bool)?
 
 	public var delegate: ModelDelegate?
 
 	public var isEmpty: Bool {
-		return self.controller.sections != nil
+		return self.controller.sections == nil
 	}
 
 	public var numberOfSections: Int {
@@ -162,12 +164,7 @@ public class CoreDataModel<Entity: NSManagedObject>: NSObject, NSFetchedResultsC
 	public func indexPath(of entity: Entity) -> IndexPath? {
 		return self.controller.indexPath(forObject: entity)
 	}
-
-
-//	func insertAtFirst(_ newEntity: Entity, completion: (() -> ())?) {
-//		<#code#>
-//	}
-
+	
 	public func insert(_ newEntity: Entity, at indexPath: IndexPath, completion: (() -> ())?) {
 		self.context.insert(newEntity)
 		if let oldIndexPath = self.controller.indexPath(forObject: newEntity) {
@@ -175,19 +172,16 @@ public class CoreDataModel<Entity: NSManagedObject>: NSObject, NSFetchedResultsC
 		}
 	}
 
-//	func insertAtLast(_ newEntity: Entity, completion: (() -> ())?) {
-//		<#code#>
-//	}
-
 	public func fetch(_ entities: [Entity], completion: (() -> ())?) {
 		self.context.insert(entities)
 		
 		do {
+			try self.context.save()
 			try self.controller.performFetch()
 			completion?()
-			
+
 		} catch {
-			
+
 			print("\(type(of: self.controller)) performFetch() gots error: ", error)
 		}
 	}
@@ -199,7 +193,10 @@ public class CoreDataModel<Entity: NSManagedObject>: NSObject, NSFetchedResultsC
 	public func moveEntity(at indexPath: IndexPath, to newIndexPath: IndexPath, isUserDriven: Bool, completion: (() -> ())?) {
 		let entity = self.controller.object(at: indexPath)
 		let moveInfo = MoveInfo(movingEntity: entity, oldIndexPath: indexPath, newIndexPath: newIndexPath)
-		self.updateMovingEntity?(moveInfo)
+		if self.updateMovingEntity != nil {
+			self.changeIsUserDriven = isUserDriven
+			self.updateMovingEntity!(moveInfo)
+		}
 	}
 
 	public func update(at indexPath: IndexPath, mutate: @escaping (inout Entity) -> Void, completion: (() -> Void)?) {
@@ -210,6 +207,7 @@ public class CoreDataModel<Entity: NSManagedObject>: NSObject, NSFetchedResultsC
 	public func update(_ entity: Entity, mutate: @escaping (inout Entity) -> Void, completion: (() -> Void)?) {
 		var entity = entity
 		mutate(&entity)
+		completion?()
 	}
 
 	public func remove(at indexPath: IndexPath, completion: ((Entity) -> ())?) {
@@ -271,21 +269,67 @@ public class CoreDataModel<Entity: NSManagedObject>: NSObject, NSFetchedResultsC
 	public func entity(at indexPath: IndexPath) -> Entity? {
 		return self.controller.object(at: indexPath)
 	}
-
+	
 	public func getAllEntities(sortedBy sort: [NSSortDescriptor]?) -> [Entity] {
 		return []
 	}
+
+	//DelegateMethods
 	
+	public func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+		self.delegate?.modelWillChangeContent()
+	}
 	
+	public func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+		changeIsUserDriven = false
+		self.delegate?.modelDidChangeContent()
+	}
+
 	
+	public func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, sectionIndexTitleForSectionName sectionName: String) -> String? {
+		return nil
+	}
+	
+	public func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+		
+		self.delegate?.model(didChange: sectionInfo, atSectionIndex: sectionIndex, for: ModelChangeType(type: type), newSectionIndex: sectionIndex)
+	}
+	
+	public func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+		if !changeIsUserDriven {
+			self.delegate?.model(didChange: [anObject as! NSManagedObject], at: indexPath != nil ? [indexPath!] : nil, for: ModelChangeType(type: type), newIndexPaths: newIndexPath != nil ? [newIndexPath!] : nil)
+		}
+	}
+	
+
 }
 
 extension NSManagedObjectContext {
-	
+
 	func insert(_ objects: [NSManagedObject]) {
 		for object in objects {
 			self.insert(object)
 		}
 	}
+}
+
+extension ModelChangeType {
+	
+	init(type: NSFetchedResultsChangeType) {
+		switch type {
+		case .insert:
+			self = .insert
+			
+		case .delete:
+			self = .delete
+
+		case .move:
+			self = .move
+
+		case .update:
+			self = .update
+		}
+	}
+	
 }
 

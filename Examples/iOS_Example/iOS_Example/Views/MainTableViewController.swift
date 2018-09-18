@@ -10,9 +10,9 @@ import UIKit
 
 private enum TableViews: Int {
 
-	case simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable, ThreadSafePhoneBookTable
+	case simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable, ThreadSafePhoneBookTable, basicCoreDataTable, mutableCoreDataTable, MyNewCoreDataIdeaTable
 	
-	static let allValues: [TableViews] = [simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable, ThreadSafePhoneBookTable]
+	static let allValues: [TableViews] = [simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable, ThreadSafePhoneBookTable, basicCoreDataTable, mutableCoreDataTable, MyNewCoreDataIdeaTable]
 	
 	var stringValue: String {
 		let suffix = " Phone Book TableView"
@@ -40,8 +40,16 @@ private enum TableViews: Int {
 			
 		case .ThreadSafePhoneBookTable:
 			return "Thread Safe" + suffix
-
-			}
+			
+		case .basicCoreDataTable:
+			return "Basic Core Data" + suffix
+			
+		case .mutableCoreDataTable:
+			return "Mutable Core Data" + suffix
+			
+		case .MyNewCoreDataIdeaTable:
+			return "My New Core Data" + suffix
+		}
 	}
 	
 	var viewController: UIViewController {
@@ -70,6 +78,14 @@ private enum TableViews: Int {
 		case .ThreadSafePhoneBookTable:
 			return ThreadSafePhoneBookTVC()
 
+		case .basicCoreDataTable:
+			return BasicCoreDataTableViewController()
+
+		case .mutableCoreDataTable:
+			return MutableCoreDataPhoneBookTVC()
+			
+		case .MyNewCoreDataIdeaTable:
+			return MYNewCoreDataMutateTVC()
 		}
 	}
 	
@@ -167,7 +183,7 @@ enum MainSections: Int {
 }
 
 class MainTableViewController: UITableViewController {
-	
+		
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		

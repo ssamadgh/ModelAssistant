@@ -9,10 +9,14 @@
 import Foundation
 import Model
 
-protocol CustomEntityProtocol: EntityProtocol {
+protocol EntityWithImage {
 	
-	init?(data: [String : Any])
 	var image: UIImage? { get set}
 	var imageURL: URL { get }
+
+}
+
+protocol CustomEntityProtocol: EntityProtocol, EntityWithImage {
 	
+	init?(data: [String : Any])
 }

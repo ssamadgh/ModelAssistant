@@ -13,9 +13,9 @@ private let reuseIdentifier = "Cell"
 
 class PhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 	
-	var imageDownloadsInProgress: [Int : ImageDownloader]!  // the set of IconDownloader objects for each app
+	var imageDownloadsInProgress: [Int : ImageDownloader<Contact>]!  // the set of IconDownloader objects for each app
 	
-	var model = Model<Contact>()
+	var model = Model<Contact>(sectionKey: nil)
 	var manager: ModelDelegateManager!
 	var isSectioned: Bool = false
 	var insertingNewEntities = false
@@ -157,8 +157,7 @@ class PhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 		let uniqueValue = entity.uniqueValue
 		var imageDownloader: ImageDownloader! = imageDownloadsInProgress[uniqueValue]
 		if imageDownloader == nil {
-			imageDownloader = ImageDownloader()
-			imageDownloader.entity = entity
+			imageDownloader = ImageDownloader(from: entity.imageURL, forEntity: entity)
 			imageDownloader.delegate = self
 			imageDownloadsInProgress[uniqueValue] = imageDownloader
 			imageDownloader.startDownload()
@@ -181,10 +180,11 @@ class PhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 	}
 	
 	// called by our ImageDownloader when an icon is ready to be displayed
-	func imageDidLoad(for entity: CustomEntityProtocol) {
-		
-		self.model.update(at: self.model.indexPath(of: entity as! Contact)!, mutate: { (contact) in
-			contact.image = entity.image
+	func downloaded<T>(_ image: UIImage?, forEntity entity: T) {
+		let entity = entity as! Contact
+
+		self.model.update(at: self.model.indexPath(of: entity)!, mutate: { (contact) in
+			contact.image = image
 		}, completion: nil)
 		
 		// Remove the IconDownloader from the in progress list.

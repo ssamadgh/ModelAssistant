@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Model
 
 private let reuseIdentifier = "Cell"
 
@@ -32,7 +33,7 @@ class SectionedPhoneBookCVC: SortablePhoneBookCVC {
 	}
 	
 	override func configureModel() {
-		self.model.sectionKey = "firstName"
+		self.model = Model(sectionKey: "firstName")
 		self.model.sortSections = { $0.name < $1.name }
 		super.configureModel()
 	}

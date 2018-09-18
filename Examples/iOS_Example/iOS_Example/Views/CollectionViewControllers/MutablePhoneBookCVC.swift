@@ -87,7 +87,7 @@ class MutablePhoneBookCVC: SimplePhoneBookCVC {
 		
 		alertController.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
 			if let indexPath = self.model.indexPath(of: contact) {
-				self.model.remove(at: indexPath, removeEmptySection: true)
+				self.model.remove(at: indexPath)
 			}
 
 		}))

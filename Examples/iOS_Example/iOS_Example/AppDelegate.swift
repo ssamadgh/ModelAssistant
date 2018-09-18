@@ -13,9 +13,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
 
-
+	var coreDataController: CoreDataController!
+	
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		// Override point for customization after application launch.
+		
+		self.coreDataController = CoreDataController(completionClosure: {
+			
+		})
 		
 		let window = UIWindow(frame: UIScreen.main.bounds)
 		window.backgroundColor = .white
@@ -24,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		window.rootViewController = nav
 		self.window = window
 		self.window?.makeKeyAndVisible()
+		
 		
 		return true
 	}
@@ -36,6 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func applicationDidEnterBackground(_ application: UIApplication) {
 		// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
 		// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+		print("applicationWillTerminate")
+
 	}
 
 	func applicationWillEnterForeground(_ application: UIApplication) {
@@ -48,7 +56,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func applicationWillTerminate(_ application: UIApplication) {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+		print("applicationWillTerminate")
 	}
+	
+	
 
 
 }

@@ -33,6 +33,9 @@ class ThreadSafePhoneBookTVC: BasicTableViewController {
 	}
 	
 	@objc func doMagicBarButtonAction(_ sender: UIBarButtonItem) {
+		
+		let firstIndexPath = IndexPath(row: 0, section: 0)
+		
 		let dic = ["id" : 0]
 		var contact = Contact(data: dic)!
 		contact.firstName = "Samad"
@@ -40,17 +43,18 @@ class ThreadSafePhoneBookTVC: BasicTableViewController {
 		contact.phone = "9934243243"
 		
 		self.dispatchQueue.async {
-			self.model.insertAtFirst(contact)
+			
+			self.model.insert(contact, at: firstIndexPath)
 		}
 		
 		self.dispatchQueue.async {
 			contact.firstName = "Abbas"
 			contact.phone = "9342432432"
-			self.model.insertAtFirst(contact)
+			self.model.insert(contact, at: firstIndexPath)
 		}
 		
 		self.dispatchQueue.async {
-			self.model.remove(at: IndexPath(row: 2, section: 0), removeEmptySection: true)
+			self.model.remove(at: IndexPath(row: 2, section: 0))
 		}
 		
 		self.dispatchQueue.async {

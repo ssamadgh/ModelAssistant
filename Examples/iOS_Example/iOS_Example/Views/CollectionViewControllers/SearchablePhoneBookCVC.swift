@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Model
 
 class SearchablePhoneBookCVC: SimplePhoneBookCVC {
 	
@@ -38,8 +39,8 @@ class SearchablePhoneBookCVC: SimplePhoneBookCVC {
 	override func configureModel() {
 		self.configureSearchController()
 		
-		self.model.sectionKey = "firstName"
-		
+		self.model = Model(sectionKey: "firstName")
+
 		self.model.sortEntities = { $0.firstName < $1.firstName }
 		self.model.sortSections = { $0.name < $1.name }
 		
@@ -114,11 +115,11 @@ class SearchablePhoneBookCVC: SimplePhoneBookCVC {
 	}
 
 	// called by our ImageDownloader when an icon is ready to be displayed
-	override func imageDidLoad(for entity: CustomEntityProtocol) {
-		
+	override func downloaded<T>(_ image: UIImage?, forEntity entity: T) {
+
 		if isSearching {
 			if let index = self.searchResults.index(of: entity as! Contact) {
-				self.searchResults[index].image = entity.image
+				self.searchResults[index].image = image
 				let indexPath = IndexPath(row: index, section: 0)
 				if let cell = self.collectionView?.cellForItem(at: indexPath) {
 					self.configure(cell, at: indexPath)
@@ -126,7 +127,7 @@ class SearchablePhoneBookCVC: SimplePhoneBookCVC {
 			}
 		}
 		
-		super.imageDidLoad(for: entity)
+		super.downloaded(image, forEntity: entity)
 	}
 
 }

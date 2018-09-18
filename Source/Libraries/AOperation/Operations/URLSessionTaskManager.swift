@@ -36,7 +36,7 @@ struct HTTPMethod {
 
 class URLSessionTaskManager: NSObject, URLSessionDelegate, URLSessionDownloadDelegate, URLSessionTaskDelegate, URLSessionDataDelegate {
 	
-	open static var shared: URLSessionTaskManager = {
+	public static var shared: URLSessionTaskManager = {
 		return URLSessionTaskManager()
 	}()
 

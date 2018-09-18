@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Model
 
 class PaginationPhoneBookTVC: BasicTableViewController {
 	
@@ -22,11 +23,12 @@ class PaginationPhoneBookTVC: BasicTableViewController {
 	override func configureModel() {
 		self.resourceFileName = "PhoneBook_0"
 		self.manager = ModelDelegateManager(controller: self)
+		
+		self.model = Model(sectionKey: "firstName")
 		self.model.delegate = self.manager
 		self.model.fetchBatchSize = 20
 		self.model.sortEntities = { $0.firstName < $1.firstName }
 		self.model.sortSections = { $0.name < $1.name }
-		self.model.sectionKey = "firstName"
 		
 		super.configureModel()
 	}

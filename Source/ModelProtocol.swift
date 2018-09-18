@@ -19,7 +19,7 @@ public protocol ModelProtocol {
 	associatedtype Section
 	
 	associatedtype Filter
-	
+		
 	var fetchBatchSize: Int { get set }
 	
 	subscript(indexPath: IndexPath) -> Entity? { get }
@@ -51,8 +51,6 @@ public protocol ModelProtocol {
 	func index(of section: Section) -> Int?
 	
 	func indexPath(of entity: Entity) -> IndexPath?
-	
-//	func indexPathOfEntity(withUniqueValue uniqueValue: Int) -> IndexPath?
 	
 	
 	//MARK: - Insert methods
