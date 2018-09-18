@@ -24,6 +24,7 @@
 		E424DD8E213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E424DD8D213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift */; };
 		E44127952150ADE300248152 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44127942150ADE300248152 /* TableViewController.swift */; };
 		E44127A32150B8CC00248152 /* Model.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E441279F2150B8BA00248152 /* Model.framework */; };
+		E45CD4632151438C0062143C /* IndexedPhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45CD4622151438C0062143C /* IndexedPhoneBookTVC.swift */; };
 		E4644CE72150183A00841265 /* CoreDataBasicTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4644CE62150183A00841265 /* CoreDataBasicTVC.swift */; };
 		E4644CE92150358300841265 /* CoreDataMutablePhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4644CE82150358300841265 /* CoreDataMutablePhoneBookTVC.swift */; };
 		E47F1AAA213D0A6400708DFF /* PhoneBook.json in Resources */ = {isa = PBXBuildFile; fileRef = E47F1AA9213D0A6400708DFF /* PhoneBook.json */; };
@@ -128,6 +129,7 @@
 		E424DD8D213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationPhoneBookTVC.swift; sourceTree = "<group>"; };
 		E44127942150ADE300248152 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		E44127992150B8BA00248152 /* Model.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Model.xcodeproj; path = ../../Model.xcodeproj; sourceTree = "<group>"; };
+		E45CD4622151438C0062143C /* IndexedPhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexedPhoneBookTVC.swift; sourceTree = "<group>"; };
 		E4644CE62150183A00841265 /* CoreDataBasicTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataBasicTVC.swift; sourceTree = "<group>"; };
 		E4644CE82150358300841265 /* CoreDataMutablePhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataMutablePhoneBookTVC.swift; sourceTree = "<group>"; };
 		E47F1AA9213D0A6400708DFF /* PhoneBook.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PhoneBook.json; sourceTree = "<group>"; };
@@ -353,6 +355,7 @@
 				E4069F65213C7087009FCD7A /* SimplePhoneBookTVC.swift */,
 				E4EC836F214437680063B4BB /* SortablePhoneBookTVC.swift */,
 				E424DD89213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift */,
+				E45CD4622151438C0062143C /* IndexedPhoneBookTVC.swift */,
 				E4EC83CD21462CC50063B4BB /* FilteredPhoneBookTVC.swift */,
 				E4EC837221443CCA0063B4BB /* SearchablePhoneBookTVC.swift */,
 				E4EC83C92145948B0063B4BB /* MutablePhoneBookTVC.swift */,
@@ -581,6 +584,7 @@
 				E4069F55213BE70E009FCD7A /* ModelDelegateManager.swift in Sources */,
 				E4873544214D319900BDA8C9 /* CoreDataController.swift in Sources */,
 				E4EC83DD214642360063B4BB /* MutablePhoneBookCVC.swift in Sources */,
+				E45CD4632151438C0062143C /* IndexedPhoneBookTVC.swift in Sources */,
 				E4EC837321443CCA0063B4BB /* SearchablePhoneBookTVC.swift in Sources */,
 				E487354E214D582D00BDA8C9 /* ContactEntity+CoreDataProperties.swift in Sources */,
 				E4EC8370214437680063B4BB /* SortablePhoneBookTVC.swift in Sources */,

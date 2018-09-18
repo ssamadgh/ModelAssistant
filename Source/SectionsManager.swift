@@ -10,6 +10,17 @@ import Foundation
 
 struct SectionsManager<Entity: EntityProtocol & Hashable> {
 	
+	var sectionIndexTitles: [String] {
+		let allValues =  self.sections.compactMap { $0.indexTitle }
+		var resultValue: [String] = []
+		for value in allValues {
+			if !resultValue.contains(value) {
+				resultValue.append(value)
+			}
+		}
+		return resultValue
+	}
+	
 	var numberOfSections: Int {
 		guard !self.isEmpty else { return 0 }
 		return sections.count
@@ -191,8 +202,8 @@ struct SectionsManager<Entity: EntityProtocol & Hashable> {
 		self.sections[sectionIndex].entities.removeAll()
 	}
 	
-	mutating func newSection(with entities: [Entity], name: String) -> SectionInfo<Entity> {
-		let section = SectionInfo(entities: entities, name: name, indexTitle: nil)
+	mutating func newSection(with entities: [Entity], name: String, indexTitle: String?) -> SectionInfo<Entity> {
+		let section = SectionInfo(entities: entities, name: name, indexTitle: indexTitle)
 		return section
 	}
 	

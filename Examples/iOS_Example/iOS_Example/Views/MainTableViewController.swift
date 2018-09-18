@@ -10,9 +10,9 @@ import UIKit
 
 private enum TableViews: Int {
 
-	case simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable, ThreadSafePhoneBookTable, CoreDataPhoneBookTable
+	case simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, indexedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable, ThreadSafePhoneBookTable, CoreDataPhoneBookTable
 	
-	static let allValues: [TableViews] = [simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable, ThreadSafePhoneBookTable, CoreDataPhoneBookTable]
+	static let allValues: [TableViews] = [simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, indexedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable, ThreadSafePhoneBookTable, CoreDataPhoneBookTable]
 	
 	var stringValue: String {
 		let suffix = " Phone Book TableView"
@@ -25,6 +25,9 @@ private enum TableViews: Int {
 			
 		case .sectionedPhoneBookTable:
 			return "Sectioned" + suffix
+			
+		case .indexedPhoneBookTable:
+			return "Indexed" + suffix
 			
 		case .filteredPhoneBookTable:
 			return "Filtered" + suffix
@@ -56,6 +59,9 @@ private enum TableViews: Int {
 			
 		case .sectionedPhoneBookTable:
 			return SectionedPhoneBookTVC()
+			
+		case .indexedPhoneBookTable:
+			return IndexedPhoneBookTVC()
 			
 		case .filteredPhoneBookTable:
 			return FilteredPhoneBookTVC()

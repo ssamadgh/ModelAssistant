@@ -25,7 +25,7 @@ public enum ModelChangeType {
 	
 }
 
-
+//MARK: - Model Delegate
 
 public protocol ModelDelegate: class {
 	
@@ -36,6 +36,8 @@ public protocol ModelDelegate: class {
 	func model(didChange entities: [EntityProtocol], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?)
 	
 	func model(didChange sectionInfo: ModelSectionInfo, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?)
+	
+	func model(sectionIndexTitleForSectionName sectionName: String) -> String?
 }
 
 
@@ -55,6 +57,10 @@ public extension ModelDelegate {
 	
 	func model(didChange sectionInfo: ModelSectionInfo, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) {
 		
+	}
+	
+	func model(sectionIndexTitleForSectionName sectionName: String) -> String? {
+		return String(Array(sectionName)[0]).uppercased()
 	}
 	
 }
@@ -84,6 +90,16 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		}
 	}
 	
+	public var sectionIndexTitles: [String] {
+		var titles: [String]!
+		
+		self.dispatchQueue.sync {
+			titles = self.sectionsManager.sectionIndexTitles
+		}
+		
+		return titles
+	}
+	
 	public private (set) var sectionKey: String?
 	
 	public var sortEntities: ((Entity, Entity) -> Bool)?
@@ -105,7 +121,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	public init(sectionKey: String?) {
 		operationQueue.maxConcurrentOperationCount = 1
 		entitiesUniqueValue = []
-		fetchBatchSize = 10
+		fetchBatchSize = 20
 		self.sectionKey = sectionKey
 		self.hasSection = sectionKey != nil
 		self.sectionsManager = SectionsManager()
@@ -284,7 +300,8 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 				if diff >= 0 {
 					if diff == 0 {
 						let sectionName = self.hasSection ? newEntity[self.sectionKey!]! : ""
-						let section = self.sectionsManager.newSection(with: [newEntity], name: sectionName)
+						let indexTitle = self.sectionIndexTitle(forSectionName: sectionName)
+						let section = self.sectionsManager.newSection(with: [newEntity], name: sectionName, indexTitle: indexTitle)
 						self.sectionsManager.insert(section, at: sectionIndex)
 						
 						self.model(didChange: section, atSectionIndex: nil, for: .insert, newSectionIndex: sectionIndex)
@@ -385,8 +402,9 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 				if let sortEntities = self.sortEntities {
 					newEntities.sort(by: sortEntities)
 				}
-				
-				let section = self.sectionsManager.newSection(with: newEntities, name: sectionName ?? "")
+				let sectionName = sectionName ?? ""
+				let indexTitle = self.sectionIndexTitle(forSectionName: sectionName)
+				let section = self.sectionsManager.newSection(with: newEntities, name: sectionName, indexTitle: indexTitle)
 				self.sectionsManager.append(section)
 				
 				let sectionIndex = self.sectionsManager.index(of: section)!
@@ -431,7 +449,8 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 						filtered.sort(by: sortEntities)
 					}
 					
-					let newSection = self.sectionsManager.newSection(with: filtered, name: sectionName)
+					let indexTitle = self.sectionIndexTitle(forSectionName: sectionName)
+					let newSection = self.sectionsManager.newSection(with: filtered, name: sectionName, indexTitle: indexTitle)
 					newSections.append(newSection)
 					
 					newSectionNames.remove(sectionName)
@@ -829,6 +848,33 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		
 		return section
 	}
+	
+	public func sectionIndexTitle(forSectionName sectionName: String) -> String? {
+		guard self.sortSections != nil,
+		 !sectionName.isEmpty else { return nil }
+		return self.delegate?.model(sectionIndexTitleForSectionName: sectionName)
+	}
+	
+	public func section(forSectionIndexTitle title: String, at sectionIndex: Int) -> Int {
+		guard let indexOfTitle = self.sectionIndexTitles.firstIndex(of: title),
+			sectionIndex == indexOfTitle else {
+				fatalError("wrong index title and section index")
+		}
+		
+		var index = 0
+		
+		self.dispatchQueue.sync {
+			for section in self.sectionsManager.sections {
+				if section.indexTitle == title {
+					index = self.sectionsManager.index(of: section)!
+					break
+				}
+			}
+		}
+		
+		return index
+	}
+		
 	
 	//MARK: - Get Entity
 	

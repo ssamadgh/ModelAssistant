@@ -40,14 +40,15 @@ public struct SectionInfo<Entity: EntityProtocol & Hashable>: GModelSectionInfo,
 	
 	public internal (set) var entities: [Entity] = []
 	
+	public internal (set) var name: String
+	
+	public internal (set) var indexTitle: String?
+	
+
 	public var numberOfEntities: Int {
 		guard !self.isEmpty else { return 0 }
 		return entities.count
 	}
-	
-	public var name: String
-	
-	public var indexTitle: String?
 	
 	public var isEmpty: Bool {
 		return entities.isEmpty

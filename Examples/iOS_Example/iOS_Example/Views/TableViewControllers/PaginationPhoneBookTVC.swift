@@ -87,7 +87,6 @@ class PaginationPhoneBookTVC: BasicTableViewController {
 		super.scrollViewDidEndDecelerating(scrollView)
 		self.insertEntities(from: "PhoneBook_\(self.model.nextIndex)")
 	}
-
 	
 }
 
