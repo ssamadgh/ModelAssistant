@@ -1,8 +1,8 @@
 //
-//  CoreDataTableViewController.swift
+//  MyNewCoreDataIdeaTableViewController.swift
 //  iOS_Example
 //
-//  Created by Seyed Samad Gholamzadeh on 9/15/18.
+//  Created by Seyed Samad Gholamzadeh on 9/17/18.
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
 //
 
@@ -10,31 +10,30 @@ import UIKit
 import Model
 import CoreData
 
-class BasicCoreDataTableViewController: UITableViewController, ImageDownloaderDelegate {
+class CoreDataBasicTVC: UITableViewController, ImageDownloaderDelegate {
 	
-	typealias ModelAlias = CoreDataModel
-	typealias EntityAlias = ContactEntity
 	
-	var imageDownloadsInProgress: [Int : ImageDownloader<EntityAlias>]!  // the set of IconDownloader objects for each app
+	var imageDownloadsInProgress: [Int : ImageDownloader<ContactEntity>]!  // the set of IconDownloader objects for each app
 	
-	var model: ModelAlias<EntityAlias>!
+	var model: Model<ContactEntity>!
 	var resourceFileName: String = "PhoneBook"
 	
 	var manager: ModelDelegateManager!
 
 	var context: NSManagedObjectContext!
-	
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
+		self.title = "Core Data Basic Phone Book"
+
 		self.imageDownloadsInProgress = [:]
 		
 		self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 		
+		self.model = Model<ContactEntity>(sectionKey: nil)
+
+		
 		self.configureModel()
-	}
-	
-	func configureModel(for model: CoreDataModel<ContactEntity>) {
 		
 	}
 	
@@ -45,58 +44,49 @@ class BasicCoreDataTableViewController: UITableViewController, ImageDownloaderDe
 		let container = (UIApplication.shared.delegate as! AppDelegate).coreDataController.container
 		let context = container.viewContext
 		self.context = context
-		
-		let displayOrderSort = NSSortDescriptor(key: "displayOrder", ascending: true)
-//		let index = NSSortDescriptor(key: "index", ascending: true)
-		let firstNameSort = NSSortDescriptor(key: "firstName", ascending: true)
 
-		let model: Any
+		var members: [ContactEntity] = []
 		
-		if ModelAlias<EntityAlias>.self == CoreDataModel<ContactEntity>.self {
-			model = CoreDataModel<ContactEntity>(context: context, sortDescriptors: [firstNameSort, displayOrderSort], predicate: nil, sectionKey: "index", cacheName: nil)
+		if !isFetchedCoreData {
+			var anyMembers: [ContactEntity] = []
+			for member in fetchedMembers {
+				let memberEnttiy = ContactEntity(context: context)
+				memberEnttiy.id = Int32(member.id)
+				memberEnttiy.firstName = member.firstName
+				memberEnttiy.lastName = member.lastName
+				memberEnttiy.phone = member.phone
+				memberEnttiy.imageURLString = member.imageURLString
+				anyMembers.append(memberEnttiy)
+			}
+
+			members = anyMembers
+
+			for member in members {
+				self.context.insert(member)
+			}
+
+			try? self.context.save()
+			
+			self.isFetchedCoreData = true
 		}
 		else {
-			model = Model<Contact>(sectionKey: nil)
+			
+			let fetchRequest: NSFetchRequest = ContactEntity.fetchRequest()
+			if let anyMembers = try? self.context.fetch(fetchRequest) {
+				members = anyMembers
+			}
 		}
-		
-		self.model = (model as! ModelAlias<EntityAlias>)
+
 		
 		self.manager = ModelDelegateManager(controller: self)
 		self.model.delegate = self.manager
 
-		
-		var members: [EntityAlias] = []
-		
-		if EntityAlias.self == ContactEntity.self {
-			if !isFetchedCoreData {
-				var anyMembers: [Any] = []
-				for member in fetchedMembers {
-					let memberEnttiy = ContactEntity(context: context)
-					memberEnttiy.id = Int32(member.id)
-					memberEnttiy.firstName = member.firstName
-					memberEnttiy.lastName = member.lastName
-					memberEnttiy.phone = member.phone
-					memberEnttiy.imageURLString = member.imageURLString
-					anyMembers.append(memberEnttiy)
-				}
-				
-				members = anyMembers as! [EntityAlias]
-
-				self.isFetchedCoreData = true
-			}
-		}
-		else {
-			let anyMembers: [Any] = fetchedMembers
-			members = anyMembers as! [EntityAlias]
-		}
-
-		
 		self.model.fetch(members) {
 			self.tableView.reloadData()
 		}
 		
 	}
-
+	
 	var isFetchedCoreData: Bool {
 		
 		get {
@@ -107,6 +97,8 @@ class BasicCoreDataTableViewController: UITableViewController, ImageDownloaderDe
 			UserDefaults.standard.set(newValue, forKey: "isFetchedCoreData")
 		}
 	}
+
+	
 	
 	// MARK: - Table view data source
 	
@@ -128,11 +120,6 @@ class BasicCoreDataTableViewController: UITableViewController, ImageDownloaderDe
 		return cell
 	}
 	
-	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		let section = self.model[section]
-		return section?.name
-	}
-
 	override func configure(_ cell: UITableViewCell, at indexPath: IndexPath) {
 		
 		let entity = self.model[indexPath]
@@ -162,9 +149,8 @@ class BasicCoreDataTableViewController: UITableViewController, ImageDownloaderDe
 	
 	//MARK: - Table cell image support
 	
-	func startIconDownload(_ entity: EntityAlias) {
+	func startIconDownload(_ entity: ContactEntity) {
 		let uniqueValue = entity.uniqueValue
-
 		var imageDownloader: ImageDownloader! = imageDownloadsInProgress[uniqueValue]
 		if imageDownloader == nil {
 			imageDownloader = ImageDownloader(from: entity.imageURL, forEntity: entity)
@@ -189,29 +175,16 @@ class BasicCoreDataTableViewController: UITableViewController, ImageDownloaderDe
 	}
 	
 	// called by our ImageDownloader when an icon is ready to be displayed
-	
-	
 	func downloaded<T>(_ image: UIImage?, forEntity entity: T) {
-		let entity = entity as! EntityAlias
-		self.model.update(entity, mutate: { (contact) in
+		
+		
+		self.model.update(entity as! ContactEntity, mutate: { (contact) in
 			contact.image = image
-			
-		}, completion: {
-			if ModelAlias<EntityAlias>.self == CoreDataModel<ContactEntity>.self {
-				if let indexPath = self.model.indexPath(of: entity),
-					let cell = self.tableView.cellForRow(at: indexPath) {
-					self.configure(cell, at: indexPath)
-				}
-			}
-
-		})
+		}, completion: nil)
 		
 		// Remove the IconDownloader from the in progress list.
 		// This will result in it being deallocated.
-		
-		let uniqueValue = entity.uniqueValue
-		self.imageDownloadsInProgress.removeValue(forKey: uniqueValue)
-
+		self.imageDownloadsInProgress.removeValue(forKey: (entity as! ContactEntity).uniqueValue)
 	}
 	
 	//MARK: - Deferred image loading (UIScrollViewDelegate)

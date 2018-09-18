@@ -76,7 +76,7 @@ class MutablePhoneBookCVC: SimplePhoneBookCVC {
 	
 	override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
 		
-		self.model.moveEntity(at: sourceIndexPath, to: destinationIndexPath, isUserDriven: true)
+		self.model.moveEntity(at: sourceIndexPath, to: destinationIndexPath, isUserDriven: true, completion: nil)
 	}
 	
 	func deletAlertController(for contact: Contact) {
@@ -87,7 +87,7 @@ class MutablePhoneBookCVC: SimplePhoneBookCVC {
 		
 		alertController.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
 			if let indexPath = self.model.indexPath(of: contact) {
-				self.model.remove(at: indexPath)
+				self.model.remove(at: indexPath, completion: nil)
 			}
 
 		}))
@@ -159,7 +159,7 @@ class MutablePhoneBookCVC: SimplePhoneBookCVC {
 				contact.lastName = lastNameTextField.text!
 				contact.phone = phoneTextField.text!
 				
-				self.model.insert([contact])
+				self.model.insert([contact], completion: nil)
 			}
 			
 		}))

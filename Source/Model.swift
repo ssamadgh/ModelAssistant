@@ -33,10 +33,9 @@ public protocol ModelDelegate: class {
 	
 	func modelDidChangeContent()
 	
-	func model<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?)
+	func model(didChange entities: [EntityProtocol], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?)
 	
-	func model<Section>(didChange sectionInfo: Section, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?)
-	
+	func model(didChange sectionInfo: ModelSectionInfo, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?)
 }
 
 
@@ -50,11 +49,11 @@ public extension ModelDelegate {
 		
 	}
 	
-	func model<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) {
+	func model(didChange entities: [EntityProtocol], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) {
 		
 	}
 	
-	func model<Section>(didChange sectionInfo: Section, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) {
+	func model(didChange sectionInfo: ModelSectionInfo, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) {
 		
 	}
 	
@@ -70,9 +69,6 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	private let dispatchQueue = DispatchQueue(label: "com.model.ConcirrentGCD.DispatchQueue", attributes: DispatchQueue.Attributes.concurrent)
 	
 	private let operationQueue = AOperationQueue()
-	
-	
-	public var myValue: Int = 0
 	
 	public var fetchBatchSize: Int
 	
@@ -270,11 +266,11 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	
 	//MARK: - Insert methods
 	
-//	public func insertAtFirst(_ newEntity: Entity, completion:(() -> ())? = nil) {
+//	public func insertAtFirst(_ newEntity: Entity, completion:(() -> ())?) {
 //		self.insert(newEntity, at: IndexPath(row: 0, section: 0), completion: completion)
 //	}
 	
-	public func insert(_ newEntity: Entity, at indexPath: IndexPath, completion:(() -> ())? = nil) {
+	public func insert(_ newEntity: Entity, at indexPath: IndexPath, completion:(() -> ())?) {
 		
 		let isMainThread = Thread.isMainThread
 		
@@ -312,7 +308,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		
 	}
 	
-//	public func insertAtLast(_ newEntity: Entity, completion:(() -> ())? = nil) {
+//	public func insertAtLast(_ newEntity: Entity, completion:(() -> ())?) {
 //		let section = self.numberOfSections - 1
 //		let row = self.numberOfEntites(at: section)
 //		self.insert(newEntity, at: IndexPath(row: row, section: section), completion: completion)
@@ -322,7 +318,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		self.insert(entities, callModelDelegateMethods: false, completion: completion)
 	}
 	
-	public func insert(_ newEntities: [Entity], completion:(() -> ())? = nil) {
+	public func insert(_ newEntities: [Entity], completion:(() -> ())?) {
 		self.insert(newEntities, callModelDelegateMethods: true, completion: completion)
 	}
 	
@@ -507,7 +503,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	
 	//MARK: - Move methods
 
-	public func moveEntity(at indexPath: IndexPath, to newIndexPath: IndexPath, isUserDriven: Bool, completion:(() -> ())? = nil) {
+	public func moveEntity(at indexPath: IndexPath, to newIndexPath: IndexPath, isUserDriven: Bool, completion:(() -> ())?) {
 		
 		let isMainThread = Thread.isMainThread
 
@@ -598,7 +594,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	
 	//MARK: - Remove methods
 	
-	public func remove(at indexPath: IndexPath, completion: ((Entity) -> ())? = nil) {
+	public func remove(at indexPath: IndexPath, completion: ((Entity) -> ())?) {
 		let removeEmptySection: Bool = true
 		let isMainThread = Thread.isMainThread
 
@@ -634,7 +630,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 
 	}
 	
-	public func remove(_ entity: Entity, completion: ((Entity) -> ())? = nil) {
+	public func remove(_ entity: Entity, completion: ((Entity) -> ())?) {
 		
 		if let indexPath = self.indexPath(of: entity) {
 			self.remove(at: indexPath, completion: completion)
@@ -644,7 +640,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		}
 	}
 
-//	public func removeAllEntities(atSection sectionIndex: Int, completion: (() -> ())? = nil) {
+//	public func removeAllEntities(atSection sectionIndex: Int, completion: (() -> ())?) {
 //		
 //		let isMainThread = Thread.isMainThread
 //		
@@ -671,7 +667,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 //
 //	}
 	
-	public func removeSection(at sectionIndex: Int, completion: ((SectionInfo<Entity>) -> ())? = nil) {
+	public func removeSection(at sectionIndex: Int, completion: ((SectionInfo<Entity>) -> ())?) {
 		
 		let isMainThread = Thread.isMainThread
 		
@@ -712,7 +708,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	
 	//MARK: - Sort methods
 
-	public func sortEntities(atSection sectionIndex: Int, by sort: @escaping ((Entity, Entity) -> Bool), completion: (() -> Void)? = nil) {
+	public func sortEntities(atSection sectionIndex: Int, by sort: @escaping ((Entity, Entity) -> Bool), completion: (() -> Void)?) {
 		
 		let isMainThread = Thread.isMainThread
 		
@@ -768,7 +764,7 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		
 	}
 	
-	public func sortSections(by sort: @escaping ((SectionInfo<Entity>, SectionInfo<Entity>) -> Bool), completion: (() -> Void)? = nil) {
+	public func sortSections(by sort: @escaping ((SectionInfo<Entity>, SectionInfo<Entity>) -> Bool), completion: (() -> Void)?) {
 		
 		let isMainThread = Thread.isMainThread
 
@@ -891,13 +887,8 @@ public class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 	}
 	
 	private func addModelOperation(with blockOperation: BlockOperation, callDelegate: Bool = true, completion: @escaping (() -> Void)) {
-		let modelOperation: AOperation
-		if callDelegate {
-			modelOperation = ModelOperation(delegate: self.delegate, blockOperation: blockOperation, completion: completion)
-		}
-		else {
-			modelOperation = blockOperation
-		}
+		let modelOperation = ModelOperation(delegate: self.delegate, callDelegate: callDelegate, blockOperation: blockOperation, completion: completion)
+
 		self.operationQueue.addOperation(modelOperation)
 	}
 	

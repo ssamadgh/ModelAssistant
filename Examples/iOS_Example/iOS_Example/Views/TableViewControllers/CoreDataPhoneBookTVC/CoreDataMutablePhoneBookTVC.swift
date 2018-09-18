@@ -9,7 +9,7 @@
 import UIKit
 import Model
 
-class MYNewCoreDataMutateTVC: MyNewCoreDataIdeaTableViewController {
+class CoreDataMutablePhoneBookTVC: CoreDataBasicTVC {
 	
 	struct MoveInfo {
 		public let movingEntity: ContactEntity
@@ -19,12 +19,13 @@ class MYNewCoreDataMutateTVC: MyNewCoreDataIdeaTableViewController {
 	
 	private var changeIsUserDriven: Bool = false
 	
-	public var updateMovingEntity: ((MoveInfo) -> Void)?
-
+	public var updateMovingEntity: ((MoveInfo) -> Void)!
+	
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
+		self.title = "Core Data Mutable Phone Book"
+
 		// Uncomment the following line to preserve selection between presentations
 		// self.clearsSelectionOnViewWillAppear = false
 		
@@ -37,41 +38,57 @@ class MYNewCoreDataMutateTVC: MyNewCoreDataIdeaTableViewController {
 		
 		self.navigationItem.rightBarButtonItems = [saveButtonItem, addButtonItem, self.editButtonItem]
 		
-	
-//		self.updateMovingEntity = { movingInfo in
-//			
-//			let movingEntity = movingInfo.movingEntity
-//			let oldIndexPath = movingInfo.oldIndexPath
-//			let newIndexPath = movingInfo.newIndexPath
-//			
-//			func orderEntities(forEntities entities: [ContactEntity]) {
-//				let count = entities.count
-//				for i in 0..<count {
-//					let entity = entities[i]
-//					entity.displayOrder = Int64(i)
-//				}
-//			}
-//			
-//			var oldSectionEntities = self.model[oldIndexPath.section] as! SectionInfo<ContactEntity>
-//			
-//			oldSectionEntities.remove(at: oldIndexPath.row)
-//			
-//			var newSectionEntities: [ContactEntity]
-//			
-//			if newIndexPath.section != oldIndexPath.section {
-//				newSectionEntities = model[newIndexPath.section]?.objects as! [ContactEntity]
-//			}
-//			else {
-//				newSectionEntities = oldSectionEntities
-//			}
-//			
-//			newSectionEntities.insert(movingEntity, at: newIndexPath.row)
-//			
-//			orderEntities(forEntities: newSectionEntities)
-//			
-//		}
-
+		
+		self.updateMovingEntity = { movingInfo in
 			
+			let movingEntity = movingInfo.movingEntity
+			let oldIndexPath = movingInfo.oldIndexPath
+			let newIndexPath = movingInfo.newIndexPath
+			
+			print("displayOrder \(Int(movingEntity.displayOrder))")
+			
+			func orderEntities(forEntities entities: [ContactEntity]) {
+				let count = entities.count
+				for i in 0..<count {
+					let entity = entities[i]
+					entity.displayOrder = Int64(i)
+				}
+			}
+			
+			let oldSectionEntities = self.model[oldIndexPath.section]!.entities
+			
+			var newSectionEntities: [ContactEntity]
+			
+			if newIndexPath.section != oldIndexPath.section {
+				orderEntities(forEntities: oldSectionEntities)
+				newSectionEntities = self.model[newIndexPath.section]!.entities
+			}
+			else {
+				newSectionEntities = oldSectionEntities
+			}
+			
+			orderEntities(forEntities: newSectionEntities)
+			
+			print("displayOrder \(Int(movingEntity.displayOrder))")
+			
+		}
+		
+	}
+	
+	override func configureModel() {
+		self.model = Model(sectionKey: "firstName")
+		self.model.sortSections = { $0.name < $1.name }
+		self.model.sortEntities = { (entity1, entity2) -> Bool in
+			
+			if entity1.displayOrder == entity2.displayOrder {
+				return entity1.firstName < entity2.firstName
+			}
+			else {
+				return entity1.displayOrder < entity2.displayOrder
+			}
+
+		}
+		super.configureModel()
 	}
 	
 	@objc func addBarButtonAction(_ sender: UIBarButtonItem) {
@@ -81,6 +98,12 @@ class MYNewCoreDataMutateTVC: MyNewCoreDataIdeaTableViewController {
 	@objc func saveBarButtonAction(_ sender: UIBarButtonItem) {
 		
 		try? self.context.save()
+	}
+	
+	
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		let section = self.model[section]
+		return section?.name
 	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -93,17 +116,22 @@ class MYNewCoreDataMutateTVC: MyNewCoreDataIdeaTableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+		let entity = self.model[sourceIndexPath]!
+		self.model.moveEntity(at: sourceIndexPath, to: destinationIndexPath, isUserDriven: true, completion: {
+			self.updateMovingEntity(MoveInfo(movingEntity: entity, oldIndexPath: sourceIndexPath, newIndexPath: destinationIndexPath))
+		})
 		
-		self.model.moveEntity(at: sourceIndexPath, to: destinationIndexPath, isUserDriven: true, completion: nil)
 	}
 	
 	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 		return true
 	}
 	
-	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
-			self.model.remove(at: indexPath, completion: nil)
+			self.model.remove(at: indexPath) { (entity) in
+				self.context.delete(entity)
+			}
 		}
 	}
 	
@@ -161,7 +189,7 @@ class MYNewCoreDataMutateTVC: MyNewCoreDataIdeaTableViewController {
 				contact.firstName = firstNameTextField.text!
 				contact.lastName = lastNameTextField.text!
 				contact.phone = phoneTextField.text!
-
+				
 				
 				
 				self.model.insert([contact], completion: {

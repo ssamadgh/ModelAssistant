@@ -24,6 +24,7 @@ class SimplePhoneBookTVC: BasicTableViewController {
 
 
 extension SimplePhoneBookTVC: ModelDelegate {
+	
 	func modelWillChangeContent() {
 		self.tableView.beginUpdates()
 	}

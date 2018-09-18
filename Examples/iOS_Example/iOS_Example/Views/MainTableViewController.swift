@@ -10,9 +10,9 @@ import UIKit
 
 private enum TableViews: Int {
 
-	case simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable, ThreadSafePhoneBookTable, basicCoreDataTable, mutableCoreDataTable, MyNewCoreDataIdeaTable
+	case simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable, ThreadSafePhoneBookTable, CoreDataPhoneBookTable
 	
-	static let allValues: [TableViews] = [simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable, ThreadSafePhoneBookTable, basicCoreDataTable, mutableCoreDataTable, MyNewCoreDataIdeaTable]
+	static let allValues: [TableViews] = [simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable, ThreadSafePhoneBookTable, CoreDataPhoneBookTable]
 	
 	var stringValue: String {
 		let suffix = " Phone Book TableView"
@@ -41,14 +41,8 @@ private enum TableViews: Int {
 		case .ThreadSafePhoneBookTable:
 			return "Thread Safe" + suffix
 			
-		case .basicCoreDataTable:
-			return "Basic Core Data" + suffix
-			
-		case .mutableCoreDataTable:
-			return "Mutable Core Data" + suffix
-			
-		case .MyNewCoreDataIdeaTable:
-			return "My New Core Data" + suffix
+		case .CoreDataPhoneBookTable:
+			return "Core Data Mutable" + suffix
 		}
 	}
 	
@@ -77,15 +71,9 @@ private enum TableViews: Int {
 			
 		case .ThreadSafePhoneBookTable:
 			return ThreadSafePhoneBookTVC()
-
-		case .basicCoreDataTable:
-			return BasicCoreDataTableViewController()
-
-		case .mutableCoreDataTable:
-			return MutableCoreDataPhoneBookTVC()
 			
-		case .MyNewCoreDataIdeaTable:
-			return MYNewCoreDataMutateTVC()
+		case .CoreDataPhoneBookTable:
+			return CoreDataMutablePhoneBookTVC()
 		}
 	}
 	

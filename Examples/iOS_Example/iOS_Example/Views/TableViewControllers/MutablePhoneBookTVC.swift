@@ -69,16 +69,16 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 	
 	override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
 
-		self.model.moveEntity(at: sourceIndexPath, to: destinationIndexPath, isUserDriven: true)
+		self.model.moveEntity(at: sourceIndexPath, to: destinationIndexPath, isUserDriven: true, completion: nil)
 	}
 	
 	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 		return true
 	}
 	
-	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
-			self.model.remove(at: indexPath)
+			self.model.remove(at: indexPath, completion: nil)
 		}
 	}
 
@@ -136,7 +136,7 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 				contact.phone = phoneTextField.text!
 				
 				//				self.model.insertAtFirst(contact, applySort: false)
-				self.model.insert([contact])
+				self.model.insert([contact], completion: nil)
 			}
 			
 		}))

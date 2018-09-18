@@ -10,23 +10,38 @@ import Foundation
 
 class ModelOperation: GroupOperation {
 	
-	init(delegate: ModelDelegate?, blockOperation: BlockOperation, completion: @escaping () -> Void) {
+	init(delegate: ModelDelegate?, callDelegate: Bool, blockOperation: BlockOperation, completion: @escaping () -> Void) {
 		
 		let modelWillChangeOperation = BlockOperation {
 			delegate?.modelWillChangeContent()
 		}
+		modelWillChangeOperation.name = "modelWillChangeOperation"
 		
 		let modelDidChangeOperation = BlockOperation {
 			delegate?.modelDidChangeContent()
 		}
+		modelDidChangeOperation.name = "modelDidChangeOperation"
 
-		let finishOperation = Foundation.BlockOperation(block: completion)
-
-		blockOperation.addDependency(modelWillChangeOperation)
-		modelDidChangeOperation.addDependency(blockOperation)
-		finishOperation.addDependency(modelDidChangeOperation)
+		blockOperation.name = "ModelOperation blockOperation"
 		
-		super.init(operations: [modelWillChangeOperation, blockOperation, modelDidChangeOperation, finishOperation])
+		let finishOperation = Foundation.BlockOperation(block: completion)
+		finishOperation.name = "ModelOperation finish Operation"
+		
+		let operations: [Operation]
+		
+		if callDelegate {
+			blockOperation.addDependency(modelWillChangeOperation)
+			modelDidChangeOperation.addDependency(blockOperation)
+			
+			finishOperation.addDependency(modelDidChangeOperation)
+			operations = [modelWillChangeOperation, blockOperation, modelDidChangeOperation, finishOperation]
+		}
+		else {
+			finishOperation.addDependency(blockOperation)
+			operations = [blockOperation, finishOperation]
+		}
+
+		super.init(operations: operations)
 		
 		name = "Model Operation"
 	}

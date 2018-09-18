@@ -259,7 +259,7 @@ class PhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 				contact.phone = phoneTextField.text!
 				
 				//				self.model.insertAtFirst(contact, applySort: false)
-				self.model.insert([contact])
+				self.model.insert([contact], completion: nil)
 			}
 			
 		}))

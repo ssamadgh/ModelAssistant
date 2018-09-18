@@ -38,7 +38,7 @@ public struct SectionInfo<Entity: EntityProtocol & Hashable>: GModelSectionInfo,
 		return lhs.name < rhs.name
 	}
 	
-	public var entities: [Entity] = []
+	public internal (set) var entities: [Entity] = []
 	
 	public var numberOfEntities: Int {
 		guard !self.isEmpty else { return 0 }

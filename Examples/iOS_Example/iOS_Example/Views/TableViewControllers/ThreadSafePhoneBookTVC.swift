@@ -44,17 +44,17 @@ class ThreadSafePhoneBookTVC: BasicTableViewController {
 		
 		self.dispatchQueue.async {
 			
-			self.model.insert(contact, at: firstIndexPath)
+			self.model.insert(contact, at: firstIndexPath, completion: nil)
 		}
 		
 		self.dispatchQueue.async {
 			contact.firstName = "Abbas"
 			contact.phone = "9342432432"
-			self.model.insert(contact, at: firstIndexPath)
+			self.model.insert(contact, at: firstIndexPath, completion: nil)
 		}
 		
 		self.dispatchQueue.async {
-			self.model.remove(at: IndexPath(row: 2, section: 0))
+			self.model.remove(at: IndexPath(row: 2, section: 0), completion: nil)
 		}
 		
 		self.dispatchQueue.async {

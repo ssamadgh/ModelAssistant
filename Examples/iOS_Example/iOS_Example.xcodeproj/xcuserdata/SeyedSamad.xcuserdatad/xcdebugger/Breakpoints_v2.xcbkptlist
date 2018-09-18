@@ -9,14 +9,62 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "iOS_Example/Views/TableViewControllers/BasicCoreDataTableViewController.swift"
-            timestampString = "558932605.330434"
+            filePath = "iOS_Example/Views/TableViewControllers/MyNewCoreDataIdeaTableViewController.swift"
+            timestampString = "558964181.10158"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
-            landmarkName = "BasicCoreDataTableViewController"
-            landmarkType = "3">
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "configureModel()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "iOS_Example.MyNewCoreDataIdeaTableViewController.configureModel() -&gt; ()"
+                  moduleName = "iOS_Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/Model/Examples/iOS_Example/iOS_Example/Views/TableViewControllers/MyNewCoreDataIdeaTableViewController.swift"
+                  timestampString = "558943537.995177"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "83"
+                  endingLineNumber = "83"
+                  offsetFromSymbolStart = "6415">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in iOS_Example.MyNewCoreDataIdeaTableViewController.configureModel() -&gt; ()"
+                  moduleName = "iOS_Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/Model/Examples/iOS_Example/iOS_Example/Views/TableViewControllers/MyNewCoreDataIdeaTableViewController.swift"
+                  timestampString = "558943537.998493"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "86"
+                  endingLineNumber = "86"
+                  offsetFromSymbolStart = "4">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iOS_Example/Views/TableViewControllers/MyNewCoreDataIdeaTableViewController.swift"
+            timestampString = "558964181.102003"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "configureModel()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

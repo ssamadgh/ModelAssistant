@@ -23,7 +23,8 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 		self.imageDownloadsInProgress = [:]
 		
 		self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-		
+		self.model = Model<Contact>(sectionKey: nil)
+
 		self.configureModel()
 		
 	}
@@ -32,7 +33,7 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 		let url = Bundle.main.url(forResource: resourceFileName, withExtension: "json")!
 		let members: [Contact] = JsonService.getEntities(fromURL: url)
 		
-		self.model = Model<Contact>(sectionKey: nil)
+		
 		self.model.fetch(members) {
 			self.tableView.reloadData()
 		}

@@ -24,13 +24,11 @@
 		E424DD8E213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E424DD8D213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift */; };
 		E44127952150ADE300248152 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44127942150ADE300248152 /* TableViewController.swift */; };
 		E44127A32150B8CC00248152 /* Model.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E441279F2150B8BA00248152 /* Model.framework */; };
-		E4644C94214F507000841265 /* MutableCoreDataPhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4644C93214F507000841265 /* MutableCoreDataPhoneBookTVC.swift */; };
-		E4644CE72150183A00841265 /* MyNewCoreDataIdeaTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4644CE62150183A00841265 /* MyNewCoreDataIdeaTableViewController.swift */; };
-		E4644CE92150358300841265 /* MYNewCoreDataMutateTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4644CE82150358300841265 /* MYNewCoreDataMutateTVC.swift */; };
+		E4644CE72150183A00841265 /* CoreDataBasicTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4644CE62150183A00841265 /* CoreDataBasicTVC.swift */; };
+		E4644CE92150358300841265 /* CoreDataMutablePhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4644CE82150358300841265 /* CoreDataMutablePhoneBookTVC.swift */; };
 		E47F1AAA213D0A6400708DFF /* PhoneBook.json in Resources */ = {isa = PBXBuildFile; fileRef = E47F1AA9213D0A6400708DFF /* PhoneBook.json */; };
 		E4873544214D319900BDA8C9 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4873543214D319900BDA8C9 /* CoreDataController.swift */; };
 		E4873547214D31E100BDA8C9 /* ContactDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E4873545214D31E100BDA8C9 /* ContactDataModel.xcdatamodeld */; };
-		E4873549214D46A500BDA8C9 /* BasicCoreDataTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4873548214D46A500BDA8C9 /* BasicCoreDataTableViewController.swift */; };
 		E487354D214D582D00BDA8C9 /* ContactEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E487354B214D582D00BDA8C9 /* ContactEntity+CoreDataClass.swift */; };
 		E487354E214D582D00BDA8C9 /* ContactEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E487354C214D582D00BDA8C9 /* ContactEntity+CoreDataProperties.swift */; };
 		E4B30771214117030034F169 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B3076E214117030034F169 /* ImageDownloader.swift */; };
@@ -130,13 +128,11 @@
 		E424DD8D213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationPhoneBookTVC.swift; sourceTree = "<group>"; };
 		E44127942150ADE300248152 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		E44127992150B8BA00248152 /* Model.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Model.xcodeproj; path = ../../Model.xcodeproj; sourceTree = "<group>"; };
-		E4644C93214F507000841265 /* MutableCoreDataPhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutableCoreDataPhoneBookTVC.swift; sourceTree = "<group>"; };
-		E4644CE62150183A00841265 /* MyNewCoreDataIdeaTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNewCoreDataIdeaTableViewController.swift; sourceTree = "<group>"; };
-		E4644CE82150358300841265 /* MYNewCoreDataMutateTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MYNewCoreDataMutateTVC.swift; sourceTree = "<group>"; };
+		E4644CE62150183A00841265 /* CoreDataBasicTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataBasicTVC.swift; sourceTree = "<group>"; };
+		E4644CE82150358300841265 /* CoreDataMutablePhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataMutablePhoneBookTVC.swift; sourceTree = "<group>"; };
 		E47F1AA9213D0A6400708DFF /* PhoneBook.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PhoneBook.json; sourceTree = "<group>"; };
 		E4873543214D319900BDA8C9 /* CoreDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
 		E4873546214D31E100BDA8C9 /* ContactDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ContactDataModel.xcdatamodel; sourceTree = "<group>"; };
-		E4873548214D46A500BDA8C9 /* BasicCoreDataTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCoreDataTableViewController.swift; sourceTree = "<group>"; };
 		E487354B214D582D00BDA8C9 /* ContactEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E487354C214D582D00BDA8C9 /* ContactEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E4B3076E214117030034F169 /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
@@ -283,6 +279,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E45CD424215120A80062143C /* CoreDataPhoneBookTVC */ = {
+			isa = PBXGroup;
+			children = (
+				E4644CE62150183A00841265 /* CoreDataBasicTVC.swift */,
+				E4644CE82150358300841265 /* CoreDataMutablePhoneBookTVC.swift */,
+			);
+			path = CoreDataPhoneBookTVC;
+			sourceTree = "<group>";
+		};
 		E4873551214D584100BDA8C9 /* CoreDataEntity */ = {
 			isa = PBXGroup;
 			children = (
@@ -353,10 +358,7 @@
 				E4EC83C92145948B0063B4BB /* MutablePhoneBookTVC.swift */,
 				E424DD8D213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift */,
 				E4EC83E0214687FE0063B4BB /* ThreadSafePhoneBookTVC.swift */,
-				E4873548214D46A500BDA8C9 /* BasicCoreDataTableViewController.swift */,
-				E4644C93214F507000841265 /* MutableCoreDataPhoneBookTVC.swift */,
-				E4644CE62150183A00841265 /* MyNewCoreDataIdeaTableViewController.swift */,
-				E4644CE82150358300841265 /* MYNewCoreDataMutateTVC.swift */,
+				E45CD424215120A80062143C /* CoreDataPhoneBookTVC */,
 				E44127942150ADE300248152 /* TableViewController.swift */,
 			);
 			path = TableViewControllers;
@@ -473,13 +475,16 @@
 				TargetAttributes = {
 					E4069F10213BE2FF009FCD7A = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 					};
 					E4069F24213BE300009FCD7A = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 						TestTargetID = E4069F10213BE2FF009FCD7A;
 					};
 					E4069F2F213BE300009FCD7A = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 						TestTargetID = E4069F10213BE2FF009FCD7A;
 					};
 				};
@@ -572,11 +577,10 @@
 				E4B30773214117600034F169 /* CustomEntityProtocol.swift in Sources */,
 				E4069F69213C70BB009FCD7A /* Contact.swift in Sources */,
 				E4EC83CA2145948B0063B4BB /* MutablePhoneBookTVC.swift in Sources */,
-				E4644CE92150358300841265 /* MYNewCoreDataMutateTVC.swift in Sources */,
+				E4644CE92150358300841265 /* CoreDataMutablePhoneBookTVC.swift in Sources */,
 				E4069F55213BE70E009FCD7A /* ModelDelegateManager.swift in Sources */,
 				E4873544214D319900BDA8C9 /* CoreDataController.swift in Sources */,
 				E4EC83DD214642360063B4BB /* MutablePhoneBookCVC.swift in Sources */,
-				E4873549214D46A500BDA8C9 /* BasicCoreDataTableViewController.swift in Sources */,
 				E4EC837321443CCA0063B4BB /* SearchablePhoneBookTVC.swift in Sources */,
 				E487354E214D582D00BDA8C9 /* ContactEntity+CoreDataProperties.swift in Sources */,
 				E4EC8370214437680063B4BB /* SortablePhoneBookTVC.swift in Sources */,
@@ -591,7 +595,6 @@
 				E424DD8E213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift in Sources */,
 				E4069F57213C3B78009FCD7A /* UITableViewController+Extension.swift in Sources */,
 				E4069F53213BE6A2009FCD7A /* SimplePhoneBookCVC.swift in Sources */,
-				E4644C94214F507000841265 /* MutableCoreDataPhoneBookTVC.swift in Sources */,
 				E4EC83502143DDDD0063B4BB /* CollectionViewCell.swift in Sources */,
 				E4EC837521443D4D0063B4BB /* JsonService.swift in Sources */,
 				E4EC8365214404B70063B4BB /* CollectionReusableView.swift in Sources */,
@@ -600,7 +603,7 @@
 				E424DD8A213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift in Sources */,
 				E44127952150ADE300248152 /* TableViewController.swift in Sources */,
 				E4EC836A214430440063B4BB /* BasicTableViewController.swift in Sources */,
-				E4644CE72150183A00841265 /* MyNewCoreDataIdeaTableViewController.swift in Sources */,
+				E4644CE72150183A00841265 /* CoreDataBasicTVC.swift in Sources */,
 				E487354D214D582D00BDA8C9 /* ContactEntity+CoreDataClass.swift in Sources */,
 				E4EC83CE21462CC50063B4BB /* FilteredPhoneBookTVC.swift in Sources */,
 				E4EC83D12146355B0063B4BB /* PhoneBookCVC.swift in Sources */,
@@ -788,7 +791,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.samad.iOS-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -807,7 +810,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.samad.iOS-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -827,7 +830,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.samad.iOS-ExampleTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS_Example.app/iOS_Example";
 			};
@@ -848,7 +851,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.samad.iOS-ExampleTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS_Example.app/iOS_Example";
 			};
@@ -868,7 +871,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.samad.iOS-ExampleUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = iOS_Example;
 			};
@@ -888,7 +891,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.samad.iOS-ExampleUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = iOS_Example;
 			};
