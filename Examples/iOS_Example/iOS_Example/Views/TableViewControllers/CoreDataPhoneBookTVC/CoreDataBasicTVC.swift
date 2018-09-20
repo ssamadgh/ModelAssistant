@@ -33,7 +33,7 @@ class CoreDataBasicTVC: UITableViewController, ImageDownloaderDelegate {
 
 		
 		self.configureModel(sectionKey: nil)
-		
+		self.fetchEntities()
 	}
 	
 	func configureModel(sectionKey: String?) {

@@ -13,14 +13,12 @@ class SectionedPhoneBookTVC: SortablePhoneBookTVC {
 
 
     override func viewDidLoad() {
-		self.model = Model(sectionKey: "firstName")
-
         super.viewDidLoad()
 		self.title = "Sectioned Phone Book"
 	}
 	
 	override func configureModel(sectionKey: String?) {
-		super.configureModel(sectionKey: sectionKey)
+		super.configureModel(sectionKey: "firstName")
 		self.model.sortSections = { $0.name < $1.name }
 	}
 

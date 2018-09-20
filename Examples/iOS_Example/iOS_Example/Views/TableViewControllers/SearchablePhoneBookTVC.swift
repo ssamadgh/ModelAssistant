@@ -26,9 +26,7 @@ class SearchablePhoneBookTVC: SimplePhoneBookTVC {
 	override func configureModel(sectionKey: String?) {
 		self.configureSearchController()
 		super.configureModel(sectionKey: "firstName")
-
 		self.model.delegate = self
-		
 		self.model.sortEntities = { $0.firstName < $1.firstName }
 		self.model.sortSections = { $0.name < $1.name }
 		

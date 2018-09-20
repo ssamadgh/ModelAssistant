@@ -21,7 +21,7 @@ class PaginationPhoneBookTVC: BasicTableViewController {
 	}
 	
 	override func configureModel(sectionKey: String?) {
-		super.configureModel(sectionKey: sectionKey)
+		super.configureModel(sectionKey: "firstName")
 		self.manager = ModelDelegateManager(controller: self)
 		self.model.delegate = self.manager
 		self.model.fetchBatchSize = 20

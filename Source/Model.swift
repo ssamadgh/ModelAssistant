@@ -51,7 +51,7 @@ public extension ModelDelegate {
 		
 	}
 	
-	func model(didChange entities: [EntityProtocol], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) {
+	func model<Entity: EntityProtocol & Hashable>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) {
 		
 	}
 	
@@ -918,7 +918,7 @@ public final class Model<Entity: EntityProtocol & Hashable>: NSObject, ModelProt
 		}
 	}
 	
-	private func model(didChange entities: [EntityProtocol], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) {
+	private func model(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) {
 		DispatchQueue.main.async {
 			self.delegate?.model(didChange: entities, at: indexPaths, for: type, newIndexPaths: newIndexPaths)
 		}
