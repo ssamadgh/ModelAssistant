@@ -14,7 +14,7 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 	
 	var imageDownloadsInProgress: [Int : ImageDownloader<Contact>]!  // the set of IconDownloader objects for each app
 	
-	var model = Model<Contact>(sectionKey: nil)
+	var model: Model<Contact>!
 	var resourceFileName: String = "PhoneBook"
 	
 	override func viewDidLoad() {
@@ -24,19 +24,20 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 		
 		self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 
-		self.configureModel()
-		
+		self.configureModel(sectionKey: nil)
+		self.fetchEntities()
 	}
 	
-	func configureModel() {
+	func configureModel(sectionKey: String?) {
+		self.model = Model<Contact>(sectionKey: sectionKey)
+	}
+	
+	func fetchEntities() {
 		let url = Bundle.main.url(forResource: resourceFileName, withExtension: "json")!
 		let members: [Contact] = JsonService.getEntities(fromURL: url)
-		
-		
 		self.model.fetch(members) {
 			self.tableView.reloadData()
 		}
-		
 	}
 	
 

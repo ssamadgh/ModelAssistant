@@ -22,7 +22,6 @@
 		E4069F69213C70BB009FCD7A /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F68213C70BB009FCD7A /* Contact.swift */; };
 		E424DD8A213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E424DD89213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift */; };
 		E424DD8E213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E424DD8D213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift */; };
-		E44127952150ADE300248152 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44127942150ADE300248152 /* TableViewController.swift */; };
 		E44127A32150B8CC00248152 /* Model.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E441279F2150B8BA00248152 /* Model.framework */; };
 		E45CD4632151438C0062143C /* IndexedPhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45CD4622151438C0062143C /* IndexedPhoneBookTVC.swift */; };
 		E45CD46B215188040062143C /* IndexedPhoneBookCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45CD46A215188040062143C /* IndexedPhoneBookCVC.swift */; };
@@ -127,7 +126,6 @@
 		E4069F68213C70BB009FCD7A /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		E424DD89213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionedPhoneBookTVC.swift; sourceTree = "<group>"; };
 		E424DD8D213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationPhoneBookTVC.swift; sourceTree = "<group>"; };
-		E44127942150ADE300248152 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		E44127992150B8BA00248152 /* Model.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Model.xcodeproj; path = ../../Model.xcodeproj; sourceTree = "<group>"; };
 		E45CD4622151438C0062143C /* IndexedPhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexedPhoneBookTVC.swift; sourceTree = "<group>"; };
 		E45CD46A215188040062143C /* IndexedPhoneBookCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexedPhoneBookCVC.swift; sourceTree = "<group>"; };
@@ -362,7 +360,6 @@
 				E424DD8D213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift */,
 				E4EC83E0214687FE0063B4BB /* ThreadSafePhoneBookTVC.swift */,
 				E45CD424215120A80062143C /* CoreDataPhoneBookTVC */,
-				E44127942150ADE300248152 /* TableViewController.swift */,
 			);
 			path = TableViewControllers;
 			sourceTree = "<group>";
@@ -606,7 +603,6 @@
 				E4873547214D31E100BDA8C9 /* ContactDataModel.xcdatamodeld in Sources */,
 				E4069F15213BE2FF009FCD7A /* AppDelegate.swift in Sources */,
 				E424DD8A213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift in Sources */,
-				E44127952150ADE300248152 /* TableViewController.swift in Sources */,
 				E4EC836A214430440063B4BB /* BasicTableViewController.swift in Sources */,
 				E4644CE72150183A00841265 /* CoreDataBasicTVC.swift in Sources */,
 				E487354D214D582D00BDA8C9 /* ContactEntity+CoreDataClass.swift in Sources */,

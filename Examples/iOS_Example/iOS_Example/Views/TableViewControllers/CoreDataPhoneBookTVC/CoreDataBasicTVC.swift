@@ -30,21 +30,26 @@ class CoreDataBasicTVC: UITableViewController, ImageDownloaderDelegate {
 		
 		self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 		
-		self.model = Model<ContactEntity>(sectionKey: nil)
 
 		
-		self.configureModel()
+		self.configureModel(sectionKey: nil)
 		
 	}
 	
-	func configureModel() {
+	func configureModel(sectionKey: String?) {
+		self.model = Model<ContactEntity>(sectionKey: sectionKey)
+		self.manager = ModelDelegateManager(controller: self)
+		self.model.delegate = self.manager
+	}
+	
+	func fetchEntities() {
 		let url = Bundle.main.url(forResource: resourceFileName, withExtension: "json")!
 		let fetchedMembers: [Contact] = JsonService.getEntities(fromURL: url)
 		
 		let container = (UIApplication.shared.delegate as! AppDelegate).coreDataController.container
 		let context = container.viewContext
 		self.context = context
-
+		
 		var members: [ContactEntity] = []
 		
 		if !isFetchedCoreData {
@@ -58,13 +63,13 @@ class CoreDataBasicTVC: UITableViewController, ImageDownloaderDelegate {
 				memberEnttiy.imageURLString = member.imageURLString
 				anyMembers.append(memberEnttiy)
 			}
-
+			
 			members = anyMembers
-
+			
 			for member in members {
 				self.context.insert(member)
 			}
-
+			
 			try? self.context.save()
 			
 			self.isFetchedCoreData = true
@@ -76,15 +81,11 @@ class CoreDataBasicTVC: UITableViewController, ImageDownloaderDelegate {
 				members = anyMembers
 			}
 		}
-
 		
-		self.manager = ModelDelegateManager(controller: self)
-		self.model.delegate = self.manager
-
 		self.model.fetch(members) {
 			self.tableView.reloadData()
 		}
-		
+
 	}
 	
 	var isFetchedCoreData: Bool {

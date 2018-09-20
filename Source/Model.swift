@@ -33,7 +33,7 @@ public protocol ModelDelegate: class {
 	
 	func modelDidChangeContent()
 	
-	func model(didChange entities: [EntityProtocol], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?)
+	func model<Entity: EntityProtocol & Hashable>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?)
 	
 	func model<Entity: EntityProtocol & Hashable>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?)
 	
@@ -68,7 +68,7 @@ public extension ModelDelegate {
 
 //MARK: - Model class
 
-public final class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
+public final class Model<Entity: EntityProtocol & Hashable>: NSObject, ModelProtocol {
 	
 	private let dispatchQueue = DispatchQueue(label: "com.model.ConcirrentGCD.DispatchQueue", attributes: DispatchQueue.Attributes.concurrent)
 	
@@ -123,7 +123,7 @@ public final class Model<Entity: EntityProtocol & Hashable>: ModelProtocol {
 		self.sectionKey = sectionKey
 		self.hasSection = sectionKey != nil
 		self.sectionsManager = SectionsManager()
-		
+		super.init()
 	}
 	
 	public var isEmpty: Bool {

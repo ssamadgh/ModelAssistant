@@ -20,17 +20,18 @@ class PaginationPhoneBookTVC: BasicTableViewController {
 		self.title = "Pagination Phone Book"
 	}
 	
-	override func configureModel() {
-		self.resourceFileName = "PhoneBook_0"
+	override func configureModel(sectionKey: String?) {
+		super.configureModel(sectionKey: sectionKey)
 		self.manager = ModelDelegateManager(controller: self)
-		
-		self.model = Model(sectionKey: "firstName")
 		self.model.delegate = self.manager
 		self.model.fetchBatchSize = 20
 		self.model.sortEntities = { $0.firstName < $1.firstName }
 		self.model.sortSections = { $0.name < $1.name }
-		
-		super.configureModel()
+	}
+	
+	override func fetchEntities() {
+		self.resourceFileName = "PhoneBook_0"
+		super.fetchEntities()
 	}
 	
 	

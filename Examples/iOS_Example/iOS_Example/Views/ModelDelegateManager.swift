@@ -44,7 +44,7 @@ class ModelDelegateManager: ModelDelegate {
 	func addToBlockOperation(_ operation: @escaping () -> Void) {
 		
 		let operation = BlockOperation {
-				operation()
+			operation()
 		}
 		
 		blockOperations.append(operation)
@@ -54,7 +54,8 @@ class ModelDelegateManager: ModelDelegate {
 		
 	}
 	
-	func model(didChange entities: [EntityProtocol], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) {
+	
+	func model<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) where Entity : EntityProtocol, Entity : Hashable {
 		switch type {
 			
 		case .insert:
@@ -139,7 +140,7 @@ class ModelDelegateManager: ModelDelegate {
 					self.controller.deleteSection(index)
 				}
 			}
-
+			
 		}
 	}
 	

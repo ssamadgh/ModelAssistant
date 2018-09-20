@@ -10,13 +10,14 @@ import Foundation
 
 protocol ModelProtocol {
 	
-	associatedtype Entity
+	associatedtype Entity: EntityProtocol & Hashable
 	
+	associatedtype Section: GModelSectionInfo
+
 	associatedtype SortEntities
 
 	associatedtype SortSections
 
-	associatedtype Section
 	
 	associatedtype Filter
 		

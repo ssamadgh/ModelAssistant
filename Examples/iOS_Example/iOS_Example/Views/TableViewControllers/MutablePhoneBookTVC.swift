@@ -23,11 +23,15 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 		self.navigationItem.rightBarButtonItems = [saveButtonItem, addButtonItem, self.editButtonItem]
 	}
 	
-	override func configureModel() {
-		self.resourceFileName = "PhoneBook"
+	override func configureModel(sectionKey: String?) {
+		super.configureModel(sectionKey: sectionKey)
 		self.model.sortEntities = { $0.firstName < $1.firstName }
 		self.model.delegate = self
-		
+	}
+	
+	override func fetchEntities() {
+		self.resourceFileName = "PhoneBook"
+
 		let documenturl = JsonService.documentURL.appendingPathComponent(self.resourceFileName + ".json")
 		
 		let url: URL

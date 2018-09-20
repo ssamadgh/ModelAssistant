@@ -19,9 +19,9 @@ class SectionedPhoneBookTVC: SortablePhoneBookTVC {
 		self.title = "Sectioned Phone Book"
 	}
 	
-	override func configureModel() {
+	override func configureModel(sectionKey: String?) {
+		super.configureModel(sectionKey: sectionKey)
 		self.model.sortSections = { $0.name < $1.name }
-		super.configureModel()
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

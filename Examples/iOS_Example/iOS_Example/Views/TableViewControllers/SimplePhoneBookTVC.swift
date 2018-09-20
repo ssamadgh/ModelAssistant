@@ -16,14 +16,15 @@ class SimplePhoneBookTVC: BasicTableViewController {
 		self.title = "Simple Phone Book"
 	}
 	
-	override func configureModel() {
+	override func configureModel(sectionKey: String?) {
+		super.configureModel(sectionKey: sectionKey)
 		self.model.delegate = self
-		super.configureModel()
 	}
 }
 
 
 extension SimplePhoneBookTVC: ModelDelegate {
+	
 	
 	func modelWillChangeContent() {
 		self.tableView.beginUpdates()
@@ -33,7 +34,7 @@ extension SimplePhoneBookTVC: ModelDelegate {
 		self.tableView.endUpdates()
 	}
 	
-	func model(didChange entities: [EntityProtocol], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) {
+	func model<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) where Entity : EntityProtocol, Entity : Hashable {
 		switch type {
 		case .insert:
 			self.tableView.insertRows(at: newIndexPaths!, with: .bottom)

@@ -75,11 +75,11 @@ class CoreDataMutablePhoneBookTVC: CoreDataBasicTVC {
 		
 	}
 	
-	override func configureModel() {
-		self.model = Model(sectionKey: "firstName")
+	override func configureModel(sectionKey: String?) {
+		super.configureModel(sectionKey: "firstName")
 		self.model.sortSections = { $0.name < $1.name }
 		self.model.sortEntities = { (entity1, entity2) -> Bool in
-			
+	
 			if entity1.displayOrder == entity2.displayOrder {
 				return entity1.firstName < entity2.firstName
 			}
@@ -88,7 +88,6 @@ class CoreDataMutablePhoneBookTVC: CoreDataBasicTVC {
 			}
 
 		}
-		super.configureModel()
 	}
 	
 	@objc func addBarButtonAction(_ sender: UIBarButtonItem) {
