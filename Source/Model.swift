@@ -562,28 +562,12 @@ public final class Model<Entity: EntityProtocol & Hashable>: NSObject, ModelProt
 	//MARK: - Update methods
 	
 	public func update(at indexPath: IndexPath, mutate: @escaping (inout Entity) -> Void, completion: (() -> Void)?) {
-		
-		let isMainThread = Thread.isMainThread
-		
-		self.addModelOperation(with: BlockOperation(block: { (finished) in
-			self.dispatchQueue.async(flags: .barrier) {
 				
-				if var entity = self.sectionsManager[indexPath] {
-					
-					mutate(&entity)
-					
-					self.sectionsManager[indexPath] = entity
-					
-					self.model(didChange: [entity], at: [indexPath], for: .update, newIndexPaths: nil)
-				}
-				
-				finished()
-			}
-		}), callDelegate: false) {
-			self.checkIsMainThread(isMainThread) {
-				completion?()
-			}
+		guard let entity = self.sectionsManager[indexPath] else {
+			fatalError("IndexPath is Out of range")
 		}
+
+		self.update(entity, mutate: mutate, completion: completion)
 		
 	}
 	

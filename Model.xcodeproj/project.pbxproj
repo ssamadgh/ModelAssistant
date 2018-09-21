@@ -22,6 +22,7 @@
 		E410FEF7213819F3006F22EA /* ModelTestsWithSectionFilteredAndSorted.swift in Sources */ = {isa = PBXBuildFile; fileRef = E410FEF6213819F3006F22EA /* ModelTestsWithSectionFilteredAndSorted.swift */; };
 		E415B74E214A2C890064B041 /* ModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415B74D214A2C890064B041 /* ModelProtocol.swift */; };
 		E473E07121548C29003ACCB8 /* AOperatinLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E473E07021548C29003ACCB8 /* AOperatinLogger.swift */; };
+		E473E0732154C74C003ACCB8 /* TableViewSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E473E0722154C74C003ACCB8 /* TableViewSimulator.swift */; };
 		E47716242133054A00B7E2BE /* Model.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E477161A2133054900B7E2BE /* Model.framework */; };
 		E47716292133054A00B7E2BE /* ModelTestsBasic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47716282133054A00B7E2BE /* ModelTestsBasic.swift */; };
 		E477162B2133054A00B7E2BE /* Model.h in Headers */ = {isa = PBXBuildFile; fileRef = E477161D2133054900B7E2BE /* Model.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -83,6 +84,7 @@
 		E410FEF6213819F3006F22EA /* ModelTestsWithSectionFilteredAndSorted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTestsWithSectionFilteredAndSorted.swift; sourceTree = "<group>"; };
 		E415B74D214A2C890064B041 /* ModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelProtocol.swift; sourceTree = "<group>"; };
 		E473E07021548C29003ACCB8 /* AOperatinLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AOperatinLogger.swift; sourceTree = "<group>"; };
+		E473E0722154C74C003ACCB8 /* TableViewSimulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewSimulator.swift; sourceTree = "<group>"; };
 		E477161A2133054900B7E2BE /* Model.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Model.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E477161D2133054900B7E2BE /* Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
 		E47716232133054A00B7E2BE /* ModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -192,6 +194,7 @@
 				E47716482133069A00B7E2BE /* Resources */,
 				E47716552133094F00B7E2BE /* Entity */,
 				E47716282133054A00B7E2BE /* ModelTestsBasic.swift */,
+				E473E0722154C74C003ACCB8 /* TableViewSimulator.swift */,
 				E477166E2133BC4E00B7E2BE /* ModelTestsWithSection.swift */,
 				E410FEEC21381964006F22EA /* ModelTestsBasicFiltered.swift */,
 				E410FEEE21381983006F22EA /* ModelTestsBasicSorted.swift */,
@@ -424,6 +427,7 @@
 				E477163C2133058A00B7E2BE /* SectionsManager.swift in Sources */,
 				E4EC842221469DD20063B4BB /* URLSessionTaskManager.swift in Sources */,
 				E4EC842321469DD20063B4BB /* GroupOperation.swift in Sources */,
+				E473E0732154C74C003ACCB8 /* TableViewSimulator.swift in Sources */,
 				E4EC842521469DD20063B4BB /* BlockOperation.swift in Sources */,
 				E4EC842421469DD20063B4BB /* AOperation.swift in Sources */,
 				E4EC843021469DD20063B4BB /* ExclusivityController.swift in Sources */,

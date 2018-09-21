@@ -241,7 +241,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		
 		let indexPath = IndexPath(row: row, section: section)
 		self.delegateExpect =  expectation(description: "insert at indexPath Expect")
-		self.model.insert(member, at: indexPath)
+		self.model.insert(member, at: indexPath, completion: nil)
 		waitForExpectations(timeout: 5, handler: nil)
 		
 		let memberIndexPath = self.model.indexPath(of: member)
@@ -260,7 +260,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		
 		let indexPath = IndexPath(row: row, section: section)
 		self.delegateExpect =  expectation(description: "insert at Last Expect")
-		self.model.insert(member, at: indexPath)
+		self.model.insert(member, at: indexPath, completion: nil)
 		waitForExpectations(timeout: 5, handler: nil)
 		
 		let memberIndexPath = self.model.indexPath(of: member)
@@ -364,7 +364,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate {
 		let newIndexPath = IndexPath(row: newRow, section: newSection)
 		
 		self.delegateExpect =  expectation(description: "moving from first IndexPath to the user not derived indexPath")
-		self.model.moveEntity(at: oldIndexPath, to: newIndexPath, isUserDriven: false)
+		self.model.moveEntity(at: oldIndexPath, to: newIndexPath, isUserDriven: false, completion: nil)
 		waitForExpectations(timeout: 5, handler: nil)
 		let currentIndexPath = self.model.indexPath(of: entity!)
 		let expectedIndexPath = newIndexPath

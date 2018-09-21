@@ -23,9 +23,13 @@ public protocol EntityProtocol {
 
 public extension EntityProtocol {
 	
-	var hashValue: Int {
-		return uniqueValue.hashValue
+	func hash(into hasher: inout Hasher) {
+		hasher.combine(uniqueValue)
 	}
+	
+//	var hashValue: Int {
+//		return uniqueValue.hashValue
+//	}
 	
 	static func ==(left: Self, right: Self) -> Bool {
 		return left.uniqueValue == right.uniqueValue
