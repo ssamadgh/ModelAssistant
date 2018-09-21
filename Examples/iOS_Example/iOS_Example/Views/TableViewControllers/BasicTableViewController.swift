@@ -118,7 +118,6 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 	// called by our ImageDownloader when an icon is ready to be displayed
 	func downloaded<T>(_ image: UIImage?, forEntity entity: T) {
 
-		
 		self.model.update(entity as! Contact, mutate: { (contact) in
 			contact.image = image
 		}, completion: nil)
