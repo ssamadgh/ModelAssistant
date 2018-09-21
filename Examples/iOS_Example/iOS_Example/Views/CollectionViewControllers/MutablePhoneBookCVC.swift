@@ -25,10 +25,13 @@ class MutablePhoneBookCVC: SimplePhoneBookCVC {
 		
 	}
 	
-	override func configureModel() {
+	override func configureModel(sectionKey: String?) {
+		super.configureModel(sectionKey: sectionKey)
 		self.manager = ModelDelegateManager(controller: self)
 		self.model.delegate = self.manager
-
+	}
+	
+	override func fetchEntities() {
 		let documenturl = JsonService.documentURL.appendingPathComponent(self.resourceFileName + ".json")
 		
 		let url: URL

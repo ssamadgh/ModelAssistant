@@ -17,9 +17,9 @@ class FilteredPhoneBookCVC: SectionedPhoneBookCVC {
 		
 	}
 	
-	override func configureModel() {
+	override func configureModel(sectionKey: String?) {
+		super.configureModel(sectionKey: sectionKey)
 		self.model.filter = { String(Array($0.firstName)[0]).uppercased() == "A" }
-		super.configureModel()
 	}
 
 }

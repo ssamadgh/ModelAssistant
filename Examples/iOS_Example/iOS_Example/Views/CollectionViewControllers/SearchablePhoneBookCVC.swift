@@ -36,15 +36,11 @@ class SearchablePhoneBookCVC: SimplePhoneBookCVC {
 		
 	}
 	
-	override func configureModel() {
+	override func configureModel(sectionKey: String?) {
 		self.configureSearchController()
-		
-		self.model = Model(sectionKey: "firstName")
-
+		super.configureModel(sectionKey: "firstName")
 		self.model.sortEntities = { $0.firstName < $1.firstName }
 		self.model.sortSections = { $0.name < $1.name }
-		
-		super.configureModel()
 	}
 	
 	func configureSearchController() {

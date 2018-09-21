@@ -229,6 +229,7 @@ public final class Model<Entity: EntityProtocol & Hashable>: NSObject, ModelProt
 		var indexPath: IndexPath?
 		
 		func getIndexPath() {
+
 			indexPath = self.sectionsManager.indexPath(of: entity, withSectionName: sectionName)
 			
 			if self.hasSection, indexPath == nil {
@@ -567,14 +568,14 @@ public final class Model<Entity: EntityProtocol & Hashable>: NSObject, ModelProt
 		self.addModelOperation(with: BlockOperation(block: { (finished) in
 			self.dispatchQueue.async(flags: .barrier) {
 				
-				guard var entity = self.sectionsManager[indexPath] else {
-					fatalError("IndexPath is Out of range")
+				if var entity = self.sectionsManager[indexPath] {
+					
+					mutate(&entity)
+					
+					self.sectionsManager[indexPath] = entity
+					
+					self.model(didChange: [entity], at: [indexPath], for: .update, newIndexPaths: nil)
 				}
-				mutate(&entity)
-				
-				self.sectionsManager[indexPath] = entity
-				
-				self.model(didChange: [entity], at: [indexPath], for: .update, newIndexPaths: nil)
 				
 				finished()
 			}

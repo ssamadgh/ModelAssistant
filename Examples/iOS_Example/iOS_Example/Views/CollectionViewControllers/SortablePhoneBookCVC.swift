@@ -21,9 +21,9 @@ class SortablePhoneBookCVC: SimplePhoneBookCVC {
 		
 	}
 	
-	override func configureModel() {
+	override func configureModel(sectionKey: String?) {
+		super.configureModel(sectionKey: sectionKey)
 		self.model.sortEntities = { $0.firstName < $1.firstName }
-		super.configureModel()
 	}
 	
 	@objc func sortBarButtonAction(_ sender: UIBarButtonItem) {

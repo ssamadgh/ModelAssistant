@@ -16,16 +16,18 @@ class PaginationPhoneBookCVC: SectionedPhoneBookCVC {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
 		self.navigationItem.rightBarButtonItem = nil
-
 		self.title = "Pagination Phone Book"
 	}
 	
-	override func configureModel() {
-		self.resourceFileName = "PhoneBook_0"
+	override func configureModel(sectionKey: String?) {
+		super.configureModel(sectionKey: sectionKey)
 		self.model.fetchBatchSize = 20
-		super.configureModel()
+	}
+	
+	override func fetchEntities() {
+		self.resourceFileName = "PhoneBook_0"
+		super.fetchEntities()
 	}
 	
 	func insertEntities(from fileName: String) {

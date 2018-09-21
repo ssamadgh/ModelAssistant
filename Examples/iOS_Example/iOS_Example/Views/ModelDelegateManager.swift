@@ -59,7 +59,7 @@ class ModelDelegateManager: ModelDelegate {
 		switch type {
 			
 		case .insert:
-			
+
 			self.addToBlockOperation { [weak self] in
 				guard let `self` = self else { return }
 				if let newIndexPaths = newIndexPaths {
@@ -103,10 +103,9 @@ class ModelDelegateManager: ModelDelegate {
 	}
 	
 	func model<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) where Entity : EntityProtocol, Entity : Hashable {
-		
 		switch type {
 		case .insert:
-			
+
 			self.addToBlockOperation { [weak self] in
 				guard let `self` = self else { return }
 				if let newIndex = newSectionIndex {

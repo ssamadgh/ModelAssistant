@@ -15,7 +15,8 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 
 	var imageDownloadsInProgress: [Int : ImageDownloader<Contact>]!  // the set of IconDownloader objects for each app
 	
-	var model = Model<Contact>(sectionKey: nil)
+	var model: Model<Contact>!
+
 	var manager: ModelDelegateManager!
 	var resourceFileName: String = "PhoneBook"
 	
@@ -42,25 +43,27 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 		
 		self.collectionView?.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
 
-		self.configureModel()
-
+		self.configureModel(sectionKey: nil)
+		self.fetchEntities()
     }
 	
-	func configureModel() {
-		
+	func configureModel(sectionKey: String?) {
+		self.model = Model<Contact>(sectionKey: sectionKey)
 		self.manager = ModelDelegateManager(controller: self)
 		self.model.delegate = self.manager
 
+	}
+
+	func fetchEntities() {
 		let url = Bundle.main.url(forResource: resourceFileName, withExtension: "json")!
 		let members: [Contact] = JsonService.getEntities(fromURL: url)
-
+		
 		self.model.fetch(members) {
 			DispatchQueue.main.async {
 				self.collectionView?.reloadData()
 			}
 		}
 	}
-
 
 	// MARK: UICollectionViewDataSource
 
@@ -138,7 +141,8 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 	// called by our ImageDownloader when an icon is ready to be displayed
 	func downloaded<T>(_ image: UIImage?, forEntity entity: T) {
 		let entity = entity as! Contact
-		self.model.update(at: self.model.indexPath(of: entity)!, mutate: { (contact) in
+		let indexPath = self.model.indexPath(of: entity)!
+		self.model.update(at: indexPath, mutate: { (contact) in
 			contact.image = image
 		}, completion: nil)
 		
