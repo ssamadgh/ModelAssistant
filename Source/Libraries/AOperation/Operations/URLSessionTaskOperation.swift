@@ -74,7 +74,7 @@ class URLSessionTaskOperation: AOperation {
 	//    }
 	
 	deinit {
-		print("URLSessionTaskOperation deinited")
+
 	}
 	
 	override func execute() {
