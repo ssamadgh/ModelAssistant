@@ -576,12 +576,12 @@ public final class Model<Entity: EntityProtocol & Hashable>: NSObject, ModelProt
 		
 		self.addModelOperation(with: BlockOperation(block: { (finished) in
 			self.dispatchQueue.async(flags: .barrier) {
-				var entity = entity
+				var mutateEntity = entity
 				
-				mutate(&entity)
+				mutate(&mutateEntity)
 				let indexPath = self.privateIndexPath(of: entity)!
-				self.sectionsManager[indexPath] = entity
-				self.model(didChange: [entity], at: [indexPath], for: .update, newIndexPaths: nil)
+				self.sectionsManager[indexPath] = mutateEntity
+				self.model(didChange: [mutateEntity], at: [indexPath], for: .update, newIndexPaths: nil)
 				
 				finished()
 			}

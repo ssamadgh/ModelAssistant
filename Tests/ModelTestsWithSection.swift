@@ -10,17 +10,10 @@ import XCTest
 @testable import Model
 
 class ModelTestsWithSection: ModelTestsBasic {
-    
-    override func setUp() {
-		self.sectionKey = "country"
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
+    	
+	override func configureModel(sectionKey: String?) {
+		super.configureModel(sectionKey: "country")
+	}
 	
 	override func testModelAfterFetch() {
 		var members = self.members!
@@ -36,7 +29,7 @@ class ModelTestsWithSection: ModelTestsBasic {
 		
 		for country in countrySet {
 			var filtered = members.filter { $0.country == country }
-			if let sort = self.sort {
+			if let sort = self.sortEntities {
 				filtered = filtered.sorted(by: sort)
 			}
 

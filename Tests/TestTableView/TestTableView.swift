@@ -1,5 +1,5 @@
 //
-//  TableViewTest.swift
+//  TestTableView.swift
 //  ModelTests
 //
 //  Created by Seyed Samad Gholamzadeh on 9/22/18.
@@ -11,7 +11,7 @@ import XCTest
 import Foundation
 import UIKit
 
-protocol TableViewTestProtocol {
+protocol TestTableViewProtocol {
 	
 	func beginUpdates()
 	
@@ -35,19 +35,19 @@ protocol TableViewTestProtocol {
 
 
 
-protocol TableViewTestDataSource {
+protocol TestTableViewDataSource {
 	
-	func numberOfSections(in tableView: TableViewTestProtocol) -> Int
+	func numberOfSections(in tableView: TestTableViewProtocol) -> Int
 	
-	func tableView(_ tableView: TableViewTestProtocol, numberOfRowsInSection section: Int) -> Int
+	func tableView(_ tableView: TestTableViewProtocol, numberOfRowsInSection section: Int) -> Int
 	
-	func tableView(_ tableView: TableViewTestProtocol, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath)
+	func tableView(_ tableView: TestTableViewProtocol, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath)
 	
 }
 
-extension TableViewTestDataSource {
+extension TestTableViewDataSource {
 	
-	func tableView(_ tableView: TableViewTestProtocol, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+	func tableView(_ tableView: TestTableViewProtocol, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
 		
 	}
 
@@ -55,44 +55,32 @@ extension TableViewTestDataSource {
 
 
 
-extension UITableView: TableViewTestProtocol {
+extension UITableView: TestTableViewProtocol {
 	
 	
 }
 
-class TableViewTest: XCTestCase, TableViewTestProtocol {
+class TestTableView: XCTestCase, TestTableViewProtocol {
 	
-	var expectation: XCTestExpectation!
-	var dataSource: TableViewTestDataSource?
+	private var expectation: XCTestExpectation!
 	
-	var numberOfSectionsBeforeUpdates: Int!
-	var numberOfRowsBeforeUpdates: [Int]!
+	private var numberOfSectionsBeforeUpdates: Int!
+	private var numberOfRowsBeforeUpdates: [Int]!
 	
-	var numberOfSectionsAfterUpdates: Int!
-	var numberOfRowsAfterUpdates: [Int]!
+	private var numberOfSectionsAfterUpdates: Int!
+	private var numberOfRowsAfterUpdates: [Int]!
 	
-	var insertedIndexPaths: [IndexPath] = []
-	var deletedIndexPaths: [IndexPath] = []
+	private var insertedIndexPaths: [IndexPath] = []
+	private var deletedIndexPaths: [IndexPath] = []
 	
 	
-	var movedIn_IndexPaths: [IndexPath] = []
-	var movedOut_IndexPaths: [IndexPath] = []
+	private var movedIn_IndexPaths: [IndexPath] = []
+	private var movedOut_IndexPaths: [IndexPath] = []
 
-	var insertedSections: [Int] = []
-	var deletedSections: [Int] = []
+	private var insertedSections: [Int] = []
+	private var deletedSections: [Int] = []
 	
-	override func setUp() {
-		super.setUp()
-		// Put setup code here. This method is called before the invocation of each test method in the class.
-		self.resetAllValues()
-	}
-	
-	override func tearDown() {
-		// Put teardown code here. This method is called after the invocation of each test method in the class.
-		self.resetAllValues()
-		super.tearDown()
-	}
-
+	var dataSource: TestTableViewDataSource?
 	
 	func resetAllValues() {
 		// Reset IndexPaths

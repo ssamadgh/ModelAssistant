@@ -9,19 +9,12 @@
 import XCTest
 
 class ModelTestsWithSectionFilteredAndSorted: ModelTestsWithSection {
-    
-    override func setUp() {
-		self.filter = { $0.fullName.contains("a")}
-		self.sort = { $0.firstName < $1.firstName }
+        
+	override func configureModel(sectionKey: String?) {
+		super.configureModel(sectionKey: sectionKey)
+		self.model.filter = { $0.fullName.contains("a")}
+		self.model.sortEntities = { $0.firstName < $1.firstName }
+	}
 
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
     
 }

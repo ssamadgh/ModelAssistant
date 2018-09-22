@@ -9,77 +9,7 @@
 import XCTest
 @testable import Model
 
-class ModelTestsBasic: XCTestCase, ModelDelegate, TableViewTestDataSource {
-	
-	var delegateCalledBalance = 0
-	
-	var delegateExpect: XCTestExpectation!
-	var updateDelegateExpect: XCTestExpectation!
-	var model: Model<Member>!
-	var members: [Member]!
-	var sectionKey: String? = nil
-	
-	var sort: ((Member, Member) -> Bool)?
-	
-	var filter: ((Member) -> Bool)?
-	
-	var tableView: TableViewTest!
-	
-	override func setUp() {
-		super.setUp()
-		// Put setup code here. This method is called before the invocation of each test method in the class.
-		self.model = Model(sectionKey: sectionKey)
-		self.model.delegate = self
-		self.model.filter = filter
-		self.model.sortEntities = sort
-		self.tableView = TableViewTest()
-		self.tableView.dataSource = self
-		self.setMembers()
-		
-		let expect = expectation(description: "insertExpect")
-		self.model.fetch(members) {
-			XCTAssertEqual(self.members.count, self.model.numberOfFetchedEntities)
-			if let filter = self.filter {
-				let filteredCount = self.members.filter(filter).count
-				XCTAssertEqual(self.model.numberOfWholeEntities, filteredCount)
-				
-			}
-			else {
-				XCTAssertEqual(self.model.numberOfWholeEntities, self.model.numberOfFetchedEntities)
-			}
-			
-			expect.fulfill()
-		}
-		
-		waitForExpectations(timeout: 5, handler: nil)
-	}
-	
-	
-	
-	func setMembers() {
-		self.members = self.entities(forFileWithName: "MOCK_DATA_10")
-	}
-	
-	override func tearDown() {
-		// Put teardown code here. This method is called after the invocation of each test method in the class.
-		XCTAssert(self.delegateCalledBalance == 0)
-		self.model = nil
-		self.members = nil
-		self.tableView = nil
-		super.tearDown()
-	}
-	
-	
-	
-	func numberOfSections(in tableView: TableViewTestProtocol) -> Int {
-		return self.model.numberOfSections
-	}
-	
-	func tableView(_ tableView: TableViewTestProtocol, numberOfRowsInSection section: Int) -> Int {
-		return self.model.numberOfEntites(at: section)
-	}
-	
-	
+class ModelTestsBasic: ModelTestsBasic0 {
 	
 	func testIndexOfEntityWithId() {
 		let entity = Member(data: ["id":1])!
@@ -104,22 +34,12 @@ class ModelTestsBasic: XCTestCase, ModelDelegate, TableViewTestDataSource {
 			members = members.filter(filter)
 		}
 		
-		if let sort = self.sort {
+		if let sort = self.sortEntities {
 			members = members.sorted(by: sort)
 		}
 		
 		XCTAssert(self.model.section(at: 0)!.name == "")
-		//		XCTAssert(self.model.section(at: 0)!.entities == members)
-	}
-	
-	func entities(forFileWithName fileName: String) -> [Member] {
-		let bundle = Bundle(for: type(of: self))
-		let url = bundle.url(forResource: fileName, withExtension: "json")!
-		let json = try! Data(contentsOf: url)
-		
-		let decoder = JSONDecoder()
-		let members = try! decoder.decode([Member].self, from: json)
-		return members
+//		XCTAssert(self.model.section(at: 0)!.entities == members)
 	}
 	
 	func testCountOfEntities() {
@@ -141,7 +61,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate, TableViewTestDataSource {
 		XCTAssertNotNil(indexPath2)
 		
 		let entity = self.model[indexPath2!]!
-		XCTAssertEqual(entity.id, id)
+		XCTAssertEqual(entity.uniqueValue, id)
 	}
 	
 	func testMemberEqualable() {
@@ -160,7 +80,6 @@ class ModelTestsBasic: XCTestCase, ModelDelegate, TableViewTestDataSource {
 		
 		self.delegateExpect = expectation(description: "Reorder")
 		self.model.reorder {
-			
 		}
 		
 		waitForExpectations(timeout: 30, handler: nil)
@@ -221,7 +140,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate, TableViewTestDataSource {
 		waitForExpectations(timeout: 20, handler: nil)
 		let memberIndexPath = self.model.indexPath(of: member)
 		
-		if self.sort == nil {
+		if self.sortEntities == nil {
 			XCTAssertEqual(memberIndexPath, indexPath)
 		}
 		
@@ -242,7 +161,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate, TableViewTestDataSource {
 		
 		let memberIndexPath = self.model.indexPath(of: member)
 		
-		if self.sort == nil {
+		if self.sortEntities == nil {
 			XCTAssertEqual(memberIndexPath, indexPath)
 		}
 		
@@ -262,7 +181,7 @@ class ModelTestsBasic: XCTestCase, ModelDelegate, TableViewTestDataSource {
 		
 		let memberIndexPath = self.model.indexPath(of: member)
 		
-		if self.sort == nil {
+		if self.sortEntities == nil {
 			XCTAssertEqual(memberIndexPath, indexPath)
 		}
 	}
@@ -281,28 +200,28 @@ class ModelTestsBasic: XCTestCase, ModelDelegate, TableViewTestDataSource {
 		
 		let memberIndexPath = self.model.indexPath(of: member)
 		
-		if self.sort == nil {
+		if self.sortEntities == nil {
 			XCTAssertEqual(memberIndexPath, indexPath)
 		}
 	}
 	
 	func testInsertAtWrongIndexPath() {
-		let dic = ["id":232,"first_name":"Jhon","last_name":"AppleSeed","email":"jhon@apple.com","gender":"male","country":"USA"] as [String : Any]
-		let member = Member(data: dic)!
-		
-		let section = self.model.numberOfSections - 1
-		let row = self.model.numberOfEntites(at: section) + 1
-		
-		let indexPath = IndexPath(row: row, section: section)
-		self.delegateExpect =  expectation(description: "insert at wrong indexPath Expect")
-		self.model.insert(member, at: indexPath, completion: nil)
-		waitForExpectations(timeout: 5, handler: nil)
-		
-		let memberIndexPath = self.model.indexPath(of: member)
-		
-		if self.sort == nil {
-			XCTAssertEqual(memberIndexPath, indexPath)
-		}
+//		let dic = ["id":232,"first_name":"Jhon","last_name":"AppleSeed","email":"jhon@apple.com","gender":"male","country":"USA"] as [String : Any]
+//		let member = Member(data: dic)!
+//
+//		let section = self.model.numberOfSections - 1
+//		let row = self.model.numberOfEntites(at: section) + 1
+//
+//		let indexPath = IndexPath(row: row, section: section)
+//		self.delegateExpect =  expectation(description: "insert at wrong indexPath Expect")
+//		self.model.insert(member, at: indexPath, completion: nil)
+//		waitForExpectations(timeout: 5, handler: nil)
+//
+//		let memberIndexPath = self.model.indexPath(of: member)
+//
+//		if self.sort == nil {
+//			XCTAssertEqual(memberIndexPath, indexPath)
+//		}
 	}
 	
 	func testMoveEntityFromFirstToLast() {
@@ -398,10 +317,10 @@ class ModelTestsBasic: XCTestCase, ModelDelegate, TableViewTestDataSource {
 		
 		self.updateDelegateExpect = expectation(description: "update IndexPath ")
 		
-		//		self.model!.update(at: indexPath, mutate: { (entity) in
-		//			entity.firstName = "Gholam"
-		//			entity.lastName = "Shishlool"
-		//		})
+		self.model!.update(at: indexPath, mutate: { (entity) in
+			entity.firstName = "Gholam"
+			entity.lastName = "Shishlool"
+		}, completion: nil)
 		
 		waitForExpectations(timeout: 5, handler: nil)
 		
@@ -419,9 +338,9 @@ class ModelTestsBasic: XCTestCase, ModelDelegate, TableViewTestDataSource {
 		self.delegateExpect = expectation(description: "remove IndexPath")
 		
 		var removedEntity: Member!
-		//		self.model.remove(at: indexPath, removeEmptySection: true) { entity in
-		//			removedEntity = entity
-		//		}
+		self.model.remove(at: indexPath) { entity in
+			removedEntity = entity
+		}
 		waitForExpectations(timeout: 5, handler: nil)
 		
 		if section < self.model.numberOfSections, row < self.model.numberOfEntites(at: section) {
@@ -431,96 +350,61 @@ class ModelTestsBasic: XCTestCase, ModelDelegate, TableViewTestDataSource {
 	}
 	
 	func testRemoveAtIndexPathWithEmptySection() {
-		//		let section = Int(arc4random_uniform(UInt32(self.model.numberOfSections - 1)))
-		//
-		//		let oldSection = self.model[section]
-		//
-		//		var numberOfEntities = self.model.numberOfEntites(at: section)
-		//		let indexPath = IndexPath(row: 0, section: section)
-		//
-		//		while numberOfEntities > 0 {
-		//			self.delegateExpect = expectation(description: "remove IndexPath")
-		//			self.model!.remove(at: indexPath, removeEmptySection: true) { entity in
-		//			}
-		//			waitForExpectations(timeout: 5, handler: nil)
-		//
-		//			numberOfEntities -= 1
-		//		}
-		//
-		//		if self.model.numberOfSections > section {
-		//			let currentSection = self.model[section]
-		//			XCTAssertNotEqual(currentSection, oldSection)
-		//		}
+		let section = Int(arc4random_uniform(UInt32(self.model.numberOfSections - 1)))
+		
+		let oldSection = self.model[section]
+		
+		var numberOfEntities = self.model.numberOfEntites(at: section)
+		let indexPath = IndexPath(row: 0, section: section)
+		
+		while numberOfEntities > 0 {
+			self.delegateExpect = expectation(description: "remove IndexPath")
+			self.model!.remove(at: indexPath) { entity in
+			}
+			waitForExpectations(timeout: 5, handler: nil)
+			
+			numberOfEntities -= 1
+		}
+		
+		if self.model.numberOfSections > section {
+			let currentSection = self.model[section]
+			XCTAssertNotEqual(currentSection, oldSection)
+		}
 		
 	}
-	
-	func testRemoveAtIndexPathWithoutEmptySection() {
-		//		let section = Int(arc4random_uniform(UInt32(self.model.numberOfSections - 1)))
-		//
-		//		let oldSection = self.model[section]
-		//
-		//		var numberOfEntities = self.model.numberOfEntites(at: section)
-		//		let indexPath = IndexPath(row: 0, section: section)
-		//
-		//		while numberOfEntities > 0 {
-		//			self.delegateExpect = expectation(description: "remove IndexPath")
-		//			self.model.remove(at: indexPath, removeEmptySection: false) { entity in
-		//			}
-		//			waitForExpectations(timeout: 5, handler: nil)
-		//
-		//			numberOfEntities -= 1
-		//		}
-		//
-		//		let currentSection = self.model[section]
-		//		XCTAssertEqual(currentSection, oldSection)
 		
+	func testRemoveEntity() {
+		let section = Int(arc4random_uniform(UInt32(self.model.numberOfSections - 1)))
+		let row = Int(arc4random_uniform(UInt32(self.model.numberOfEntites(at: section))))
+		
+		let indexPath = IndexPath(row: row, section: section)
+		
+		let entity = self.model[indexPath]
+		
+		self.delegateExpect = expectation(description: "remove IndexPath")
+		
+		self.model.remove(entity!, completion: nil)
+		
+		waitForExpectations(timeout: 5, handler: nil)
+		
+		XCTAssertNil(self.model.indexPath(of: entity!))
 	}
-	
-	//	func testRemoveEntity() {
-	//		let section = Int(arc4random_uniform(UInt32(self.model.numberOfSections - 1)))
-	//		let row = Int(arc4random_uniform(UInt32(self.model.numberOfEntites(at: section))))
-	//
-	//		let indexPath = IndexPath(row: row, section: section)
-	//
-	//		let entity = self.model[indexPath]
-	//
-	//		self.delegateExpect = expectation(description: "remove IndexPath")
-	//
-	//		self.model.remove(entity!, removeEmptySection: true)
-	//
-	//		waitForExpectations(timeout: 5, handler: nil)
-	//
-	//		XCTAssertNil(self.model.indexPath(of: entity!))
-	//	}
-	//
-	//	func testRemoveAllEntitiesAtSection() {
-	//		let section = Int(arc4random_uniform(UInt32(self.model.numberOfSections - 1)))
-	//
-	//		self.delegateExpect = expectation(description: "remove all entities at Section")
-	//
-	//		self.model.removeAllEntities(atSection: section)
-	//
-	//		waitForExpectations(timeout: 5, handler: nil)
-	//
-	//		XCTAssert(self.model[section]!.isEmpty)
-	//	}
 	
 	func testRemoveSection() {
-		//		let sectionIndex = Int(arc4random_uniform(UInt32(self.model.numberOfSections - 1)))
-		//
-		//		let removedSection = self.model[sectionIndex]
-		//
-		//		self.delegateExpect = expectation(description: "remove all entities at Section")
-		//
-		//		self.model.removeSection(at: sectionIndex)
-		//
-		//		waitForExpectations(timeout: 5, handler: nil)
-		//
-		//		if sectionIndex < self.model.numberOfSections {
-		//			let currentSection = self.model[sectionIndex]
-		//			XCTAssertNotEqual(currentSection, removedSection)
-		//		}
+		let sectionIndex = Int(arc4random_uniform(UInt32(self.model.numberOfSections - 1)))
 		
+		let removedSection = self.model[sectionIndex]
+		
+		self.delegateExpect = expectation(description: "remove all entities at Section")
+		
+		self.model.removeSection(at: sectionIndex, completion: nil)
+		
+		waitForExpectations(timeout: 5, handler: nil)
+		
+		if sectionIndex < self.model.numberOfSections {
+			let currentSection = self.model[sectionIndex]
+			XCTAssertNotEqual(currentSection, removedSection)
+		}
 	}
 	
 	func testRemoveAll() {
@@ -588,76 +472,6 @@ class ModelTestsBasic: XCTestCase, ModelDelegate, TableViewTestDataSource {
 		
 		XCTAssertEqual(self.model.index(of: section!), sectionIndex)
 	}
-	
-	func modelWillChangeContent() {
-		XCTAssert(self.delegateCalledBalance >= 0)
-		self.delegateCalledBalance += 1
-		self.tableView.beginUpdates()
-	}
-	
-	func modelDidChangeContent() {
-		self.tableView.endUpdates()
-		XCTAssert(self.delegateCalledBalance > 0)
-		self.delegateCalledBalance -= 1
-		self.delegateExpect.fulfill()
-	}
-	
-	func model<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) where Entity : EntityProtocol, Entity : Hashable {
-		switch type {
-		case .insert:
-			XCTAssertNil(indexPaths)
-			XCTAssertNotNil(newIndexPaths)
-			XCTAssertNotNil(entities)
-			self.tableView.insertRows(at: newIndexPaths!, with: .automatic)
-			
-		case .delete:
-			XCTAssertNotNil(indexPaths)
-			XCTAssertNil(newIndexPaths)
-			XCTAssertNotNil(entities)
-			self.tableView.deleteRows(at: newIndexPaths!, with: .automatic)
-			
-		case .move:
-			XCTAssertNotNil(indexPaths)
-			XCTAssertNotNil(newIndexPaths)
-			XCTAssertNotNil(entities)
-			for i in 0..<indexPaths!.count {
-				self.tableView.moveRow(at: indexPaths![i], to: newIndexPaths![i])
-			}
-			
-		case .update:
-			XCTAssertNotNil(indexPaths)
-			XCTAssertNil(newIndexPaths)
-			XCTAssertNotNil(entities)
-			self.updateDelegateExpect?.fulfill()
-			
-		}
-	}
-	
-	func model<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) where Entity : EntityProtocol, Entity : Hashable {
-		switch type {
-		case .insert:
-			XCTAssertNil(sectionIndex)
-			XCTAssertNotNil(newSectionIndex)
-			XCTAssertNotNil(sectionInfo)
-			
-		case .delete:
-			XCTAssertNotNil(sectionIndex)
-			XCTAssertNil(newSectionIndex)
-			XCTAssertNotNil(sectionInfo)
-			
-		case .move:
-			XCTAssertNotNil(sectionIndex)
-			XCTAssertNotNil(newSectionIndex)
-			XCTAssertNotNil(sectionInfo)
-			
-		case .update:
-			XCTAssertNotNil(sectionIndex)
-			XCTAssertNil(newSectionIndex)
-			XCTAssertNotNil(sectionInfo)
-		}
-		
-	}
-	
 	
 	//MARK: - Performance Checking
 	
