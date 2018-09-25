@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ModelProtocol {
+protocol ModelAssistantProtocol {
 	
 	associatedtype Entity: EntityProtocol & Hashable
 	
@@ -35,7 +35,7 @@ protocol ModelProtocol {
 	
 	var filter: Filter? { get set }
 	
-	var delegate: ModelDelegate? { get set }
+	var delegate: ModelAssistantDelegate? { get set }
 	
 	var isEmpty: Bool { get }
 	
@@ -121,7 +121,7 @@ protocol ModelProtocol {
 	
 }
 
-extension ModelProtocol {
+extension ModelAssistantProtocol {
 	
 	public subscript(indexPath: IndexPath) -> Entity? {
 		get {

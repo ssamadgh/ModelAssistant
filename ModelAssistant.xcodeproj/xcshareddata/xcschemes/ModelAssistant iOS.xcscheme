@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0940"
+   LastUpgradeVersion = "1000"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E47716192133054900B7E2BE"
-               BuildableName = "Model.framework"
-               BlueprintName = "Model"
-               ReferencedContainer = "container:Model.xcodeproj">
+               BlueprintIdentifier = "E4480DEC2156D3980052DC6D"
+               BuildableName = "ModelAssistant.framework"
+               BlueprintName = "ModelAssistant iOS"
+               ReferencedContainer = "container:ModelAssistant.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -26,27 +26,26 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      codeCoverageEnabled = "YES"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E47716222133054A00B7E2BE"
-               BuildableName = "ModelTests.xctest"
-               BlueprintName = "ModelTests"
-               ReferencedContainer = "container:Model.xcodeproj">
+               BlueprintIdentifier = "E459218A215A9C7000E6DF7C"
+               BuildableName = "ModelAssistant iOS Tests.xctest"
+               BlueprintName = "ModelAssistant iOS Tests"
+               ReferencedContainer = "container:ModelAssistant.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E47716192133054900B7E2BE"
-            BuildableName = "Model.framework"
-            BlueprintName = "Model"
-            ReferencedContainer = "container:Model.xcodeproj">
+            BlueprintIdentifier = "E4480DEC2156D3980052DC6D"
+            BuildableName = "ModelAssistant.framework"
+            BlueprintName = "ModelAssistant iOS"
+            ReferencedContainer = "container:ModelAssistant.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -65,10 +64,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E47716192133054900B7E2BE"
-            BuildableName = "Model.framework"
-            BlueprintName = "Model"
-            ReferencedContainer = "container:Model.xcodeproj">
+            BlueprintIdentifier = "E4480DEC2156D3980052DC6D"
+            BuildableName = "ModelAssistant.framework"
+            BlueprintName = "ModelAssistant iOS"
+            ReferencedContainer = "container:ModelAssistant.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -83,10 +82,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E47716192133054900B7E2BE"
-            BuildableName = "Model.framework"
-            BlueprintName = "Model"
-            ReferencedContainer = "container:Model.xcodeproj">
+            BlueprintIdentifier = "E4480DEC2156D3980052DC6D"
+            BuildableName = "ModelAssistant.framework"
+            BlueprintName = "ModelAssistant iOS"
+            ReferencedContainer = "container:ModelAssistant.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
