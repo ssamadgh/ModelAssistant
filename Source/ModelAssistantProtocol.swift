@@ -51,7 +51,7 @@ protocol ModelAssistantProtocol {
 	
 	func index(of section: Section) -> Int?
 	
-	func indexPath(of entity: Entity) -> IndexPath?
+	func indexPath(for entity: Entity) -> IndexPath?
 	
 	
 	//MARK: - Insert methods

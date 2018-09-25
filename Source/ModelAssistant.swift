@@ -324,21 +324,33 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 		return isEmpty
 	}
 	
+	/**
+	The index of last fetched objects.
 	
+	This property is used if you want load objects to view in lazy loading style.
+	*/
 	public var lastFetchIndex: Int {
 		guard fetchBatchSize != 0 else { return 0}
 		let subtract = numberOfFetchedEntities/fetchBatchSize
 		return numberOfFetchedEntities%fetchBatchSize == 0 ? subtract - 1 : subtract
 	}
 	
+	/**
+	The index of next fetched entities.
 	
+	This property is used if you want load objects to view in lazy loading style
+	*/
 	public var nextFetchIndex: Int {
 		guard fetchBatchSize != 0 else { return 0}
 		guard !entitiesUniqueValueIsEmpty else { return 0 }
 		return numberOfFetchedEntities%fetchBatchSize == 0 ? lastFetchIndex + 1 : lastFetchIndex
 	}
 	
+	/**
+	The number of entities assistant got in last fetch
 	
+	This property is used if you want load objects to view in lazy loading style
+	*/
 	private var numberOfLastFetchedEntities: Int {
 		guard fetchBatchSize != 0 else { return numberOfFetchedEntities }
 		let numberOfEntities = self.numberOfFetchedEntities
@@ -353,7 +365,7 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 	
 	- Parameter section: A section
 	- Returns:
-	The lowest index whose corresponding section is equal to given section. If none of the sections in the assistant is equal to section, returns NSNotFound.
+	The lowest index whose corresponding section is equal to given section. If none of the sections in the assistant is equal to section, returns nil.
 	*/
 	public func index(of section: SectionInfo<Entity>) -> Int? {
 		var index: Int?
@@ -365,6 +377,13 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 		return index
 	}
 	
+	/**
+	Returns the lowest index whose corresponding section with a name that is equal to a given section name.
+	
+	- Parameter sectionName: A section name
+	- Returns:
+	The lowest index whose corresponding section with a name that is equal to given section name. If none of the sections in the assistant is equal to section, returns nil.
+	*/
 	func indexOfSection(withSectionName sectionName: String) -> Int? {
 		var index: Int?
 		
@@ -375,7 +394,7 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 		return index
 	}
 	
-	private func indexPath(of entity: Entity, synchronous: Bool) -> IndexPath? {
+	private func indexPath(for entity: Entity, synchronous: Bool) -> IndexPath? {
 		let sectionName = self.hasSection ? entity[self.sectionKey!] : nil
 		var indexPath: IndexPath?
 		
@@ -406,22 +425,52 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 		return indexPath
 	}
 	
-	public func indexPath(of entity: Entity) -> IndexPath? {
-		return self.indexPath(of: entity, synchronous: true)
+	/**
+	Returns the index path of a given entity.
+	
+	- Parameter entity:
+	An entity in the model assistant.
+	
+	- Returns:
+	The index path of entity in the model assistant, or nil if entity could not be found.
+	*/
+	public func indexPath(for entity: Entity) -> IndexPath? {
+		return self.indexPath(for: entity, synchronous: true)
 	}
 	
-	private func privateIndexPath(of entity: Entity) -> IndexPath? {
-		return indexPath(of: entity, synchronous: false)
+	/**
+	Returns the index path of a given entity.
+	
+	- Parameter entity:
+	An entity in the model assistant.
+	
+	- Returns:
+	The index path of entity in the model assistant, or nil if entity could not be found.
+	
+	- Important: This method is not synchronous
+	*/
+	private func privateIndexPath(for entity: Entity) -> IndexPath? {
+		return indexPath(for: entity, synchronous: false)
 	}
 	
+	/**
+	Returns the index path of an entity with given unique value.
 	
-	public func indexPathOfEntity(withUniqueValue uniqueValue: Int) -> IndexPath? {
+	- Parameter uniqueValue:
+	The uniqueValue property of entity. This value should be unique for each entity.
+	
+	- Returns:
+	The index path of entity in the model assistant that its uniqueValue is equal to the given uniqueValue, or nil if entity could not be found.
+	
+	- Important: This method is not synchronous
+	*/
+	public func indexPathForEntity(withUniqueValue uniqueValue: Int) -> IndexPath? {
 		var indexPath: IndexPath?
 		
 		self.dispatchQueue.sync {
 			if self.entitiesUniqueValue.contains(uniqueValue) {
 				if let entity = self.filteredEntities(with: { $0.uniqueValue == uniqueValue }).first {
-					indexPath = self.indexPath(of: entity)
+					indexPath = self.indexPath(for: entity)
 				}
 			}
 		}
@@ -436,6 +485,18 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 	//		self.insert(newEntity, at: IndexPath(row: 0, section: 0), completion: completion)
 	//	}
 	
+	
+	/**
+	Inserts a new entity into the model assistant at the specified indexPath.
+	
+	
+	- Parameters:
+		- newEntity:
+		The new entity to insert into the model assistant.
+	
+		- indexPath:
+		The indexPath at which to insert the new entity. indexPath must be a valid indexPath into the model assistant.
+	*/
 	public func insert(_ newEntity: Entity, at indexPath: IndexPath, completion:(() -> ())?) {
 		
 		let isMainThread = Thread.isMainThread
@@ -481,16 +542,54 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 	//		self.insert(newEntity, at: IndexPath(row: row, section: section), completion: completion)
 	//	}
 	
+	
+	/**
+	This method gots the given entities and inserts them in to model assistant according to section key, sorts and filter user has set, without calling delegate methods.
+	- Important:
+	Use this method at the begin of loading list view to set the initial values of view like number of sections, number of entities, etc.
+	
+	- Parameters:
+		- entities:
+		The new entities to insert into the model assistant.
+		- completion:
+		A block object to be executed when the insertion of entities ends.
+	*/
 	public func fetch(_ entities: [Entity], completion:(() -> ())?) {
 		self.insert(entities, callDelegateMethods: false, completion: completion)
 	}
 	
+	/**
+	This method gots the given entities and inserts them in to model assistant according to section key, sorts and filter user has set. This method calls delegate methods.
+	- Important:
+	Do not use this method at the begin of loading list view. Because in that time the view has not set the needed initial values (like number of sections, number of entities, etc) yet, and by calling this method you disrupt the work of view and your app gots crash. Use `fetch(_:, completion:)` method insetead.
+	
+	- Parameters:
+		- newEntities:
+		The new entities to insert into the model assistant.
+	
+		- completion:
+		A block object to be executed when the insertion of entities ends.
+		Notice that this block will be executed after the end of the last called delegate method execution.
+	*/
 	public func insert(_ newEntities: [Entity], completion:(() -> ())?) {
 		self.insert(newEntities, callDelegateMethods: true, completion: completion)
 	}
 	
 	
+	/**
+	This method gots the given entities and inserts them in to model assistant according to section key, sorts and filter user has set. This method calls delegate methods.
 	
+	- Parameters:
+		- newEntities:
+		The new entities to insert into the model assistant.
+	
+		- callDelegateMethods:
+		Set true to call delegate method, else set it false
+	
+		- completion:
+		A block object to be executed when the insertion of entities ends.
+
+	*/
 	private func insert(_ newEntities: [Entity], callDelegateMethods: Bool, completion:(() -> ())?) {
 		
 		let isMainThread = Thread.isMainThread
@@ -730,7 +829,7 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 				var mutateEntity = entity
 				
 				mutate(&mutateEntity)
-				let indexPath = self.privateIndexPath(of: entity)!
+				let indexPath = self.privateIndexPath(for: entity)!
 				self.sectionsManager[indexPath] = mutateEntity
 				self.modelAssistant(didChange: [mutateEntity], at: [indexPath], for: .update, newIndexPaths: nil)
 				
@@ -785,7 +884,7 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 	
 	public func remove(_ entity: Entity, completion: ((Entity) -> ())?) {
 		
-		if let indexPath = self.indexPath(of: entity) {
+		if let indexPath = self.indexPath(for: entity) {
 			self.remove(at: indexPath, completion: completion)
 		}
 		else {
