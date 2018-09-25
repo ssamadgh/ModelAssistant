@@ -112,6 +112,14 @@ public final class Model<Entity: EntityProtocol & Hashable>: NSObject, ModelProt
 	
 	public weak var delegate: ModelDelegate?
 	
+	var sections: [SectionInfo<Entity>] {
+		var sections: [SectionInfo<Entity>]!
+		self.dispatchQueue.sync {
+			sections = self.sectionsManager.sections
+		}
+		return sections
+	}
+	
 	//	var entities: [Entity]
 	
 	private var entitiesUniqueValue: Set<Int>

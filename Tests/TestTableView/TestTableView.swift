@@ -118,6 +118,12 @@ class TestTableView: XCTestCase, TestTableViewProtocol {
 		
 		XCTAssertEqual(self.numberOfSectionsAfterUpdates, self.numberOfSectionsBeforeUpdates + numberOfInsertedSectons - numberOfDeletedSectons, self.updateSectionsErrorMessageFor(inserted: numberOfInsertedSectons, deleted: numberOfDeletedSectons))
 		
+		let insertedSections = self.insertedSections.sorted()
+		for index in insertedSections {
+			self.numberOfRowsBeforeUpdates.insert(0, at: index)
+		}
+		
+		
 		var insertedIndexPaths = self.insertedIndexPaths
 		var deletedIndexPaths = self.deletedIndexPaths
 		var movedIn_IndexPaths = self.movedIn_IndexPaths
@@ -261,9 +267,12 @@ class TestTableView: XCTestCase, TestTableViewProtocol {
 	}
 	
 	func updateRowsErrorMessageFor(section: Int, inserted: Int, deleted: Int, movedIn: Int, movedOut: Int) -> String {
+		let numberOfRowsAfterUpdatesAtSection = self.numberOfRowsAfterUpdates[section]
+		let numberOfRowsBeforeUpdatesAtSection = self.numberOfRowsBeforeUpdates[section]
+
 		let message =
 		"""
-			Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: 'Invalid update: invalid number of rows in section \(section). The number of rows contained in an existing section after the update \(self.numberOfRowsAfterUpdates[section]) must be equal to the number of rows contained in that section before the update \(self.numberOfRowsBeforeUpdates[section]), plus or minus the number of rows inserted or deleted from that section (\(inserted) inserted, \(deleted) deleted) and plus or minus the number of rows moved into or out of that section (\(movedIn) moved in, \(movedOut) moved out).
+			Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: 'Invalid update: invalid number of rows in section \(section). The number of rows contained in an existing section after the update \(numberOfRowsAfterUpdatesAtSection) must be equal to the number of rows contained in that section before the update \(numberOfRowsBeforeUpdatesAtSection), plus or minus the number of rows inserted or deleted from that section (\(inserted) inserted, \(deleted) deleted) and plus or minus the number of rows moved into or out of that section (\(movedIn) moved in, \(movedOut) moved out).
 		"""
 		return message
 	}

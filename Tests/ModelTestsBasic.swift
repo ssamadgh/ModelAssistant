@@ -79,10 +79,50 @@ class ModelTestsBasic: ModelTestsBasic0 {
 		self.model.sortEntities = { $0.lastName < $1.lastName }
 		
 		self.delegateExpect = expectation(description: "Reorder")
+		let sortExpectation = expectation(description: "Reorder")
 		self.model.reorder {
+			let entities = self.model.section(at: 0)!.entities
+			let allSatisfy = entities.allSatisfy({ (entity) -> Bool in
+				
+				let indexPath = self.model.indexPath(of: entity)
+				XCTAssertNotNil(indexPath)
+				let nextIndexPath = IndexPath(row: indexPath!.row + 1, section: indexPath!.section)
+				if let nextEntity = self.model[nextIndexPath] {
+					XCTAssert(entity.lastName < nextEntity.lastName)
+					return entity.lastName < nextEntity.lastName
+				}
+				
+				return true
+			})
+			
+			XCTAssert(allSatisfy)
+			sortExpectation.fulfill()
 		}
 		
-		waitForExpectations(timeout: 30, handler: nil)
+		wait(for: [sortExpectation], timeout: 30)
+		wait(for: [delegateExpect], timeout: 30)
+
+	}
+	
+	func testSortSections() {
+		self.delegateExpect = expectation(description: "sort all Sections")
+		let sortExpection = expectation(description: "sort all Sections")
+		self.model.sortSections(by: { $0.name < $1.name }) {
+			
+			for index in 0..<self.model.numberOfSections {
+				let section = self.model.section(at: index)!
+				let nextIndex = index + 1
+				if let nextSectoin = self.model.section(at: nextIndex) {
+					XCTAssert(section.name < nextSectoin.name )
+				}
+				
+			}
+			sortExpection.fulfill()
+		}
+		
+		wait(for: [sortExpection], timeout: 10)
+		wait(for: [delegateExpect], timeout: 10)
+
 	}
 	
 	func testInsertSameEntities() {
@@ -140,10 +180,8 @@ class ModelTestsBasic: ModelTestsBasic0 {
 		waitForExpectations(timeout: 20, handler: nil)
 		let memberIndexPath = self.model.indexPath(of: member)
 		
-		if self.sortEntities == nil {
-			XCTAssertEqual(memberIndexPath, indexPath)
-		}
-		
+		XCTAssertEqual(memberIndexPath, indexPath)
+
 	}
 	
 	func testInsertAtLast1() {
@@ -161,10 +199,8 @@ class ModelTestsBasic: ModelTestsBasic0 {
 		
 		let memberIndexPath = self.model.indexPath(of: member)
 		
-		if self.sortEntities == nil {
-			XCTAssertEqual(memberIndexPath, indexPath)
-		}
-		
+		XCTAssertEqual(memberIndexPath, indexPath)
+
 	}
 	
 	func testInsertAtIndexPath() {
@@ -181,9 +217,7 @@ class ModelTestsBasic: ModelTestsBasic0 {
 		
 		let memberIndexPath = self.model.indexPath(of: member)
 		
-		if self.sortEntities == nil {
-			XCTAssertEqual(memberIndexPath, indexPath)
-		}
+		XCTAssertEqual(memberIndexPath, indexPath)
 	}
 	
 	func testInsertAtLast2() {
@@ -200,9 +234,7 @@ class ModelTestsBasic: ModelTestsBasic0 {
 		
 		let memberIndexPath = self.model.indexPath(of: member)
 		
-		if self.sortEntities == nil {
-			XCTAssertEqual(memberIndexPath, indexPath)
-		}
+		XCTAssertEqual(memberIndexPath, indexPath)
 	}
 	
 	func testInsertAtWrongIndexPath() {
@@ -417,31 +449,6 @@ class ModelTestsBasic: ModelTestsBasic0 {
 		waitForExpectations(timeout: 5, handler: nil)
 	}
 	
-	func testSortSections() {
-		self.delegateExpect = expectation(description: "remove all entities at Section")
-		
-		self.model.sortSections(by: { $0.name < $1.name }) {
-			
-		}
-		
-		waitForExpectations(timeout: 5, handler: nil)
-		
-		let firstIndex = 0
-		
-		let lastIndex = self.model.numberOfSections - 1
-		
-		let first = self.model[firstIndex]
-		let last = self.model[lastIndex]
-		
-		if lastIndex == firstIndex {
-			XCTAssert(last!.name == first!.name)
-		}
-		else {
-			XCTAssert(last!.name > first!.name)
-		}
-		
-		
-	}
 	
 	func testFilterAtSection() {
 		let sectionIndex = Int(arc4random_uniform(UInt32(self.model.numberOfSections - 1)))
@@ -472,6 +479,8 @@ class ModelTestsBasic: ModelTestsBasic0 {
 		
 		XCTAssertEqual(self.model.index(of: section!), sectionIndex)
 	}
+	
+		
 	
 	//MARK: - Performance Checking
 	

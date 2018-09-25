@@ -67,7 +67,7 @@ class ModelTestsBasic0: XCTestCase, ModelDelegate, TestTableViewDataSource {
 			expect.fulfill()
 		}
 		
-		waitForExpectations(timeout: 5, handler: nil)
+		waitForExpectations(timeout: 20, handler: nil)
 	}
 
 	func setMembers() {
