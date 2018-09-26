@@ -74,9 +74,9 @@ protocol ModelAssistantProtocol {
 	
 	//MARK: - Update methods
 
-	func update(at indexPath: IndexPath, mutate: @escaping (inout Entity) -> Void, completion: (() -> Void)?)
+	func update(at indexPath: IndexPath, mutate: @escaping ((inout Entity) -> Void), completion: (() -> Void)?)
 	
-	func update(_ entity: Entity, mutate: @escaping (inout Entity) -> Void, completion: (() -> Void)?)
+	func update(_ entity: Entity, mutate: @escaping ((inout Entity) -> Void), completion: (() -> Void)?)
 	
 	
 	//MARK: - Remove methods
@@ -96,7 +96,9 @@ protocol ModelAssistantProtocol {
 
 	func sortEntities(atSection sectionIndex: Int, by sort: SortEntities, completion: (() -> Void)?)
 	
-	func reorder(completion: (() -> Void)?)
+	func reorderEntities(completion: (() -> Void)?)
+	
+	func reorderSections(completion: (() -> Void)?)
 	
 	func sortSections(by sort: SortSections, completion: (() -> Void)?)
 

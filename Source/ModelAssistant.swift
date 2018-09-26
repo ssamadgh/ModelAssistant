@@ -553,6 +553,7 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 		The new entities to insert into the model assistant.
 		- completion:
 		A block object to be executed when the insertion of entities ends.
+		Note that, this block executes after the task of method in model assistant ends.
 	*/
 	public func fetch(_ entities: [Entity], completion:(() -> ())?) {
 		self.insert(entities, callDelegateMethods: false, completion: completion)
@@ -569,7 +570,7 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 	
 		- completion:
 		A block object to be executed when the insertion of entities ends.
-		Notice that this block will be executed after the end of the last called delegate method execution.
+		Note that, this block, executes after executing all the delegate methods.
 	*/
 	public func insert(_ newEntities: [Entity], completion:(() -> ())?) {
 		self.insert(newEntities, callDelegateMethods: true, completion: completion)
@@ -588,7 +589,6 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 	
 		- completion:
 		A block object to be executed when the insertion of entities ends.
-
 	*/
 	private func insert(_ newEntities: [Entity], callDelegateMethods: Bool, completion:(() -> ())?) {
 		
@@ -771,6 +771,21 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 	
 	//MARK: - Move methods
 	
+	/**
+	Move an entity at a specific indexPath in the model assistant to another indexPath.
+	
+	- Parameters:
+		- indexPath: An index path locating the entity to be moved in assistant.
+		- newIndexPath: An index path locating the place in model assistant that is the destination of the move.
+		- isUserDriven:
+		set This flag true if move is initiated by the user.
+		In general, ModelAssistant is designed to respond to changes at the model layer. If you allow a user to reorder table rows in tableView, then your implementation of the delegate methods must take this into account.
+		If you allow the user to reorder table rows, and then call this method, by default this causing the model assistant to notice the change, and so inform its delegate of the update (using modelAssistant(_:didChange:at:for:newIndexPath:)), then the delegate attempts to update the table view. The table view, however, is already in the appropriate state because of the user’s action.
+			So by setting this flag true, model assistant bypass delegate methods and you avoiding this side effect.
+		- completion:
+		A block object to be executed when the task of method ends.
+		Note that, if you set isUserDriven flag true, this block, executes after executing all the delegate methods, and if you set if you set isUserDriven flag false, this block executes after the task of method in model assistant ends.
+	*/
 	public func moveEntity(at indexPath: IndexPath, to newIndexPath: IndexPath, isUserDriven: Bool, completion:(() -> ())?) {
 		
 		let isMainThread = Thread.isMainThread
@@ -811,17 +826,50 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 	
 	//MARK: - Update methods
 	
-	public func update(at indexPath: IndexPath, mutate: @escaping (inout Entity) -> Void, completion: (() -> Void)?) {
+	/**
+	Updates the entity located at given indexPath
+	
+	Use this method to update entities that passed in model assistant. This method is thread safe,
+	so you can update an entity in several thread concurrently and model assistant take care fo updating that entity safely.
+	
+	 - Parameters:
+	   - indexPath: The index path of entity to be update.
+	   - mutate: A black that gives you a mutate entity. Update properties of this entity directly and do not copy or replace it. the model assistant take care of update process.
+	   - completion:
+		A block object to be executed when the task of method ends.
+		Note that, this block, executes after executing all the delegate methods.
+	
+	- important:
+		* This method do not calls delegate `modelWillCahnge()` and `modelDidChange()` methods. Because by calling this two methods if you configured tableView by delegate methods, tableView reloads the cell that is connected to index path of updated entity. So if you want such situation configure it manually.
+		* The indexpath that passed to delegate method which locates the place of updated entity is not necessarily equal to given indexpath to this method. Because the indexpath of the entity may be changed before update process be executed by other methods, and model assistant trace these changes.
+	*/
+	public func update(at indexPath: IndexPath, mutate: @escaping ((inout Entity) -> Void), completion: (() -> Void)?) {
 				
 		guard let entity = self.sectionsManager[indexPath] else {
 			fatalError("IndexPath is Out of range")
 		}
 
 		self.update(entity, mutate: mutate, completion: completion)
-		
 	}
 	
-	public func update(_ entity: Entity, mutate: @escaping (inout Entity) -> Void, completion: (() -> Void)?) {
+	/**
+	Updates the given entity, by given block
+	
+	Use this method to update entities that passed in model assistant. This method is thread safe,
+	so you can update an entity in several thread concurrently and model assistant take care fo updating that entity safely.
+	
+	- important:
+		* This method do not calls delegate `modelWillCahnge()` and `modelDidChange()` methods. Because by calling this two methods if you configured tableView by delegate methods, tableView reloads the cell that is connected to index path of updated entity. So if you want such situation configure it manually.
+
+	- Parameters:
+		- entity: The entity to be update.
+		- mutate: A black that gives you a mutate entity. Update properties of this entity directly and do not copy or replace it. the model assistant take care of update process.
+		- completion:
+		A block object to be executed when the task of method ends.
+		Note that, this block, executes after executing all the delegate methods.
+	
+	*/
+	public func update(_ entity: Entity, mutate: @escaping ((inout Entity) -> Void), completion: (() -> Void)?) {
 		let isMainThread = Thread.isMainThread
 		
 		self.addModelAssistantOperation(with: BlockOperation(block: { (finished) in
@@ -843,9 +891,18 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 		
 	}
 	
-	
 	//MARK: - Remove methods
 	
+	/**
+	 Removes the entity at the specified indexpath.
+	
+	 - Parameters:
+	   - indexPath: The indexpath of the entity to remove. indexpath must be a valid indexPath of model assistant entities.
+	   - completion:
+		A block object to be executed when the task of method ends.
+		This block contains removed entity.
+		Note that, this block, executes after executing all the delegate methods.
+	*/
 	public func remove(at indexPath: IndexPath, completion: ((Entity) -> ())?) {
 		let removeEmptySection: Bool = true
 		let isMainThread = Thread.isMainThread
@@ -882,6 +939,16 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 		
 	}
 	
+	/**
+	Removes the given entity.
+	
+	- Parameters:
+		- entity: The the entity to remove.
+		- completion:
+		A block object to be executed when the task of method ends.
+		This block contains removed entity.
+		Note that, this block, executes after executing all the delegate methods.
+	*/
 	public func remove(_ entity: Entity, completion: ((Entity) -> ())?) {
 		
 		if let indexPath = self.indexPath(for: entity) {
@@ -919,6 +986,17 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 	//
 	//	}
 	
+	
+	/**
+	Removes All entities at the specified section index.
+	
+	- Parameters:
+		- sectionIndex: The index of the section to remove. Index must be a valid index of the model assistant sections.
+		- completion:
+		A block object to be executed when the task of method ends.
+		This block contains removed section.
+		Note that, this block, executes after executing all the delegate methods.
+	*/
 	public func removeSection(at sectionIndex: Int, completion: ((SectionInfo<Entity>) -> ())?) {
 		
 		let isMainThread = Thread.isMainThread
@@ -942,6 +1020,17 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 		
 	}
 	
+	/**
+	Removes All entities in model assistant.
+	
+	Use this method to reset model assistant. This method does not call any delegate method.
+	
+	- Parameters:
+		- completion:
+		A block object to be executed when the task of method ends.
+		This block contains removed section.
+		Note that, this block executes after the task of method in model assistant ends.
+	*/
 	public func removeAll(completion: (() -> ())?) {
 		
 		let isMainThread = Thread.isMainThread
@@ -960,6 +1049,19 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 	
 	//MARK: - Sort methods
 	
+	/**
+	Sort entities in the given section index by sort closure.
+
+	Use this method to sort a specified section entities independent of other sections
+	
+	- Parameters:
+		- sectionIndex: The section index of entities to be sort
+		- sort: The sort closure of entities.
+		- completion:
+		A block object to be executed when the task of method ends.
+		This block contains removed section.
+		Note that, this block, executes after executing all the delegate methods.
+	*/
 	public func sortEntities(atSection sectionIndex: Int, by sort: @escaping ((Entity, Entity) -> Bool), completion: (() -> Void)?) {
 		
 		let isMainThread = Thread.isMainThread
@@ -982,7 +1084,18 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 		}
 	}
 	
-	public func reorder(completion: (() -> Void)?) {
+	/**
+	Reorders entities in all the sections based on `sortEntities` closure.
+	
+	Use this method if you changed the value of `sortEntities` to reorder entities in all the sections.
+	
+	- Parameters:
+		- completion:
+		A block object to be executed when the task of method ends.
+		This block contains removed section.
+		Note that, this block, executes after executing all the delegate methods.
+	*/
+	public func reorderEntities(completion: (() -> Void)?) {
 		guard self.sortEntities != nil else { return }
 		
 		let firstIndex = 0
@@ -1016,6 +1129,34 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 		
 	}
 	
+	/**
+	Reorders sections based on `sortSections` closure.
+	
+	Use this method if you changed the value `sortSections` to reorder sections in model assistant.
+	
+	- Parameters:
+		- completion:
+		A block object to be executed when the task of method ends.
+		This block contains removed section.
+		Note that, this block, executes after executing all the delegate methods.
+	*/
+	public func reorderSections(completion: (() -> Void)?) {
+		guard let sortSections = self.sortSections else { return }
+
+		self.sortSections(by: sortSections, completion: completion)
+	}
+	
+	/**
+	Sorts sections by the given sort closure.
+	
+	- Parameters:
+		- sort: The sort closure of sections
+		- completion:
+		A block object to be executed when the task of method ends.
+		This block contains removed section.
+		Note that, this block, executes after executing all the delegate methods.
+	*/
+
 	public func sortSections(by sort: @escaping ((SectionInfo<Entity>, SectionInfo<Entity>) -> Bool), completion: (() -> Void)?) {
 		
 		let isMainThread = Thread.isMainThread
@@ -1047,6 +1188,15 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 	}
 	
 	//MARK: - filter methods
+	
+	/**
+	Returns entities that satisfy filter closure conditions in the given section index.
+	
+	- Parameters:
+	  - sectionIndex: The section index of entities to be filtered
+	  - filter: The filter closure of entities
+	- Returns: entities that satisfy filter closure conditions in the given section index.
+	*/
 	public func filteredEntities(atSection sectionIndex: Int, with filter: @escaping ((Entity) -> Bool)) -> [Entity] {
 		var entities: [Entity]!
 		self.dispatchQueue.sync {
@@ -1056,6 +1206,13 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 		return entities ?? []
 	}
 	
+	/**
+	Returns entities that satisfy filter closure conditions among all the model assistant entities.
+	
+	- Parameters:
+		- filter: The filter closure of entities
+	- Returns: entities that satisfy filter closure conditions.
+	*/
 	public func filteredEntities(with filter: @escaping ((Entity) -> Bool)) -> [Entity] {
 		var entities: [Entity] = []
 		
@@ -1071,6 +1228,14 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 	
 	//MARK: - Get Section
 	
+	/**
+	Returns the section at the given index in the model assistant.
+	
+	- Parameter sectionIndex: A section index in the model assistant.
+	
+	- Returns: The section at the given section index in the model assistant.
+	If section index does not describe a valid section index in the model assistant, returns nil.
+	*/
 	public func section(at sectionIndex: Int) -> SectionInfo<Entity>? {
 		
 		var section: SectionInfo<Entity>?
@@ -1082,12 +1247,31 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 		return section
 	}
 	
+	/**
+	Returns the corresponding section index entry for a given section name.
+	
+	This method calls `modelAssistant(sectionIndexTitleForSectionName sectionName: String) -> String?`. You should use this delegate method if you need a different way to convert from a section name to its name in the section index.
+	
+	- Parameter sectionName: The name of a section.
+	- Returns: The section index entry corresponding to the section with name sectionName.
+	*/
 	public func sectionIndexTitle(forSectionName sectionName: String) -> String? {
 		guard self.sortSections != nil,
 			!sectionName.isEmpty else { return nil }
 		return self.delegate?.modelAssistant(sectionIndexTitleForSectionName: sectionName)
 	}
 	
+	/**
+	Returns the section number for a given section title and index in the section index.
+	
+	You would typically call this method when executing UITableViewDataSource’s [tableView(_:sectionForSectionIndexTitle:at:)](https://developer.apple.com/documentation/uikit/uitableviewdatasource/1614933-tableview) method.
+	
+	- Parameters:
+	  - title: The title of a section
+	  - sectionIndex: The index of a section.
+	- Returns: The section number for the given section title and index in the section index
+
+	*/
 	public func section(forSectionIndexTitle title: String, at sectionIndex: Int) -> Int {
 		guard let indexOfTitle = self.sectionIndexTitles.firstIndex(of: title),
 			sectionIndex == indexOfTitle else {
@@ -1111,6 +1295,14 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 	
 	//MARK: - Get Entity
 	
+	/**
+	Returns the entity at the given index path in the model assistant.
+	
+	- Parameter indexPath: An index path in the model assistant.
+	- Returns: The entity at the given index path in the model assistant.
+	If index path does not describe a valid index path in the model assistant, returns nil.
+
+	*/
 	public func entity(at indexPath: IndexPath) -> Entity? {
 		
 		var entity: Entity?
@@ -1122,6 +1314,12 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 		return entity
 	}
 	
+	/**
+	Returns all the entities in model assistant, sorted by given sort
+	
+	- Parameter sort: The sort closure of entities. leave this parameter nil, if you do not want to do any sort task on the returned entities.
+	- Returns: All the entities in model assistant, sorted by given sort
+	*/
 	public func getAllEntities(sortedBy sort: ((Entity, Entity) -> Bool)?) -> [Entity] {
 		var entities: [Entity] = []
 		
