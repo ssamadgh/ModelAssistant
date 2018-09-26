@@ -21,7 +21,6 @@
 	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 	THE SOFTWARE.
-
 */
 
 import Foundation
@@ -1338,7 +1337,7 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 	}
 	
 	//MARK: - Delegate methods
-	
+
 	private func modelAssistantWillChangeContent() {
 		DispatchQueue.main.async {
 			self.delegate?.modelAssistantWillChangeContent()
@@ -1387,18 +1386,58 @@ public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, 
 
 public protocol ModelAssistantDelegate: class {
 	
+	/**
+	Notifies the receiver that the model assistant is about to start processing of one or more changes due to an add, remove, move, or update.
+	
+	This method is invoked before all invocations of modelAssistant(didChange:at:for:newIndexPath:) and modelAssistant(didChange:atSectionIndex:for:) have been sent for a given change event.
+	*/
 	func modelAssistantWillChangeContent()
 	
+	/**
+	Notifies the receiver that the model assistant has completed processing of one or more changes due to an add, remove, move, or update.
+	
+	This method is invoked after all invocations of modelAssistant(didChange:at:for:newIndexPath:) and modelAssistant(didChange:atSectionIndex:for:) have been sent for a given change event.
+	*/
 	func modelAssistantDidChangeContent()
 	
+	/**
+	Notifies the receiver that some of entities has been changed due to an add, remove, move, or update.
+	
+	User this method to change your collection view according to model assistant changes.
+	- Important: The place of items in entities, indexPaths and newIndexPaths arrays are corresponds to eachother.
+	
+	- Parameters:
+	- entities: The entities in model assistant that changed.
+	- indexPaths: The index paths of the changed entities (this value is nil for insertions).
+	- type: The type of change. For valid values see ModelAssistantChangeType.
+	- newIndexPaths: The destination paths for the entities for insertions or moves (this value is nil for a deletion).
+	*/
 	func modelAssistant<Entity: EntityProtocol & Hashable>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelAssistantChangeType, newIndexPaths: [IndexPath]?)
 	
+	/**
+	Notifies the receiver of the addition or removal of a section.
+	
+	- Parameters:
+	- sectionInfo: The section that changed.
+	- sectionIndex: The index of the changed section (this value is nil for insertions).
+	- type: The type of change (insert or delete). Valid values are ModelAssistantChangeType.insert and ModelAssistantChangeType.delete.
+	- newSectionIndex: The destination index for the section for insertions or moves (this value is nil for a deletion).
+	*/
 	func modelAssistant<Entity: EntityProtocol & Hashable>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelAssistantChangeType, newSectionIndex: Int?)
 	
+	/**
+	Returns the name for a given section.
+	
+	This method does not enable change tracking. It is only needed if a section index is used.
+	If the delegate doesn’t implement this method, the default implementation returns the capitalized first letter of the section name.
+	
+	- Parameter sectionName: The default name of the section.
+	- Returns: The string to use as the name for the specified section.
+	*/
 	func modelAssistant(sectionIndexTitleForSectionName sectionName: String) -> String?
 }
 
-
+// This extension is used to makes methods of ModelAssistantDelegate protocol optional.
 public extension ModelAssistantDelegate {
 	
 	func modelAssistantWillChangeContent() {
@@ -1427,15 +1466,15 @@ public extension ModelAssistantDelegate {
 /// Constants that specify the possible types of changes that are reported.
 public enum ModelAssistantChangeType {
 	
-	/// Specifies that an object was inserted.
+	/// Specifies that an entity was inserted.
 	case insert
 	
-	/// Specifies that an object was deleted.
+	/// Specifies that an entity was deleted.
 	case delete
 	
-	/// Specifies that an object was moved.
+	/// Specifies that an entity was moved.
 	case move
 	
-	/// Specifies that an object was changed.
+	/// Specifies that an entity was changed.
 	case update
 }
