@@ -25,21 +25,30 @@ THE SOFTWARE.
 
 import Foundation
 
-
+///A protocol that defines the interface for section objects vended by a fetched results controller.
 public protocol ModelSectionInfo {
 	
+	///The number of entities (rows) in the section.
 	var numberOfEntities: Int { get }
 	
+	///The name of the section.
 	var name: String  { get }
 	
+	/**
+	The index title of the section.
+	
+	This is used when displaying the index.
+	*/
 	var indexTitle: String?  { get }
 	
 }
 
+///A protocol that defines the interface for section objects vended by a fetched results controller.
 protocol GModelSectionInfo: ModelSectionInfo {
 	
 	associatedtype Entity: EntityProtocol, Hashable
 	
+	///The array of entities in the section.
 	var entities: [Entity]  { get set}
 	
 }

@@ -1,0 +1,11 @@
+framework module ModelAssistant {
+  umbrella header "ModelAssistant.h"
+
+  export *
+  module * { export * }
+}
+
+module ModelAssistant.Swift {
+    header "ModelAssistant-Swift.h"
+    requires objc
+}

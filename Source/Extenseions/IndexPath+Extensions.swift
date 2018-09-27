@@ -20,7 +20,7 @@ extension IndexPath: Strideable {
 		return IndexPath(row: row, section: self.section)
 	}
 	
-	public static func indexPaths(in range: CountableClosedRange<Int>, atSection section: Int) -> [IndexPath] {
+	static func indexPaths(in range: CountableClosedRange<Int>, atSection section: Int) -> [IndexPath] {
 		let lowerIndexPath = IndexPath(row: range.lowerBound, section: section)
 		let upperIndexPth = IndexPath(row: range.upperBound, section: section)
 		
