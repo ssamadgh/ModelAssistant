@@ -7,26 +7,26 @@
 //
 
 import UIKit
-import Model
+import ModelAssistant
 
 class PaginationPhoneBookTVC: BasicTableViewController {
 	
 	var insertingNewEntities = false
 	
-	var manager: ModelDelegateManager!
+	var manager: ModelAssistantDelegateManager!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.title = "Pagination Phone Book"
 	}
 	
-	override func configureModel(sectionKey: String?) {
-		super.configureModel(sectionKey: "firstName")
-		self.manager = ModelDelegateManager(controller: self)
-		self.model.delegate = self.manager
-		self.model.fetchBatchSize = 20
-		self.model.sortEntities = { $0.firstName < $1.firstName }
-		self.model.sortSections = { $0.name < $1.name }
+	override func configureModelAssistant(sectionKey: String?) {
+		super.configureModelAssistant(sectionKey: "firstName")
+		self.manager = ModelAssistantDelegateManager(controller: self)
+		self.assistant.delegate = self.manager
+		self.assistant.fetchBatchSize = 20
+		self.assistant.sortEntities = { $0.firstName < $1.firstName }
+		self.assistant.sortSections = { $0.name < $1.name }
 	}
 	
 	override func fetchEntities() {
@@ -53,7 +53,7 @@ class PaginationPhoneBookTVC: BasicTableViewController {
 			let decoder = JSONDecoder()
 			let members = try! decoder.decode([Contact].self, from: json)
 			self.insertingNewEntities = true
-			self.model.insert(members) {
+			self.assistant.insert(members) {
 				self.insertingNewEntities = false
 			}
 		}
@@ -63,7 +63,7 @@ class PaginationPhoneBookTVC: BasicTableViewController {
 	// MARK: - Table view data source
 	
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		return self.model[section]?.name
+		return self.assistant[section]?.name
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -80,13 +80,13 @@ class PaginationPhoneBookTVC: BasicTableViewController {
 	override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
 		super.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
 		if !decelerate {
-			self.insertEntities(from: "PhoneBook_\(self.model.nextIndex)")
+			self.insertEntities(from: "PhoneBook_\(self.assistant.nextFetchIndex)")
 		}
 	}
 	
 	override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 		super.scrollViewDidEndDecelerating(scrollView)
-		self.insertEntities(from: "PhoneBook_\(self.model.nextIndex)")
+		self.insertEntities(from: "PhoneBook_\(self.assistant.nextFetchIndex)")
 	}
 	
 }

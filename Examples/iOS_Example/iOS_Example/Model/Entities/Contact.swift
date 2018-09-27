@@ -6,7 +6,7 @@
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
 //
 
-import Model
+import ModelAssistant
 
 struct Contact: CustomEntityProtocol & Hashable, Codable {
 	

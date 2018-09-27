@@ -9,7 +9,7 @@
 
 import Foundation
 import CoreData
-import Model
+import ModelAssistant
 
 extension ContactEntity: EntityProtocol {
 

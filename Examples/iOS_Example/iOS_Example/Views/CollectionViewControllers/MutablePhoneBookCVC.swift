@@ -25,10 +25,10 @@ class MutablePhoneBookCVC: SimplePhoneBookCVC {
 		
 	}
 	
-	override func configureModel(sectionKey: String?) {
-		super.configureModel(sectionKey: sectionKey)
-		self.manager = ModelDelegateManager(controller: self)
-		self.model.delegate = self.manager
+	override func configureModelAssistant(sectionKey: String?) {
+		super.configureModelAssistant(sectionKey: sectionKey)
+		self.manager = ModelAssistantDelegateManager(controller: self)
+		self.assistant.delegate = self.manager
 	}
 	
 	override func fetchEntities() {
@@ -45,7 +45,7 @@ class MutablePhoneBookCVC: SimplePhoneBookCVC {
 		
 		let members: [Contact] = JsonService.getEntities(fromURL: url)
 		
-		self.model.fetch(members) {
+		self.assistant.fetch(members) {
 			self.collectionView?.reloadData()
 		}
 	}
@@ -55,7 +55,7 @@ class MutablePhoneBookCVC: SimplePhoneBookCVC {
 	}
 	
 	@objc func saveBarButtonAction(_ sender: UIBarButtonItem) {
-		let entities = self.model.getAllEntities(sortedBy: nil)
+		let entities = self.assistant.getAllEntities(sortedBy: nil)
 		let url = JsonService.documentURL.appendingPathComponent(self.resourceFileName + ".json")
 		JsonService.saveEntities(entities, toURL: url) {
 			
@@ -63,7 +63,7 @@ class MutablePhoneBookCVC: SimplePhoneBookCVC {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let contact = self.model[indexPath]
+		let contact = self.assistant[indexPath]
 
 		if self.isEditing {
 			self.deletAlertController(for: contact!)
@@ -79,7 +79,7 @@ class MutablePhoneBookCVC: SimplePhoneBookCVC {
 	
 	override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
 		
-		self.model.moveEntity(at: sourceIndexPath, to: destinationIndexPath, isUserDriven: true, completion: nil)
+		self.assistant.moveEntity(at: sourceIndexPath, to: destinationIndexPath, isUserDriven: true, completion: nil)
 	}
 	
 	func deletAlertController(for contact: Contact) {
@@ -89,8 +89,8 @@ class MutablePhoneBookCVC: SimplePhoneBookCVC {
 		let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 		
 		alertController.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
-			if let indexPath = self.model.indexPath(of: contact) {
-				self.model.remove(at: indexPath, completion: nil)
+			if let indexPath = self.assistant.indexPath(for: contact) {
+				self.assistant.remove(at: indexPath, completion: nil)
 			}
 
 		}))
@@ -138,12 +138,12 @@ class MutablePhoneBookCVC: SimplePhoneBookCVC {
 		let doneButtonTitle = contact == nil ? "Add" : "Update"
 		alertController.addAction(UIAlertAction(title: doneButtonTitle, style: .default, handler: { (action) in
 			if contact != nil {
-				let indexPath = self.model.indexPath(of: contact!)!
+				let indexPath = self.assistant.indexPath(for: contact!)!
 				let firstName = firstNameTextField.text!
 				let lastName = lastNameTextField.text!
 				let phone = phoneTextField.text!
 				
-				self.model.update(at: indexPath, mutate: { (contact) in
+				self.assistant.update(at: indexPath, mutate: { (contact) in
 					contact.firstName = firstName
 					contact.lastName = lastName
 					contact.phone = phone
@@ -162,7 +162,7 @@ class MutablePhoneBookCVC: SimplePhoneBookCVC {
 				contact.lastName = lastNameTextField.text!
 				contact.phone = phoneTextField.text!
 				
-				self.model.insert([contact], completion: nil)
+				self.assistant.insert([contact], completion: nil)
 			}
 			
 		}))

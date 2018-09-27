@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Model
+import ModelAssistant
 
 class CoreDataMutablePhoneBookTVC: CoreDataBasicTVC {
 	
@@ -55,13 +55,13 @@ class CoreDataMutablePhoneBookTVC: CoreDataBasicTVC {
 				}
 			}
 			
-			let oldSectionEntities = self.model[oldIndexPath.section]!.entities
+			let oldSectionEntities = self.assistant[oldIndexPath.section]!.entities
 			
 			var newSectionEntities: [ContactEntity]
 			
 			if newIndexPath.section != oldIndexPath.section {
 				orderEntities(forEntities: oldSectionEntities)
-				newSectionEntities = self.model[newIndexPath.section]!.entities
+				newSectionEntities = self.assistant[newIndexPath.section]!.entities
 			}
 			else {
 				newSectionEntities = oldSectionEntities
@@ -75,10 +75,10 @@ class CoreDataMutablePhoneBookTVC: CoreDataBasicTVC {
 		
 	}
 	
-	override func configureModel(sectionKey: String?) {
-		super.configureModel(sectionKey: "firstName")
-		self.model.sortSections = { $0.name < $1.name }
-		self.model.sortEntities = { (entity1, entity2) -> Bool in
+	override func configureModelAssistant(sectionKey: String?) {
+		super.configureModelAssistant(sectionKey: "firstName")
+		self.assistant.sortSections = { $0.name < $1.name }
+		self.assistant.sortEntities = { (entity1, entity2) -> Bool in
 	
 			if entity1.displayOrder == entity2.displayOrder {
 				return entity1.firstName < entity2.firstName
@@ -101,12 +101,12 @@ class CoreDataMutablePhoneBookTVC: CoreDataBasicTVC {
 	
 	
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		let section = self.model[section]
+		let section = self.assistant[section]
 		return section?.name
 	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let contact = self.model[indexPath]
+		let contact = self.assistant[indexPath]
 		self.contactDetailsAlertController(for: contact)
 	}
 	
@@ -115,8 +115,8 @@ class CoreDataMutablePhoneBookTVC: CoreDataBasicTVC {
 	}
 	
 	override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-		let entity = self.model[sourceIndexPath]!
-		self.model.moveEntity(at: sourceIndexPath, to: destinationIndexPath, isUserDriven: true, completion: {
+		let entity = self.assistant[sourceIndexPath]!
+		self.assistant.moveEntity(at: sourceIndexPath, to: destinationIndexPath, isUserDriven: true, completion: {
 			self.updateMovingEntity(MoveInfo(movingEntity: entity, oldIndexPath: sourceIndexPath, newIndexPath: destinationIndexPath))
 		})
 		
@@ -128,7 +128,7 @@ class CoreDataMutablePhoneBookTVC: CoreDataBasicTVC {
 	
 	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
-			self.model.remove(at: indexPath) { (entity) in
+			self.assistant.remove(at: indexPath) { (entity) in
 				self.context.delete(entity)
 			}
 		}
@@ -165,12 +165,12 @@ class CoreDataMutablePhoneBookTVC: CoreDataBasicTVC {
 		let doneButtonTitle = contact == nil ? "Add" : "Update"
 		alertController.addAction(UIAlertAction(title: doneButtonTitle, style: .default, handler: { (action) in
 			if contact != nil {
-				let indexPath = self.model.indexPath(of: contact!)!
+				let indexPath = self.assistant.indexPath(for: contact!)!
 				let firstName = firstNameTextField.text!
 				let lastName = lastNameTextField.text!
 				let phone = phoneTextField.text!
 				
-				self.model.update(at: indexPath, mutate: { (contact) in
+				self.assistant.update(at: indexPath, mutate: { (contact) in
 					contact.firstName = firstName
 					contact.lastName = lastName
 					contact.phone = phone
@@ -191,7 +191,7 @@ class CoreDataMutablePhoneBookTVC: CoreDataBasicTVC {
 				
 				
 				
-				self.model.insert([contact], completion: {
+				self.assistant.insert([contact], completion: {
 					self.context.insert(contact)
 				})
 			}

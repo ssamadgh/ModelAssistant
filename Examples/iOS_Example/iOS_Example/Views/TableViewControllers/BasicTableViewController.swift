@@ -7,14 +7,14 @@
 //
 
 import UIKit
-import Model
+import ModelAssistant
 
 class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 	
 	
 	var imageDownloadsInProgress: [Int : ImageDownloader<Contact>]!  // the set of IconDownloader objects for each app
 	
-	var model: Model<Contact>!
+	var assistant: ModelAssistant<Contact>!
 	var resourceFileName: String = "PhoneBook"
 	
 	override func viewDidLoad() {
@@ -24,18 +24,18 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 		
 		self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 
-		self.configureModel(sectionKey: nil)
+		self.configureModelAssistant(sectionKey: nil)
 		self.fetchEntities()
 	}
 	
-	func configureModel(sectionKey: String?) {
-		self.model = Model<Contact>(sectionKey: sectionKey)
+	func configureModelAssistant(sectionKey: String?) {
+		self.assistant = ModelAssistant<Contact>(sectionKey: sectionKey)
 	}
 	
 	func fetchEntities() {
 		let url = Bundle.main.url(forResource: resourceFileName, withExtension: "json")!
 		let members: [Contact] = JsonService.getEntities(fromURL: url)
-		self.model.fetch(members) {
+		self.assistant.fetch(members) {
 			self.tableView.reloadData()
 		}
 	}
@@ -45,12 +45,12 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 	
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		// #warning Incomplete implementation, return the number of sections
-		return self.model.numberOfSections
+		return self.assistant.numberOfSections
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		// #warning Incomplete implementation, return the number of rows
-		return self.model.numberOfEntites(at: section)
+		return self.assistant.numberOfEntites(at: section)
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -63,7 +63,7 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 	
 	override func configure(_ cell: UITableViewCell, at indexPath: IndexPath) {
 		
-		let entity = self.model[indexPath]
+		let entity = self.assistant[indexPath]
 		// Configure the cell...
 		cell.textLabel?.text =  entity?.fullName
 		
@@ -103,10 +103,10 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 	
 	// this method is used in case the user scrolled into a set of cells that don't have their app icons yet
 	func loadImagesForOnscreenRows() {
-		if !self.model.isEmpty {
+		if !self.assistant.isEmpty {
 			let visiblePaths = self.tableView.indexPathsForVisibleRows ?? []
 			for indexPath in visiblePaths {
-				guard let entity = self.model[indexPath] else { return }
+				guard let entity = self.assistant[indexPath] else { return }
 				if entity.image == nil // avoid the app icon download if the app already has an icon
 				{
 					self.startIconDownload(entity)
@@ -118,7 +118,7 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 	// called by our ImageDownloader when an icon is ready to be displayed
 	func downloaded<T>(_ image: UIImage?, forEntity entity: T) {
 
-		self.model.update(entity as! Contact, mutate: { (contact) in
+		self.assistant.update(entity as! Contact, mutate: { (contact) in
 			contact.image = image
 		}, completion: nil)
 

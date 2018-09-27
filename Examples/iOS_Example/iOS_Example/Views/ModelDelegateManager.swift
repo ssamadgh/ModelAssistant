@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Model
+import ModelAssistant
 
 protocol CollectionController {
 	
@@ -31,7 +31,7 @@ protocol CollectionController {
 }
 
 
-class ModelDelegateManager: ModelDelegate {
+class ModelAssistantDelegateManager: ModelAssistantDelegate {
 	var blockOperations: [BlockOperation] = []
 	
 	var controller: CollectionController
@@ -55,7 +55,7 @@ class ModelDelegateManager: ModelDelegate {
 	}
 	
 	
-	func model<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) where Entity : EntityProtocol, Entity : Hashable {
+	func model<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelAssistantChangeType, newIndexPaths: [IndexPath]?) where Entity : EntityProtocol, Entity : Hashable {
 		switch type {
 			
 		case .insert:
@@ -102,7 +102,7 @@ class ModelDelegateManager: ModelDelegate {
 		}
 	}
 	
-	func model<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) where Entity : EntityProtocol, Entity : Hashable {
+	func model<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelAssistantChangeType, newSectionIndex: Int?) where Entity : EntityProtocol, Entity : Hashable {
 		switch type {
 		case .insert:
 

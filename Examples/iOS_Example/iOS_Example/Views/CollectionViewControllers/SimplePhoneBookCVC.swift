@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Model
+import ModelAssistant
 
 private let reuseIdentifier = "Cell"
 
@@ -15,9 +15,9 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 
 	var imageDownloadsInProgress: [Int : ImageDownloader<Contact>]!  // the set of IconDownloader objects for each app
 	
-	var model: Model<Contact>!
+	var assistant: ModelAssistant<Contact>!
 
-	var manager: ModelDelegateManager!
+	var manager: ModelAssistantDelegateManager!
 	var resourceFileName: String = "PhoneBook"
 	
 	init() {
@@ -43,14 +43,14 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 		
 		self.collectionView?.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
 
-		self.configureModel(sectionKey: nil)
+		self.configureModelAssistant(sectionKey: nil)
 		self.fetchEntities()
     }
 	
-	func configureModel(sectionKey: String?) {
-		self.model = Model<Contact>(sectionKey: sectionKey)
-		self.manager = ModelDelegateManager(controller: self)
-		self.model.delegate = self.manager
+	func configureModelAssistant(sectionKey: String?) {
+		self.assistant = ModelAssistant<Contact>(sectionKey: sectionKey)
+		self.manager = ModelAssistantDelegateManager(controller: self)
+		self.assistant.delegate = self.manager
 
 	}
 
@@ -58,7 +58,7 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 		let url = Bundle.main.url(forResource: resourceFileName, withExtension: "json")!
 		let members: [Contact] = JsonService.getEntities(fromURL: url)
 		
-		self.model.fetch(members) {
+		self.assistant.fetch(members) {
 			DispatchQueue.main.async {
 				self.collectionView?.reloadData()
 			}
@@ -69,12 +69,12 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 
 
 	override func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return self.model.numberOfSections
+		return self.assistant.numberOfSections
 	}
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return self.model.numberOfEntites(at: section)
+        return self.assistant.numberOfEntites(at: section)
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -88,7 +88,7 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 	
 	override func configure(_ cell: UICollectionViewCell, at indexPath: IndexPath) {
 		if let cell  = cell as? CollectionViewCell {
-			let entity = self.model[indexPath]
+			let entity = self.assistant[indexPath]
 			cell.titleLabel.text = entity?.fullName
 			
 			// Only load cached images; defer new downloads until scrolling ends
@@ -126,10 +126,10 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 	
 	// this method is used in case the user scrolled into a set of cells that don't have their app icons yet
 	func loadImagesForOnscreenRows() {
-		if !self.model.isEmpty {
+		if !self.assistant.isEmpty {
 			let visiblePaths = self.collectionView?.indexPathsForVisibleItems ?? []
 			for indexPath in visiblePaths {
-				let entity = self.model[indexPath]
+				let entity = self.assistant[indexPath]
 				if entity?.image == nil // avoid the app icon download if the app already has an icon
 				{
 					self.startIconDownload(entity!, for: indexPath)
@@ -141,8 +141,8 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 	// called by our ImageDownloader when an icon is ready to be displayed
 	func downloaded<T>(_ image: UIImage?, forEntity entity: T) {
 		let entity = entity as! Contact
-		let indexPath = self.model.indexPath(of: entity)!
-		self.model.update(at: indexPath, mutate: { (contact) in
+		let indexPath = self.assistant.indexPath(for: entity)!
+		self.assistant.update(at: indexPath, mutate: { (contact) in
 			contact.image = image
 		}, completion: nil)
 		

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Model
+import ModelAssistant
 
 class SearchablePhoneBookTVC: SimplePhoneBookTVC {
 	
@@ -23,12 +23,12 @@ class SearchablePhoneBookTVC: SimplePhoneBookTVC {
 		
 	}
 	
-	override func configureModel(sectionKey: String?) {
+	override func configureModelAssistant(sectionKey: String?) {
 		self.configureSearchController()
-		super.configureModel(sectionKey: "firstName")
-		self.model.delegate = self
-		self.model.sortEntities = { $0.firstName < $1.firstName }
-		self.model.sortSections = { $0.name < $1.name }
+		super.configureModelAssistant(sectionKey: "firstName")
+		self.assistant.delegate = self
+		self.assistant.sortEntities = { $0.firstName < $1.firstName }
+		self.assistant.sortSections = { $0.name < $1.name }
 		
 	}
 	
@@ -65,13 +65,13 @@ class SearchablePhoneBookTVC: SimplePhoneBookTVC {
 	
 	
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		let section = self.model[section]
+		let section = self.assistant[section]
 		return isSearching ? nil : section?.name
 	}
 	
 	override func configure(_ cell: UITableViewCell, at indexPath: IndexPath) {
 		
-		let entity = self.isSearching ? self.searchResults[indexPath.row] : self.model[indexPath]
+		let entity = self.isSearching ? self.searchResults[indexPath.row] : self.assistant[indexPath]
 		// Configure the cell...
 		cell.textLabel?.text =  entity?.fullName
 		
@@ -117,10 +117,10 @@ extension SearchablePhoneBookTVC: UISearchBarDelegate, UISearchControllerDelegat
 	func updateSearchResults(for searchController: UISearchController) {
 		if let text = searchController.searchBar.text {
 			if text.isEmpty {
-				self.searchResults = self.model.getAllEntities(sortedBy: nil)
+				self.searchResults = self.assistant.getAllEntities(sortedBy: nil)
 			}
 			else {
-				self.searchResults = self.model.filteredEntities(with: { $0.fullName.contains(text) })
+				self.searchResults = self.assistant.filteredEntities(with: { $0.fullName.contains(text) })
 			}
 			self.tableView.reloadData()
 		}

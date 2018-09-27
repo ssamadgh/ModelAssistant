@@ -23,10 +23,10 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 		self.navigationItem.rightBarButtonItems = [saveButtonItem, addButtonItem, self.editButtonItem]
 	}
 	
-	override func configureModel(sectionKey: String?) {
-		super.configureModel(sectionKey: sectionKey)
-		self.model.sortEntities = { $0.firstName < $1.firstName }
-		self.model.delegate = self
+	override func configureModelAssistant(sectionKey: String?) {
+		super.configureModelAssistant(sectionKey: sectionKey)
+		self.assistant.sortEntities = { $0.firstName < $1.firstName }
+		self.assistant.delegate = self
 	}
 	
 	override func fetchEntities() {
@@ -45,7 +45,7 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 		
 		let members: [Contact] = JsonService.getEntities(fromURL: url)
 		
-		self.model.fetch(members) {
+		self.assistant.fetch(members) {
 			self.tableView.reloadData()
 		}
 	}
@@ -55,7 +55,7 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 	}
 	
 	@objc func saveBarButtonAction(_ sender: UIBarButtonItem) {
-		let entities = self.model.getAllEntities(sortedBy: nil)
+		let entities = self.assistant.getAllEntities(sortedBy: nil)
 		let url = JsonService.documentURL.appendingPathComponent(self.resourceFileName + ".json")
 		JsonService.saveEntities(entities, toURL: url) {
 			
@@ -63,7 +63,7 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let contact = self.model[indexPath]
+		let contact = self.assistant[indexPath]
 		self.contactDetailsAlertController(for: contact)
 	}
 	
@@ -73,7 +73,7 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 	
 	override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
 
-		self.model.moveEntity(at: sourceIndexPath, to: destinationIndexPath, isUserDriven: true, completion: nil)
+		self.assistant.moveEntity(at: sourceIndexPath, to: destinationIndexPath, isUserDriven: true, completion: nil)
 	}
 	
 	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -82,7 +82,7 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 	
 	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
-			self.model.remove(at: indexPath, completion: nil)
+			self.assistant.remove(at: indexPath, completion: nil)
 		}
 	}
 
@@ -117,12 +117,12 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 		let doneButtonTitle = contact == nil ? "Add" : "Update"
 		alertController.addAction(UIAlertAction(title: doneButtonTitle, style: .default, handler: { (action) in
 			if contact != nil {
-				let indexPath = self.model.indexPath(of: contact!)!
+				let indexPath = self.assistant.indexPath(for: contact!)!
 				let firstName = firstNameTextField.text!
 				let lastName = lastNameTextField.text!
 				let phone = phoneTextField.text!
 				
-				self.model.update(at: indexPath, mutate: { (contact) in
+				self.assistant.update(at: indexPath, mutate: { (contact) in
 					contact.firstName = firstName
 					contact.lastName = lastName
 					contact.phone = phone
@@ -139,8 +139,8 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 				contact.lastName = lastNameTextField.text!
 				contact.phone = phoneTextField.text!
 				
-				//				self.model.insertAtFirst(contact, applySort: false)
-				self.model.insert([contact], completion: nil)
+				//				self.assistant.insertAtFirst(contact, applySort: false)
+				self.assistant.insert([contact], completion: nil)
 			}
 			
 		}))

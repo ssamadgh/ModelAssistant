@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Model
+import ModelAssistant
 
 struct Member: EntityProtocol, Hashable, Codable {
 	

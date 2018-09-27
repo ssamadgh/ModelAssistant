@@ -7,12 +7,12 @@
 //
 
 import UIKit
-import Model
+import ModelAssistant
 
 class MemberTableViewController: UITableViewController {
 	
-	var model: Model<Member>!
-	var manager: ModelDelegateManager!
+	var assistant: ModelAssistant<Member>!
+	var manager: ModelAssistantDelegateManager!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +26,7 @@ class MemberTableViewController: UITableViewController {
 		
 		self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 		
-		self.configureModel(sectionKey: nil)
+		self.configureModelAssistant(sectionKey: nil)
 		self.fetchEntities()
 
     }
@@ -35,16 +35,16 @@ class MemberTableViewController: UITableViewController {
 		let url = Bundle.main.url(forResource: "MOCK_DATA_20", withExtension: "json")!
 		let members: [Member] = JsonService.getEntities(fromURL: url)
 
-		self.model.insert(members, completion: nil)
+		self.assistant.insert(members, completion: nil)
 	}
 	
-	func configureModel(sectionKey: String?) {
-		self.model = Model<Member>(sectionKey: "country")
-		self.model.sortSections = { $0.name < $1.name }
-		self.model.sortEntities = { $0.firstName < $1.firstName }
+	func configureModelAssistant(sectionKey: String?) {
+		self.assistant = ModelAssistant<Member>(sectionKey: "country")
+		self.assistant.sortSections = { $0.name < $1.name }
+		self.assistant.sortEntities = { $0.firstName < $1.firstName }
 
-		self.manager = ModelDelegateManager(controller: self)
-		self.model.delegate = self.manager
+		self.manager = ModelAssistantDelegateManager(controller: self)
+		self.assistant.delegate = self.manager
 
 	}
 	
@@ -52,24 +52,24 @@ class MemberTableViewController: UITableViewController {
 
 		let url = Bundle.main.url(forResource: "MOCK_DATA_10", withExtension: "json")!
 		let members: [Member] = JsonService.getEntities(fromURL: url)
-		self.model.fetch(members) {
+		self.assistant.fetch(members) {
 			self.tableView.reloadData()
 		}
 	}
 	
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		let section = self.model[section]
+		let section = self.assistant[section]
 		return section?.name
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		// #warning Incomplete implementation, return the number of sections
-		return self.model.numberOfSections
+		return self.assistant.numberOfSections
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		// #warning Incomplete implementation, return the number of rows
-		return self.model.numberOfEntites(at: section)
+		return self.assistant.numberOfEntites(at: section)
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -81,16 +81,16 @@ class MemberTableViewController: UITableViewController {
 	}
 	
 	override func configure(_ cell: UITableViewCell, at indexPath: IndexPath) {
-		let entity = self.model[indexPath]
+		let entity = self.assistant[indexPath]
 		cell.textLabel?.text = entity?.fullName
 	}
 	
 	override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-		return self.model.sectionIndexTitles
+		return self.assistant.sectionIndexTitles
 	}
 	
 	override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
-		return self.model.section(forSectionIndexTitle: title, at: index)
+		return self.assistant.section(forSectionIndexTitle: title, at: index)
 	}
 
 

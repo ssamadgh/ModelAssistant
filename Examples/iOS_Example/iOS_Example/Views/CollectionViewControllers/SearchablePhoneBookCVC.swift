@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Model
+import ModelAssistant
 
 class SearchablePhoneBookCVC: SimplePhoneBookCVC {
 	
@@ -36,11 +36,11 @@ class SearchablePhoneBookCVC: SimplePhoneBookCVC {
 		
 	}
 	
-	override func configureModel(sectionKey: String?) {
+	override func configureModelAssistant(sectionKey: String?) {
 		self.configureSearchController()
-		super.configureModel(sectionKey: "firstName")
-		self.model.sortEntities = { $0.firstName < $1.firstName }
-		self.model.sortSections = { $0.name < $1.name }
+		super.configureModelAssistant(sectionKey: "firstName")
+		self.assistant.sortEntities = { $0.firstName < $1.firstName }
+		self.assistant.sortSections = { $0.name < $1.name }
 	}
 	
 	func configureSearchController() {
@@ -66,7 +66,7 @@ class SearchablePhoneBookCVC: SimplePhoneBookCVC {
 	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 		let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as! CollectionReusableView
 		
-		let section = self.model[indexPath.section]
+		let section = self.assistant[indexPath.section]
 		
 		headerView.titleLabel.text = section?.name
 		
@@ -85,7 +85,7 @@ class SearchablePhoneBookCVC: SimplePhoneBookCVC {
 	
 	override func configure(_ cell: UICollectionViewCell, at indexPath: IndexPath) {
 		if let cell  = cell as? CollectionViewCell {
-			let entity = self.isSearching ? self.searchResults[indexPath.row] : self.model[indexPath]
+			let entity = self.isSearching ? self.searchResults[indexPath.row] : self.assistant[indexPath]
 			
 			cell.titleLabel.text = entity?.fullName
 			
@@ -134,10 +134,10 @@ extension SearchablePhoneBookCVC: UISearchBarDelegate, UISearchControllerDelegat
 	func updateSearchResults(for searchController: UISearchController) {
 		if let text = searchController.searchBar.text {
 			if text.isEmpty {
-				self.searchResults = self.model.getAllEntities(sortedBy: nil)
+				self.searchResults = self.assistant.getAllEntities(sortedBy: nil)
 			}
 			else {
-				self.searchResults = self.model.filteredEntities(with: { $0.fullName.contains(text) })
+				self.searchResults = self.assistant.filteredEntities(with: { $0.fullName.contains(text) })
 			}
 			self.collectionView?.reloadData()
 		}

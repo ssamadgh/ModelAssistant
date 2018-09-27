@@ -22,7 +22,6 @@
 		E4069F69213C70BB009FCD7A /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F68213C70BB009FCD7A /* Contact.swift */; };
 		E424DD8A213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E424DD89213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift */; };
 		E424DD8E213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E424DD8D213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift */; };
-		E44127A32150B8CC00248152 /* Model.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E441279F2150B8BA00248152 /* Model.framework */; };
 		E4480DDC2156BF760052DC6D /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480DD82156BF760052DC6D /* Member.swift */; };
 		E4480DDD2156BF760052DC6D /* MOCK_DATA_20.json in Resources */ = {isa = PBXBuildFile; fileRef = E4480DD92156BF760052DC6D /* MOCK_DATA_20.json */; };
 		E4480DDE2156BF760052DC6D /* MemberTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480DDA2156BF760052DC6D /* MemberTableViewController.swift */; };
@@ -36,6 +35,8 @@
 		E4873547214D31E100BDA8C9 /* ContactDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E4873545214D31E100BDA8C9 /* ContactDataModel.xcdatamodeld */; };
 		E487354D214D582D00BDA8C9 /* ContactEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E487354B214D582D00BDA8C9 /* ContactEntity+CoreDataClass.swift */; };
 		E487354E214D582D00BDA8C9 /* ContactEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E487354C214D582D00BDA8C9 /* ContactEntity+CoreDataProperties.swift */; };
+		E495A8FD215C7A89009CBB3E /* ModelAssistant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E495A8FA215C7A63009CBB3E /* ModelAssistant.framework */; };
+		E495A8FE215C7A89009CBB3E /* ModelAssistant.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E495A8FA215C7A63009CBB3E /* ModelAssistant.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E4B30771214117030034F169 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B3076E214117030034F169 /* ImageDownloader.swift */; };
 		E4B30773214117600034F169 /* CustomEntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B30772214117600034F169 /* CustomEntityProtocol.swift */; };
 		E4EC83502143DDDD0063B4BB /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC834E2143DDDD0063B4BB /* CollectionViewCell.swift */; };
@@ -79,19 +80,26 @@
 			remoteGlobalIDString = E4069F10213BE2FF009FCD7A;
 			remoteInfo = iOS_Example;
 		};
-		E441279E2150B8BA00248152 /* PBXContainerItemProxy */ = {
+		E495A8F9215C7A63009CBB3E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = E44127992150B8BA00248152 /* Model.xcodeproj */;
+			containerPortal = E495A8F4215C7A63009CBB3E /* ModelAssistant.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E477161A2133054900B7E2BE;
-			remoteInfo = Model;
+			remoteGlobalIDString = E4480DED2156D3980052DC6D;
+			remoteInfo = "ModelAssistant iOS";
 		};
-		E44127A02150B8BA00248152 /* PBXContainerItemProxy */ = {
+		E495A8FB215C7A63009CBB3E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = E44127992150B8BA00248152 /* Model.xcodeproj */;
+			containerPortal = E495A8F4215C7A63009CBB3E /* ModelAssistant.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E47716232133054A00B7E2BE;
-			remoteInfo = ModelTests;
+			remoteGlobalIDString = E459218B215A9C7000E6DF7C;
+			remoteInfo = "ModelAssistant iOS Tests";
+		};
+		E495A8FF215C7A89009CBB3E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E495A8F4215C7A63009CBB3E /* ModelAssistant.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E4480DEC2156D3980052DC6D;
+			remoteInfo = "ModelAssistant iOS";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -102,6 +110,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				E495A8FE215C7A89009CBB3E /* ModelAssistant.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -130,7 +139,6 @@
 		E4069F68213C70BB009FCD7A /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		E424DD89213E1BCF002E20D8 /* SectionedPhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionedPhoneBookTVC.swift; sourceTree = "<group>"; };
 		E424DD8D213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationPhoneBookTVC.swift; sourceTree = "<group>"; };
-		E44127992150B8BA00248152 /* Model.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Model.xcodeproj; path = ../../Model.xcodeproj; sourceTree = "<group>"; };
 		E4480DD82156BF760052DC6D /* Member.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		E4480DD92156BF760052DC6D /* MOCK_DATA_20.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MOCK_DATA_20.json; sourceTree = "<group>"; };
 		E4480DDA2156BF760052DC6D /* MemberTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberTableViewController.swift; sourceTree = "<group>"; };
@@ -144,6 +152,7 @@
 		E4873546214D31E100BDA8C9 /* ContactDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ContactDataModel.xcdatamodel; sourceTree = "<group>"; };
 		E487354B214D582D00BDA8C9 /* ContactEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E487354C214D582D00BDA8C9 /* ContactEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E495A8F4215C7A63009CBB3E /* ModelAssistant.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ModelAssistant.xcodeproj; path = ../../ModelAssistant.xcodeproj; sourceTree = "<group>"; };
 		E4B3076E214117030034F169 /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 		E4B30772214117600034F169 /* CustomEntityProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEntityProtocol.swift; sourceTree = "<group>"; };
 		E4EC834E2143DDDD0063B4BB /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
@@ -177,7 +186,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E44127A32150B8CC00248152 /* Model.framework in Frameworks */,
+				E495A8FD215C7A89009CBB3E /* ModelAssistant.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,7 +215,7 @@
 				E4069F33213BE300009FCD7A /* iOS_ExampleUITests */,
 				E4069F12213BE2FF009FCD7A /* Products */,
 				E44127A22150B8CC00248152 /* Frameworks */,
-				E44127992150B8BA00248152 /* Model.xcodeproj */,
+				E495A8F4215C7A63009CBB3E /* ModelAssistant.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -271,15 +280,6 @@
 			path = Entities;
 			sourceTree = "<group>";
 		};
-		E441279A2150B8BA00248152 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E441279F2150B8BA00248152 /* Model.framework */,
-				E44127A12150B8BA00248152 /* ModelTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		E44127A22150B8CC00248152 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -314,6 +314,15 @@
 				E487354C214D582D00BDA8C9 /* ContactEntity+CoreDataProperties.swift */,
 			);
 			path = CoreDataEntity;
+			sourceTree = "<group>";
+		};
+		E495A8F5215C7A63009CBB3E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E495A8FA215C7A63009CBB3E /* ModelAssistant.framework */,
+				E495A8FC215C7A63009CBB3E /* ModelAssistant iOS Tests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		E4EC834321424F510063B4BB /* Pagination Phone Book */ = {
@@ -441,6 +450,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				E495A900215C7A89009CBB3E /* PBXTargetDependency */,
 			);
 			name = iOS_Example;
 			productName = iOS_Example;
@@ -522,8 +532,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = E441279A2150B8BA00248152 /* Products */;
-					ProjectRef = E44127992150B8BA00248152 /* Model.xcodeproj */;
+					ProductGroup = E495A8F5215C7A63009CBB3E /* Products */;
+					ProjectRef = E495A8F4215C7A63009CBB3E /* ModelAssistant.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -536,18 +546,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		E441279F2150B8BA00248152 /* Model.framework */ = {
+		E495A8FA215C7A63009CBB3E /* ModelAssistant.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = Model.framework;
-			remoteRef = E441279E2150B8BA00248152 /* PBXContainerItemProxy */;
+			path = ModelAssistant.framework;
+			remoteRef = E495A8F9215C7A63009CBB3E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E44127A12150B8BA00248152 /* ModelTests.xctest */ = {
+		E495A8FC215C7A63009CBB3E /* ModelAssistant iOS Tests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = ModelTests.xctest;
-			remoteRef = E44127A02150B8BA00248152 /* PBXContainerItemProxy */;
+			path = "ModelAssistant iOS Tests.xctest";
+			remoteRef = E495A8FB215C7A63009CBB3E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -664,6 +674,11 @@
 			isa = PBXTargetDependency;
 			target = E4069F10213BE2FF009FCD7A /* iOS_Example */;
 			targetProxy = E4069F31213BE300009FCD7A /* PBXContainerItemProxy */;
+		};
+		E495A900215C7A89009CBB3E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "ModelAssistant iOS";
+			targetProxy = E495A8FF215C7A89009CBB3E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

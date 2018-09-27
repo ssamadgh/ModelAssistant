@@ -7,13 +7,13 @@
 //
 
 import UIKit
-import Model
+import ModelAssistant
 
 class ThreadSafePhoneBookTVC: BasicTableViewController {
 	
 	private let dispatchQueue = DispatchQueue(label: "com.ThreadSafePhoneBookTVC.ConcirrentGCD.DispatchQueue", attributes: DispatchQueue.Attributes.concurrent)
 	
-	var manager: ModelDelegateManager!
+	var manager: ModelAssistantDelegateManager!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -25,10 +25,10 @@ class ThreadSafePhoneBookTVC: BasicTableViewController {
 		
 	}
 	
-	override func configureModel(sectionKey: String?) {
-		super.configureModel(sectionKey: sectionKey)
-		self.manager = ModelDelegateManager(controller: self)
-		self.model.delegate = self.manager
+	override func configureModelAssistant(sectionKey: String?) {
+		super.configureModelAssistant(sectionKey: sectionKey)
+		self.manager = ModelAssistantDelegateManager(controller: self)
+		self.assistant.delegate = self.manager
 	}
 	
 	@objc func doMagicBarButtonAction(_ sender: UIBarButtonItem) {
@@ -43,21 +43,21 @@ class ThreadSafePhoneBookTVC: BasicTableViewController {
 		
 		self.dispatchQueue.async {
 			
-			self.model.insert(contact, at: firstIndexPath, completion: nil)
+			self.assistant.insert(contact, at: firstIndexPath, completion: nil)
 		}
 		
 		self.dispatchQueue.async {
 			contact.firstName = "Abbas"
 			contact.phone = "9342432432"
-			self.model.insert(contact, at: firstIndexPath, completion: nil)
+			self.assistant.insert(contact, at: firstIndexPath, completion: nil)
 		}
 		
 		self.dispatchQueue.async {
-			self.model.remove(at: IndexPath(row: 2, section: 0), completion: nil)
+			self.assistant.remove(at: IndexPath(row: 2, section: 0), completion: nil)
 		}
 		
 		self.dispatchQueue.async {
-			self.model.update(at: IndexPath(row: 3, section: 0), mutate:  { (contact) in
+			self.assistant.update(at: IndexPath(row: 3, section: 0), mutate:  { (contact) in
 				contact.firstName = "Joooooojoooo"
 				contact.lastName = "Talaaaaaaaieeeee"
 			}, completion: nil)

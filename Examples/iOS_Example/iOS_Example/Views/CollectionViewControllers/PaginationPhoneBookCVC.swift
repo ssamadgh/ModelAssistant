@@ -20,9 +20,9 @@ class PaginationPhoneBookCVC: SectionedPhoneBookCVC {
 		self.title = "Pagination Phone Book"
 	}
 	
-	override func configureModel(sectionKey: String?) {
-		super.configureModel(sectionKey: sectionKey)
-		self.model.fetchBatchSize = 20
+	override func configureModelAssistant(sectionKey: String?) {
+		super.configureModelAssistant(sectionKey: sectionKey)
+		self.assistant.fetchBatchSize = 20
 	}
 	
 	override func fetchEntities() {
@@ -48,7 +48,7 @@ class PaginationPhoneBookCVC: SectionedPhoneBookCVC {
 			let decoder = JSONDecoder()
 			let members = try! decoder.decode([Contact].self, from: json)
 			self.insertingNewEntities = true
-			self.model.insert(members) {
+			self.assistant.insert(members) {
 				self.insertingNewEntities = false
 			}
 		}
@@ -58,13 +58,13 @@ class PaginationPhoneBookCVC: SectionedPhoneBookCVC {
 	override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
 		super.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
 		if !decelerate {
-			self.insertEntities(from: "PhoneBook_\(self.model.nextIndex)")
+			self.insertEntities(from: "PhoneBook_\(self.assistant.nextFetchIndex)")
 		}
 	}
 	
 	override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 		super.scrollViewDidEndDecelerating(scrollView)
-		self.insertEntities(from: "PhoneBook_\(self.model.nextIndex)")
+		self.insertEntities(from: "PhoneBook_\(self.assistant.nextFetchIndex)")
 	}
 	
 }

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Model
+import ModelAssistant
 
 private let reuseIdentifier = "Cell"
 
@@ -32,16 +32,16 @@ class SectionedPhoneBookCVC: SortablePhoneBookCVC {
 
 	}
 	
-	override func configureModel(sectionKey: String?) {
-		super.configureModel(sectionKey: "firstName")
-		self.model.sortSections = { $0.name < $1.name }
+	override func configureModelAssistant(sectionKey: String?) {
+		super.configureModelAssistant(sectionKey: "firstName")
+		self.assistant.sortSections = { $0.name < $1.name }
 	}
 
 	
 	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 		let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as! CollectionReusableView
 		
-		let section = self.model[indexPath.section]
+		let section = self.assistant[indexPath.section]
 
 		headerView.titleLabel.text = section?.name
 		
@@ -53,37 +53,37 @@ class SectionedPhoneBookCVC: SortablePhoneBookCVC {
 		
 		alertController.addAction(UIAlertAction(title: "Section A-Z", style: .default, handler: { (action) in
 
-			self.model.sortSections(by: { $0.name < $1.name }, completion: nil)
+			self.assistant.sortSections(by: { $0.name < $1.name }, completion: nil)
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "Section Z-A", style: .default, handler: { (action) in
-			self.model.sortSections(by: { $0.name > $1.name }, completion: nil)
+			self.assistant.sortSections(by: { $0.name > $1.name }, completion: nil)
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "First Name A-Z", style: .default, handler: { (action) in
-			self.model.sortEntities = { $0.firstName < $1.firstName }
+			self.assistant.sortEntities = { $0.firstName < $1.firstName }
 
-			self.model.reorder(completion: nil)
+			self.assistant.reorderEntities(completion: nil)
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "First Name Z-A", style: .default, handler: { (action) in
-			self.model.sortEntities = { $0.firstName > $1.firstName }
+			self.assistant.sortEntities = { $0.firstName > $1.firstName }
 
-			self.model.reorder(completion: nil)
+			self.assistant.reorderEntities(completion: nil)
 			
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "Last Name A-Z", style: .default, handler: { (action) in
-			self.model.sortEntities = { $0.lastName < $1.lastName }
+			self.assistant.sortEntities = { $0.lastName < $1.lastName }
 
-			self.model.reorder(completion: nil)
+			self.assistant.reorderEntities(completion: nil)
 			
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "Last Name Z-A", style: .default, handler: { (action) in
-			self.model.sortEntities = { $0.lastName > $1.lastName }
+			self.assistant.sortEntities = { $0.lastName > $1.lastName }
 
-			self.model.reorder(completion: nil)
+			self.assistant.reorderEntities(completion: nil)
 			
 		}))
 		

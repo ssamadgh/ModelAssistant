@@ -184,7 +184,7 @@ class MainTableViewController: UITableViewController {
 		let backBarButton = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
 		self.navigationItem.backBarButtonItem = backBarButton
 		
-		self.title = "variety uses of Model"
+		self.title = "variety uses of ModelAssistant"
 		self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 		self.tableView.tableFooterView = UIView()
 		self.tableView.backgroundColor = UIColor.groupTableViewBackground

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Model
+import ModelAssistant
 
 class SimplePhoneBookTVC: BasicTableViewController {
 	
@@ -16,14 +16,14 @@ class SimplePhoneBookTVC: BasicTableViewController {
 		self.title = "Simple Phone Book"
 	}
 	
-	override func configureModel(sectionKey: String?) {
-		super.configureModel(sectionKey: sectionKey)
-		self.model.delegate = self
+	override func configureModelAssistant(sectionKey: String?) {
+		super.configureModelAssistant(sectionKey: sectionKey)
+		self.assistant.delegate = self
 	}
 }
 
 
-extension SimplePhoneBookTVC: ModelDelegate {
+extension SimplePhoneBookTVC: ModelAssistantDelegate {
 	
 	
 	func modelWillChangeContent() {
@@ -34,7 +34,7 @@ extension SimplePhoneBookTVC: ModelDelegate {
 		self.tableView.endUpdates()
 	}
 	
-	func model<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) where Entity : EntityProtocol, Entity : Hashable {
+	func model<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelAssistantChangeType, newIndexPaths: [IndexPath]?) where Entity : EntityProtocol, Entity : Hashable {
 		switch type {
 		case .insert:
 			self.tableView.insertRows(at: newIndexPaths!, with: .bottom)
@@ -55,7 +55,7 @@ extension SimplePhoneBookTVC: ModelDelegate {
 		}
 	}
 	
-	func model<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) where Entity : EntityProtocol, Entity : Hashable {
+	func model<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelAssistantChangeType, newSectionIndex: Int?) where Entity : EntityProtocol, Entity : Hashable {
 		
 		switch type {
 		case .insert:

@@ -21,38 +21,38 @@ class SortablePhoneBookCVC: SimplePhoneBookCVC {
 		
 	}
 	
-	override func configureModel(sectionKey: String?) {
-		super.configureModel(sectionKey: sectionKey)
-		self.model.sortEntities = { $0.firstName < $1.firstName }
+	override func configureModelAssistant(sectionKey: String?) {
+		super.configureModelAssistant(sectionKey: sectionKey)
+		self.assistant.sortEntities = { $0.firstName < $1.firstName }
 	}
 	
 	@objc func sortBarButtonAction(_ sender: UIBarButtonItem) {
 		let alertController = UIAlertController(title: nil, message: "Sort by", preferredStyle: .actionSheet)
 		
 		alertController.addAction(UIAlertAction(title: "First Name A-Z", style: .default, handler: { (action) in
-			self.model.sortEntities = { $0.firstName < $1.firstName }
+			self.assistant.sortEntities = { $0.firstName < $1.firstName }
 
-			self.model.reorder(completion: nil)
+			self.assistant.reorderEntities(completion: nil)
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "First Name Z-A", style: .default, handler: { (action) in
-			self.model.sortEntities = { $0.firstName > $1.firstName }
+			self.assistant.sortEntities = { $0.firstName > $1.firstName }
 
-			self.model.reorder(completion: nil)
+			self.assistant.reorderEntities(completion: nil)
 
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "Last Name A-Z", style: .default, handler: { (action) in
-			self.model.sortEntities = { $0.lastName < $1.lastName }
+			self.assistant.sortEntities = { $0.lastName < $1.lastName }
 
-			self.model.reorder(completion: nil)
+			self.assistant.reorderEntities(completion: nil)
 			
 		}))
 		
 		alertController.addAction(UIAlertAction(title: "Last Name Z-A", style: .default, handler: { (action) in
-			self.model.sortEntities = { $0.lastName > $1.lastName }
+			self.assistant.sortEntities = { $0.lastName > $1.lastName }
 
-			self.model.reorder(completion: nil)
+			self.assistant.reorderEntities(completion: nil)
 			
 		}))
 		

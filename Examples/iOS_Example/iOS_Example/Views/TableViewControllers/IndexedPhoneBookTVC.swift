@@ -19,11 +19,11 @@ class IndexedPhoneBookTVC: SectionedPhoneBookTVC {
 	}
 	
 	override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-		return self.model.sectionIndexTitles
+		return self.assistant.sectionIndexTitles
 	}
 	
 	override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
-		return self.model.section(forSectionIndexTitle: title, at: index)
+		return self.assistant.section(forSectionIndexTitle: title, at: index)
 	}
 
 }

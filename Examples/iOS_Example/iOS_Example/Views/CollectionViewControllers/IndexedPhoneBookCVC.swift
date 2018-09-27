@@ -19,12 +19,12 @@ class IndexedPhoneBookCVC: SectionedPhoneBookCVC {
 
 	
 	override func indexTitles(for collectionView: UICollectionView) -> [String]? {
-		return self.model.sectionIndexTitles
+		return self.assistant.sectionIndexTitles
 	}
 	
 	override func collectionView(_ collectionView: UICollectionView, indexPathForIndexTitle title: String, at index: Int) -> IndexPath {
 		
-		let section = self.model.section(forSectionIndexTitle: title, at: index)
+		let section = self.assistant.section(forSectionIndexTitle: title, at: index)
 		
 		return IndexPath(item: 0, section: section)
 	}

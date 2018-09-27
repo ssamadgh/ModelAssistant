@@ -18,9 +18,9 @@ class FilteredPhoneBookTVC: SectionedPhoneBookTVC {
 
 	}
 	
-	override func configureModel(sectionKey: String?) {
-		super.configureModel(sectionKey: sectionKey)
-		self.model.filter = { String(Array($0.firstName)[0]).uppercased() == "A" }
+	override func configureModelAssistant(sectionKey: String?) {
+		super.configureModelAssistant(sectionKey: sectionKey)
+		self.assistant.filter = { String(Array($0.firstName)[0]).uppercased() == "A" }
 	}
 
 }
