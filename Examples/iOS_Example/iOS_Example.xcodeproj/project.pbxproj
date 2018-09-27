@@ -14,7 +14,7 @@
 		E4069F2A213BE300009FCD7A /* iOS_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F29213BE300009FCD7A /* iOS_ExampleTests.swift */; };
 		E4069F35213BE300009FCD7A /* iOS_ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F34213BE300009FCD7A /* iOS_ExampleUITests.swift */; };
 		E4069F53213BE6A2009FCD7A /* SimplePhoneBookCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F52213BE6A2009FCD7A /* SimplePhoneBookCVC.swift */; };
-		E4069F55213BE70E009FCD7A /* ModelDelegateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F54213BE70E009FCD7A /* ModelDelegateManager.swift */; };
+		E4069F55213BE70E009FCD7A /* ModelAssistantDelegateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F54213BE70E009FCD7A /* ModelAssistantDelegateManager.swift */; };
 		E4069F57213C3B78009FCD7A /* UITableViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F56213C3B78009FCD7A /* UITableViewController+Extension.swift */; };
 		E4069F5F213C6753009FCD7A /* UICollectionViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F5E213C6753009FCD7A /* UICollectionViewController+Extension.swift */; };
 		E4069F64213C68CC009FCD7A /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F63213C68CC009FCD7A /* MainTableViewController.swift */; };
@@ -131,7 +131,7 @@
 		E4069F34213BE300009FCD7A /* iOS_ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_ExampleUITests.swift; sourceTree = "<group>"; };
 		E4069F36213BE300009FCD7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E4069F52213BE6A2009FCD7A /* SimplePhoneBookCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplePhoneBookCVC.swift; sourceTree = "<group>"; };
-		E4069F54213BE70E009FCD7A /* ModelDelegateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDelegateManager.swift; sourceTree = "<group>"; };
+		E4069F54213BE70E009FCD7A /* ModelAssistantDelegateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelAssistantDelegateManager.swift; sourceTree = "<group>"; };
 		E4069F56213C3B78009FCD7A /* UITableViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewController+Extension.swift"; sourceTree = "<group>"; };
 		E4069F5E213C6753009FCD7A /* UICollectionViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewController+Extension.swift"; sourceTree = "<group>"; };
 		E4069F63213C68CC009FCD7A /* MainTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewController.swift; sourceTree = "<group>"; };
@@ -396,7 +396,7 @@
 		E4EC837E2144AFE20063B4BB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E4069F54213BE70E009FCD7A /* ModelDelegateManager.swift */,
+				E4069F54213BE70E009FCD7A /* ModelAssistantDelegateManager.swift */,
 				E4EC83DE21464A530063B4BB /* Extensions */,
 				E4069F63213C68CC009FCD7A /* MainTableViewController.swift */,
 				E4EC837A2144A9FB0063B4BB /* TableViewControllers */,
@@ -611,7 +611,7 @@
 				E45CD46B215188040062143C /* IndexedPhoneBookCVC.swift in Sources */,
 				E4EC83CA2145948B0063B4BB /* MutablePhoneBookTVC.swift in Sources */,
 				E4644CE92150358300841265 /* CoreDataMutablePhoneBookTVC.swift in Sources */,
-				E4069F55213BE70E009FCD7A /* ModelDelegateManager.swift in Sources */,
+				E4069F55213BE70E009FCD7A /* ModelAssistantDelegateManager.swift in Sources */,
 				E4873544214D319900BDA8C9 /* CoreDataController.swift in Sources */,
 				E4EC83DD214642360063B4BB /* MutablePhoneBookCVC.swift in Sources */,
 				E45CD4632151438C0062143C /* IndexedPhoneBookTVC.swift in Sources */,

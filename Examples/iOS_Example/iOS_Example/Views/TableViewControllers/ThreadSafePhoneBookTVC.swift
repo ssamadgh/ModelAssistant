@@ -19,7 +19,7 @@ class ThreadSafePhoneBookTVC: BasicTableViewController {
 		super.viewDidLoad()
 		self.title = "Thread Safe Phone Book"
 		
-		let doMagicButtonItem = UIBarButtonItem(title: "Do Magic!", style: .plain, target: self, action: #selector(doMagicBarButtonAction(_:)))
+		let doMagicButtonItem = UIBarButtonItem(title: "Do Concurrent!", style: .plain, target: self, action: #selector(doMagicBarButtonAction(_:)))
 		
 		self.navigationItem.rightBarButtonItems = [doMagicButtonItem]
 		

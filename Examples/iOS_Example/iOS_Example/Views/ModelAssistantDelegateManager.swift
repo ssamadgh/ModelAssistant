@@ -50,12 +50,12 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 		blockOperations.append(operation)
 	}
 	
-	func modelWillChangeContent() {
+	func modelAssistantWillChangeContent() {
 		
 	}
 	
 	
-	func model<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelAssistantChangeType, newIndexPaths: [IndexPath]?) where Entity : EntityProtocol, Entity : Hashable {
+	func modelAssistant<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelAssistantChangeType, newIndexPaths: [IndexPath]?) where Entity : EntityProtocol, Entity : Hashable {
 		switch type {
 			
 		case .insert:
@@ -102,7 +102,7 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 		}
 	}
 	
-	func model<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelAssistantChangeType, newSectionIndex: Int?) where Entity : EntityProtocol, Entity : Hashable {
+	func modelAssistant<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelAssistantChangeType, newSectionIndex: Int?) where Entity : EntityProtocol, Entity : Hashable {
 		switch type {
 		case .insert:
 
@@ -143,7 +143,7 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 		}
 	}
 	
-	func modelDidChangeContent() {		
+	func modelAssistantDidChangeContent() {		
 		self.controller.performBatchUpdates({
 			for operation: BlockOperation in self.blockOperations {
 				operation.start()
