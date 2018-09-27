@@ -29,7 +29,7 @@ class SearchablePhoneBookCVC: SimplePhoneBookCVC {
 
 	override func viewDidLoad() {
 		
-		self.collectionView?.register(UINib(nibName: "CollectionReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
+		self.collectionView?.register(UINib(nibName: "CollectionReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "header")
 
 		super.viewDidLoad()
 		self.title = "Searchable Phone Book"
