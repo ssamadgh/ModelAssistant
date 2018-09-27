@@ -16,8 +16,8 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "ModelAssistant"
-  s.version      = "0.0.1"
-  s.summary      = "A short description of ModelAssistant."
+  s.version      = "0.9.0"
+  s.summary      = "A Mediator Between Model (or Server) and View"
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
@@ -25,9 +25,13 @@ Pod::Spec.new do |s|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description  = <<-DESC
+  This library is a Controller in MVC design pattern.
+  It is a Presenter in MVP design pattern.
+  It is a ViewModel in MVVM design pattern.
+  It is a Interactor in Viper design pattern.
                    DESC
 
-  s.homepage     = "http://EXAMPLE/ModelAssistant"
+  s.homepage     = "https://github.com/ssamadgh/ModelAssistant.git"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -67,7 +71,7 @@ Pod::Spec.new do |s|
   # s.platform     = :ios, "5.0"
 
   #  When using multiple platforms
-  # s.ios.deployment_target = "5.0"
+   s.ios.deployment_target = "8.0"
   # s.osx.deployment_target = "10.7"
   # s.watchos.deployment_target = "2.0"
   # s.tvos.deployment_target = "9.0"
@@ -79,7 +83,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "http://EXAMPLE/ModelAssistant.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/ssamadgh/ModelAssistant.git", :tag => "#{s.version}" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -90,10 +94,11 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "Classes", "Classes/**/*.{h,m}"
-  s.exclude_files = "Classes/Exclude"
+  # s.source_files  = "Classes", "Classes/**/*.{h,m}"
+  # s.exclude_files = "Classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
+  s.source_files = 'Source/*.swift'
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
