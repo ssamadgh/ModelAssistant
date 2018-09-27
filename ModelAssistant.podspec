@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "ModelAssistant"
-  s.version      = "0.9.0"
+  s.version      = "v0.9.0"
   s.summary      = "A Mediator Between Model (or Server) and View"
 
   s.description  = <<-DESC
@@ -16,6 +16,5 @@ Pod::Spec.new do |s|
    s.ios.deployment_target = "8.0"
   s.source       = { :git => "https://github.com/ssamadgh/ModelAssistant.git", :tag => "#{s.version}" }
   s.source_files = 'Source/**/*.swift'
-  s.documentation_url = "https://ssamadgh.github.io/ModelAssistant/"
 
 end
