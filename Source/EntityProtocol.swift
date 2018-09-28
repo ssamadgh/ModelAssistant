@@ -45,7 +45,7 @@ public protocol EntityProtocol {
 	Returns a section name according to a given section key.
 	
 	This subscript is used by model assistant to get section name of entity by given section key.
-	Note that if you set a section key for model assistant, you must return a string value for that key in this subscript.
+	Note that if you set a section key for model assistant, you must return a string value for that key in this subscript. Return nil if you do not want to categorize your data in sections.
 	
 	- Parameter key: A given section key
 	- Returns: The section name relates to a given section key

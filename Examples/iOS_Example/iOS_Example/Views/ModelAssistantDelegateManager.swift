@@ -9,7 +9,7 @@
 import UIKit
 import ModelAssistant
 
-protocol CollectionController {
+protocol CollectionController: class {
 	
 	func insert(at indexPaths: [IndexPath])
 	
@@ -34,7 +34,7 @@ protocol CollectionController {
 class ModelAssistantDelegateManager: ModelAssistantDelegate {
 	var blockOperations: [BlockOperation] = []
 	
-	var controller: CollectionController
+	unowned var controller: CollectionController
 	
 	init(controller: CollectionController) {
 		self.controller = controller

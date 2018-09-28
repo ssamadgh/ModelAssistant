@@ -39,7 +39,7 @@ class CoreDataMutablePhoneBookTVC: CoreDataBasicTVC {
 		self.navigationItem.rightBarButtonItems = [saveButtonItem, addButtonItem, self.editButtonItem]
 		
 		
-		self.updateMovingEntity = { movingInfo in
+		self.updateMovingEntity = { [unowned self] movingInfo in
 			
 			let movingEntity = movingInfo.movingEntity
 			let oldIndexPath = movingInfo.oldIndexPath

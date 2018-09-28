@@ -35,8 +35,8 @@
 		E4873547214D31E100BDA8C9 /* ContactDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E4873545214D31E100BDA8C9 /* ContactDataModel.xcdatamodeld */; };
 		E487354D214D582D00BDA8C9 /* ContactEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E487354B214D582D00BDA8C9 /* ContactEntity+CoreDataClass.swift */; };
 		E487354E214D582D00BDA8C9 /* ContactEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E487354C214D582D00BDA8C9 /* ContactEntity+CoreDataProperties.swift */; };
-		E495A8FD215C7A89009CBB3E /* ModelAssistant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E495A8FA215C7A63009CBB3E /* ModelAssistant.framework */; };
-		E495A8FE215C7A89009CBB3E /* ModelAssistant.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E495A8FA215C7A63009CBB3E /* ModelAssistant.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E491D6E4215DE1E400888CF2 /* ModelAssistant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E495A8FA215C7A63009CBB3E /* ModelAssistant.framework */; };
+		E491D6E5215DE1E400888CF2 /* ModelAssistant.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E495A8FA215C7A63009CBB3E /* ModelAssistant.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E4B30771214117030034F169 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B3076E214117030034F169 /* ImageDownloader.swift */; };
 		E4B30773214117600034F169 /* CustomEntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B30772214117600034F169 /* CustomEntityProtocol.swift */; };
 		E4EC83502143DDDD0063B4BB /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC834E2143DDDD0063B4BB /* CollectionViewCell.swift */; };
@@ -80,6 +80,13 @@
 			remoteGlobalIDString = E4069F10213BE2FF009FCD7A;
 			remoteInfo = iOS_Example;
 		};
+		E491D6E6215DE1E400888CF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E495A8F4215C7A63009CBB3E /* ModelAssistant.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E4480DEC2156D3980052DC6D;
+			remoteInfo = "ModelAssistant iOS";
+		};
 		E495A8F9215C7A63009CBB3E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E495A8F4215C7A63009CBB3E /* ModelAssistant.xcodeproj */;
@@ -94,23 +101,16 @@
 			remoteGlobalIDString = E459218B215A9C7000E6DF7C;
 			remoteInfo = "ModelAssistant iOS Tests";
 		};
-		E495A8FF215C7A89009CBB3E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E495A8F4215C7A63009CBB3E /* ModelAssistant.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = E4480DEC2156D3980052DC6D;
-			remoteInfo = "ModelAssistant iOS";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		E4069F4F213BE331009FCD7A /* Embed Frameworks */ = {
+		E491D6E8215DE1E400888CF2 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E495A8FE215C7A89009CBB3E /* ModelAssistant.framework in Embed Frameworks */,
+				E491D6E5215DE1E400888CF2 /* ModelAssistant.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -186,7 +186,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E495A8FD215C7A89009CBB3E /* ModelAssistant.framework in Frameworks */,
+				E491D6E4215DE1E400888CF2 /* ModelAssistant.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,12 +445,12 @@
 				E4069F0D213BE2FF009FCD7A /* Sources */,
 				E4069F0E213BE2FF009FCD7A /* Frameworks */,
 				E4069F0F213BE2FF009FCD7A /* Resources */,
-				E4069F4F213BE331009FCD7A /* Embed Frameworks */,
+				E491D6E8215DE1E400888CF2 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				E495A900215C7A89009CBB3E /* PBXTargetDependency */,
+				E491D6E7215DE1E400888CF2 /* PBXTargetDependency */,
 			);
 			name = iOS_Example;
 			productName = iOS_Example;
@@ -675,10 +675,10 @@
 			target = E4069F10213BE2FF009FCD7A /* iOS_Example */;
 			targetProxy = E4069F31213BE300009FCD7A /* PBXContainerItemProxy */;
 		};
-		E495A900215C7A89009CBB3E /* PBXTargetDependency */ = {
+		E491D6E7215DE1E400888CF2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "ModelAssistant iOS";
-			targetProxy = E495A8FF215C7A89009CBB3E /* PBXContainerItemProxy */;
+			targetProxy = E491D6E6215DE1E400888CF2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
