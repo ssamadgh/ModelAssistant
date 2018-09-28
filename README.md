@@ -1,6 +1,6 @@
-#ModelAssistant
+# ModelAssistant
 
-###An assistant to manage the interactions between view and model
+### An assistant to manage the interactions between view and model
 
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/ModelAssistant.svg)](https://img.shields.io/cocoapods/v/ModelAssistant.svg)
 [![Platform](https://img.shields.io/cocoapods/p/ModelAssistant.svg?style=flat)](https://ssamadgh.github.io/ModelAssistant)
