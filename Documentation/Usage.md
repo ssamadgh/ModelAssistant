@@ -258,7 +258,7 @@ So it would be good if we implement ModelAssistantDelegate methods with this new
 ## Interaction
 
 ### Documentation
-There is a reach [documentation](https://ssamadgh.github.io/ModelAssistant/) for methods and properties you can use for intercting with model assistant. 
+There is a rich [documentation](https://ssamadgh.github.io/ModelAssistant/) for methods and properties you can use for intercting with model assistant. 
 
 ### Examples 
 In addition there is some really good [examples](https://github.com/ssamadgh/ModelAssistant/tree/master/Examples/iOS_Example) that simply shows you how to use model assistant in your project.
