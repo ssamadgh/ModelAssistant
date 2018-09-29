@@ -9,26 +9,26 @@
 import XCTest
 
 class ModelTestPagedDatabase: ModelTestsBasic {
-    
+
 
 	override func configureModel(sectionKey: String?) {
 		super.configureModel(sectionKey: sectionKey)
 		self.model.fetchBatchSize = 5
 	}
-	
+
 	override func setMembers() {
 		self.members = self.entities(forFileWithName: "MOCK_DATA_20_0")
 	}
-	
-	
+
+
 	func testPagedInsert() {
-		
+
 		var endOfFetchData = false
 		var minorIndex = ""
 		while !endOfFetchData {
 			let nextIndex = self.model.nextIndex
 			let members = self.entities(forFileWithName: "MOCK_DATA_20_\(nextIndex)\(minorIndex)")
-			
+
 			self.delegateExpect = expectation(description: "insert entities of page \(nextIndex)")
 			self.model.insert(members, completion: nil)
 			waitForExpectations(timeout: 5, handler: nil)
@@ -42,20 +42,20 @@ class ModelTestPagedDatabase: ModelTestsBasic {
 				XCTAssert(self.model.numberOfWholeEntities == (nextIndex)*self.model.fetchBatchSize + members.count)
 				minorIndex = "_2"
 			}
-			
+
 			if members.isEmpty {
 				endOfFetchData = true
 			}
 		}
-		
+
 	}
-	
+
 	override func testInsertSameEntities() {
-		
+
 	}
-	
+
 	override func testInsertDifferentEntities() {
-		
+
 	}
-	
+
 }

@@ -257,5 +257,5 @@ So it would be good if we implement ModelAssistantDelegate methods with this new
 
 ## Interaction
 
-
+See [documentation](https://ssamadgh.github.io/ModelAssistant/)
 

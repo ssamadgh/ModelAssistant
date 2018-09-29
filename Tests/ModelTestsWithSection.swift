@@ -10,23 +10,23 @@ import XCTest
 @testable import Model
 
 class ModelTestsWithSection: ModelTestsBasic {
-    	
+
 	override func configureModel(sectionKey: String?) {
 		super.configureModel(sectionKey: "country")
 	}
-	
+
 	override func testModelAfterFetch() {
 		var members = self.members!
-		
+
 		if let filter = self.filter {
 			members = self.members.filter(filter)
 		}
-		
+
 
 		let countryArry = members.compactMap { $0.country }
 		let countrySet = Set(countryArry)
 		XCTAssertEqual(self.model.numberOfSections, countrySet.count)
-		
+
 		for country in countrySet {
 			var filtered = members.filter { $0.country == country }
 			if let sort = self.sortEntities {
@@ -39,5 +39,5 @@ class ModelTestsWithSection: ModelTestsBasic {
 			XCTAssertEqual(Set(section!.entities), Set(filtered))
 		}
 	}
-    
+
 }

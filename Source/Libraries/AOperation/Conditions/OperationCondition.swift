@@ -1,7 +1,7 @@
 /*
  Copyright (C) 2015 Apple Inc. All Rights Reserved.
  See LICENSE.txt for this sample’s licensing information
- 
+
  Abstract:
  This file contains the fundamental logic relating to AOperation conditions.
  */
@@ -20,18 +20,18 @@ protocol OperationCondition {
      errors as the value of the `OperationConditionKey` key.
      */
     static var name: String { get }
-    
+
     /**
      Specifies whether multiple instances of the conditionalized operation may
      be executing simultaneously.
      */
     static var isMutuallyExclusive: Bool { get }
-    
+
     /**
      Some conditions may have the ability to satisfy the condition if another
      operation is executed first. Use this method to return an operation that
      (for example) asks for permission to perform the operation
-     
+
      - parameter operation: The `AOperation` to which the Condition has been added.
      - returns: An `NSOperation`, if a dependency should be automatically added. Otherwise, `nil`.
      - note: Only a single operation may be returned as a dependency. If you
@@ -40,7 +40,7 @@ protocol OperationCondition {
      a single `GroupOperation` that executes multiple operations internally.
      */
     func dependencyForOperation(_ operation: AOperation) -> Foundation.Operation?
-    
+
     /// Evaluate the condition, to see if it has been satisfied or not.
     func evaluateForOperation(_ operation: AOperation, completion: @escaping (OperationConditionResult) -> Void)
 }
@@ -52,12 +52,12 @@ protocol OperationCondition {
 enum OperationConditionResult: Equatable {
     case satisfied
     case failed(NSError)
-    
+
     var error: NSError? {
         if case .failed(let error) = self {
             return error
         }
-        
+
         return nil
     }
 }
@@ -79,9 +79,9 @@ struct OperationConditionEvaluator {
     static func evaluate(_ conditions: [OperationCondition], operation: AOperation, completion: @escaping ([NSError]) -> Void) {
         // Check conditions.
         let conditionGroup = DispatchGroup()
-        
+
         var results = [OperationConditionResult?](repeating: nil, count: conditions.count)
-        
+
         // Ask each condition to evaluate and store its result in the "results" array.
         for (index, condition) in conditions.enumerated() {
             conditionGroup.enter()
@@ -90,12 +90,12 @@ struct OperationConditionEvaluator {
                 conditionGroup.leave()
             }
         }
-        
+
         // After all the conditions have evaluated, this block will execute.
         conditionGroup.notify(queue: DispatchQueue.global(qos: DispatchQoS.QoSClass.default)) {
             // Aggregate the errors that occurred, in order.
 			var failures = results.compactMap { $0?.error }
-            
+
             /*
              If any of the conditions caused this operation to be cancelled,
              check for that.
@@ -103,7 +103,7 @@ struct OperationConditionEvaluator {
             if operation.isCancelled {
                 failures.append(NSError(code: .conditionFailed))
             }
-            
+
             completion(failures)
         }
     }

@@ -26,6 +26,6 @@ THE SOFTWARE.
 import Foundation
 
 struct AOperatinLogger {
-	
+
 	static var logOperationsTrack: Bool = false
 }

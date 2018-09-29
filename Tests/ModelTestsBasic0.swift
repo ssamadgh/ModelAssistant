@@ -10,17 +10,17 @@ import XCTest
 @testable import Model
 
 class ModelTestsBasic0: XCTestCase, ModelDelegate, TestTableViewDataSource {
-	
+
 	var delegateCalledBalance = 0
 	var delegateExpect: XCTestExpectation!
 	var updateDelegateExpect: XCTestExpectation!
 	var model: Model<Member>!
 	var members: [Member]!
-	
+
 	var sortEntities: ((Member, Member) -> Bool)?
 	var sortSections: ((SectionInfo<Member>, SectionInfo<Member>) -> Bool)?
 	var filter: ((Member) -> Bool)?
-	
+
 	var tableView: TestTableView!
 
     override func setUp() {
@@ -31,7 +31,7 @@ class ModelTestsBasic0: XCTestCase, ModelDelegate, TestTableViewDataSource {
 		self.checkSortAndFilterOfModel()
 		self.fetchEntities()
     }
-	
+
 	func configureTableView() {
 		self.tableView = TestTableView()
 		self.tableView.dataSource = self
@@ -41,13 +41,13 @@ class ModelTestsBasic0: XCTestCase, ModelDelegate, TestTableViewDataSource {
 		self.model = Model(sectionKey: sectionKey)
 		self.model.delegate = self
 	}
-	
+
 	func checkSortAndFilterOfModel() {
 		self.sortEntities = self.model.sortEntities
 		self.sortSections = self.model.sortSections
 		self.filter = self.model.filter
 	}
-	
+
 	func fetchEntities() {
 		self.setMembers()
 		let expect = expectation(description: "insertExpect")
@@ -56,17 +56,17 @@ class ModelTestsBasic0: XCTestCase, ModelDelegate, TestTableViewDataSource {
 			if let filter = self.filter {
 				let filteredCount = self.members.filter(filter).count
 				XCTAssertEqual(self.model.numberOfWholeEntities, filteredCount)
-				
+
 			}
 			else {
 				let numberOfWholeEntities = self.model.numberOfWholeEntities
 				let numberOfFetchedEntities = self.model.numberOfFetchedEntities
 				XCTAssertEqual(numberOfWholeEntities, numberOfFetchedEntities, "number of whole entities should be equal to number of fetched enities")
 			}
-			
+
 			expect.fulfill()
 		}
-		
+
 		waitForExpectations(timeout: 20, handler: nil)
 	}
 
@@ -78,7 +78,7 @@ class ModelTestsBasic0: XCTestCase, ModelDelegate, TestTableViewDataSource {
 		let bundle = Bundle(for: type(of: self))
 		let url = bundle.url(forResource: fileName, withExtension: "json")!
 		let json = try! Data(contentsOf: url)
-		
+
 		let decoder = JSONDecoder()
 		let members = try! decoder.decode([Member].self, from: json)
 		return members
@@ -99,27 +99,27 @@ class ModelTestsBasic0: XCTestCase, ModelDelegate, TestTableViewDataSource {
 	func numberOfSections(in tableView: TestTableViewProtocol) -> Int {
 		return self.model.numberOfSections
 	}
-	
+
 	func tableView(_ tableView: TestTableViewProtocol, numberOfRowsInSection section: Int) -> Int {
 		return self.model.numberOfEntites(at: section)
 	}
-	
-	
+
+
 	//MARK: - Model delegate Methods
-	
+
 	func modelWillChangeContent() {
 		XCTAssert(self.delegateCalledBalance >= 0)
 		self.delegateCalledBalance += 1
 		self.tableView.beginUpdates()
 	}
-	
+
 	func modelDidChangeContent() {
 		self.tableView.endUpdates()
 		XCTAssert(self.delegateCalledBalance > 0)
 		self.delegateCalledBalance -= 1
 		self.delegateExpect.fulfill()
 	}
-	
+
 	func model<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) where Entity : MAEntity, Entity : Hashable {
 		switch type {
 		case .insert:
@@ -127,13 +127,13 @@ class ModelTestsBasic0: XCTestCase, ModelDelegate, TestTableViewDataSource {
 			XCTAssertNotNil(newIndexPaths)
 			XCTAssertNotNil(entities)
 			self.tableView.insertRows(at: newIndexPaths!, with: .automatic)
-			
+
 		case .delete:
 			XCTAssertNotNil(indexPaths)
 			XCTAssertNil(newIndexPaths)
 			XCTAssertNotNil(entities)
 			self.tableView.deleteRows(at: indexPaths!, with: .automatic)
-			
+
 		case .move:
 			XCTAssertNotNil(indexPaths)
 			XCTAssertNotNil(newIndexPaths)
@@ -141,16 +141,16 @@ class ModelTestsBasic0: XCTestCase, ModelDelegate, TestTableViewDataSource {
 			for i in 0..<indexPaths!.count {
 				self.tableView.moveRow(at: indexPaths![i], to: newIndexPaths![i])
 			}
-			
+
 		case .update:
 			XCTAssertNotNil(indexPaths)
 			XCTAssertNil(newIndexPaths)
 			XCTAssertNotNil(entities)
 			self.updateDelegateExpect?.fulfill()
-			
+
 		}
 	}
-	
+
 	func model<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) where Entity : MAEntity, Entity : Hashable {
 		switch type {
 		case .insert:
@@ -158,7 +158,7 @@ class ModelTestsBasic0: XCTestCase, ModelDelegate, TestTableViewDataSource {
 			XCTAssertNotNil(newSectionIndex)
 			XCTAssertNotNil(sectionInfo)
 			self.tableView.insertSections(IndexSet(integer: newSectionIndex!), with: .automatic)
-			
+
 		case .delete:
 			XCTAssertNotNil(sectionIndex)
 			XCTAssertNil(newSectionIndex)
@@ -169,13 +169,13 @@ class ModelTestsBasic0: XCTestCase, ModelDelegate, TestTableViewDataSource {
 			XCTAssertNotNil(sectionIndex)
 			XCTAssertNotNil(newSectionIndex)
 			XCTAssertNotNil(sectionInfo)
-			
+
 		case .update:
 			XCTAssertNotNil(sectionIndex)
 			XCTAssertNil(newSectionIndex)
 			XCTAssertNotNil(sectionInfo)
 		}
-		
+
 	}
-	
+
 }

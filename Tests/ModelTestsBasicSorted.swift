@@ -10,19 +10,19 @@ import XCTest
 import Model
 
 class ModelTestsBasicSorted: ModelTestsBasic {
-	
+
 	override func configureModel(sectionKey: String?) {
 		super.configureModel(sectionKey: sectionKey)
 		self.model.sortEntities = { $0.firstName < $1.firstName }
 	}
-	
+
 	func testPrint() {
 		let names = self.model.getAllEntities(sortedBy: nil).map { $0.firstName }
-		
+
 		for name in names {
 			print("\(name)\n")
 
 		}
 	}
-	        
+
 }

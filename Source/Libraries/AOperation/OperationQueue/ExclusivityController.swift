@@ -1,7 +1,7 @@
 /*
  Copyright (C) 2015 Apple Inc. All Rights Reserved.
  See LICENSE.txt for this sample’s licensing information
- 
+
  Abstract:
  This file contains the code to automatically set up dependencies between mutually exclusive operations.
  */
@@ -16,17 +16,17 @@ import Foundation
  */
 class ExclusivityController {
     static let shared = ExclusivityController()
-    
+
     fileprivate let serialQueue = DispatchQueue(label: "Operations.ExclusivityController", attributes: [])
     fileprivate var operations: [String: [AOperation]] = [:]
-    
+
     fileprivate init() {
         /*
          A private initializer effectively prevents any other part of the app
          from accidentally creating an instance.
          */
     }
-    
+
     /// Registers an operation as being mutually exclusive
     func addOperation(_ operation: AOperation, categories: [String]) {
         /*
@@ -40,7 +40,7 @@ class ExclusivityController {
             }
         }
     }
-    
+
     /// Unregisters an operation from being mutually exclusive.
     func removeOperation(_ operation: AOperation, categories: [String]) {
         serialQueue.async {
@@ -49,32 +49,32 @@ class ExclusivityController {
             }
         }
     }
-    
-    
+
+
     // MARK: AOperation Management
-    
+
     fileprivate func noqueue_addOperation(_ operation: AOperation, category: String) {
         var operationsWithThisCategory = operations[category] ?? []
-        
+
         if let last = operationsWithThisCategory.last {
             operation.addDependency(last)
         }
-        
+
         operationsWithThisCategory.append(operation)
-        
+
         operations[category] = operationsWithThisCategory
     }
-    
+
     fileprivate func noqueue_removeOperation(_ operation: AOperation, category: String) {
         let matchingOperations = operations[category]
-        
+
         if var operationsWithThisCategory = matchingOperations,
             let index = operationsWithThisCategory.index(of: operation) {
-            
+
             operationsWithThisCategory.remove(at: index)
             operations[category] = operationsWithThisCategory
         }
     }
-    
+
 }
 

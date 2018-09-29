@@ -1,7 +1,7 @@
 /*
  Copyright (C) 2015 Apple Inc. All Rights Reserved.
  See LICENSE.txt for this sample’s licensing information
- 
+
  Abstract:
  This code shows how to create a simple subclass of AOperation.
  */
@@ -14,10 +14,10 @@ typealias OperationBlock = (@escaping () -> Void) -> Void
 /// A sublcass of `AOperation` to execute a closure.
 class BlockOperation: AOperation {
     fileprivate let block: OperationBlock?
-    
+
     /**
      The designated initializer.
-     
+
      - parameter block: The closure to run when the operation executes. This
      closure will be run on an arbitrary queue. The parameter passed to the
      block **MUST** be invoked by your code, or else the `BlockOperation`
@@ -28,10 +28,10 @@ class BlockOperation: AOperation {
         self.block = block
         super.init()
     }
-    
+
     /**
      A convenience initializer to execute a block on the main queue.
-     
+
      - parameter mainQueueBlock: The block to execute on the main queue. Note
      that this block does not have a "continuation" block to execute (unlike
      the designated initializer). The operation will be automatically ended
@@ -45,13 +45,13 @@ class BlockOperation: AOperation {
             }
         })
     }
-    
+
     override func execute() {
         guard let block = block else {
             finish()
             return
         }
-		
+
         block {
             self.finish()
         }

@@ -25,6 +25,7 @@ These views typically expect their data source to present results as a list of s
 - [x] Compatible with all design patterns
 - [x] **Easy to use**
 - [x] **Thread safe**
+- [x] [Complete Documentation](https://ssamadgh.github.io/ModelAssistant/)
 
 ## Requirements
 

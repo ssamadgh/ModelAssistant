@@ -1,7 +1,7 @@
 /*
  Copyright (C) 2015 Apple Inc. All Rights Reserved.
  See LICENSE.txt for this sample’s licensing information
- 
+
  Abstract:
  This file shows an example of implementing the OperationCondition protocol.
  */
@@ -18,19 +18,19 @@ struct ReachabilityCondition: OperationCondition {
     static let hostKey = "Host"
     static let name = "Reachability"
     static let isMutuallyExclusive = false
-    
+
     let host: URL
-    
+
     init(host: URL) {
         self.host = host
     }
-    
+
     func dependencyForOperation(_ operation: AOperation) -> Foundation.Operation? {
         return nil
     }
-    
-    
-    
+
+
+
     func evaluateForOperation(_ operation: AOperation, completion: @escaping (OperationConditionResult) -> Void) {
         ReachabilityController.requestReachability(host) { reachable in
             if reachable {
@@ -41,34 +41,34 @@ struct ReachabilityCondition: OperationCondition {
                     OperationConditionKey: type(of: self).name,
                     type(of: self).hostKey: self.host
                     ])
-                
+
                 completion(.failed(error))
             }
         }
     }
-    
+
 }
 
 /// A private singleton that maintains a basic cache of `SCNetworkReachability` objects.
 private class ReachabilityController {
     static var reachabilityRefs = [String: SCNetworkReachability]()
-    
+
     static let reachabilityQueue = DispatchQueue(label: "Operations.Reachability", attributes: [])
-    
+
     static func requestReachability(_ url: URL, completionHandler: @escaping (Bool) -> Void) {
         if let host = url.host {
             reachabilityQueue.async {
                 var ref = self.reachabilityRefs[host]
-                
+
                 if ref == nil {
                     let hostString = host as NSString
                     ref = SCNetworkReachabilityCreateWithName(nil, hostString.utf8String!)
 //                    ref = SCNetworkReachabilityCreateWithName(nil, hostString.utf8String!)
                 }
-                
+
                 if let ref = ref {
                     self.reachabilityRefs[host] = ref
-                    
+
                     var reachable = false
                     var flags: SCNetworkReachabilityFlags = []
                     if SCNetworkReachabilityGetFlags(ref, &flags) != false {

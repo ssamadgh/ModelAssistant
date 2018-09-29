@@ -1,7 +1,7 @@
 /*
  Copyright (C) 2015 Apple Inc. All Rights Reserved.
  See LICENSE.txt for this sample’s licensing information
- 
+
  Abstract:
  A convenient extension to Foundation.NSOperation.
  */
@@ -28,7 +28,7 @@ extension Foundation.Operation {
             completionBlock = block
         }
     }
-    
+
     /// Add multiple depdendencies to the operation.
     func addDependencies(_ dependencies: [Foundation.Operation]) {
         for dependency in dependencies {

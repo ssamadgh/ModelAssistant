@@ -13,6 +13,7 @@
 			buildPhases = (
 				E495A908215C80AC009CBB3E /* Make Universal Library */,
 				E495A909215C818E009CBB3E /* Build API Documentation */,
+				E491D76E215F85A500888CF2 /* Run Script */,
 			);
 			dependencies = (
 			);
@@ -471,6 +472,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		E491D76E215F85A500888CF2 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/sh\ndirectories=(Example Source Tests)\n\nfor directory in \"${directories[@]}\"\ndo\necho \"Cleaning whitespace in directory: $directory\"\nfind $directory -iregex '.*\\**\\.swift' -exec sed -E -i '' -e 's/[[:blank:]]*$//' {} \\;\ndone\n";
+		};
 		E495A908215C80AC009CBB3E /* Make Universal Library */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

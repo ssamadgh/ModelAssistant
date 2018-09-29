@@ -31,43 +31,43 @@ An abstract protocol used by objects inserted to model assistant.
 Every object the going to be used by model assistant should adopt to this protocol.
 */
 public protocol MAEntity {
-	
+
 	/**
 	A value that is unique for each entity.
-	
+
 	This property is used by model assistant to distinguish unique entities. Use this property for returning one of entity properties that is unique for all fetched entities.
 	*/
 	var uniqueValue: Int { get }
 
 //	init?(data: [String: Any])
-	
+
 	/**
 	Returns a section name according to a given section key.
-	
+
 	This subscript is used by model assistant to get section name of entity by given section key.
 	Note that if you set a section key for model assistant, you must return a string value for that key in this subscript. Return nil if you do not want to categorize your data in sections.
-	
+
 	- Parameter key: A given section key
 	- Returns: The section name relates to a given section key
 	*/
 	subscript (key: String) -> String? { get }
-	
+
 	/**
 	Entity updates itself by the given new entity.
-	
+
 	This method is used by model assistant, if it detect a new entity inserted with the same uniqueValue to an existing entity into model assistant. So model assistant updates existed entity by the new inserted entity. Use this method to determine which property should be update if a new same entity detected.
-	
+
 	By default this method does nothing
-	
+
 	- Parameter newFetechedEntity: The given new entity that is same as this entity.
 	*/
 	mutating func update(with newFetechedEntity: MAEntity)
 
-	
+
 }
 
 public extension MAEntity {
-	
+
 	#if swift(>=4.2)
 	func hash(into hasher: inout Hasher) {
 		hasher.combine(uniqueValue)
@@ -77,10 +77,10 @@ public extension MAEntity {
 		return uniqueValue.hashValue
 	}
 	#endif
-	
+
 	static func ==(left: Self, right: Self) -> Bool {
 		return left.uniqueValue == right.uniqueValue
 	}
-		
+
 }
 

@@ -1,7 +1,7 @@
 /*
  Copyright (C) 2015 Apple Inc. All Rights Reserved.
  See LICENSE.txt for this sample’s licensing information
- 
+
  Abstract:
  This file contains an NSAOperationQueue subclass.
  */
@@ -11,7 +11,7 @@ import Foundation
 /**
  The delegate of an `AOperationQueue` can respond to `AOperation` lifecycle
  events by implementing these methods.
- 
+
  In general, implementing `AOperationQueueDelegate` is not necessary; you would
  want to use an `OperationObserver` instead. However, there are a couple of
  situations where using `AOperationQueueDelegate` can lead to simpler code.
@@ -26,14 +26,14 @@ import Foundation
 /**
  `AOperationQueue` is an `NSAOperationQueue` subclass that implements a large
  number of "extra features" related to the `AOperation` class:
- 
+
  - Notifying a delegate of all operation completion
  - Extracting generated dependencies from operation conditions
  - Setting up dependencies to enforce mutual exclusivity
  */
 class AOperationQueue: Foundation.OperationQueue {
     weak var delegate: AOperationQueueDelegate?
-    
+
     override func addOperation(_ op: Foundation.Operation) {
         if let op = op as? AOperation {
             // Set up a `BlockObserver` to invoke the `AOperationQueueDelegate` method.
@@ -49,39 +49,39 @@ class AOperationQueue: Foundation.OperationQueue {
                 }
             )
             op.addObserver(delegate)
-            
+
             // Extract any dependencies needed by this operation.
 			let dependencies = op.conditions.compactMap {
                 $0.dependencyForOperation(op)
             }
-            
+
             for dependency in dependencies {
                 op.addDependency(dependency)
-                
+
                 self.addOperation(dependency)
             }
-            
+
             /*
              With condition dependencies added, we can now see if this needs
              dependencies to enforce mutual exclusivity.
              */
 			let concurrencyCategories: [String] = op.conditions.compactMap { condition in
                 if !type(of: condition).isMutuallyExclusive { return nil }
-                
+
                 return "\(type(of: condition))"
             }
-            
+
             if !concurrencyCategories.isEmpty {
                 // Set up the mutual exclusivity dependencies.
                 let exclusivityController = ExclusivityController.shared
-                
+
                 exclusivityController.addOperation(op, categories: concurrencyCategories)
-                
+
                 op.addObserver(BlockObserver { operation, _ in
                     exclusivityController.removeOperation(operation, categories: concurrencyCategories)
                 })
             }
-            
+
             /*
              Indicate to the operation that we've finished our extra work on it
              and it's now it a state where it can proceed with evaluating conditions,
@@ -101,16 +101,16 @@ class AOperationQueue: Foundation.OperationQueue {
                 queue.delegate?.operationQueue?(queue, operationDidFinish: operation, withErrors: [])
             }
         }
-        
+
         delegate?.operationQueue?(self, willAddOperation: op)
-		
+
 		if AOperatinLogger.logOperationsTrack {
 			print("AOperation \"\(op.name ?? "has no name")\" added to queue")
 		}
-		
+
         super.addOperation(op)
     }
-    
+
     override func addOperations(_ ops: [Foundation.Operation], waitUntilFinished wait: Bool) {
         /*
          The base implementation of this method does not call `addOperation()`,
@@ -119,7 +119,7 @@ class AOperationQueue: Foundation.OperationQueue {
         for operation in ops {
             addOperation(operation)
         }
-        
+
         if wait {
             for operation in ops {
                 operation.waitUntilFinished()
