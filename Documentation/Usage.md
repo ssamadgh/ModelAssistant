@@ -1,13 +1,16 @@
 # Usage
 
-The usage of **ModelAssistant** has three steps:
+- [Preparation](#Preparation)
+- [Interaction](#Interaction)
 
-1. [Preparing model object](#Preparing_model_object)
-2. [Preparing view](#Preparing_view)
-3. [Preparing delegate](#Preparing_delegate)
+## Preparation
+The preparation of **ModelAssistant** has three steps:
 
+1. [Preparing model object](#Preparing-model-object)
+2. [Preparing view](#Preparing-view)
+3. [Preparing delegate](#Preparing-delegate)
 
-## Preparing model object
+### Preparing model object
 
 For compatibility of your model objects with ModelAssistant you must adopt them to **MAEntity** and **Hashable** protocols. Suppose you have a model struct named Contact. Your Contact struct should be like this:
 
@@ -34,7 +37,7 @@ struct  Contacte: MAEntity & Hashable {
 }
 ```
 
-### uniqueValue
+#### uniqueValue
 uniqueValue returns an `Int` value that is unique for each of entities in ModelAssistant.
 It could be an id, phone number, created time, etc. For here if Contact struct be like this:
 
@@ -63,10 +66,10 @@ var uniqueValue: Int {
 }
 ```
 
-### subscript(key: String) -> String?
+#### subscript(key: String) -> String?
 
-This subscript is used to categorize entities into sections by ModelAssistant. So into this subscript braces, you should return the string value you expect, for the section key you gave to ModelAssistant.
-For example, suppose we want categorize the contacts have same last names in sections. So we instantiate ModelAssistant this way:
+This subscript is used to divide entities into multiple sections by ModelAssistant. So into this subscript braces, you should return the string value you expect, for the section key you gave to ModelAssistant instance.
+For example, suppose we want to grouping the contacts by the last names. So we instantiate ModelAssistant:
 
 ```swift
 let assistant = ModelAssistant<Contact>(sectionKey: "lastName")
@@ -96,11 +99,11 @@ Or for a wider range of entities to have in each section, we can configure retur
 		return nil
 	}
 ```
-This subscript returns upper cased first letter of last name for each contact, so ModelAssistant categorize contacts with the same upper cased first letters in the same section.
+This subscript returns uppercased first letter of last name for each contact, so ModelAssistant groups contacts with the uppercased first letter of last names.
 
-Reutrn nil in this subscript if you do not want to use sections.
+Reutrn nil in this subscript if you do not want to use multiple sections.
 
-### func update(with newFetechedEntity: MAEntity)
+#### func update(with newFetechedEntity: MAEntity)
 
 This method is used with ModelAssistant to update an existent entity with the new fetched entity that is equal to this existing entity. With this method you decide wich of the entity properties to be update with new fetched entity. This method is useful when you want to update the existent entities with the new fetched ones, instead of reload them. For example for Contact entities we want to update just firstName and lastName:
 
@@ -114,9 +117,9 @@ This method is used with ModelAssistant to update an existent entity with the ne
 ```
 leave this method blank, if you do not want to use this feature to update existent entities.
 
-## Preparing view
+### Preparing view
 
-### Creating a Model Assistant
+#### Creating a Model Assistant
 Before preparing view you should create an instance of ModelAssistant as an instance variable of your view and configure it. ModelAssistant is a generic class, so you should typecast its generic parameter. This parameter tells to ModelAssistant, for which entity type you use it. For example, for Contact type we create a ModelAssistant instance like this:
 
 ```swift
@@ -140,7 +143,7 @@ Now its time to fetch entities to ModelAssistant. These entities can be from a w
 ```
 > At the time we initialize ModelAssistant, the view may not have received the initial information of the model yet. So calling delegate methods may lead to crash. Therefore, at this time we use `fetch(_:completion:)` method wich doesn't notify delegate and update the view manually to notify it get the model initial informations.
 
-### Integrating the Model Assistant with the View Data Source
+#### Integrating the Model Assistant with the View Data Source
 
 After you  initialized model assistant and have data ready to be displayed in the view, you integrate the model assistant with the view data source.
 Model Assistant is fully compatible with both of UITableView and UICollectionView. Due to the similarity of these two views, we only show here the tableView integration to model assistant:
@@ -173,7 +176,21 @@ override func tableView(tableView: UITableView, numberOfRowsInSection section: I
 As shown in each `UITableViewDataSource` method above, the integration with the model assistant is reduced to a single method call that is specifically designed to integrate with the table view data source.
 
 
-### Communicating Data Changes to the Table View
+#### Adding Sections
+
+So far you have been working with a table view that has only one section, which represents all of the data that needs to be displayed in the table view. If you are working with a large number of Employee objects, it can be advantageous to divide the table view into multiple sections. Grouping the contacts by first letter of their last names makes the list of contacts more manageable. Without Model Assistant, a table view with multiple sections would involve an array of arrays, or perhaps an even more complicated data structure. With Model Assistant, you make a simple change to the construction of it.
+
+```swift
+assistant = ModelAssistant(sectionKey: "lastName")
+```
+Here we added a section key to ModelAssistant. The ModelAssistant uses this key to break apart the data into multiple sections. On the other hand you should define in the typecasted entity, that what to returns in the result of section key ( See [Preparing model object](#Preparing-model-object) ).
+
+For example if we define uppercased first letter of lastname as the reurning value of section key in the Contact, this change causes the ModelAssistant to break the returning Contact instances into multiple sections based on the first letter of the lastname that each Contact instance has. 
+
+
+### Preparing delegate
+
+#### Communicating Data Changes to the Table View
 
 In addition to making it significantly easier to integrate your model with the table view data source, ModelAssistant handles the communication with the UITableViewController instance when data changes. To enable this, implement the **ModelAssistantDelegate** protocol:
 
@@ -229,11 +246,16 @@ func modelAssistantWillChangeContent() {
 
 Implementing the four protocol methods shown above provides automatic updates to the associated UITableView whenever the underlying data changes.
 
-### Communicating Data Changes to the Collection View
+#### Communicating Data Changes to the Collection View
 
 In the table view with the help of two [beginUpdate()](https://developer.apple.com/documentation/uikit/uitableview/1614908-beginupdates) and [endUpdate()](https://developer.apple.com/documentation/uikit/uitableview/1614890-endupdates) methods, we could implement ModelAssistantDelegate methods to it easily. But there aren't such fancy methods in collection view, instead view updates handled with a new version of those two methods called [performBatchUpdates(_:, completion:)](https://developer.apple.com/documentation/uikit/uicollectionview/1618045-performbatchupdates).
 This method uses the advantage of blocks to make multiple changes to the collection view in one single animated operation, as opposed to in several separate animations. This method has been added from the iOS 11 to the tableView and along with that, added a new line to those old methods documentations, wich tells:
 > Use the [performBatchUpdates(_:completion:)](https://developer.apple.com/documentation/uikit/uitableview/2887515-performbatchupdates) method instead of this one whenever possible.
 
 So it isn't far away that apple decide to deprecate the old [beginUpdate()](https://developer.apple.com/documentation/uikit/uitableview/1614908-beginupdates) and [endUpdate()](https://developer.apple.com/documentation/uikit/uitableview/1614890-endupdates) methods.
-So it would be good if we implement ModelAssistantDelegate methods with this new version of view update method for both of tableView and collectionView. But I do not want to discuss it here. There is a class in sample code of this repository named [ModelAssistantDelegateManager](), which shows you how to use **performBatchUpdates(_:completion:)** for implementing ModelAssistantDelegate methods.
+So it would be good if we implement ModelAssistantDelegate methods with this new version of view update method for both of tableView and collectionView. But I do not want to discuss it here. There is a class in sample code of this repository named [ModelAssistantDelegateManager](https://github.com/ssamadgh/ModelAssistant/blob/master/Examples/iOS_Example/iOS_Example/Controller/ModelAssistantDelegateManager.swift), which shows you how to use **performBatchUpdates(_:completion:)** for implementing ModelAssistantDelegate methods. You can use this class for both of collectionView and tableView in your projects.
+
+## Interaction
+
+
+
