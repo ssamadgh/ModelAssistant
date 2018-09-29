@@ -1,7 +1,7 @@
 # Usage
 
-- [Preparation](#Preparation)
-- [Interaction](#Interaction)
+- [Preparation](#preparation)
+- [Interaction](#interaction)
 
 ## Preparation
 The preparation of **ModelAssistant** has three steps:
