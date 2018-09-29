@@ -4,7 +4,12 @@
 //
 //  Created by Seyed Samad Gholamzadeh on 9/4/18.
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
-//
+
+/*
+Abstract:
+	With model assistant you can fetch entities in form of lazy loading.
+*/
+
 
 import UIKit
 import ModelAssistant

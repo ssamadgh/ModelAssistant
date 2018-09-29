@@ -6,17 +6,14 @@
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
 //
 
+// Abstract: In this file we created a protocol which is inherit MAEntity protocol.
+// This way you can make a custom protocol for your project and adopt your model objects to it.
+
 import Foundation
 import ModelAssistant
 
-protocol EntityWithImage {
-	
-	var image: UIImage? { get set}
-	var imageURL: URL { get }
 
-}
-
-protocol CustomMAEntity: MAEntity, EntityWithImage {
+protocol CustomMAEntity: MAEntity {
 	
 	init?(data: [String : Any])
 }

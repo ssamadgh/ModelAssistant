@@ -6,6 +6,12 @@
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
 //
 
+/*
+Abstract:
+	Managing model data using model assistant
+*/
+
+
 import UIKit
 
 class MutablePhoneBookTVC: SimplePhoneBookTVC {

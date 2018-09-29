@@ -6,6 +6,13 @@
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
 //
 
+/*
+Abstract:
+	This file configures model assistant to devide entities into multiple sections.
+	In addition, it confiures model assistant to shows sections sorted.
+*/
+
+
 import UIKit
 import ModelAssistant
 
@@ -18,7 +25,10 @@ class SectionedPhoneBookTVC: SortablePhoneBookTVC {
 	}
 	
 	override func configureModelAssistant(sectionKey: String?) {
+		//Configuring model assistant to devide entities into multiple sections
 		super.configureModelAssistant(sectionKey: "firstName")
+		
+		// Configuring model assistant to shows sections sorted
 		self.assistant.sortSections = { $0.name < $1.name }
 	}
 

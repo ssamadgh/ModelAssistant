@@ -6,6 +6,13 @@
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
 //
 
+/*
+Abstract:
+
+	With model assistant you can call its methods in multiple threads concurrently without worry about race condition or crashing tableView
+*/
+
+
 import UIKit
 import ModelAssistant
 
@@ -40,6 +47,9 @@ class ThreadSafePhoneBookTVC: BasicTableViewController {
 		contact.firstName = "Samad"
 		contact.lastName = "Khatar"
 		contact.phone = "9934243243"
+		
+		
+		// We do some interaction with model assistant concurrently.
 		
 		self.dispatchQueue.async {
 			

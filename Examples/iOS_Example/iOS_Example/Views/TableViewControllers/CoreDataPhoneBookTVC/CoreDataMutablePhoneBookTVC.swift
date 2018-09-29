@@ -6,6 +6,12 @@
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
 //
 
+/*
+Abstract:
+	Using model assistant with CoreData Model.
+*/
+
+
 import UIKit
 import ModelAssistant
 

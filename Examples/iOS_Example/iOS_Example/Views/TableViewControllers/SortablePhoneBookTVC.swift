@@ -6,6 +6,12 @@
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
 //
 
+/*
+Abstract:
+	In this file we configure model assistant to shows entities sorted.
+*/
+
+
 import UIKit
 
 class SortablePhoneBookTVC: SimplePhoneBookTVC {
@@ -23,6 +29,8 @@ class SortablePhoneBookTVC: SimplePhoneBookTVC {
 	
 	override func configureModelAssistant(sectionKey: String?) {
 		super.configureModelAssistant(sectionKey: sectionKey)
+		
+		// Configuring model assistant to show entities sorted
 		self.assistant.sortEntities = { $0.firstName < $1.firstName }
 	}
 	

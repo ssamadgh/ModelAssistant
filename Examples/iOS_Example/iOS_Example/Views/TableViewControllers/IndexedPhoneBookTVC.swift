@@ -6,6 +6,12 @@
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
 //
 
+/*
+Abstract:
+	Its really easy to showing section index titles on the tableView by using model assistant methods.
+*/
+
+
 import UIKit
 
 class IndexedPhoneBookTVC: SectionedPhoneBookTVC {

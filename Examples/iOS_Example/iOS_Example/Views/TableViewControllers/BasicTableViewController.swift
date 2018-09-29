@@ -6,6 +6,11 @@
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
 //
 
+/*
+Abstract:
+In this file we prepare BasicTableViewController to use ModelAssistant, for interacting with model.
+*/
+
 import UIKit
 import ModelAssistant
 
@@ -28,6 +33,7 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 		self.fetchEntities()
 	}
 	
+	/// This method creates an instance of ModelAssistant with the given sectionKey
 	func configureModelAssistant(sectionKey: String?) {
 		self.assistant = ModelAssistant<Contact>(sectionKey: sectionKey)
 	}

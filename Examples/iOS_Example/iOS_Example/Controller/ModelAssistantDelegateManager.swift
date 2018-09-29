@@ -4,11 +4,18 @@
 //
 //  Created by Seyed Samad Gholamzadeh on 9/2/18.
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
-//
 
-import UIKit
+/*
+Abstract:
+	In this file we created a mechanism to use `performBatchUpdates(_:completion:)` method for implementing ModelAssistantDelegate methods
+*/
+
 import ModelAssistant
 
+/**
+	The CollectionController protocol is an abstract of methods that each collection view needs for interacting with its datasource. This protocol makes ModelAssistantDelegateManager class independent of ViewControllers.
+	Any ViewController that uses ModelAssistantDelegateManager to implement ModelAssistantDelegate methods, must adopt this protocol.
+*/
 protocol CollectionController: class {
 	
 	func insert(at indexPaths: [IndexPath])
@@ -30,8 +37,11 @@ protocol CollectionController: class {
 	func performBatchUpdates(_ updates: (() -> Void)?, completion: ((Bool) -> Void)?)
 }
 
-
+/**
+The ModelAssistantDelegateManager class uses `performBatchUpdates(_:completion:)` to implement ModelAssistantDelegate methods. The way it works is that, we collect all the notifications sending to ModelAssistantDelegate as BlockOperation in an array. Then, when modelAssistantDidChangeContent() called, we execute these blocks into the `performBatchUpdates(_:completion:)` updates block.
+*/
 class ModelAssistantDelegateManager: ModelAssistantDelegate {
+	
 	var blockOperations: [BlockOperation] = []
 	
 	unowned var controller: CollectionController
@@ -146,6 +156,8 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 	func modelAssistantDidChangeContent() {		
 		self.controller.performBatchUpdates({
 			for operation: BlockOperation in self.blockOperations {
+				
+				// We directly call `start()` method of BlockOperations instead of adding them to a queue, so they execute in the main thread.
 				operation.start()
 			}
 			
@@ -154,7 +166,7 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 		}
 	}
 	
-	func model(sectionIndexTitleForSectionName sectionName: String) -> String? {
+	func modelAssistant(sectionIndexTitleForSectionName sectionName: String) -> String? {
 		return String(Array(sectionName)[0]).uppercased()
 	}
 	

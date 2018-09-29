@@ -6,6 +6,11 @@
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
 //
 
+/*
+Abstract:
+	In this file you see, how we use model assistant to implement a search controller.
+*/
+
 import UIKit
 import ModelAssistant
 

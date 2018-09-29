@@ -6,6 +6,11 @@
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
 //
 
+/*
+Abstract:
+	You can set a filter on assistant to fetch just some specific of entities.
+*/
+
 import UIKit
 
 class FilteredPhoneBookTVC: SectionedPhoneBookTVC {
@@ -20,6 +25,8 @@ class FilteredPhoneBookTVC: SectionedPhoneBookTVC {
 	
 	override func configureModelAssistant(sectionKey: String?) {
 		super.configureModelAssistant(sectionKey: sectionKey)
+		
+		//Set a filter on model assistant to fetch just some specific of entities.
 		self.assistant.filter = { String(Array($0.firstName)[0]).uppercased() == "A" }
 	}
 
