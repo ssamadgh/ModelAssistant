@@ -12,7 +12,9 @@ These views typically expect their data source to present results as a list of s
 - [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
-- [Usage](https://github.com/ModelAssistant/ModelAssistant/blob/master/Documentation/Usage.md)
+- [Usage](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md)
+	- **Preparation -** [Preparing model object](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md#Preparing-model-object), [Preparing view](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md#Preparing-view), [Preparing delegate](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md#Preparing-delegate)
+	- **Interaction -** [Documentation](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md#Documentation), [Examples](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md#Examples)
 
 ## Features
 - [x] Inserting / Removing / Ordering / Updating model objects
