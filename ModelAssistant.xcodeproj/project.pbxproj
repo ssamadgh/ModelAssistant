@@ -524,7 +524,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n\n# Define macros\nAPI_TARGET=\"iOS\"\nAPI_OUTPUT=\"${PROJECT_DIR}/docs/\"\nDEVICE_OS=\"iphoneos\"\nROOT_URL=\"http://appracatappra.com/api/actionutilities/ios/\"\n\n# Make sure the output directory exists\nmkdir -p \"${API_OUTPUT}\"\n\n# Move to project directory\ncd \"${PROJECT_DIR}\"\n\n# Create documentation with Jazzy\njazzy --output \"${API_OUTPUT}\" --sdk ${DEVICE_OS} --clean --xcodebuild-arguments -target,\"${PROJECT_NAME} ${API_TARGET}\" --module ${PROJECT_NAME} --author \"Appracatappra, LLC\" --root-url \"${ROOT_URL}\"\n\n# Open project directory\n# open \"${API_OUTPUT}\"\n";
+			shellScript = "#!/bin/sh\n\n# Define macros\nAPI_TARGET=\"iOS\"\nAPI_OUTPUT=\"${PROJECT_DIR}/docs/\"\nDEVICE_OS=\"iphoneos\"\nROOT_URL=\"http://appracatappra.com/api/actionutilities/ios/\"\n\n# Make sure the output directory exists\nmkdir -p \"${API_OUTPUT}\"\n\n# Move to project directory\ncd \"${PROJECT_DIR}\"\n\n# Create documentation with Jazzy\njazzy --output \"${API_OUTPUT}\" --sdk ${DEVICE_OS} --clean --xcodebuild-arguments -target,\"${PROJECT_NAME} ${API_TARGET}\" --module ${PROJECT_NAME} --author \"Seyed Samad Gholamzadeh\" --root-url \"${ROOT_URL}\" --theme \"fullwidth\"\n\n# Open project directory\n# open \"${API_OUTPUT}\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
