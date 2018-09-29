@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 import Foundation
 
-struct SectionsManager<Entity: EntityProtocol & Hashable> {
+struct SectionsManager<Entity: MAEntity & Hashable> {
 	
 	var sectionIndexTitles: [String] {
 		let allValues =  self.sections.compactMap { $0.indexTitle }

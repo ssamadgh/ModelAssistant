@@ -2,16 +2,23 @@
   "warnings": [
     {
       "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/EntityProtocol.swift",
-      "line": 72,
-      "symbol": "EntityProtocol.hash(into:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "line": 81,
+      "symbol": "MAEntity.==(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/EntityProtocol.swift",
-      "line": 80,
-      "symbol": "EntityProtocol.==(_:_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/MASectionInfo.swift",
+      "line": 56,
+      "symbol": "SectionInfo",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/MASectionInfo.swift",
+      "line": 79,
+      "symbol": "SectionInfo.isEmpty",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
@@ -47,20 +54,6 @@
       "line": 134,
       "symbol": "ModelAssistantProtocol.subscript(_:)",
       "symbol_kind": "source.lang.swift.decl.function.subscript",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/ModelSectionInfo.swift",
-      "line": 56,
-      "symbol": "SectionInfo",
-      "symbol_kind": "source.lang.swift.decl.struct",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/ModelSectionInfo.swift",
-      "line": 79,
-      "symbol": "SectionInfo.isEmpty",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     }
   ],

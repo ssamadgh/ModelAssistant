@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>EntityProtocol Protocol Reference</title>
+    <title>MAEntity Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,11 +10,11 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Protocol/EntityProtocol" class="dashAnchor"></a>
-    <a title="EntityProtocol Protocol Reference"></a>
+    <a name="//apple_ref/swift/Protocol/MAEntity" class="dashAnchor"></a>
+    <a title="MAEntity Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">ModelAssistant Docs</a> (89% documented)</p>
+        <p><a href="../index.html">ModelAssistant Docs</a> (90% documented)</p>
         <p class="header-right"><a href="dash-feed://http%3A%2F%2Fappracatappra%2Ecom%2Fapi%2Factionutilities%2Fios%2Fdocsets%2FModelAssistant%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
       </div>
     </header>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">ModelAssistant Reference</a>
         <img id="carat" src="../img/carat.png" />
-        EntityProtocol Protocol Reference
+        MAEntity Protocol Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -59,13 +59,13 @@
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Protocols/EntityProtocol.html">EntityProtocol</a>
+                <a href="../Protocols/MAEntity.html">MAEntity</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/MASectionInfo.html">MASectionInfo</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/ModelAssistantDelegate.html">ModelAssistantDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Protocols/ModelSectionInfo.html">ModelSectionInfo</a>
               </li>
             </ul>
           </li>
@@ -82,10 +82,10 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>EntityProtocol</h1>
+            <h1>MAEntity</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">EntityProtocol</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MAEntity</span></code></pre>
 
                 </div>
               </div>
@@ -100,9 +100,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14ModelAssistant14EntityProtocolP11uniqueValueSivp"></a>
+                    <a name="/s:14ModelAssistant8MAEntityP11uniqueValueSivp"></a>
                     <a name="//apple_ref/swift/Property/uniqueValue" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14ModelAssistant14EntityProtocolP11uniqueValueSivp">uniqueValue</a>
+                    <a class="token" href="#/s:14ModelAssistant8MAEntityP11uniqueValueSivp">uniqueValue</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -129,9 +129,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14ModelAssistant14EntityProtocolPySSSgSScip"></a>
+                    <a name="/s:14ModelAssistant8MAEntityPySSSgSScip"></a>
                     <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14ModelAssistant14EntityProtocolPySSSgSScip">subscript(_:)</a>
+                    <a class="token" href="#/s:14ModelAssistant8MAEntityPySSSgSScip">subscript(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -182,9 +182,9 @@ Note that if you set a section key for model assistant, you must return a string
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14ModelAssistant14EntityProtocolP6update4withyAaB_p_tF"></a>
+                    <a name="/s:14ModelAssistant8MAEntityP6update4withyAaB_p_tF"></a>
                     <a name="//apple_ref/swift/Method/update(with:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14ModelAssistant14EntityProtocolP6update4withyAaB_p_tF">update(with:)</a>
+                    <a class="token" href="#/s:14ModelAssistant8MAEntityP6update4withyAaB_p_tF">update(with:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -203,7 +203,7 @@ Note that if you set a section key for model assistant, you must return a string
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">mutating</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">(</span><span class="n">with</span> <span class="nv">newFetechedEntity</span><span class="p">:</span> <span class="kt">EntityProtocol</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">mutating</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">(</span><span class="n">with</span> <span class="nv">newFetechedEntity</span><span class="p">:</span> <span class="kt">MAEntity</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -236,9 +236,9 @@ Note that if you set a section key for model assistant, you must return a string
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14ModelAssistant14EntityProtocolPAAE4hash4intoys6HasherVz_tF"></a>
+                    <a name="/"></a>
                     <a name="//apple_ref/swift/Method/hash(into:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14ModelAssistant14EntityProtocolPAAE4hash4intoys6HasherVz_tF">hash(into:)</a>
+                    <a class="token" href="#/">hash(into:)</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -249,16 +249,7 @@ Note that if you set a section key for model assistant, you must return a string
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">hash</span><span class="p">(</span><span class="n">into</span> <span class="nv">hasher</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Hasher</span><span class="p">)</span></code></pre>
-
-                        </div>
+                        
                       </div>
                     </section>
                   </div>
@@ -266,9 +257,9 @@ Note that if you set a section key for model assistant, you must return a string
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14ModelAssistant14EntityProtocolPAAE2eeoiySbx_xtFZ"></a>
+                    <a name="/s:14ModelAssistant8MAEntityPAAE2eeoiySbx_xtFZ"></a>
                     <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14ModelAssistant14EntityProtocolPAAE2eeoiySbx_xtFZ">==(_:_:)</a>
+                    <a class="token" href="#/s:14ModelAssistant8MAEntityPAAE2eeoiySbx_xtFZ">==(_:_:)</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -298,7 +289,7 @@ Note that if you set a section key for model assistant, you must return a string
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://github.com/ssamadgh/ModelAssistant.git" target="_blank" rel="external">Appracatappra, LLC</a>. All rights reserved. (Last updated: 2018-09-27)</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/ssamadgh/ModelAssistant.git" target="_blank" rel="external">Appracatappra, LLC</a>. All rights reserved. (Last updated: 2018-09-28)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

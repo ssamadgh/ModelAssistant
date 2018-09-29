@@ -1,5 +1,5 @@
 /**
-	EntityProtocol.swift
+	MAEntity.swift
 	ModelAssistant
 
 	Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
@@ -30,7 +30,7 @@ An abstract protocol used by objects inserted to model assistant.
 
 Every object the going to be used by model assistant should adopt to this protocol.
 */
-public protocol EntityProtocol {
+public protocol MAEntity {
 	
 	/**
 	A value that is unique for each entity.
@@ -61,21 +61,22 @@ public protocol EntityProtocol {
 	
 	- Parameter newFetechedEntity: The given new entity that is same as this entity.
 	*/
-	mutating func update(with newFetechedEntity: EntityProtocol)
+	mutating func update(with newFetechedEntity: MAEntity)
 
 	
 }
 
-public extension EntityProtocol {
+public extension MAEntity {
 	
-	
+	#if swift(>=4.2)
 	func hash(into hasher: inout Hasher) {
 		hasher.combine(uniqueValue)
 	}
-	
-//	var hashValue: Int {
-//		return uniqueValue.hashValue
-//	}
+	#else
+	var hashValue: Int {
+		return uniqueValue.hashValue
+	}
+	#endif
 	
 	static func ==(left: Self, right: Self) -> Bool {
 		return left.uniqueValue == right.uniqueValue

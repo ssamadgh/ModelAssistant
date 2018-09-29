@@ -1,5 +1,5 @@
 //
-//  CustomEntityProtocol.swift
+//  CustomMAEntity.swift
 //  iOS_Example
 //
 //  Created by Seyed Samad Gholamzadeh on 9/6/18.
@@ -16,7 +16,7 @@ protocol EntityWithImage {
 
 }
 
-protocol CustomEntityProtocol: EntityProtocol, EntityWithImage {
+protocol CustomMAEntity: MAEntity, EntityWithImage {
 	
 	init?(data: [String : Any])
 }

@@ -11,7 +11,7 @@ import Foundation
 import CoreData
 import ModelAssistant
 
-extension ContactEntity: EntityProtocol {
+extension ContactEntity: MAEntity {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<ContactEntity> {
         return NSFetchRequest<ContactEntity>(entityName: "ContactEntity")
@@ -53,7 +53,7 @@ extension ContactEntity: EntityProtocol {
 		return nil
 	}
 
-	public func update(with newFetechedEntity: EntityProtocol) {
+	public func update(with newFetechedEntity: MAEntity) {
 		let entity = newFetechedEntity as! ContactEntity
 		self.firstName = entity.firstName
 		self.lastName = entity.lastName

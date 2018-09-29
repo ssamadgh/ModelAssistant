@@ -34,8 +34,8 @@ class BasicTableViewController: UITableViewController, ImageDownloaderDelegate {
 	
 	func fetchEntities() {
 		let url = Bundle.main.url(forResource: resourceFileName, withExtension: "json")!
-		let members: [Contact] = JsonService.getEntities(fromURL: url)
-		self.assistant.fetch(members) {
+		let contacts: [Contact] = JsonService.getEntities(fromURL: url)
+		self.assistant.fetch(contacts) {
 			self.tableView.reloadData()
 		}
 	}

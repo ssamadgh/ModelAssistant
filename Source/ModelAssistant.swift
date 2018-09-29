@@ -69,9 +69,9 @@ An assistant thus effectively has two modes of operation, determined by whether 
 * Memory tracking: the delegate is non-nil. The assistant monitors objects and updates section and ordering information in response to relevant changes.
 
 - Important:
-	The objects that passed in to the modelAssistant must be adapted **EntityProtocol & Hashable** protocols
+	The objects that passed in to the modelAssistant must be adapted **MAEntity & Hashable** protocols
 */
-public final class ModelAssistant<Entity: EntityProtocol & Hashable>: NSObject, ModelAssistantProtocol {
+public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelAssistantProtocol {
 	
 	
 	/* ========================================================*/
@@ -1412,7 +1412,7 @@ public protocol ModelAssistantDelegate: class {
 	- type: The type of change. For valid values see ModelAssistantChangeType.
 	- newIndexPaths: The destination paths for the entities for insertions or moves (this value is nil for a deletion).
 	*/
-	func modelAssistant<Entity: EntityProtocol & Hashable>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelAssistantChangeType, newIndexPaths: [IndexPath]?)
+	func modelAssistant<Entity: MAEntity & Hashable>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelAssistantChangeType, newIndexPaths: [IndexPath]?)
 	
 	/**
 	Notifies the receiver of the addition or removal of a section.
@@ -1420,10 +1420,10 @@ public protocol ModelAssistantDelegate: class {
 	- Parameters:
 	- sectionInfo: The section that changed.
 	- sectionIndex: The index of the changed section (this value is nil for insertions).
-	- type: The type of change (insert or delete). Valid values are ModelAssistantChangeType.insert and ModelAssistantChangeType.delete.
+	- type: The type of change (insert or delete). Valid values are ModelAssistantChangeType.insert, ModelAssistantChangeType.move and ModelAssistantChangeType.delete.
 	- newSectionIndex: The destination index for the section for insertions or moves (this value is nil for a deletion).
 	*/
-	func modelAssistant<Entity: EntityProtocol & Hashable>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelAssistantChangeType, newSectionIndex: Int?)
+	func modelAssistant<Entity: MAEntity & Hashable>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelAssistantChangeType, newSectionIndex: Int?)
 	
 	/**
 	Returns the name for a given section.
@@ -1448,11 +1448,11 @@ public extension ModelAssistantDelegate {
 		
 	}
 	
-	func modelAssistant<Entity: EntityProtocol & Hashable>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelAssistantChangeType, newIndexPaths: [IndexPath]?) {
+	func modelAssistant<Entity: MAEntity & Hashable>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelAssistantChangeType, newIndexPaths: [IndexPath]?) {
 		
 	}
 	
-	func modelAssistant<Entity: EntityProtocol & Hashable>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelAssistantChangeType, newSectionIndex: Int?) {
+	func modelAssistant<Entity: MAEntity & Hashable>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelAssistantChangeType, newSectionIndex: Int?) {
 		
 	}
 	

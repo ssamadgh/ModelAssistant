@@ -351,6 +351,7 @@
 		E4EC836C214431E90063B4BB /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				E4069F54213BE70E009FCD7A /* ModelAssistantDelegateManager.swift */,
 				E4EC837421443D4D0063B4BB /* JsonService.swift */,
 				E4B3076E214117030034F169 /* ImageDownloader.swift */,
 			);
@@ -396,7 +397,6 @@
 		E4EC837E2144AFE20063B4BB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E4069F54213BE70E009FCD7A /* ModelAssistantDelegateManager.swift */,
 				E4EC83DE21464A530063B4BB /* Extensions */,
 				E4069F63213C68CC009FCD7A /* MainTableViewController.swift */,
 				E4EC837A2144A9FB0063B4BB /* TableViewControllers */,

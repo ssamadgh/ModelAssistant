@@ -55,11 +55,11 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 	}
 	
 	
-	func modelAssistant<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelAssistantChangeType, newIndexPaths: [IndexPath]?) where Entity : EntityProtocol, Entity : Hashable {
+	func modelAssistant<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelAssistantChangeType, newIndexPaths: [IndexPath]?) where Entity : MAEntity, Entity : Hashable {
 		switch type {
 			
 		case .insert:
-
+			
 			self.addToBlockOperation { [weak self] in
 				guard let `self` = self else { return }
 				if let newIndexPaths = newIndexPaths {
@@ -102,10 +102,10 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 		}
 	}
 	
-	func modelAssistant<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelAssistantChangeType, newSectionIndex: Int?) where Entity : EntityProtocol, Entity : Hashable {
+	func modelAssistant<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelAssistantChangeType, newSectionIndex: Int?) where Entity : MAEntity, Entity : Hashable {
 		switch type {
 		case .insert:
-
+			
 			self.addToBlockOperation { [weak self] in
 				guard let `self` = self else { return }
 				if let newIndex = newSectionIndex {

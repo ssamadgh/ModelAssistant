@@ -9,7 +9,7 @@
 import Foundation
 import ModelAssistant
 
-struct Member: EntityProtocol, Hashable, Codable {
+struct Member: MAEntity, Hashable, Codable {
 	
 	
 	var uniqueValue: Int {
@@ -35,7 +35,7 @@ struct Member: EntityProtocol, Hashable, Codable {
 		self.country = data["country"] as? String ?? ""
 	}
 	
-	mutating func update(with newFetechedEntity: EntityProtocol) {
+	mutating func update(with newFetechedEntity: MAEntity) {
 		let entity = newFetechedEntity as! Member
 		self.firstName = entity.firstName
 		self.lastName = entity.lastName

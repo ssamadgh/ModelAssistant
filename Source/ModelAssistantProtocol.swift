@@ -10,9 +10,9 @@ import Foundation
 
 protocol ModelAssistantProtocol {
 	
-	associatedtype Entity: EntityProtocol & Hashable
+	associatedtype Entity: MAEntity & Hashable
 	
-	associatedtype Section: GModelSectionInfo
+	associatedtype Section: GMASectionInfo
 
 	associatedtype SortEntities
 

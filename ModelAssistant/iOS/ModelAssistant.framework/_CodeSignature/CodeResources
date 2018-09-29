@@ -18,19 +18,19 @@
 		</data>
 		<key>Modules/ModelAssistant.swiftmodule/arm.swiftdoc</key>
 		<data>
-		SB8/f4HtcqZgwTSNuBLEBKBfiOw=
+		BlBSNlHT1haHI0pP3BT+CnvBYbo=
 		</data>
 		<key>Modules/ModelAssistant.swiftmodule/arm.swiftmodule</key>
 		<data>
-		sYzXI0Q0qW7S23yYomDe/gyPB1I=
+		1AXEKao7GkKry3Um3SvkCnXj044=
 		</data>
 		<key>Modules/ModelAssistant.swiftmodule/arm64.swiftdoc</key>
 		<data>
-		g2trUa+J1TIBU1Bm7BcE4PykoGs=
+		jfDlgm6zmE3xxIQbb9JgJML+LB4=
 		</data>
 		<key>Modules/ModelAssistant.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		YFLPtGuGnmCjNvrHnsCHvpvhuiA=
+		0o5+JE1RJ7QrFmS2rf/WQD3+L1s=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -65,44 +65,44 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			SB8/f4HtcqZgwTSNuBLEBKBfiOw=
+			BlBSNlHT1haHI0pP3BT+CnvBYbo=
 			</data>
 			<key>hash2</key>
 			<data>
-			tpVE5s5ImFHDqYnlrPyzEi86pY5dqazpdvSJt6krfvw=
+			/tkt6YdjHmA84xqKhRPXDb/8O2wOJOKx2JSqcLiwd74=
 			</data>
 		</dict>
 		<key>Modules/ModelAssistant.swiftmodule/arm.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			sYzXI0Q0qW7S23yYomDe/gyPB1I=
+			1AXEKao7GkKry3Um3SvkCnXj044=
 			</data>
 			<key>hash2</key>
 			<data>
-			lAzppcB2T90u/u5YRqwd3pvkDQ9aMA7YRlJZhD0XOo4=
+			tFWINa0YJKXdmTb404oawHImV1+CGTLKeByd5JoiFBc=
 			</data>
 		</dict>
 		<key>Modules/ModelAssistant.swiftmodule/arm64.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			g2trUa+J1TIBU1Bm7BcE4PykoGs=
+			jfDlgm6zmE3xxIQbb9JgJML+LB4=
 			</data>
 			<key>hash2</key>
 			<data>
-			27rOiM4Zlqo8/cfNObnoQHjy6h4PdoC5GbTceNF+pU4=
+			ZTHi7ifzRNLIIeNeXfV+JA5M7IB7B7H2sEAyBqqGvC4=
 			</data>
 		</dict>
 		<key>Modules/ModelAssistant.swiftmodule/arm64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			YFLPtGuGnmCjNvrHnsCHvpvhuiA=
+			0o5+JE1RJ7QrFmS2rf/WQD3+L1s=
 			</data>
 			<key>hash2</key>
 			<data>
-			sf738FkQ++sitsSszYeCjk8XCwhAARmnfbEhjBCtigs=
+			wtpKt7B2Avf9XxytaNXWSU5vNF488MXpSU6LR/CRiUg=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

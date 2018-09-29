@@ -15,7 +15,7 @@ class JsonService {
 		return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 	}()
 	
-	class func getEntities<Entity: EntityProtocol & Hashable & Decodable>(fromURL url: URL) -> [Entity] {
+	class func getEntities<Entity: MAEntity & Hashable & Decodable>(fromURL url: URL) -> [Entity] {
 //		let url = Bundle.main.url(forResource: fileName, withExtension: "json")!
 		let json = try! Data(contentsOf: url)
 		
@@ -24,7 +24,7 @@ class JsonService {
 		return entities
 	}
 	
-	class func saveEntities<Entity: EntityProtocol & Hashable & Encodable>(_ entities: [Entity], toURL url: URL, finished: (() -> Void)?) {
+	class func saveEntities<Entity: MAEntity & Hashable & Encodable>(_ entities: [Entity], toURL url: URL, finished: (() -> Void)?) {
 		let encoder = JSONEncoder()
 		encoder.outputFormatting = .prettyPrinted
 		let data = try! encoder.encode(entities)

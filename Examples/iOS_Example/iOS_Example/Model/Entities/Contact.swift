@@ -8,7 +8,7 @@
 
 import ModelAssistant
 
-struct Contact: CustomEntityProtocol & Hashable, Codable {
+struct Contact: CustomMAEntity & Hashable, Codable {
 	
 	
 	var uniqueValue: Int {
@@ -42,7 +42,7 @@ struct Contact: CustomEntityProtocol & Hashable, Codable {
 		self.imageURLString = data["avatar"] as? String
 	}
 	
-	mutating func update(with newFetechedEntity: EntityProtocol) {
+	mutating func update(with newFetechedEntity: MAEntity) {
 		let entity = newFetechedEntity as! Contact
 		self.firstName = entity.firstName
 		self.lastName = entity.lastName
@@ -54,9 +54,9 @@ struct Contact: CustomEntityProtocol & Hashable, Codable {
 		}
 		
 		if key == "lastName" {
-			return String(Array(self.firstName)[0]).uppercased()
+			return String(Array(self.lastName)[0]).uppercased()
 		}
-
+		
 		return nil
 	}
 	

@@ -14,7 +14,7 @@
     <a title="Protocols  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">ModelAssistant Docs</a> (89% documented)</p>
+        <p><a href="index.html">ModelAssistant Docs</a> (90% documented)</p>
         <p class="header-right"><a href="dash-feed://http%3A%2F%2Fappracatappra%2Ecom%2Fapi%2Factionutilities%2Fios%2Fdocsets%2FModelAssistant%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
       </div>
     </header>
@@ -59,13 +59,13 @@
             <a href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Protocols/EntityProtocol.html">EntityProtocol</a>
+                <a href="Protocols/MAEntity.html">MAEntity</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/MASectionInfo.html">MASectionInfo</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/ModelAssistantDelegate.html">ModelAssistantDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/ModelSectionInfo.html">ModelSectionInfo</a>
               </li>
             </ul>
           </li>
@@ -92,9 +92,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14ModelAssistant14EntityProtocolP"></a>
-                    <a name="//apple_ref/swift/Protocol/EntityProtocol" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14ModelAssistant14EntityProtocolP">EntityProtocol</a>
+                    <a name="/s:14ModelAssistant8MAEntityP"></a>
+                    <a name="//apple_ref/swift/Protocol/MAEntity" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14ModelAssistant8MAEntityP">MAEntity</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -106,13 +106,45 @@
 
 <p>Every object the going to be used by model assistant should adopt to this protocol.</p>
 
-                        <a href="Protocols/EntityProtocol.html" class="slightly-smaller">See more</a>
+                        <a href="Protocols/MAEntity.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">EntityProtocol</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MAEntity</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14ModelAssistant13MASectionInfoP"></a>
+                    <a name="//apple_ref/swift/Protocol/MASectionInfo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14ModelAssistant13MASectionInfoP">MASectionInfo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A protocol that defines the interface for section objects vended by a fetched results controller.</p>
+
+                        <a href="Protocols/MASectionInfo.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MASectionInfo</span></code></pre>
 
                         </div>
                       </div>
@@ -160,42 +192,10 @@
                 </li>
               </ul>
             </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:14ModelAssistant0A11SectionInfoP"></a>
-                    <a name="//apple_ref/swift/Protocol/ModelSectionInfo" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14ModelAssistant0A11SectionInfoP">ModelSectionInfo</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>A protocol that defines the interface for section objects vended by a fetched results controller.</p>
-
-                        <a href="Protocols/ModelSectionInfo.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">ModelSectionInfo</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://github.com/ssamadgh/ModelAssistant.git" target="_blank" rel="external">Appracatappra, LLC</a>. All rights reserved. (Last updated: 2018-09-27)</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/ssamadgh/ModelAssistant.git" target="_blank" rel="external">Appracatappra, LLC</a>. All rights reserved. (Last updated: 2018-09-28)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

@@ -120,7 +120,7 @@ class ModelTestsBasic0: XCTestCase, ModelDelegate, TestTableViewDataSource {
 		self.delegateExpect.fulfill()
 	}
 	
-	func model<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) where Entity : EntityProtocol, Entity : Hashable {
+	func model<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) where Entity : MAEntity, Entity : Hashable {
 		switch type {
 		case .insert:
 			XCTAssertNil(indexPaths)
@@ -151,7 +151,7 @@ class ModelTestsBasic0: XCTestCase, ModelDelegate, TestTableViewDataSource {
 		}
 	}
 	
-	func model<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) where Entity : EntityProtocol, Entity : Hashable {
+	func model<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) where Entity : MAEntity, Entity : Hashable {
 		switch type {
 		case .insert:
 			XCTAssertNil(sectionIndex)

@@ -1,5 +1,5 @@
 /**
-ModelSectionInfo.swift
+MASectionInfo.swift
 ModelAssistant
 
 Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
@@ -26,7 +26,7 @@ THE SOFTWARE.
 import Foundation
 
 ///A protocol that defines the interface for section objects vended by a fetched results controller.
-public protocol ModelSectionInfo {
+public protocol MASectionInfo {
 	
 	///The number of entities (rows) in the section.
 	var numberOfEntities: Int { get }
@@ -44,16 +44,16 @@ public protocol ModelSectionInfo {
 }
 
 ///A protocol that defines the interface for section objects vended by a fetched results controller.
-protocol GModelSectionInfo: ModelSectionInfo {
+protocol GMASectionInfo: MASectionInfo {
 	
-	associatedtype Entity: EntityProtocol, Hashable
+	associatedtype Entity: MAEntity, Hashable
 	
 	///The array of entities in the section.
 	var entities: [Entity]  { get set}
 	
 }
 
-public struct SectionInfo<Entity: EntityProtocol & Hashable>: GModelSectionInfo, Equatable, Comparable {
+public struct SectionInfo<Entity: MAEntity & Hashable>: GMASectionInfo, Equatable, Comparable {
 	
 	
 	static public  func ==(lhs: SectionInfo<Entity>, rhs: SectionInfo<Entity>) -> Bool {

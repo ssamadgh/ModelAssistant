@@ -34,7 +34,7 @@ extension SimplePhoneBookTVC: ModelAssistantDelegate {
 		self.tableView.endUpdates()
 	}
 	
-	func modelAssistant<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelAssistantChangeType, newIndexPaths: [IndexPath]?) where Entity : EntityProtocol, Entity : Hashable {
+	func modelAssistant<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelAssistantChangeType, newIndexPaths: [IndexPath]?) where Entity : MAEntity, Entity : Hashable {
 		switch type {
 		case .insert:
 			self.tableView.insertRows(at: newIndexPaths!, with: .bottom)
@@ -55,7 +55,7 @@ extension SimplePhoneBookTVC: ModelAssistantDelegate {
 		}
 	}
 	
-	func modelAssistant<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelAssistantChangeType, newSectionIndex: Int?) where Entity : EntityProtocol, Entity : Hashable {
+	func modelAssistant<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelAssistantChangeType, newSectionIndex: Int?) where Entity : MAEntity, Entity : Hashable {
 		
 		switch type {
 		case .insert:
