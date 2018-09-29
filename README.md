@@ -13,8 +13,8 @@ These views typically expect their data source to present results as a list of s
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md)
-	- **Preparation -** [Preparing model object](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md#Preparing-model-object), [Preparing view](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md#Preparing-view), [Preparing delegate](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md#Preparing-delegate)
-	- **Interaction -** [Documentation](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md#Documentation), [Examples](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md#Examples)
+	- **Preparation -** [Preparing Model Object](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md#preparing-model-object), [Preparing View](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md#preparing-view), [Preparing Delegate](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md#preparing-delegate)
+	- **Interaction -** [Documentation](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md#documentation), [Examples](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md#examples)
 
 ## Features
 - [x] Inserting / Removing / Ordering / Updating model objects

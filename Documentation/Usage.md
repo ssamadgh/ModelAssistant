@@ -6,11 +6,11 @@
 ## Preparation
 The preparation of **ModelAssistant** has three steps:
 
-1. [Preparing model object](#preparing-model-object)
-2. [Preparing view](#Preparing-view)
-3. [Preparing delegate](#Preparing-delegate)
+1. [Preparing Model Object](#preparing-model-object)
+2. [Preparing View](#preparing-view)
+3. [Preparing Delegate](#preparing-delegate)
 
-### Preparing model object
+### Preparing Model Object
 
 For compatibility of your model objects with ModelAssistant you must adopt them to **MAEntity** and **Hashable** protocols. Suppose you have a model struct named Contact. Your Contact struct should be like this:
 
@@ -117,7 +117,7 @@ This method is used with ModelAssistant to update an existent entity with the ne
 ```
 leave this method blank, if you do not want to use this feature to update existent entities.
 
-### Preparing view
+### Preparing View
 
 #### Creating a Model Assistant
 Before preparing view you should create an instance of ModelAssistant as an instance variable of your view and configure it. ModelAssistant is a generic class, so you should typecast its generic parameter. This parameter tells to ModelAssistant, for which entity type you use it. For example, for Contact type we create a ModelAssistant instance like this:
@@ -188,7 +188,7 @@ Here we added a section key to ModelAssistant. The ModelAssistant uses this key 
 For example if we define uppercased first letter of lastname as the reurning value of section key in the Contact, this change causes the ModelAssistant to break the returning Contact instances into multiple sections based on the first letter of the lastname that each Contact instance has. 
 
 
-### Preparing delegate
+### Preparing Delegate
 
 #### Communicating Data Changes to the Table View
 
