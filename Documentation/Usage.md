@@ -183,7 +183,7 @@ So far you have been working with a table view that has only one section, which 
 ```swift
 assistant = ModelAssistant(sectionKey: "lastName")
 ```
-Here we added a section key to ModelAssistant. The ModelAssistant uses this key to break apart the data into multiple sections. On the other hand you should define in the typecasted entity, that what to returns in the result of section key ( See [Preparing model object](#Preparing-model-object) ).
+Here we added a section key to ModelAssistant. The ModelAssistant uses this key to break apart the data into multiple sections. On the other hand you should define in the typecasted entity, that what to returns in the result of section key ( See [Preparing model object](#preparing-model-object) ).
 
 For example if we define uppercased first letter of lastname as the reurning value of section key in the Contact, this change causes the ModelAssistant to break the returning Contact instances into multiple sections based on the first letter of the lastname that each Contact instance has. 
 
