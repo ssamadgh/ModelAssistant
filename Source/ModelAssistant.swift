@@ -50,11 +50,11 @@ WARNING: The assistant only performs change tracking if a delegate is set and re
 
 */
 
-//MARK: - ModelAssistant class
+//MARK: - ModelAssistant
 /**
 An assistant that you use to manage the results of an external source and display data to the user.
 
-While table views can be used in several ways, modelAssistant primarily assist you with a master list view. UITableView expects its data source to provide cells as an array of sections made up of rows. You configure a modelAssistant, optionally with a sectionKey, filter and sort orders. The modelAssistant efficiently analyzes the input objects that you pass in it by calling fetch(_:completion:) method and computes all the information about sections of these objects. It also computes all the information for the index based on the fetched objects.
+While table views can be used in several ways, modelAssistant primarily assist you with a master list view. UITableView expects its data source to provide cells as an array of sections made up of rows. You configure a modelAssistant, optionally with a sectionKey, filter and sort orders. The modelAssistant efficiently analyzes the input objects that you pass in it by calling `fetch(_:completion:)` method and computes all the information about sections of these objects. It also computes all the information for the index based on the fetched objects.
 
 In addition:
 * The assistant monitors changes to objects its fetched, and reports changes to its delegate.
@@ -82,8 +82,9 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 	sectionKey - key on resulting objects that returns the section name. This will be used to pre-compute the section information.
 	*/
 
+	//MARK: - Initialization
 	/**
-	Returns a fetch request controller initialized using the given arguments.
+	Returns a model assistant initialized using the given arguments.
 
 	- Parameter sectionKey:
 		A key on result objects that returns the section name. Pass nil to indicate that the controller should generate a single section.
@@ -98,6 +99,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 		super.init()
 	}
 
+	//MARK: - Properties
 	/// A DispatchQueue property that used to make implemention of methods thread safe.
 	private let dispatchQueue = DispatchQueue(label: "com.model.ConcirrentGCD.DispatchQueue", attributes: DispatchQueue.Attributes.concurrent)
 
@@ -112,40 +114,6 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 	The default value of this property is 20.
 	*/
 	public var fetchBatchSize: Int = 20
-
-	/**
-	Use this subscript method to get the object corresponding to each indexPath.
-
-	The result of this method is equivalent to `entity(at:)` method.
-
-	- Parameter indexPath:
-		The indexPath that you want object that corresponding to it.
-
-	- Returns:
-		The object corresponds to given indexPath or nil if nothing is found.
-	*/
-	public subscript(indexPath: IndexPath) -> Entity? {
-		get {
-			return self.entity(at: indexPath)
-		}
-	}
-
-	/**
-	Use this subscript method to get the section corresponding to each index.
-
-	The result of this method is equivalent to `section(at:)` method.
-
-	- Parameter index:
-	The index that you want section that corresponding to it.
-
-	- Returns:
-	The section corresponds to given index or nil if nothing is found.
-	*/
-	public subscript(index: Int) -> SectionInfo<Entity>? {
-		get {
-			return self.section(at: index)
-		}
-	}
 
 	/**
 	The array of section index titles.
@@ -359,6 +327,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 		return diff == 0 ? self.fetchBatchSize : diff
 	}
 
+	//MARK: - Section Index Retrieval
 	/**
 	Returns the lowest index whose corresponding section that is equal to a given section.
 
@@ -392,6 +361,8 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 		return index
 	}
+
+	//MARK: - IndexPath Retrieval
 
 	private func indexPath(for entity: Entity, synchronous: Bool) -> IndexPath? {
 		let sectionName = self.hasSection ? entity[self.sectionKey!] : nil
@@ -1225,7 +1196,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 		return entities
 	}
 
-	//MARK: - Get Section
+	//MARK: - Section Retrieval
 
 	/**
 	Returns the section at the given index in the model assistant.
@@ -1244,6 +1215,23 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 		}
 
 		return section
+	}
+
+	/**
+	Use this subscript method to get the section corresponding to each index.
+
+	The result of this method is equivalent to `section(at:)` method.
+
+	- Parameter index:
+	The index that you want section that corresponding to it.
+
+	- Returns:
+	The section corresponds to given index or nil if nothing is found.
+	*/
+	public subscript(index: Int) -> SectionInfo<Entity>? {
+		get {
+			return self.section(at: index)
+		}
 	}
 
 	/**
@@ -1292,7 +1280,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 	}
 
 
-	//MARK: - Get Entity
+	//MARK: - Entity Retrieval
 
 	/**
 	Returns the entity at the given index path in the model assistant.
@@ -1311,6 +1299,23 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 		}
 
 		return entity
+	}
+
+	/**
+	Use this subscript method to get the object corresponding to each indexPath.
+
+	The result of this method is equivalent to `entity(at:)` method.
+
+	- Parameter indexPath:
+	The indexPath that you want object that corresponding to it.
+
+	- Returns:
+	The object corresponds to given indexPath or nil if nothing is found.
+	*/
+	public subscript(indexPath: IndexPath) -> Entity? {
+		get {
+			return self.entity(at: indexPath)
+		}
 	}
 
 	/**

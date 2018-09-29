@@ -18,7 +18,6 @@ protocol ModelAssistantProtocol {
 
 	associatedtype SortSections
 
-
 	associatedtype Filter
 
 	var fetchBatchSize: Int { get set }
@@ -125,13 +124,13 @@ protocol ModelAssistantProtocol {
 
 extension ModelAssistantProtocol {
 
-	public subscript(indexPath: IndexPath) -> Entity? {
+	subscript(indexPath: IndexPath) -> Entity? {
 		get {
 			return self.entity(at: indexPath)
 		}
 	}
 
-	public subscript(index: Int) -> Section? {
+	subscript(index: Int) -> Section? {
 		get {
 			return self.section(at: index)
 		}

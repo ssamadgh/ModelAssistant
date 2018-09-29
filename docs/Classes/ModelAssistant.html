@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           ModelAssistant Docs
         </a>
-         (90% documented)
+         (93% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -78,9 +78,6 @@
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Extensions/IndexPath.html">IndexPath</a>
               </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Extensions/ModelAssistantProtocol.html">ModelAssistantProtocol</a>
-              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -120,7 +117,7 @@
               </div>
             <p>An assistant that you use to manage the results of an external source and display data to the user.</p>
 
-<p>While table views can be used in several ways, modelAssistant primarily assist you with a master list view. UITableView expects its data source to provide cells as an array of sections made up of rows. You configure a modelAssistant, optionally with a sectionKey, filter and sort orders. The modelAssistant efficiently analyzes the input objects that you pass in it by calling fetch(_:completion:) method and computes all the information about sections of these objects. It also computes all the information for the index based on the fetched objects.</p>
+<p>While table views can be used in several ways, modelAssistant primarily assist you with a master list view. UITableView expects its data source to provide cells as an array of sections made up of rows. You configure a modelAssistant, optionally with a sectionKey, filter and sort orders. The modelAssistant efficiently analyzes the input objects that you pass in it by calling <code>fetch(_:completion:)</code> method and computes all the information about sections of these objects. It also computes all the information for the index based on the fetched objects.</p>
 
 <p>In addition:</p>
 
@@ -144,6 +141,13 @@
         <section class="section">
           <div class="section-content">
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Initialization"></a>
+                <a name="//apple_ref/swift/Section/Initialization" class="dashAnchor"></a>
+                <a href="#/Initialization">
+                  <h3 class="section-name">Initialization</h3>
+                </a>
+              </div>
               <ul class="item-container">
                 <li class="item">
                   <div>
@@ -158,7 +162,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Returns a fetch request controller initialized using the given arguments.</p>
+                        <p>Returns a model assistant initialized using the given arguments.</p>
 
                       </div>
                       <div class="declaration">
@@ -193,6 +197,17 @@
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Properties"></a>
+                <a name="//apple_ref/swift/Section/Properties" class="dashAnchor"></a>
+                <a href="#/Properties">
+                  <h3 class="section-name">Properties</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -220,110 +235,6 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">fetchBatchSize</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
 
                         </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:14ModelAssistantAACyxSg10Foundation9IndexPathVcip"></a>
-                    <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14ModelAssistantAACyxSg10Foundation9IndexPathVcip">subscript(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Use this subscript method to get the object corresponding to each indexPath.</p>
-
-<p>The result of this method is equivalent to <code><a href="../Classes/ModelAssistant.html#/s:14ModelAssistantAAC6entity2atxSg10Foundation9IndexPathV_tF">entity(at:)</a></code> method.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">subscript</span><span class="p">(</span><span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Entity</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>indexPath</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The indexPath that you want object that corresponding to it.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>The object corresponds to given indexPath or nil if nothing is found.</p>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:14ModelAssistantAACyAA11SectionInfoVyxGSgSicip"></a>
-                    <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14ModelAssistantAACyAA11SectionInfoVyxGSgSicip">subscript(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Use this subscript method to get the section corresponding to each index.</p>
-
-<p>The result of this method is equivalent to <code><a href="../Classes/ModelAssistant.html#/s:14ModelAssistantAAC7section2atAA11SectionInfoVyxGSgSi_tF">section(at:)</a></code> method.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">subscript</span><span class="p">(</span><span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/SectionInfo.html">SectionInfo</a></span><span class="o">&lt;</span><span class="kt">Entity</span><span class="o">&gt;</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>index</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The index that you want section that corresponding to it.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>The section corresponds to given index or nil if nothing is found.</p>
                       </div>
                     </section>
                   </div>
@@ -701,6 +612,17 @@ assistant, delegate methods are called in this way:</p>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Section%20Index%20Retrieval"></a>
+                <a name="//apple_ref/swift/Section/Section Index Retrieval" class="dashAnchor"></a>
+                <a href="#/Section%20Index%20Retrieval">
+                  <h3 class="section-name">Section Index Retrieval</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -751,6 +673,17 @@ assistant, delegate methods are called in this way:</p>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/IndexPath%20Retrieval"></a>
+                <a name="//apple_ref/swift/Section/IndexPath Retrieval" class="dashAnchor"></a>
+                <a href="#/IndexPath%20Retrieval">
+                  <h3 class="section-name">IndexPath Retrieval</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -1931,10 +1864,10 @@ Note that, this block, executes after executing all the delegate methods.</p>
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Get%20Section"></a>
-                <a name="//apple_ref/swift/Section/Get Section" class="dashAnchor"></a>
-                <a href="#/Get%20Section">
-                  <h3 class="section-name">Get Section</h3>
+                <a name="/Section%20Retrieval"></a>
+                <a name="//apple_ref/swift/Section/Section Retrieval" class="dashAnchor"></a>
+                <a href="#/Section%20Retrieval">
+                  <h3 class="section-name">Section Retrieval</h3>
                 </a>
               </div>
               <ul class="item-container">
@@ -1985,6 +1918,58 @@ Note that, this block, executes after executing all the delegate methods.</p>
                         <h4>Return Value</h4>
                         <p>The section at the given section index in the model assistant.
 If section index does not describe a valid section index in the model assistant, returns nil.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14ModelAssistantAACyAA11SectionInfoVyxGSgSicip"></a>
+                    <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14ModelAssistantAACyAA11SectionInfoVyxGSgSicip">subscript(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Use this subscript method to get the section corresponding to each index.</p>
+
+<p>The result of this method is equivalent to <code><a href="../Classes/ModelAssistant.html#/s:14ModelAssistantAAC7section2atAA11SectionInfoVyxGSgSi_tF">section(at:)</a></code> method.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">subscript</span><span class="p">(</span><span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/SectionInfo.html">SectionInfo</a></span><span class="o">&lt;</span><span class="kt">Entity</span><span class="o">&gt;</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index that you want section that corresponding to it.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The section corresponds to given index or nil if nothing is found.</p>
                       </div>
                     </section>
                   </div>
@@ -2109,10 +2094,10 @@ If section index does not describe a valid section index in the model assistant,
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Get%20Entity"></a>
-                <a name="//apple_ref/swift/Section/Get Entity" class="dashAnchor"></a>
-                <a href="#/Get%20Entity">
-                  <h3 class="section-name">Get Entity</h3>
+                <a name="/Entity%20Retrieval"></a>
+                <a name="//apple_ref/swift/Section/Entity Retrieval" class="dashAnchor"></a>
+                <a href="#/Entity%20Retrieval">
+                  <h3 class="section-name">Entity Retrieval</h3>
                 </a>
               </div>
               <ul class="item-container">
@@ -2163,6 +2148,58 @@ If section index does not describe a valid section index in the model assistant,
                         <h4>Return Value</h4>
                         <p>The entity at the given index path in the model assistant.
 If index path does not describe a valid index path in the model assistant, returns nil.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14ModelAssistantAACyxSg10Foundation9IndexPathVcip"></a>
+                    <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14ModelAssistantAACyxSg10Foundation9IndexPathVcip">subscript(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Use this subscript method to get the object corresponding to each indexPath.</p>
+
+<p>The result of this method is equivalent to <code><a href="../Classes/ModelAssistant.html#/s:14ModelAssistantAAC6entity2atxSg10Foundation9IndexPathV_tF">entity(at:)</a></code> method.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">subscript</span><span class="p">(</span><span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Entity</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>indexPath</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The indexPath that you want object that corresponding to it.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The object corresponds to given indexPath or nil if nothing is found.</p>
                       </div>
                     </section>
                   </div>
