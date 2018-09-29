@@ -48,7 +48,7 @@
 		E4480EAA2156D80F0052DC6D /* ModelAssistantOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E782156D80F0052DC6D /* ModelAssistantOperation.swift */; };
 		E4480EAB2156D80F0052DC6D /* SectionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E792156D80F0052DC6D /* SectionsManager.swift */; };
 		E4480EAD2156D80F0052DC6D /* MASectionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E7B2156D80F0052DC6D /* MASectionInfo.swift */; };
-		E4480EAE2156D80F0052DC6D /* EntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E7C2156D80F0052DC6D /* EntityProtocol.swift */; };
+		E4480EAE2156D80F0052DC6D /* MAEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E7C2156D80F0052DC6D /* MAEntity.swift */; };
 		E459218E215A9C7000E6DF7C /* ModelAssistant_iOS_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E459218D215A9C7000E6DF7C /* ModelAssistant_iOS_Tests.swift */; };
 		E4592190215A9C7000E6DF7C /* ModelAssistant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4480DED2156D3980052DC6D /* ModelAssistant.framework */; };
 		E4592196215A9CFB00E6DF7C /* ModelTestsBasicFiltered.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E5A2156D80F0052DC6D /* ModelTestsBasicFiltered.swift */; };
@@ -135,7 +135,7 @@
 		E4480E782156D80F0052DC6D /* ModelAssistantOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelAssistantOperation.swift; sourceTree = "<group>"; };
 		E4480E792156D80F0052DC6D /* SectionsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionsManager.swift; sourceTree = "<group>"; };
 		E4480E7B2156D80F0052DC6D /* MASectionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MASectionInfo.swift; sourceTree = "<group>"; };
-		E4480E7C2156D80F0052DC6D /* EntityProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityProtocol.swift; sourceTree = "<group>"; };
+		E4480E7C2156D80F0052DC6D /* MAEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MAEntity.swift; sourceTree = "<group>"; };
 		E459218B215A9C7000E6DF7C /* ModelAssistant iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ModelAssistant iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E459218D215A9C7000E6DF7C /* ModelAssistant_iOS_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelAssistant_iOS_Tests.swift; sourceTree = "<group>"; };
 		E459218F215A9C7000E6DF7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -267,7 +267,7 @@
 				E4480E782156D80F0052DC6D /* ModelAssistantOperation.swift */,
 				E4480E792156D80F0052DC6D /* SectionsManager.swift */,
 				E4480E7B2156D80F0052DC6D /* MASectionInfo.swift */,
-				E4480E7C2156D80F0052DC6D /* EntityProtocol.swift */,
+				E4480E7C2156D80F0052DC6D /* MAEntity.swift */,
 				E4480E3D2156D7C00052DC6D /* Supporting Files */,
 			);
 			path = Source;
@@ -556,7 +556,7 @@
 				E4480E972156D80F0052DC6D /* IndexPath+Extensions.swift in Sources */,
 				E4480EA62156D80F0052DC6D /* NetworkObserver.swift in Sources */,
 				E4480EA12156D80F0052DC6D /* ReachabilityCondition.swift in Sources */,
-				E4480EAE2156D80F0052DC6D /* EntityProtocol.swift in Sources */,
+				E4480EAE2156D80F0052DC6D /* MAEntity.swift in Sources */,
 				E4480EA32156D80F0052DC6D /* OperationCondition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

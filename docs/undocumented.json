@@ -1,7 +1,7 @@
 {
   "warnings": [
     {
-      "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/EntityProtocol.swift",
+      "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/MAEntity.swift",
       "line": 81,
       "symbol": "MAEntity.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
