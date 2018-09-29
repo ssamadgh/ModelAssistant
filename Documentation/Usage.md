@@ -6,7 +6,7 @@
 ## Preparation
 The preparation of **ModelAssistant** has three steps:
 
-1. [Preparing model object](#Preparing-model-object)
+1. [Preparing model object](#preparing-model-object)
 2. [Preparing view](#Preparing-view)
 3. [Preparing delegate](#Preparing-delegate)
 
