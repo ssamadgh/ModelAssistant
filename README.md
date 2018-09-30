@@ -2,6 +2,8 @@
 
 ### An assistant to manage the interactions between view and model
 
+[![Swift 4.2](https://img.shields.io/badge/Swift-4.2-orange.svg?style=flat)](https://developer.apple.com/swift/)
+[![license MIT](https://img.shields.io/cocoapods/l/ModelAssistant.svg)](https://github.com/ssamadgh/ModelAssistant/blob/master/LICENSE)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/ModelAssistant.svg)](https://img.shields.io/cocoapods/v/ModelAssistant.svg)
 [![Platform](https://img.shields.io/cocoapods/p/ModelAssistant.svg?style=flat)](https://ssamadgh.github.io/ModelAssistant)
 [![Twitter](https://img.shields.io/badge/twitter-@ssamadgh-blue.svg?style=flat)](https://twitter.com/ssamadgh)
