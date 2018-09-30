@@ -1,4 +1,4 @@
-# AdvancedUsage
+# Advanced Usage
 
 - [MAEntitiy](#maentitiy)
 - [ModelAssistant](#modelassistant)

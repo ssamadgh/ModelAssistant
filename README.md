@@ -15,6 +15,10 @@ These views typically expect their data source to present results as a list of s
 - [Usage](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md)
 	- **Preparation -** [Preparing Model Object](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md#preparing-model-object), [Preparing View](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md#preparing-view), [Preparing Delegate](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md#preparing-delegate)
 	- **Interaction -** [Documentation](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md#documentation), [Examples](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md#examples)
+- [Advanced Usage](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/AdvancedUsage.md)
+	- **MAEntitiy** [Inheritance](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/AdvancedUsage.md#inheritance), [Hashable](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/AdvancedUsage.md#hashable)
+	- **ModelAssistant** [More Configurations](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/AdvancedUsage.md#more-configurations), [Export Entities](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/AdvancedUsage.md#export-entities), [Using with Core Data and Realm](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/AdvancedUsage.md#using-with-core-data-and-realm)
+
 
 ## Features
 - [x] Inserting / Removing / Ordering / Updating model objects
