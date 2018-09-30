@@ -13,7 +13,7 @@
 			buildPhases = (
 				E495A908215C80AC009CBB3E /* Make Universal Library */,
 				E495A909215C818E009CBB3E /* Build API Documentation */,
-				E491D76E215F85A500888CF2 /* Run Script */,
+				E491D76E215F85A500888CF2 /* Cleaning whitespace */,
 			);
 			dependencies = (
 			);
@@ -472,7 +472,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		E491D76E215F85A500888CF2 /* Run Script */ = {
+		E491D76E215F85A500888CF2 /* Cleaning whitespace */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -481,7 +481,7 @@
 			);
 			inputPaths = (
 			);
-			name = "Run Script";
+			name = "Cleaning whitespace";
 			outputFileListPaths = (
 			);
 			outputPaths = (
