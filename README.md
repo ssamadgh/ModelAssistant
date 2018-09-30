@@ -57,9 +57,27 @@ platform :ios, '10.0'
 use_frameworks!
 
 target '<Your Target Name>' do
+
     pod 'ModelAssistant'
+    
 end
+
 ```
+If you are not upgraded to Swift 4.2, use the last non-swift 4.2 compatible release:
+
+If you are using swift 4, replace `pod 'ModelAssistant'` with this:
+
+```ruby
+pod 'ModelAssistant', '1.0.1' #Swift 4
+```
+ 
+ If you are using swift 3, replace `pod 'ModelAssistant'` with this:
+
+```ruby 
+pod 'ModelAssistant', '1.0.0' #Swift 3
+```
+
+
 ### Manually
 
 If you prefer not to use any of the aforementioned dependency managers, you can integrate ModelAssistant into your project manually.
