@@ -156,7 +156,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 	/**
 	The filter of the objects.
 
-	The filter closure constrains the selection of objects the assistant instance is to fetch.
+	The filter closure constraints the selection of objects the assistant instance is to fetch.
 
 	A value of nil is treated as no filter.
 	*/

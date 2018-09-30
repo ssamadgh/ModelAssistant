@@ -19,7 +19,7 @@ struct Contact: MAEntity & Hashable {
 	//...
 }
 ```
-Now Contact struct must satisfy MAEntity protocol properties and methods.
+Now Contact struct must satisfy MAEntity protocol requirements.
 
 ```swift
 struct  Contacte: MAEntity & Hashable {

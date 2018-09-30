@@ -50,6 +50,7 @@ class ThreadSafePhoneBookTVC: BasicTableViewController {
 		
 		
 		// We do some interaction with model assistant concurrently.
+		// Run the app and see how tableView updates without any crash.
 		
 		self.dispatchQueue.async {
 			
