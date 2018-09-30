@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import Model
+@testable import ModelAssistant
 
 class ModelTestsWithSection: ModelTestsBasic {
 

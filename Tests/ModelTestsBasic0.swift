@@ -7,14 +7,14 @@
 //
 
 import XCTest
-@testable import Model
+@testable import ModelAssistant
 
-class ModelTestsBasic0: XCTestCase, ModelDelegate, TestTableViewDataSource {
+class ModelTestsBasic0: XCTestCase, ModelAssistantDelegate, TestTableViewDataSource {
 
 	var delegateCalledBalance = 0
 	var delegateExpect: XCTestExpectation!
 	var updateDelegateExpect: XCTestExpectation!
-	var model: Model<Member>!
+	var model: ModelAssistant<Member>!
 	var members: [Member]!
 
 	var sortEntities: ((Member, Member) -> Bool)?
@@ -38,7 +38,7 @@ class ModelTestsBasic0: XCTestCase, ModelDelegate, TestTableViewDataSource {
 	}
 
 	func configureModel(sectionKey: String?) {
-		self.model = Model(sectionKey: sectionKey)
+		self.model = ModelAssistant(sectionKey: sectionKey)
 		self.model.delegate = self
 	}
 
@@ -120,7 +120,7 @@ class ModelTestsBasic0: XCTestCase, ModelDelegate, TestTableViewDataSource {
 		self.delegateExpect.fulfill()
 	}
 
-	func model<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelChangeType, newIndexPaths: [IndexPath]?) where Entity : MAEntity, Entity : Hashable {
+	func model<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelAssistantChangeType, newIndexPaths: [IndexPath]?) where Entity : MAEntity, Entity : Hashable {
 		switch type {
 		case .insert:
 			XCTAssertNil(indexPaths)
@@ -151,7 +151,7 @@ class ModelTestsBasic0: XCTestCase, ModelDelegate, TestTableViewDataSource {
 		}
 	}
 
-	func model<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelChangeType, newSectionIndex: Int?) where Entity : MAEntity, Entity : Hashable {
+	func model<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelAssistantChangeType, newSectionIndex: Int?) where Entity : MAEntity, Entity : Hashable {
 		switch type {
 		case .insert:
 			XCTAssertNil(sectionIndex)

@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import Model
+import ModelAssistant
 
 class ModelTestsBasicSorted: ModelTestsBasic {
 

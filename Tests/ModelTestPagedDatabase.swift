@@ -26,19 +26,19 @@ class ModelTestPagedDatabase: ModelTestsBasic {
 		var endOfFetchData = false
 		var minorIndex = ""
 		while !endOfFetchData {
-			let nextIndex = self.model.nextIndex
+			let nextIndex = self.model.nextFetchIndex
 			let members = self.entities(forFileWithName: "MOCK_DATA_20_\(nextIndex)\(minorIndex)")
 
 			self.delegateExpect = expectation(description: "insert entities of page \(nextIndex)")
 			self.model.insert(members, completion: nil)
 			waitForExpectations(timeout: 5, handler: nil)
 			if members.count == self.model.fetchBatchSize {
-				XCTAssert(self.model.nextIndex == nextIndex + 1)
+				XCTAssert(self.model.nextFetchIndex == nextIndex + 1)
 				XCTAssert(self.model.numberOfWholeEntities == (nextIndex + 1)*self.model.fetchBatchSize)
 				minorIndex = ""
 			}
 			else {
-				XCTAssert(self.model.nextIndex == nextIndex)
+				XCTAssert(self.model.nextFetchIndex == nextIndex)
 				XCTAssert(self.model.numberOfWholeEntities == (nextIndex)*self.model.fetchBatchSize + members.count)
 				minorIndex = "_2"
 			}

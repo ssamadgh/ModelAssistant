@@ -7,22 +7,22 @@
 //
 
 import XCTest
-@testable import Model
+@testable import ModelAssistant
 
 class ModelTestsBasic: ModelTestsBasic0 {
 
 	func testIndexOfEntityWithId() {
 		let entity = Member(data: ["id":1])!
-		let indexPath = self.model.indexPathOfEntity(withUniqueValue: entity.uniqueValue)
+		let indexPath = self.model.indexPathForEntity(withUniqueValue: entity.uniqueValue)
 		XCTAssertNotNil(indexPath)
 	}
 
 	func testIndexOfEntity() {
 		let entity = Member(data: ["id":1,"first_name":"Emma","last_name":"McGinty"])!
-		let indexPath = self.model.indexPath(of: entity)
+		let indexPath = self.model.indexPath(for: entity)
 		XCTAssertNotNil(indexPath)
 
-		let indexPathWithUniqueValue = self.model.indexPathOfEntity(withUniqueValue: entity.uniqueValue)
+		let indexPathWithUniqueValue = self.model.indexPathForEntity(withUniqueValue: entity.uniqueValue)
 
 		XCTAssertEqual(indexPath, indexPathWithUniqueValue)
 	}
@@ -53,11 +53,11 @@ class ModelTestsBasic: ModelTestsBasic0 {
 	}
 
 	func testGetIndexPath() {
-		let indexPath1 = self.model.indexPath(of: self.members.first!)
+		let indexPath1 = self.model.indexPath(for: self.members.first!)
 		XCTAssertNotNil(indexPath1)
 
 		let id = 3
-		let indexPath2 = self.model.indexPathOfEntity(withUniqueValue: id)
+		let indexPath2 = self.model.indexPathForEntity(withUniqueValue: id)
 		XCTAssertNotNil(indexPath2)
 
 		let entity = self.model[indexPath2!]!
@@ -80,11 +80,11 @@ class ModelTestsBasic: ModelTestsBasic0 {
 
 		self.delegateExpect = expectation(description: "Reorder")
 		let sortExpectation = expectation(description: "Reorder")
-		self.model.reorder {
+		self.model.reorderEntities {
 			let entities = self.model.section(at: 0)!.entities
 			let allSatisfy = entities.allSatisfy({ (entity) -> Bool in
 
-				let indexPath = self.model.indexPath(of: entity)
+				let indexPath = self.model.indexPath(for: entity)
 				XCTAssertNotNil(indexPath)
 				let nextIndexPath = IndexPath(row: indexPath!.row + 1, section: indexPath!.section)
 				if let nextEntity = self.model[nextIndexPath] {
@@ -178,7 +178,7 @@ class ModelTestsBasic: ModelTestsBasic0 {
 		self.delegateExpect =  expectation(description: "insert at First Expect")
 		self.model.insert(member, at: indexPath, completion: nil)
 		waitForExpectations(timeout: 20, handler: nil)
-		let memberIndexPath = self.model.indexPath(of: member)
+		let memberIndexPath = self.model.indexPath(for: member)
 
 		XCTAssertEqual(memberIndexPath, indexPath)
 
@@ -197,7 +197,7 @@ class ModelTestsBasic: ModelTestsBasic0 {
 		self.model.insert(member, at: indexPath, completion: nil)
 		waitForExpectations(timeout: 5, handler: nil)
 
-		let memberIndexPath = self.model.indexPath(of: member)
+		let memberIndexPath = self.model.indexPath(for: member)
 
 		XCTAssertEqual(memberIndexPath, indexPath)
 
@@ -215,7 +215,7 @@ class ModelTestsBasic: ModelTestsBasic0 {
 		self.model.insert(member, at: indexPath, completion: nil)
 		waitForExpectations(timeout: 5, handler: nil)
 
-		let memberIndexPath = self.model.indexPath(of: member)
+		let memberIndexPath = self.model.indexPath(for: member)
 
 		XCTAssertEqual(memberIndexPath, indexPath)
 	}
@@ -232,7 +232,7 @@ class ModelTestsBasic: ModelTestsBasic0 {
 		self.model.insert(member, at: indexPath, completion: nil)
 		waitForExpectations(timeout: 5, handler: nil)
 
-		let memberIndexPath = self.model.indexPath(of: member)
+		let memberIndexPath = self.model.indexPath(for: member)
 
 		XCTAssertEqual(memberIndexPath, indexPath)
 	}
@@ -267,7 +267,7 @@ class ModelTestsBasic: ModelTestsBasic0 {
 
 		let expect = expectation(description: "moving from first IndexPath to the last indexPath")
 		self.model.moveEntity(at: oldIndexPath, to: newIndexPath, isUserDriven: true) {
-			let currentIndexPath = self.model.indexPath(of: entity!)
+			let currentIndexPath = self.model.indexPath(for: entity!)
 			let expectedSection = self.model.numberOfSections-1
 			let expectedRow = self.model.numberOfEntites(at: expectedSection) - 1
 			let expectedIndexPath = IndexPath(row: expectedRow, section: expectedSection)
@@ -301,7 +301,7 @@ class ModelTestsBasic: ModelTestsBasic0 {
 
 		let expect = expectation(description: "moving from first IndexPath to the User derived indexPath")
 		self.model.moveEntity(at: oldIndexPath, to: newIndexPath, isUserDriven: true) {
-			let currentIndexPath = self.model.indexPath(of: entity!)
+			let currentIndexPath = self.model.indexPath(for: entity!)
 			let expectedIndexPath = newIndexPath
 			XCTAssertEqual(currentIndexPath, expectedIndexPath)
 
@@ -333,7 +333,7 @@ class ModelTestsBasic: ModelTestsBasic0 {
 		self.delegateExpect =  expectation(description: "moving from first IndexPath to the user not derived indexPath")
 		self.model.moveEntity(at: oldIndexPath, to: newIndexPath, isUserDriven: false, completion: nil)
 		waitForExpectations(timeout: 5, handler: nil)
-		let currentIndexPath = self.model.indexPath(of: entity!)
+		let currentIndexPath = self.model.indexPath(for: entity!)
 		let expectedIndexPath = newIndexPath
 		XCTAssertEqual(currentIndexPath, expectedIndexPath)
 
@@ -419,7 +419,7 @@ class ModelTestsBasic: ModelTestsBasic0 {
 
 		waitForExpectations(timeout: 5, handler: nil)
 
-		XCTAssertNil(self.model.indexPath(of: entity!))
+		XCTAssertNil(self.model.indexPath(for: entity!))
 	}
 
 	func testRemoveSection() {
@@ -490,7 +490,7 @@ class ModelTestsBasic: ModelTestsBasic0 {
 			// Put the code you want to measure the time of here.
 			let entity = Member(data: ["id":1,"first_name":"Emma","last_name":"McGinty"])!
 			//			let indexPath = self.model.indexPath(of: entity)
-			_ = self.model.indexPathOfEntity(withUniqueValue: entity.uniqueValue)
+			_ = self.model.indexPathForEntity(withUniqueValue: entity.uniqueValue)
 
 		}
 	}
