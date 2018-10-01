@@ -1,4 +1,4 @@
 language: objective-c
 osx_image: xcode10
-xcode_project: $PROJECTNAME.xcodeproj
-xcode_scheme: $PROJECTNAME iOS
+xcode_project: ModelAssistant.xcodeproj
+xcode_scheme: ModelAssistant iOS
