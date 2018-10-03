@@ -44,8 +44,8 @@ class ThreadSafePhoneBookTVC: BasicTableViewController {
 		
 		let dic = ["id" : 0]
 		var contact = Contact(data: dic)!
-		contact.firstName = "Samad"
-		contact.lastName = "Khatar"
+		contact.firstName = "John"
+		contact.lastName = "Appleseed"
 		contact.phone = "9934243243"
 		
 		
@@ -58,7 +58,7 @@ class ThreadSafePhoneBookTVC: BasicTableViewController {
 		}
 		
 		self.dispatchQueue.async {
-			contact.firstName = "Abbas"
+			contact.firstName = "Chris"
 			contact.phone = "9342432432"
 			self.assistant.insert(contact, at: firstIndexPath, completion: nil)
 		}
@@ -69,13 +69,13 @@ class ThreadSafePhoneBookTVC: BasicTableViewController {
 		
 		self.dispatchQueue.async {
 			self.assistant.update(at: IndexPath(row: 3, section: 0), mutate:  { (contact) in
-				contact.firstName = "Joooooojoooo"
+				contact.firstName = "Hello🐤"
 			}, completion: nil)
 		}
 		
 		self.dispatchQueue.async {
 			self.assistant.update(at: IndexPath(row: 3, section: 0), mutate:  { (contact) in
-				contact.lastName = "Talaaaaaaaieeeee"
+				contact.lastName = "World🦄"
 			}, completion: nil)
 		}
 		
