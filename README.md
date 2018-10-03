@@ -25,7 +25,7 @@ These views typically expect their data source to present results as a list of s
 ## Features
 - [x] Inserting / Removing / Ordering / Updating model objects
 - [x] Notifies changes to view
-- [x] Full compatible with table view and collection view
+- [x] Full compatible with UITableView and UICollectionView
 - [x] Supports Sections
 - [x] Supports index titles
 - [x] Compatible with Server data source
@@ -129,7 +129,7 @@ Design Pattern  | ModelAssistant Position
 MVC | Controller
 MVP  | Presenter
 MVVM  | ViewModel
-Viper  | Interactor
+VIPER  | Interactor
 
 
 ## Credits
