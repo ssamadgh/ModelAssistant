@@ -37,7 +37,7 @@
     },
     {
       "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/ModelAssistant.swift",
-      "line": 1392,
+      "line": 1491,
       "symbol": "ModelAssistantDelegate",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"

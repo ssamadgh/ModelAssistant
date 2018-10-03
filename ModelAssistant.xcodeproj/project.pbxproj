@@ -11,7 +11,6 @@
 			isa = PBXAggregateTarget;
 			buildConfigurationList = E495A906215C804E009CBB3E /* Build configuration list for PBXAggregateTarget "Package iOS" */;
 			buildPhases = (
-				E495A908215C80AC009CBB3E /* Make Universal Library */,
 				E495A909215C818E009CBB3E /* Build API Documentation */,
 				E491D76E215F85A500888CF2 /* Cleaning whitespace */,
 			);
@@ -490,24 +489,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/sh\ndirectories=(Example Source Tests)\n\nfor directory in \"${directories[@]}\"\ndo\necho \"Cleaning whitespace in directory: $directory\"\nfind $directory -iregex '.*\\**\\.swift' -exec sed -E -i '' -e 's/[[:blank:]]*$//' {} \\;\ndone\n";
-		};
-		E495A908215C80AC009CBB3E /* Make Universal Library */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Make Universal Library";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n\n# Step 1: Define Macros\nRELEASE_TYPE=\"\"\nFRAMEWORK_VERSION=\"NOTRIAL_VERSION\"\n\n# Step 2: Define OS and directories\nUNIVERSAL_TARGET=\"iOS\"\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal-${UNIVERSAL_TARGET}\nUNIVERSAL_FRAMEWORKFOLDER=${PROJECT_NAME}${RELEASE_TYPE}/${UNIVERSAL_TARGET}\nDEVICE_OS=\"iphoneos\"\nDEVICE_SIMULATOR=\"iphonesimulator\"\n\n# Step 3: Make sure the output directories exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\nmkdir -p \"${UNIVERSAL_FRAMEWORKFOLDER}\"\n\n# Step 4: Build Device and Simulator versions\n# See: https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/xcodebuild.1.html\nxcodebuild -target \"${PROJECT_NAME} ${UNIVERSAL_TARGET}\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk ${DEVICE_OS}  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" OTHER_SWIFT_FLAGS=\"-D ${FRAMEWORK_VERSION}\" clean build\nxcodebuild -target \"${PROJECT_NAME} ${UNIVERSAL_TARGET}\" VALID_ARCHS=\"x86_64 i386\" -configuration ${CONFIGURATION} -sdk ${DEVICE_SIMULATOR} ONLY_ACTIVE_ARCH=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" OTHER_SWIFT_FLAGS=\"-D ${FRAMEWORK_VERSION}\" clean build\n\n# Step 5: Copy the framework structure (from iphoneos build) to the universal folder\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\n# Step 6: Copy Swift modules from iphonesimulator build (if it exists) to the copied framework directory\nSIMULATOR_SWIFT_MODULES_DIR=\"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule/.\"\nif [ -d \"${SIMULATOR_SWIFT_MODULES_DIR}\" ]; then\ncp -R \"${SIMULATOR_SWIFT_MODULES_DIR}\" \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule\"\nfi\n\n# Step 7: Create universal binary file using lipo and place the combined executable in the copied framework directory\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/${PROJECT_NAME}.framework/${PROJECT_NAME}\"\n\n# Step 8: Convenience step to copy the framework to the project's directory\ncp -R \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# Step 9: Convenience step to open the project's directory in Finder\n# open \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# Step 10: Testing\n# open \"${UNIVERSAL_OUTPUTFOLDER}\"\n";
 		};
 		E495A909215C818E009CBB3E /* Build API Documentation */ = {
 			isa = PBXShellScriptBuildPhase;

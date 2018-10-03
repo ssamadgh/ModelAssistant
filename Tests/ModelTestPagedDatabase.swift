@@ -47,7 +47,7 @@ class ModelTestPagedDatabase: ModelTestsBasic {
 			}
 		}
 	}
-	
+
 
 	override func testInsertSameEntities() {
 

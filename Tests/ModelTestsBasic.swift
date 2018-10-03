@@ -53,12 +53,12 @@ class ModelTestsBasic: ModelTestsBasic0 {
 			XCTAssertEqual(self.model.numberOfWholeEntities, self.members.count)
 		}
 	}
-	
+
 	func testConcurrentChangedEntity() {
-		
+
 		let section = Int(arc4random_uniform(UInt32(self.model.numberOfSections - 1)))
 		let row = Int(arc4random_uniform(UInt32(self.model.numberOfEntites(at: section))))
-		
+
 		let indexPath = IndexPath(row: row, section: section)
 
 		let expectFirstUpdate = expectation(description: "update first name")
@@ -70,7 +70,7 @@ class ModelTestsBasic: ModelTestsBasic0 {
 				expectFirstUpdate.fulfill()
 			})
 		}
-		
+
 
 		self.dispatchQueue.async {
 			self.model.update(at: indexPath, mutate:  { (contact) in
@@ -80,43 +80,43 @@ class ModelTestsBasic: ModelTestsBasic0 {
 			})
 		}
 		wait(for: [expectFirstUpdate, expectSecondUpdate], timeout: 5)
-		
+
 		let entity = self.model[indexPath]!
 		XCTAssertEqual(entity.firstName, "Joooooojoooo")
 		XCTAssertEqual(entity.lastName, "Talaaaaaaaieeeee")
 	}
-	
+
 	func testConcurrentMovedEntity() {
 		let section = Int(arc4random_uniform(UInt32(self.model.numberOfSections - 1)))
 		let row = Int(arc4random_uniform(UInt32(self.model.numberOfEntites(at: section))))
-		
+
 		let indexPath = IndexPath(row: row, section: section)
-		
+
 		let newSection = Int(arc4random_uniform(UInt32(self.model.numberOfSections - 1)))
 		let newRow = Int(arc4random_uniform(UInt32(self.model.numberOfEntites(at: newSection))))
-		
+
 		let newIndexPath = IndexPath(row: newRow, section: newSection)
 
-		
+
 		let expectFirstUpdate = expectation(description: "update first name")
 		let expectSecondUpdate = expectation(description: "update second name")
-		
-		
-		
+
+
+
 		self.dispatchQueue.async {
 
 			self.model.moveEntity(at: indexPath, to: newIndexPath, isUserDriven: true, completion: {
 				expectFirstUpdate.fulfill()
 			})
-			
+
 //			self.model.update(at: indexPath, mutate:  { (contact) in
 //				contact.firstName = "Joooooojoooo"
 //			}, completion: {
 //				expectFirstUpdate.fulfill()
 //			})
 		}
-		
-		
+
+
 		self.dispatchQueue.async {
 			self.model.update(at: indexPath, mutate:  { (contact) in
 				contact.firstName = "Joooooojoooo"
@@ -125,34 +125,34 @@ class ModelTestsBasic: ModelTestsBasic0 {
 				expectSecondUpdate.fulfill()
 			})
 		}
-		
+
 		wait(for: [expectFirstUpdate, expectSecondUpdate], timeout: 5)
-		
+
 		let entity = self.model[newIndexPath]!
 		XCTAssertEqual(entity.firstName, "Joooooojoooo")
 		XCTAssertEqual(entity.lastName, "Talaaaaaaaieeeee")
 
 	}
-	
-	
+
+
 	func testConcurrentMovedandChangedEntity() {
 		let section = Int(arc4random_uniform(UInt32(self.model.numberOfSections - 1)))
 		let row = Int(arc4random_uniform(UInt32(self.model.numberOfEntites(at: section))))
-		
+
 		let indexPath = IndexPath(row: row, section: section)
-		
+
 		let newSection = Int(arc4random_uniform(UInt32(self.model.numberOfSections - 1)))
 		let newRow = Int(arc4random_uniform(UInt32(self.model.numberOfEntites(at: newSection))))
-		
+
 		let newIndexPath = IndexPath(row: newRow, section: newSection)
-		
-		
+
+
 		let expectFirstUpdate = expectation(description: "update first name")
 		let expectSecondUpdate = expectation(description: "update second name")
 		let expectMove = expectation(description: "moved entity")
 
-		
-		
+
+
 		self.dispatchQueue.async {
 
 			self.model.moveEntity(at: indexPath, to: newIndexPath, isUserDriven: true, completion: {
@@ -160,7 +160,7 @@ class ModelTestsBasic: ModelTestsBasic0 {
 			})
 
 		}
-		
+
 		self.dispatchQueue.async {
 			self.model.update(at: indexPath, mutate:  { (contact) in
 				contact.firstName = "Joooooojoooo"
@@ -168,7 +168,7 @@ class ModelTestsBasic: ModelTestsBasic0 {
 				expectFirstUpdate.fulfill()
 			})
 		}
-		
+
 		self.dispatchQueue.async {
 			self.model.update(at: indexPath, mutate:  { (contact) in
 				contact.lastName = "Talaaaaaaaieeeee"
@@ -176,16 +176,16 @@ class ModelTestsBasic: ModelTestsBasic0 {
 				expectSecondUpdate.fulfill()
 			})
 		}
-		
+
 		wait(for: [expectFirstUpdate, expectSecondUpdate, expectMove], timeout: 100)
-		
+
 		let entity = self.model[newIndexPath]!
 		XCTAssertEqual(entity.firstName, "Joooooojoooo")
 		XCTAssertEqual(entity.lastName, "Talaaaaaaaieeeee")
-		
+
 	}
-	
-	
+
+
 
 	func testGetIndexPath() {
 		let indexPath1 = self.model.indexPath(for: self.members.first!)
