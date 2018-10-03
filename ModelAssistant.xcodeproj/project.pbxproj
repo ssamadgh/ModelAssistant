@@ -191,14 +191,14 @@
 		E4480E3E2156D80F0052DC6D /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				E4480E412156D80F0052DC6D /* ModelTestsBasic0.swift */,
+				E4480E522156D80F0052DC6D /* ModelTestsBasic.swift */,
 				E4480E3F2156D80F0052DC6D /* ModelTestPagedDatabase.swift */,
 				E4480E402156D80F0052DC6D /* ModelTestsWithSectionFilteredAndSorted.swift */,
-				E4480E412156D80F0052DC6D /* ModelTestsBasic0.swift */,
 				E4480E422156D80F0052DC6D /* ModelTestsWithSectionSorted.swift */,
 				E4480E432156D80F0052DC6D /* ModelTestsWithSectionFiltered.swift */,
 				E4480E442156D80F0052DC6D /* Entity */,
 				E4480E462156D80F0052DC6D /* Resources */,
-				E4480E522156D80F0052DC6D /* ModelTestsBasic.swift */,
 				E4480E532156D80F0052DC6D /* ModelTestsWithSection.swift */,
 				E4480E542156D80F0052DC6D /* ModelTestsBasicSorted.swift */,
 				E4480E552156D80F0052DC6D /* ModelTestsBasicSortedAndFiltered.swift */,

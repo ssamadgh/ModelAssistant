@@ -39,5 +39,10 @@ class ModelTestsWithSection: ModelTestsBasic {
 			XCTAssertEqual(Set(section!.entities), Set(filtered))
 		}
 	}
+	
+	override func testInsertDifferentEntities() {
+		
+	}
+
 
 }

@@ -11,6 +11,8 @@ import XCTest
 
 class ModelTestsBasic: ModelTestsBasic0 {
 
+	private let dispatchQueue = DispatchQueue(label: "com.ThreadSafePhoneBookTVC.ConcirrentGCD.DispatchQueue", attributes: DispatchQueue.Attributes.concurrent)
+
 	func testIndexOfEntityWithId() {
 		let entity = Member(data: ["id":1])!
 		let indexPath = self.model.indexPathForEntity(withUniqueValue: entity.uniqueValue)
@@ -51,6 +53,139 @@ class ModelTestsBasic: ModelTestsBasic0 {
 			XCTAssertEqual(self.model.numberOfWholeEntities, self.members.count)
 		}
 	}
+	
+	func testConcurrentChangedEntity() {
+		
+		let section = Int(arc4random_uniform(UInt32(self.model.numberOfSections - 1)))
+		let row = Int(arc4random_uniform(UInt32(self.model.numberOfEntites(at: section))))
+		
+		let indexPath = IndexPath(row: row, section: section)
+
+		let expectFirstUpdate = expectation(description: "update first name")
+		let expectSecondUpdate = expectation(description: "update second name")
+		self.dispatchQueue.async {
+			self.model.update(at: indexPath, mutate:  { (contact) in
+				contact.firstName = "Joooooojoooo"
+			}, completion: {
+				expectFirstUpdate.fulfill()
+			})
+		}
+		
+
+		self.dispatchQueue.async {
+			self.model.update(at: indexPath, mutate:  { (contact) in
+				contact.lastName = "Talaaaaaaaieeeee"
+			}, completion: {
+				expectSecondUpdate.fulfill()
+			})
+		}
+		wait(for: [expectFirstUpdate, expectSecondUpdate], timeout: 5)
+		
+		let entity = self.model[indexPath]!
+		XCTAssertEqual(entity.firstName, "Joooooojoooo")
+		XCTAssertEqual(entity.lastName, "Talaaaaaaaieeeee")
+	}
+	
+	func testConcurrentMovedEntity() {
+		let section = Int(arc4random_uniform(UInt32(self.model.numberOfSections - 1)))
+		let row = Int(arc4random_uniform(UInt32(self.model.numberOfEntites(at: section))))
+		
+		let indexPath = IndexPath(row: row, section: section)
+		
+		let newSection = Int(arc4random_uniform(UInt32(self.model.numberOfSections - 1)))
+		let newRow = Int(arc4random_uniform(UInt32(self.model.numberOfEntites(at: newSection))))
+		
+		let newIndexPath = IndexPath(row: newRow, section: newSection)
+
+		
+		let expectFirstUpdate = expectation(description: "update first name")
+		let expectSecondUpdate = expectation(description: "update second name")
+		
+		
+		
+		self.dispatchQueue.async {
+
+			self.model.moveEntity(at: indexPath, to: newIndexPath, isUserDriven: true, completion: {
+				expectFirstUpdate.fulfill()
+			})
+			
+//			self.model.update(at: indexPath, mutate:  { (contact) in
+//				contact.firstName = "Joooooojoooo"
+//			}, completion: {
+//				expectFirstUpdate.fulfill()
+//			})
+		}
+		
+		
+		self.dispatchQueue.async {
+			self.model.update(at: indexPath, mutate:  { (contact) in
+				contact.firstName = "Joooooojoooo"
+				contact.lastName = "Talaaaaaaaieeeee"
+			}, completion: {
+				expectSecondUpdate.fulfill()
+			})
+		}
+		
+		wait(for: [expectFirstUpdate, expectSecondUpdate], timeout: 5)
+		
+		let entity = self.model[newIndexPath]!
+		XCTAssertEqual(entity.firstName, "Joooooojoooo")
+		XCTAssertEqual(entity.lastName, "Talaaaaaaaieeeee")
+
+	}
+	
+	
+	func testConcurrentMovedandChangedEntity() {
+		let section = Int(arc4random_uniform(UInt32(self.model.numberOfSections - 1)))
+		let row = Int(arc4random_uniform(UInt32(self.model.numberOfEntites(at: section))))
+		
+		let indexPath = IndexPath(row: row, section: section)
+		
+		let newSection = Int(arc4random_uniform(UInt32(self.model.numberOfSections - 1)))
+		let newRow = Int(arc4random_uniform(UInt32(self.model.numberOfEntites(at: newSection))))
+		
+		let newIndexPath = IndexPath(row: newRow, section: newSection)
+		
+		
+		let expectFirstUpdate = expectation(description: "update first name")
+		let expectSecondUpdate = expectation(description: "update second name")
+		let expectMove = expectation(description: "moved entity")
+
+		
+		
+		self.dispatchQueue.async {
+
+			self.model.moveEntity(at: indexPath, to: newIndexPath, isUserDriven: true, completion: {
+				expectMove.fulfill()
+			})
+
+		}
+		
+		self.dispatchQueue.async {
+			self.model.update(at: indexPath, mutate:  { (contact) in
+				contact.firstName = "Joooooojoooo"
+			}, completion: {
+				expectFirstUpdate.fulfill()
+			})
+		}
+		
+		self.dispatchQueue.async {
+			self.model.update(at: indexPath, mutate:  { (contact) in
+				contact.lastName = "Talaaaaaaaieeeee"
+			}, completion: {
+				expectSecondUpdate.fulfill()
+			})
+		}
+		
+		wait(for: [expectFirstUpdate, expectSecondUpdate, expectMove], timeout: 100)
+		
+		let entity = self.model[newIndexPath]!
+		XCTAssertEqual(entity.firstName, "Joooooojoooo")
+		XCTAssertEqual(entity.lastName, "Talaaaaaaaieeeee")
+		
+	}
+	
+	
 
 	func testGetIndexPath() {
 		let indexPath1 = self.model.indexPath(for: self.members.first!)
@@ -66,7 +201,7 @@ class ModelTestsBasic: ModelTestsBasic0 {
 
 	func testMemberEqualable() {
 		let dic1 = ["id":232,"first_name":"Emma","last_name":"McGinty","email":"emcginty0@wp.com","gender":"Female","country":"China"] as [String : Any]
-		let dic2 = ["id":232,"first_name":"Emilia","last_name":"McGinty","email":"emcginty0@wp.com","gender":"Female","country":"China"] as [String : Any]
+		let dic2 = ["id":233,"first_name":"Emilia","last_name":"McGinty","email":"emcginty0@wp.com","gender":"Female","country":"China"] as [String : Any]
 
 		let member1 = Member(data: dic1)
 
@@ -147,10 +282,10 @@ class ModelTestsBasic: ModelTestsBasic0 {
 		let beforeNumberOfEntities = self.model.numberOfWholeEntities
 		let beforeNumberOfFetchedEntities = self.model.numberOfFetchedEntities
 
-		let members = self.entities(forFileWithName: "MOCK_DATA_20")
+		let localMembers = self.entities(forFileWithName: "MOCK_DATA_20")
 
 		self.delegateExpect = expectation(description: "insertExpect")
-		self.model.insert(members) {
+		self.model.insert(localMembers) {
 
 		}
 
@@ -158,15 +293,18 @@ class ModelTestsBasic: ModelTestsBasic0 {
 		let afterNumberOfEntities = self.model.numberOfWholeEntities
 		let afterNumberOfFetchedEntities = self.model.numberOfFetchedEntities
 
-		let difSet = Set(self.members).subtracting(members).count
+		let difSet = Set(localMembers).subtracting(self.members)
+//		let difSet = localMembers
+
+		let difSetCount = difSet.count
 		if let filter = self.filter {
-			let filtered = members.filter(filter)
+			let filtered = difSet.filter(filter)
 			XCTAssertEqual(afterNumberOfEntities, beforeNumberOfEntities + filtered.count)
-			XCTAssertEqual(afterNumberOfFetchedEntities, beforeNumberOfFetchedEntities + difSet)
+			XCTAssertEqual(afterNumberOfFetchedEntities, beforeNumberOfFetchedEntities + difSetCount)
 		}
 		else {
-			XCTAssertEqual(afterNumberOfEntities, beforeNumberOfEntities + members.count)
-			XCTAssertEqual(afterNumberOfFetchedEntities, beforeNumberOfFetchedEntities + difSet)
+			XCTAssertEqual(afterNumberOfEntities, beforeNumberOfEntities + difSet.count)
+			XCTAssertEqual(afterNumberOfFetchedEntities, beforeNumberOfFetchedEntities + difSetCount)
 		}
 	}
 
@@ -181,7 +319,6 @@ class ModelTestsBasic: ModelTestsBasic0 {
 		let memberIndexPath = self.model.indexPath(for: member)
 
 		XCTAssertEqual(memberIndexPath, indexPath)
-
 	}
 
 	func testInsertAtLast1() {
@@ -358,7 +495,7 @@ class ModelTestsBasic: ModelTestsBasic0 {
 
 		let newEntity = self.model[indexPath]
 
-		XCTAssertNotEqual(newEntity, oldEntity)
+		XCTAssertNotEqual(newEntity?.fullName, oldEntity?.fullName)
 	}
 
 	func testRemoveAtIndexPath() {

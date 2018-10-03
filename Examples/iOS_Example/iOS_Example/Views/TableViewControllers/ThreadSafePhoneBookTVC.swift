@@ -70,9 +70,15 @@ class ThreadSafePhoneBookTVC: BasicTableViewController {
 		self.dispatchQueue.async {
 			self.assistant.update(at: IndexPath(row: 3, section: 0), mutate:  { (contact) in
 				contact.firstName = "Joooooojoooo"
+			}, completion: nil)
+		}
+		
+		self.dispatchQueue.async {
+			self.assistant.update(at: IndexPath(row: 3, section: 0), mutate:  { (contact) in
 				contact.lastName = "Talaaaaaaaieeeee"
 			}, completion: nil)
 		}
+		
 		
 	}
 	

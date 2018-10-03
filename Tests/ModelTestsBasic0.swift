@@ -71,7 +71,11 @@ class ModelTestsBasic0: XCTestCase, ModelAssistantDelegate, TestTableViewDataSou
 	}
 
 	func setMembers() {
-		self.members = self.entities(forFileWithName: "MOCK_DATA_10")
+		var members = self.entities(forFileWithName: "MOCK_DATA_10")
+		if let filter = self.filter {
+			members = members.filter(filter)
+		}
+		self.members = members
 	}
 
 	func entities(forFileWithName fileName: String) -> [Member] {
@@ -106,21 +110,20 @@ class ModelTestsBasic0: XCTestCase, ModelAssistantDelegate, TestTableViewDataSou
 
 
 	//MARK: - Model delegate Methods
-
-	func modelWillChangeContent() {
+	func modelAssistantWillChangeContent() {
 		XCTAssert(self.delegateCalledBalance >= 0)
 		self.delegateCalledBalance += 1
 		self.tableView.beginUpdates()
 	}
 
-	func modelDidChangeContent() {
+	func modelAssistantDidChangeContent() {
 		self.tableView.endUpdates()
 		XCTAssert(self.delegateCalledBalance > 0)
 		self.delegateCalledBalance -= 1
 		self.delegateExpect.fulfill()
 	}
 
-	func model<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelAssistantChangeType, newIndexPaths: [IndexPath]?) where Entity : MAEntity, Entity : Hashable {
+	func modelAssistant<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelAssistantChangeType, newIndexPaths: [IndexPath]?) where Entity : MAEntity, Entity : Hashable {
 		switch type {
 		case .insert:
 			XCTAssertNil(indexPaths)
@@ -151,7 +154,7 @@ class ModelTestsBasic0: XCTestCase, ModelAssistantDelegate, TestTableViewDataSou
 		}
 	}
 
-	func model<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelAssistantChangeType, newSectionIndex: Int?) where Entity : MAEntity, Entity : Hashable {
+	func modelAssistant<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelAssistantChangeType, newSectionIndex: Int?) where Entity : MAEntity, Entity : Hashable {
 		switch type {
 		case .insert:
 			XCTAssertNil(sectionIndex)

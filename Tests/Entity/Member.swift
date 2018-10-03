@@ -59,8 +59,8 @@ struct Member: MAEntity, Hashable, Codable {
 	}
 
 	static func ==(left: Member, right: Member) -> Bool {
-		return left.id == right.id && left.fullName == right.fullName
-//		return left.id == right.id
+//		return left.uniqueValue == right.uniqueValue == right.fullName
+		return left.uniqueValue == right.uniqueValue
 	}
 
 	/*

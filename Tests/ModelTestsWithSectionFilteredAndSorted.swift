@@ -17,5 +17,4 @@ class ModelTestsWithSectionFilteredAndSorted: ModelTestsWithSection {
 		self.model.sortEntities = { $0.firstName < $1.firstName }
 	}
 
-
 }

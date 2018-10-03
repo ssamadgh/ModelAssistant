@@ -259,6 +259,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 			for section in self.sections {
 				numberOfWholeEntities += section.numberOfEntities
 			}
+
 		}
 
 		return numberOfWholeEntities
@@ -435,19 +436,45 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 	- Important: This method is not synchronous
 	*/
 	public func indexPathForEntity(withUniqueValue uniqueValue: Int) -> IndexPath? {
-		var indexPath: IndexPath?
-
-		self.dispatchQueue.sync {
-			if self.entitiesUniqueValue.contains(uniqueValue) {
-				if let entity = self.filteredEntities(with: { $0.uniqueValue == uniqueValue }).first {
-					indexPath = self.indexPath(for: entity)
-				}
-			}
-		}
-
-		return indexPath
+		return indexPathForEntity(withUniqueValue: uniqueValue, synchronous: true)
 	}
 
+	
+	private func privateIndexPathForEntity(withUniqueValue uniqueValue: Int) -> IndexPath? {
+		return indexPathForEntity(withUniqueValue: uniqueValue, synchronous: false)
+	}
+
+	private func indexPathForEntity(withUniqueValue uniqueValue: Int, synchronous: Bool) -> IndexPath? {
+		var indexPath: IndexPath?
+		
+		func getIndexPath() {
+			if self.entitiesUniqueValue.contains(uniqueValue) {
+				
+				if let sectionIndex = self.sectionsManager.sections.firstIndex(where: { $0.entities.contains { $0.uniqueValue == uniqueValue } }) {
+					
+					let section = self.sectionsManager.sections[sectionIndex]
+					
+					if let row = section.entities.firstIndex(where: { $0.uniqueValue == uniqueValue }) {
+						indexPath = IndexPath(row: row, section: sectionIndex)
+					}
+					
+				}
+				
+			}
+		}
+		
+		if synchronous {
+			
+			self.dispatchQueue.sync {
+				getIndexPath()
+			}
+		}
+		else {
+			getIndexPath()
+		}
+		
+		return indexPath
+	}
 
 	//MARK: - Insert methods
 
@@ -588,7 +615,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 				if let inserted = result.inserted {
 
-
+					let entities = inserted.entities
 					if self.sortEntities == nil {
 						if callDelegateMethods {
 							self.modelAssistant(didChange: inserted.entities, at: nil, for: .insert, newIndexPaths: inserted.indexPaths)
@@ -819,7 +846,8 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 			fatalError("IndexPath is Out of range")
 		}
 
-		self.update(entity, mutate: mutate, completion: completion)
+		self.update(entity, at: indexPath, mutate: mutate, completion: completion)
+		
 	}
 
 	/**
@@ -840,25 +868,76 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 	*/
 	public func update(_ entity: Entity, mutate: @escaping ((inout Entity) -> Void), completion: (() -> Void)?) {
+		
+		guard let indexPath = self.privateIndexPath(for: entity) else {
+			fatalError("entity is Out of access")
+		}
+		
+		self.update(entity, at: indexPath, mutate: mutate, completion: completion)
+	}
+	
+	
+	private func update(_ entity: Entity, at indexPath: IndexPath, mutate: @escaping ((inout Entity) -> Void), completion: (() -> Void)?) {
 		let isMainThread = Thread.isMainThread
-
+		
 		self.addModelAssistantOperation(with: BlockOperation(block: { (finished) in
 			self.dispatchQueue.async(flags: .barrier) {
-				var mutateEntity = entity
+				
+				func update(_ entity: Entity, at indexPath: IndexPath) {
+					var mutateEntity = entity
+					
+					mutate(&mutateEntity)
+					self.sectionsManager[indexPath] = mutateEntity
+					self.modelAssistant(didChange: [mutateEntity], at: [indexPath], for: .update, newIndexPaths: nil)
+				}
 
-				mutate(&mutateEntity)
-				let indexPath = self.privateIndexPath(for: entity)!
-				self.sectionsManager[indexPath] = mutateEntity
-				self.modelAssistant(didChange: [mutateEntity], at: [indexPath], for: .update, newIndexPaths: nil)
+				let afterIndexPath = self.privateIndexPath(for: entity)
+				let afterEntity = self.sectionsManager[indexPath]
+				
+				if afterEntity == entity, afterIndexPath == indexPath {
+					//State 1: The given entity not changed and not moved
+					// continue update with entity
+					update(afterEntity!, at: indexPath)
+				}
+				else if afterEntity?.uniqueValue == entity.uniqueValue {
+						//State 2: The given entity has changed
+						// Continue update with afterEntity
+						update(afterEntity!, at: indexPath)
 
+					}
+					else {
+					
+						if let movedIndexPath = afterIndexPath {
+							//State 3: The given entity has moved
+							let movedEntity = self.sectionsManager[movedIndexPath]!
+							// Continue update with entity
+							update(movedEntity, at: movedIndexPath)
+							
+						}
+						else {
+							//State 4:
+							// Maybe its main infos changed, let find it with its unique value
+							if let movedIndexPath = self.privateIndexPathForEntity(withUniqueValue: entity.uniqueValue) {
+								let movedEntity = self.sectionsManager[movedIndexPath]!
+								// Continue update with entity
+								update(movedEntity, at: movedIndexPath)
+							}
+
+						}
+					
+					}
+				
 				finished()
+
 			}
+			
 		}), callDelegate: false) {
 			self.checkIsMainThread(isMainThread) {
 				completion?()
 			}
 		}
-
+		
+		
 	}
 
 	//MARK: - Remove methods
@@ -1184,15 +1263,35 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 	- Returns: entities that satisfy filter closure conditions.
 	*/
 	public func filteredEntities(with filter: @escaping ((Entity) -> Bool)) -> [Entity] {
+		return filteredEntities(with: filter, synchronous: true)
+	}
+	
+	private func privateFilteredEntities(with filter: @escaping ((Entity) -> Bool)) -> [Entity] {
+		
+		return filteredEntities(with: filter, synchronous: false)
+	}
+	
+	private func filteredEntities(with filter: @escaping ((Entity) -> Bool), synchronous: Bool) -> [Entity] {
 		var entities: [Entity] = []
-
-		self.dispatchQueue.sync {
-			for i in 0...(self.numberOfSections-1) {
-				let filtered = self.sectionsManager.filteredEntities(atSection: i, with: filter)
+		
+		func filterEntities() {
+			
+			let sections = self.sectionsManager.sections.filter { $0.entities.contains(where: filter) }
+			
+			
+			for section in sections {
+				let filtered = section.entities.filter(filter)
 				entities.append(contentsOf: filtered)
 			}
 		}
-
+		
+		if synchronous {
+			filterEntities()
+		}
+		else {
+			filterEntities()
+		}
+		
 		return entities
 	}
 

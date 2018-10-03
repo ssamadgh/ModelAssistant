@@ -10,7 +10,6 @@ import XCTest
 
 class ModelTestPagedDatabase: ModelTestsBasic {
 
-
 	override func configureModel(sectionKey: String?) {
 		super.configureModel(sectionKey: sectionKey)
 		self.model.fetchBatchSize = 5
@@ -31,7 +30,7 @@ class ModelTestPagedDatabase: ModelTestsBasic {
 
 			self.delegateExpect = expectation(description: "insert entities of page \(nextIndex)")
 			self.model.insert(members, completion: nil)
-			waitForExpectations(timeout: 5, handler: nil)
+			wait(for: [self.delegateExpect], timeout: 5)
 			if members.count == self.model.fetchBatchSize {
 				XCTAssert(self.model.nextFetchIndex == nextIndex + 1)
 				XCTAssert(self.model.numberOfWholeEntities == (nextIndex + 1)*self.model.fetchBatchSize)
@@ -47,8 +46,8 @@ class ModelTestPagedDatabase: ModelTestsBasic {
 				endOfFetchData = true
 			}
 		}
-
 	}
+	
 
 	override func testInsertSameEntities() {
 
