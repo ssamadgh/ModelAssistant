@@ -464,7 +464,6 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 		}
 		
 		if synchronous {
-			
 			self.dispatchQueue.sync {
 				getIndexPath()
 			}
@@ -615,7 +614,6 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 				if let inserted = result.inserted {
 
-					let entities = inserted.entities
 					if self.sortEntities == nil {
 						if callDelegateMethods {
 							self.modelAssistant(didChange: inserted.entities, at: nil, for: .insert, newIndexPaths: inserted.indexPaths)
@@ -1286,7 +1284,9 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 		}
 		
 		if synchronous {
-			filterEntities()
+			self.dispatchQueue.sync {
+				filterEntities()
+			}
 		}
 		else {
 			filterEntities()
