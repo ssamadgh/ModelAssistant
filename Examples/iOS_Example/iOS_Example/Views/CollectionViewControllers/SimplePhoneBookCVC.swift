@@ -86,7 +86,7 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
         return cell
     }
 	
-	override func configure(_ cell: UICollectionViewCell, at indexPath: IndexPath) {
+	func configure(_ cell: UICollectionViewCell, at indexPath: IndexPath) {
 		if let cell  = cell as? CollectionViewCell {
 			let entity = self.assistant[indexPath]
 			cell.titleLabel.text = entity?.fullName
@@ -111,6 +111,11 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 
 		}
 	}
+	
+	override func update(_ cell: UICollectionViewCell, at indexPath: IndexPath) {
+		self.configure(cell, at: indexPath)
+	}
+
 	
 	//MARK: - Table cell image support
 	func startIconDownload(_ entity: Contact, for indexPath: IndexPath) {

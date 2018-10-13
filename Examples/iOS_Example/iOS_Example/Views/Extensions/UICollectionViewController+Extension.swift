@@ -16,7 +16,7 @@ extension UICollectionViewController: CollectionController {
 	
 	func update(at indexPath: IndexPath) {
 		if let cell = self.collectionView?.cellForItem(at: indexPath) {
-			self.configure(cell, at: indexPath)
+			self.update(cell, at: indexPath)
 			
 		}
 	}
@@ -49,7 +49,7 @@ extension UICollectionViewController: CollectionController {
 		self.collectionView?.performBatchUpdates(updates, completion: completion)
 	}
 	
-	@objc func configure(_ cell: UICollectionViewCell, at indexPath: IndexPath) {
+	@objc func update(_ cell: UICollectionViewCell, at indexPath: IndexPath) {
 		
 	}
 	

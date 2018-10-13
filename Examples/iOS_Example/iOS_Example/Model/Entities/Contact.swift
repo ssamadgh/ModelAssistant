@@ -7,6 +7,7 @@
 //
 
 import ModelAssistant
+import UIKit
 
 struct Contact: CustomMAEntity & Hashable, Codable {
 	

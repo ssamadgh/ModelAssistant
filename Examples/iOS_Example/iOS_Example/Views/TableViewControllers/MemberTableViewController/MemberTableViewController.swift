@@ -80,9 +80,13 @@ class MemberTableViewController: UITableViewController {
 		return cell
 	}
 	
-	override func configure(_ cell: UITableViewCell, at indexPath: IndexPath) {
+	func configure(_ cell: UITableViewCell, at indexPath: IndexPath) {
 		let entity = self.assistant[indexPath]
 		cell.textLabel?.text = entity?.fullName
+	}
+	
+	override func update(_ cell: UITableViewCell, at indexPath: IndexPath) {
+		self.configure(cell, at: indexPath)
 	}
 	
 	override func sectionIndexTitles(for tableView: UITableView) -> [String]? {

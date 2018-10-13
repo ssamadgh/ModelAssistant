@@ -121,7 +121,7 @@ class CoreDataBasicTVC: UITableViewController, ImageDownloaderDelegate {
 		return cell
 	}
 	
-	override func configure(_ cell: UITableViewCell, at indexPath: IndexPath) {
+	func configure(_ cell: UITableViewCell, at indexPath: IndexPath) {
 		
 		let entity = self.assistant[indexPath]
 		// Configure the cell...
@@ -146,7 +146,9 @@ class CoreDataBasicTVC: UITableViewController, ImageDownloaderDelegate {
 		
 	}
 	
-	
+	override func update(_ cell: UITableViewCell, at indexPath: IndexPath) {
+		self.configure(cell, at: indexPath)
+	}
 	
 	//MARK: - Table cell image support
 	

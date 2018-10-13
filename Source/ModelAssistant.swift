@@ -1084,7 +1084,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 		self.addModelAssistantOperation(with: BlockOperation(block: { (finished) in
 			self.dispatchQueue.async(flags: .barrier) {
-
+				self.entitiesUniqueValue.removeAll()
 				self.sectionsManager.removeAll()
 				finished()
 			}

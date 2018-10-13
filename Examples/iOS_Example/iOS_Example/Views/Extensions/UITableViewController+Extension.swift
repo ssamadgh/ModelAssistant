@@ -17,7 +17,7 @@ extension UITableViewController: CollectionController {
 	
 	func update(at indexPath: IndexPath) {
 		if let cell = self.tableView.cellForRow(at: indexPath) {
-			self.configure(cell, at: indexPath)
+			self.update(cell, at: indexPath)
 			
 		}
 	}
@@ -50,7 +50,7 @@ extension UITableViewController: CollectionController {
 		self.tableView.performBatchUpdates(updates, completion: completion)
 	}
 	
-	@objc func configure(_ cell: UITableViewCell, at indexPath: IndexPath) {
+	@objc func update(_ cell: UITableViewCell, at indexPath: IndexPath) {
 		
 	}
 	

@@ -5,7 +5,7 @@
 //  Created by Seyed Samad Gholamzadeh on 9/22/18.
 //
 
-#import <UIKit/UIKit.h>
+@import Foundation;
 
 //! Project version number for ModelAssistant.
 FOUNDATION_EXPORT double ModelAssistantVersionNumber;
