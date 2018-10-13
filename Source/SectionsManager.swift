@@ -115,7 +115,9 @@ struct SectionsManager<Entity: MAEntity & Hashable> {
 	}
 
 	func indexPath(of entity: Entity, withSectionName sectionName: String?) -> IndexPath? {
-
+		
+		guard !self.sections.isEmpty else { return nil }
+		
 		if sectionName == nil {
 			if let row = self.sections[0].index(of: entity) {
 				return IndexPath(row: row, section: 0)
