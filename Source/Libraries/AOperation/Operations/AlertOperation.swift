@@ -38,7 +38,7 @@ class AlertOperation: AOperation {
     // MARK: Initialization
 
     init(presentationContext: UIViewController? = nil) {
-        self.presentationContext = presentationContext ?? UIApplication.shared.keyWindow?.rootViewController
+        self.presentationContext = presentationContext
 
         super.init()
 
