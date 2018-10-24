@@ -33,14 +33,12 @@
 		E4480E9C2156D80F0052DC6D /* GroupOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E672156D80F0052DC6D /* GroupOperation.swift */; };
 		E4480E9D2156D80F0052DC6D /* AOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E682156D80F0052DC6D /* AOperation.swift */; };
 		E4480E9E2156D80F0052DC6D /* BlockOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E692156D80F0052DC6D /* BlockOperation.swift */; };
-		E4480E9F2156D80F0052DC6D /* URLSessionTaskOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E6A2156D80F0052DC6D /* URLSessionTaskOperation.swift */; };
-		E4480EA02156D80F0052DC6D /* AlertOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E6B2156D80F0052DC6D /* AlertOperation.swift */; };
 		E4480EA12156D80F0052DC6D /* ReachabilityCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E6D2156D80F0052DC6D /* ReachabilityCondition.swift */; };
 		E4480EA22156D80F0052DC6D /* MutuallyExclusive.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E6E2156D80F0052DC6D /* MutuallyExclusive.swift */; };
 		E4480EA32156D80F0052DC6D /* OperationCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E6F2156D80F0052DC6D /* OperationCondition.swift */; };
 		E4480EA42156D80F0052DC6D /* OperationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E702156D80F0052DC6D /* OperationErrors.swift */; };
 		E4480EA52156D80F0052DC6D /* OperationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E722156D80F0052DC6D /* OperationObserver.swift */; };
-		E4480EA62156D80F0052DC6D /* NetworkObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E732156D80F0052DC6D /* NetworkObserver.swift */; };
+		E4480EA62156D80F0052DC6D /* OperationTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E732156D80F0052DC6D /* OperationTimer.swift */; };
 		E4480EA72156D80F0052DC6D /* BlockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E742156D80F0052DC6D /* BlockObserver.swift */; };
 		E4480EA82156D80F0052DC6D /* AOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E762156D80F0052DC6D /* AOperationQueue.swift */; };
 		E4480EA92156D80F0052DC6D /* ExclusivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E772156D80F0052DC6D /* ExclusivityController.swift */; };
@@ -120,14 +118,12 @@
 		E4480E672156D80F0052DC6D /* GroupOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupOperation.swift; sourceTree = "<group>"; };
 		E4480E682156D80F0052DC6D /* AOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AOperation.swift; sourceTree = "<group>"; };
 		E4480E692156D80F0052DC6D /* BlockOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockOperation.swift; sourceTree = "<group>"; };
-		E4480E6A2156D80F0052DC6D /* URLSessionTaskOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionTaskOperation.swift; sourceTree = "<group>"; };
-		E4480E6B2156D80F0052DC6D /* AlertOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertOperation.swift; sourceTree = "<group>"; };
 		E4480E6D2156D80F0052DC6D /* ReachabilityCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityCondition.swift; sourceTree = "<group>"; };
 		E4480E6E2156D80F0052DC6D /* MutuallyExclusive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MutuallyExclusive.swift; sourceTree = "<group>"; };
 		E4480E6F2156D80F0052DC6D /* OperationCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationCondition.swift; sourceTree = "<group>"; };
 		E4480E702156D80F0052DC6D /* OperationErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationErrors.swift; sourceTree = "<group>"; };
 		E4480E722156D80F0052DC6D /* OperationObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationObserver.swift; sourceTree = "<group>"; };
-		E4480E732156D80F0052DC6D /* NetworkObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkObserver.swift; sourceTree = "<group>"; };
+		E4480E732156D80F0052DC6D /* OperationTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationTimer.swift; sourceTree = "<group>"; };
 		E4480E742156D80F0052DC6D /* BlockObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockObserver.swift; sourceTree = "<group>"; };
 		E4480E762156D80F0052DC6D /* AOperationQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AOperationQueue.swift; sourceTree = "<group>"; };
 		E4480E772156D80F0052DC6D /* ExclusivityController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExclusivityController.swift; sourceTree = "<group>"; };
@@ -309,8 +305,6 @@
 				E4480E672156D80F0052DC6D /* GroupOperation.swift */,
 				E4480E682156D80F0052DC6D /* AOperation.swift */,
 				E4480E692156D80F0052DC6D /* BlockOperation.swift */,
-				E4480E6A2156D80F0052DC6D /* URLSessionTaskOperation.swift */,
-				E4480E6B2156D80F0052DC6D /* AlertOperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -330,7 +324,7 @@
 			isa = PBXGroup;
 			children = (
 				E4480E722156D80F0052DC6D /* OperationObserver.swift */,
-				E4480E732156D80F0052DC6D /* NetworkObserver.swift */,
+				E4480E732156D80F0052DC6D /* OperationTimer.swift */,
 				E4480E742156D80F0052DC6D /* BlockObserver.swift */,
 			);
 			path = Observers;
@@ -527,16 +521,14 @@
 				E4480E982156D80F0052DC6D /* AOperatinLogger.swift in Sources */,
 				E4480E992156D80F0052DC6D /* NSLock+MyOperations.swift in Sources */,
 				E4480EA52156D80F0052DC6D /* OperationObserver.swift in Sources */,
-				E4480EA02156D80F0052DC6D /* AlertOperation.swift in Sources */,
 				E4480EA72156D80F0052DC6D /* BlockObserver.swift in Sources */,
 				E4480E9A2156D80F0052DC6D /* Foundation.Operation+Operation.swift in Sources */,
-				E4480E9F2156D80F0052DC6D /* URLSessionTaskOperation.swift in Sources */,
 				E4480E9C2156D80F0052DC6D /* GroupOperation.swift in Sources */,
 				E4480E962156D80F0052DC6D /* ModelAssistantProtocol.swift in Sources */,
 				E4480E952156D80F0052DC6D /* ModelAssistant.swift in Sources */,
 				E4480EA42156D80F0052DC6D /* OperationErrors.swift in Sources */,
 				E4480E972156D80F0052DC6D /* IndexPath+Extensions.swift in Sources */,
-				E4480EA62156D80F0052DC6D /* NetworkObserver.swift in Sources */,
+				E4480EA62156D80F0052DC6D /* OperationTimer.swift in Sources */,
 				E4480EA12156D80F0052DC6D /* ReachabilityCondition.swift in Sources */,
 				E4480EAE2156D80F0052DC6D /* MAEntity.swift in Sources */,
 				E4480EA32156D80F0052DC6D /* OperationCondition.swift in Sources */,
