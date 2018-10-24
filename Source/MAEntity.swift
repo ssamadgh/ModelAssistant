@@ -23,7 +23,59 @@
 	THE SOFTWARE.
 */
 
-import UIKit
+import Foundation
+
+protocol MAIndexPath {
+	
+	var row: Int { get set }
+	var item: Int { get set }
+	var section: Int { get set }
+	
+	init(row: Int, section: Int)
+	
+	init(item: Int, section: Int)
+
+}
+
+extension IndexPath: MAIndexPath {
+	
+	var row: Int {
+		get {
+			return self[1]
+		}
+		set {
+			self[1] = newValue
+		}
+	}
+	
+	var item: Int {
+		get {
+			return self[1]
+		}
+		set {
+			self[1] = newValue
+		}
+	}
+	
+	var section: Int {
+		get {
+			return self[0]
+		}
+		set {
+			self[0] = newValue
+		}
+	}
+	
+	init(row: Int, section: Int) {
+		self.init(arrayLiteral: section, row)
+	}
+	
+	init(item: Int, section: Int) {
+		self.init(arrayLiteral: section, item)
+	}
+	
+}
+
 
 /**
 An abstract protocol used by objects inserted to model assistant.

@@ -22,6 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		E42353682180CA6E00888C92 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E42353672180CA6E00888C92 /* Foundation.framework */; };
 		E4480DFE2156D3980052DC6D /* ModelAssistant.h in Headers */ = {isa = PBXBuildFile; fileRef = E4480DF02156D3980052DC6D /* ModelAssistant.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E4480E952156D80F0052DC6D /* ModelAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E5C2156D80F0052DC6D /* ModelAssistant.swift */; };
 		E4480E962156D80F0052DC6D /* ModelAssistantProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E5D2156D80F0052DC6D /* ModelAssistantProtocol.swift */; };
@@ -83,6 +84,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E42353672180CA6E00888C92 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		E4480DED2156D3980052DC6D /* ModelAssistant.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ModelAssistant.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4480DF02156D3980052DC6D /* ModelAssistant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelAssistant.h; sourceTree = "<group>"; };
 		E4480DF12156D3980052DC6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E42353682180CA6E00888C92 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,6 +158,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E42353662180CA6D00888C92 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E42353672180CA6E00888C92 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E4480DE12156D32A0052DC6D = {
 			isa = PBXGroup;
 			children = (
@@ -162,6 +173,7 @@
 				E4480E3E2156D80F0052DC6D /* Tests */,
 				E459218C215A9C7000E6DF7C /* ModelAssistant iOS Tests */,
 				E4480DEE2156D3980052DC6D /* Products */,
+				E42353662180CA6D00888C92 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

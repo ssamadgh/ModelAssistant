@@ -9,8 +9,7 @@
      Contains the code to manage the visibility of the network activity indicator
 */
 
-
-
+import Foundation
 
 /// Essentially a cancelable `dispatch_after`.
 class OperationTimer {
