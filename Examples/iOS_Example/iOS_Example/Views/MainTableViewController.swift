@@ -10,9 +10,9 @@ import UIKit
 
 private enum TableViews: Int {
 
-	case simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, indexedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable, ThreadSafePhoneBookTable, CoreDataPhoneBookTable
+	case simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, indexedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable, threadSafePhoneBookTable, faultablePhoneBookTable, coreDataPhoneBookTable
 	
-	static let allValues: [TableViews] = [simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, indexedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable, ThreadSafePhoneBookTable, CoreDataPhoneBookTable]
+	static let allValues: [TableViews] = [simplePhoneBookTable, sortablePhoneBookTable, sectionedPhoneBookTable, indexedPhoneBookTable, filteredPhoneBookTable, searchablePhoneBookTable, mutablePhoneBookTable, paginationPhoneBookTable, threadSafePhoneBookTable, faultablePhoneBookTable, coreDataPhoneBookTable]
 	
 	var stringValue: String {
 		let suffix = " Phone Book TableView"
@@ -41,10 +41,13 @@ private enum TableViews: Int {
 		case .paginationPhoneBookTable:
 			return "Pagination" + suffix
 			
-		case .ThreadSafePhoneBookTable:
+		case .threadSafePhoneBookTable:
 			return "Thread Safe" + suffix
 			
-		case .CoreDataPhoneBookTable:
+		case .faultablePhoneBookTable:
+			return "Fault Able" + suffix
+			
+		case .coreDataPhoneBookTable:
 			return "Core Data Mutable" + suffix
 		}
 	}
@@ -75,10 +78,12 @@ private enum TableViews: Int {
 		case .paginationPhoneBookTable:
 			return PaginationPhoneBookTVC()
 			
-		case .ThreadSafePhoneBookTable:
+		case .threadSafePhoneBookTable:
 			return ThreadSafePhoneBookTVC()
+		case .faultablePhoneBookTable:
+			return FaultablePhoneBookTVC()
 			
-		case .CoreDataPhoneBookTable:
+		case .coreDataPhoneBookTable:
 			return CoreDataMutablePhoneBookTVC()
 		}
 	}
