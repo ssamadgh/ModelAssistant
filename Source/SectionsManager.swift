@@ -28,8 +28,7 @@ import Foundation
 struct SectionsManager<Entity: MAEntity & Hashable> {
 
 	var sectionIndexTitles: [String] {
-		let resultValue: [String] =  self.sections.compactMap { $0.indexTitle }.removingDuplicates()
-		return resultValue
+		return self.sections.compactMap { $0.indexTitle }.removingDuplicates()
 	}
 
 	var numberOfSections: Int {

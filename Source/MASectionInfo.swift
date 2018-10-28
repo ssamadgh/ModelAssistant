@@ -45,6 +45,14 @@ public protocol MASectionInfo {
 
 public extension MASectionInfo {
 	
+	static public  func ==(lhs: Self, rhs: Self) -> Bool {
+		return lhs.name == rhs.name
+	}
+	
+	static public func <(lhs: Self, rhs: Self) -> Bool {
+		return lhs.name < rhs.name
+	}
+	
 	#if swift(>=4.2)
 	func hash(into hasher: inout Hasher) {
 		hasher.combine(name)
@@ -68,15 +76,6 @@ protocol GMASectionInfo: MASectionInfo {
 }
 
 public struct SectionInfo<Entity: MAEntity & Hashable>: GMASectionInfo, Hashable, Comparable {
-
-
-	static public  func ==(lhs: SectionInfo<Entity>, rhs: SectionInfo<Entity>) -> Bool {
-		return lhs.name == rhs.name
-	}
-
-	static public func <(lhs: SectionInfo<Entity>, rhs: SectionInfo<Entity>) -> Bool {
-		return lhs.name < rhs.name
-	}
 
 	public internal (set) var entities: [Entity] = []
 
@@ -118,9 +117,9 @@ public struct SectionInfo<Entity: MAEntity & Hashable>: GMASectionInfo, Hashable
 		return self.append(contentsOf: [newEntity])
 	}
 
-	mutating func append(contentsOf newEntities: [Entity]) -> (updated: (indexes: [Int], entities: [Entity])?, inserted:  (indexes: [Int], entities: [Entity])?) {
+	mutating func append<S>(contentsOf newEntities: S) -> (updated: (indexes: [Int], entities: [Entity])?, inserted:  (indexes: [Int], entities: [Entity])?) where S.Element == Entity, S: Sequence {
 
-		var newEntities = newEntities
+		var newEntities = Array(newEntities)
 		let startIndex = newEntities.stablePartition(isSuffixElement: { !self.entities.contains($0) })
 		
 		let updatedEntities: [Entity] = Array(newEntities[0..<startIndex])
@@ -129,25 +128,6 @@ public struct SectionInfo<Entity: MAEntity & Hashable>: GMASectionInfo, Hashable
 		let lowerBound = self.entities.count
 		let upperBound = lowerBound + (insertedEntities.count - 1)
 		let insertedIndexes: [Int] = !insertedEntities.isEmpty ? Array(lowerBound ... upperBound) : []
-
-//		let insertedIndexes: [Int] = []
-
-//		newEntities.forEach { entity in
-//			if self.entities.contains(entity) {
-//				let updatedIndex = self.entities.index(of: entity)!
-//
-//				updatedEntities.append(entity)
-//				updatedIndexes.append(updatedIndex)
-//				self.entities[updatedIndex].update(with: entity)
-//			}
-//			else {
-//				insertedEntities.append(entity)
-//			}
-//		}
-
-//		let lowerBound = self.entities.count
-//		let upperBound = lowerBound + (insertedEntities.count - 1)
-//		insertedIndexes = !insertedEntities.isEmpty ? Array(lowerBound ... upperBound) : []
 		self.entities.append(contentsOf: insertedEntities)
 
 		let updated = !updatedIndexes.isEmpty ? (indexes: updatedIndexes, entities: updatedEntities) : nil
