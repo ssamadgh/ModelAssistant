@@ -26,6 +26,8 @@ env:
   - carthage build --no-skip-current
   - carthage archive $FRAMEWORK_NAME
 
+  before_deploy:
+
   deploy:
     provider: releases
 # api_key: "$GITHUBTOKEN"
