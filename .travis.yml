@@ -28,7 +28,7 @@ env:
 
   deploy:
     provider: releases
-    api_key: "$GITHUBTOKEN"
+# api_key: "$GITHUBTOKEN"
     file: $FRAMEWORK_NAME.zip
     skip_cleanup: true
     on:
