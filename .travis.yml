@@ -26,15 +26,3 @@ env:
   - carthage build --no-skip-current
   - carthage archive $FRAMEWORK_NAME
 
-# before_deploy:
-
-# deploy:
-#    provider: releases
-# api_key: "$GITHUBTOKEN"
-#   file: $FRAMEWORK_NAME.zip
-#   skip_cleanup: true
-#   on:
-      # repo: ssamadgh/$PROJECTNAME
-#     repo: ssamadgh/ModelAssistant
-#     tags: true
-	  # condition: "$CARTHAGEDEPLOY = YES"
