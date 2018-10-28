@@ -18,21 +18,21 @@ env:
   - DESTINATION="OS=9.3,name=iPhone 6"           SCHEME="$IOS_FRAMEWORK_SCHEME"      RUN_TESTS="YES"
     POD_LINT="NO"
   - DESTINATION="arch=x86_64"                        SCHEME="ModelAssistant iOS Tests   SDK="$IOS_SDK"   RUN_TESTS="YES"
-before_Install:
-- brew update
-- brew outdated carthage || brew upgrade carthage
-before_script: 
-before_deploy:
-- carthage build --no-skip-current
-- carthage archive $FRAMEWORK_NAME
+  before_Install:
+  - brew update
+  - brew outdated carthage || brew upgrade carthage
+  before_script:
+  before_deploy:
+  - carthage build --no-skip-current
+  - carthage archive $FRAMEWORK_NAME
 
-deploy:
-  provider: releases
-  api_key:
- 31     secure: iXWNZvRB9Ouk4QzF4PTGjBx2iDXiuVyJBvIuittAXun4T+daXTnsM8mJ4ndJKn3Y    nqVpZ5RFyCqmM9E521YoVGgBJIX2IZRRkpO9f21RD8XDrY/ebXV8YDWDVOS2HoPf0ivOpIZCUN8E    i3YzlNseV4zN0jB8ZLsB56itvQOegtu2dNnEo+799EkorjTybil1KrN9oP8EatvwXSSOS5dfRjds    VbEzuo1jZRzo33FHUA/86sQNuq6Sic4p0ZwrIiYiby5K6nh7g39/yExvIB6UlpnQEF8VqZZaBCO5    ++D0MKtUwhhc9yrg+US/MukGI/snUlpF24tZdDY8qLqo6tfGjn5UMR1CYhbbL3BoXFSZr2ijWngE    MaHdV0NbhG6d7Dzb2Kju62xRqPQbfOpIvnipDzynxTUzcrS33Thog3uQ1PGi7gfpCzSuwlQj3OSe    DT+07d1IcAyEB0em/llymi4XPu8+fYZv2RQ+vxgPUArb9DUL/W0PmlJLqWnUH4OtUwH/9XaAwzJe    N+lxSWFBlx+ZbYDQoKgpTwLyTZDae/dYt/GarLVDWIhe+Qzbt3cwTmw5pzL5rlgdCeeBHK7i1WRx    e4mDCRWhfOV3WvSwVchdTfibo2jbPcln7b/3d1HudmSb+uiHLHcD9BYfQek5TCkUYI5f60/N2Q7o    Dc/BRP+snuQ=
+  deploy:
+    provider: releases
+    api_key:
+   31     secure: iXWNZvRB9Ouk4QzF4PTGjBx2iDXiuVyJBvIuittAXun4T+daXTnsM8mJ4ndJKn3Y    nqVpZ5RFyCqmM9E521YoVGgBJIX2IZRRkpO9f21RD8XDrY/ebXV8YDWDVOS2HoPf0ivOpIZCUN8E    i3YzlNseV4zN0jB8ZLsB56itvQOegtu2dNnEo+799EkorjTybil1KrN9oP8EatvwXSSOS5dfRjds    VbEzuo1jZRzo33FHUA/86sQNuq6Sic4p0ZwrIiYiby5K6nh7g39/yExvIB6UlpnQEF8VqZZaBCO5    ++D0MKtUwhhc9yrg+US/MukGI/snUlpF24tZdDY8qLqo6tfGjn5UMR1CYhbbL3BoXFSZr2ijWngE    MaHdV0NbhG6d7Dzb2Kju62xRqPQbfOpIvnipDzynxTUzcrS33Thog3uQ1PGi7gfpCzSuwlQj3OSe    DT+07d1IcAyEB0em/llymi4XPu8+fYZv2RQ+vxgPUArb9DUL/W0PmlJLqWnUH4OtUwH/9XaAwzJe    N+lxSWFBlx+ZbYDQoKgpTwLyTZDae/dYt/GarLVDWIhe+Qzbt3cwTmw5pzL5rlgdCeeBHK7i1WRx    e4mDCRWhfOV3WvSwVchdTfibo2jbPcln7b/3d1HudmSb+uiHLHcD9BYfQek5TCkUYI5f60/N2Q7o    Dc/BRP+snuQ=
 
-  file: "$FRAMEWORK_NAME.framework.zip"
-  skip_cleanup: true
-on:
-  repo: ssamadgh/ModelAssistant
-  tags: true
+    file: "$FRAMEWORK_NAME.framework.zip"
+    skip_cleanup: true
+	on:
+		repo: ssamadgh/ModelAssistant
+		tags: true
