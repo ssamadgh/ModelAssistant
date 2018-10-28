@@ -27,8 +27,7 @@ env:
   - carthage archive $PROJECTNAME
 deploy:
   provider: releases
-  api_key:
-    secure: vmfe3GkSLuIt8S+TuFAR8QUC01kb9ACuwPFATjNbgXOnCZu3X/1eIeGLtMLlHg26AbDJjpTtqXE2cNdFEb5irV5j5MrouKcEpPBZnLw8sXY2M/uvXdbCRkEfcFmBCPTm/3u0mTAr0rZFzqhLE2/odd/Z338aqrHq0XGn/Yp1oTHAk8ugMneC3HUfOazbguzo0ZmY7dvErJY9ltu5AUm96vOvXyM0Mpi0ItblcNNxTGk7sGm6dRwdfcxoaENlo1hMM02ALYXEZ/d9z5snQR4jqubWkEZ718aa96kohb8jStq6LFM9iMAu4mCejPr5GoI1+J0292FiSfYcOMwfEjPK1zmFmw4yWaBajDmmzrCI2wBl54TviBNySdh3MXMQZ/cVyytpPlqw/WNn/IaXGblFbi1CGKA/MDy3CNsatzwRNzcZHIAwrLPltTjAqogrBr5Lgg6WFfx9CaV6F0F2F4lckYoOUPJb+YQ7EzHJlrMruTfhPCcsYaBv0CcfYkebt6o4WMv5y+rW3nRhKnNr52I/H891i4bRFHUk5OjMCu5mD/6fqElAIhLgZROb8jTt6raKQnPuFeOZ4272SheHUugge/YhzZlXvG8AQ39zjNUcg276OQ5ynnM6uobCwFAk8DgSQfjiP2WEZ2/RNVy1P0p9zGTs0vQR5cHJMUOH5KuFn8o=
+  api_key: "$GITHUBTOKEN"
   file: "$FRAMEWORK_NAME.framework.zip"
   on:
     repo: ssamadgh/ModelAssistant
