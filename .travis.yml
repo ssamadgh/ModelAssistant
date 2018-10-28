@@ -28,7 +28,7 @@ env:
 
 # before_deploy:
 
- deploy:
+# deploy:
 #    provider: releases
 # api_key: "$GITHUBTOKEN"
 #   file: $FRAMEWORK_NAME.zip
