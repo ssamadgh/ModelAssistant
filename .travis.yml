@@ -18,13 +18,12 @@ env:
   - DESTINATION="OS=9.3,name=iPhone 6"           SCHEME="$IOS_FRAMEWORK_SCHEME"      RUN_TESTS="YES"
     POD_LINT="NO"
   - DESTINATION="arch=x86_64"                        SCHEME="ModelAssistant iOS Tests   SDK="$IOS_SDK"   RUN_TESTS="YES"
-  before_Install:
-  - brew update
-  - brew outdated carthage || brew upgrade carthage
-  before_script: 
-  before_deploy:
-  - carthage build --no-skip-current
-  - carthage archive $PROJECTNAME
+
+before_deploy:
+- brew update
+- brew outdated carthage || brew upgrade carthage
+- carthage build --no-skip-current
+- carthage archive $PROJECTNAME
 deploy:
   provider: releases
   api_key: "$GITHUBTOKEN"
