@@ -591,7 +591,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 			if !self.hasSection {
 
 				if self.sectionsManager.isEmpty {
-					self.insertFirstNewSection(with: newEntities, callDelegateMethods: true)
+					self.insertFirstNewSection(with: newEntities, callDelegateMethods: callDelegateMethods)
 				}
 				else {
 					let sectionIndex: Int = 0
