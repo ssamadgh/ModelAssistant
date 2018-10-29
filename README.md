@@ -90,13 +90,13 @@ $ brew update
 $ brew install carthage
 ```
 
-To integrate Alamofire into your Xcode project using Carthage, specify it in your `Cartfile`:
+To integrate ModelAssistant into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "Alamofire/Alamofire" ~> 4.7
+github "ssamadgh/ModelAssistant"
 ```
 
-Run `carthage update` to build the framework and drag the built `Alamofire.framework` into your Xcode project.
+Run `carthage update --platform iOS` to build the framework and drag the built `ModelAssistant.framework` into your Xcode project.
 
 ### Manually
 
