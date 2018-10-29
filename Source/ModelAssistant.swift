@@ -681,26 +681,13 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 		}
 
-		if callDelegateMethods {
-			self.addModelAssistantOperation(with: BlockOperation(block: { (finished) in
-				self.dispatchQueue.async(flags: .barrier) {
-					inserMethod()
-					finished()
-				}
-			})) {
-				self.checkIsMainThread(isMainThread, completion: completion)
+		self.addModelAssistantOperation(with: BlockOperation(block: { (finished) in
+			self.dispatchQueue.async(flags: .barrier) {
+				inserMethod()
+				finished()
 			}
-
-		}
-		else {
-			self.addModelAssistantOperation(with: BlockOperation(block: { (finished) in
-				self.dispatchQueue.async(flags: .barrier) {
-					inserMethod()
-					finished()
-				}
-			}), callDelegate: false) {
-				self.checkIsMainThread(isMainThread, completion: completion)
-			}
+		}), callDelegate: callDelegateMethods) {
+			self.checkIsMainThread(isMainThread, completion: completion)
 		}
 
 	}
