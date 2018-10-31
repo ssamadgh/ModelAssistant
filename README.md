@@ -1,6 +1,7 @@
-# ModelAssistant
+![ModelAssistant](HeaderImage/HeaderImage.png)
 
-### An assistant to manage the interactions between view and model
+
+ An assistant to manage the interactions between view and model
 
 [![Swift 4.2](https://img.shields.io/badge/Swift-4.2-orange.svg?style=flat)](https://developer.apple.com/swift/)
 [![license MIT](https://img.shields.io/cocoapods/l/ModelAssistant.svg)](https://github.com/ssamadgh/ModelAssistant/blob/master/LICENSE)
