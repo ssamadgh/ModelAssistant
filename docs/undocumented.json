@@ -1,29 +1,57 @@
 {
   "warnings": [
     {
+      "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/Extenseions/Algorithms.swift",
+      "line": 491,
+      "symbol": "RotatedCollection.rotated(shiftingToStart:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/MAEntity.swift",
-      "line": 72,
+      "line": 124,
       "symbol": "MAEntity.hash(into:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/MAEntity.swift",
-      "line": 81,
+      "line": 133,
       "symbol": "MAEntity.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/MASectionInfo.swift",
-      "line": 56,
+      "line": 48,
+      "symbol": "MASectionInfo.==(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/MASectionInfo.swift",
+      "line": 52,
+      "symbol": "MASectionInfo.<(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/MASectionInfo.swift",
+      "line": 57,
+      "symbol": "MASectionInfo.hash(into:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/MASectionInfo.swift",
+      "line": 78,
       "symbol": "SectionInfo",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/MASectionInfo.swift",
-      "line": 79,
+      "line": 92,
       "symbol": "SectionInfo.isEmpty",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -37,7 +65,7 @@
     },
     {
       "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/ModelAssistant.swift",
-      "line": 1491,
+      "line": 1448,
       "symbol": "ModelAssistantDelegate",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"

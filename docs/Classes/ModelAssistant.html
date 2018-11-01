@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           ModelAssistant Docs
         </a>
-         (92% documented)
+         (91% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -78,6 +78,9 @@
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Extensions/IndexPath.html">IndexPath</a>
               </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/MutableCollection.html">MutableCollection</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -92,11 +95,26 @@
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/ModelAssistantDelegate.html">ModelAssistantDelegate</a>
               </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/MutableCollectionAlgorithms.html">MutableCollectionAlgorithms</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
             <a class="nav-group-name-link" href="../Structs.html">Structures</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Concatenation.html">Concatenation</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Concatenation/Index.html">– Index</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/RotatedCollection.html">RotatedCollection</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/RotatedCollection/Index.html">– Index</a>
+              </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/SectionInfo.html">SectionInfo</a>
               </li>
@@ -669,6 +687,56 @@ assistant, delegate methods are called in this way:</p>
                       <div>
                         <h4>Return Value</h4>
                         <p>The lowest index whose corresponding section is equal to given section. If none of the sections in the assistant is equal to section, returns nil.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14ModelAssistantAAC14indexOfSection04withE4NameSiSgSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/indexOfSection(withSectionName:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14ModelAssistantAAC14indexOfSection04withE4NameSiSgSS_tF">indexOfSection(withSectionName:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the lowest index whose corresponding section with a name that is equal to a given section name.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">indexOfSection</span><span class="p">(</span><span class="n">withSectionName</span> <span class="nv">sectionName</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sectionName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A section name</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The lowest index whose corresponding section with a name that is equal to given section name. If none of the sections in the assistant is equal to section, returns nil.</p>
                       </div>
                     </section>
                   </div>
@@ -2262,7 +2330,7 @@ If index path does not describe a valid index path in the model assistant, retur
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2018 <a class="link" href="https://github.com/ssamadgh/ModelAssistant.git" target="_blank" rel="external">Seyed Samad Gholamzadeh</a>. All rights reserved. (Last updated: 2018-10-13)</p>
+      <p>&copy; 2018 <a class="link" href="https://github.com/ssamadgh/ModelAssistant.git" target="_blank" rel="external">Seyed Samad Gholamzadeh</a>. All rights reserved. (Last updated: 2018-11-01)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

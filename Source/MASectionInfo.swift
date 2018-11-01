@@ -44,15 +44,15 @@ public protocol MASectionInfo {
 }
 
 public extension MASectionInfo {
-	
+
 	static public  func ==(lhs: Self, rhs: Self) -> Bool {
 		return lhs.name == rhs.name
 	}
-	
+
 	static public func <(lhs: Self, rhs: Self) -> Bool {
 		return lhs.name < rhs.name
 	}
-	
+
 	#if swift(>=4.2)
 	func hash(into hasher: inout Hasher) {
 		hasher.combine(name)
@@ -121,7 +121,7 @@ public struct SectionInfo<Entity: MAEntity & Hashable>: GMASectionInfo, Hashable
 
 		var newEntities = Array(newEntities)
 		let startIndex = newEntities.stablePartition(isSuffixElement: { !self.entities.contains($0) })
-		
+
 		let updatedEntities: [Entity] = Array(newEntities[0..<startIndex])
 		let updatedIndexes: [Int] = updatedEntities.compactMap { self.entities.firstIndex(of: $0) }
 		let insertedEntities: [Entity] = Array(newEntities[startIndex...])
@@ -177,12 +177,12 @@ public struct SectionInfo<Entity: MAEntity & Hashable>: GMASectionInfo, Hashable
 	func filter(by filter: ((Entity) -> Bool)) -> [Entity] {
 		return self.entities.filter(filter)
 	}
-	
+
 	func contains(_ entity: Entity) -> Bool {
 		return self.entities.contains(entity)
 	}
-	
-	
-	
+
+
+
 }
 

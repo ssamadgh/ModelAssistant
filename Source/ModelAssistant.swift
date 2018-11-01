@@ -600,82 +600,82 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 			}
 			else {
-				
+
 				let existSectionNames = Set(self.sectionsManager.sections.compactMap { $0.name })
 
 				let newSections: [SectionInfo<Entity>]
-				
+
 				func newSection(withName sectionName: String) -> SectionInfo<Entity> {
 					let index = newEntities.stablePartition { $0[self.sectionKey!] == sectionName }
 					var sectionEntities = Array(newEntities[index...])
 					newEntities.removeLast(sectionEntities.count)
-					
+
 					if let sortEntities = self.sortEntities {
 						sectionEntities.sort(by: sortEntities)
 					}
-					
+
 					let indexTitle = self.sectionIndexTitle(forSectionName: sectionName)
 					let newSection = self.sectionsManager.newSection(with: sectionEntities, name: sectionName, indexTitle: indexTitle)
 					return newSection
 				}
-				
+
 				if let sortSections = self.sortSections {
-					
+
 					var newSectionNames = Set(newEntities.compactMap {  $0[self.sectionKey!] })
-					
-					
+
+
 					newSectionNames.subtract(existSectionNames)
-					
+
 					var sectionsSet = Set<SectionInfo<Entity>>()
-					
+
 					while !newSectionNames.isEmpty {
 						sectionsSet.insert(newSection(withName: newSectionNames.removeFirst() ))
 					}
-					
+
 					self.sectionsManager.append(contentsOf: sectionsSet)
 					_ = self.sectionsManager.sortSections(by: sortSections)
 					newSections = Array(sectionsSet)
 
 				}
 				else {
-					
+
 					var newSectionNames = (newEntities.compactMap {  $0[self.sectionKey!] }).removingDuplicates()
-					
+
 					newSectionNames.removeAll { existSectionNames.contains($0) }
-					
+
 					var sectionsArray = [SectionInfo<Entity>]()
-					
+
 					while !newSectionNames.isEmpty {
 						sectionsArray.append(newSection(withName: newSectionNames.removeLast() ))
 					}
-					
+
 					sectionsArray.reverse()
-					
+
 					self.sectionsManager.append(contentsOf: sectionsArray)
 					newSections = sectionsArray
 				}
 
 				if callDelegateMethods {
-					
+
 					newSections.forEach { section in
 						let sectionIndex = self.sectionsManager.firstIndex(of: section)
 						self.modelAssistant(didChange: section, atSectionIndex: nil, for: .insert, newSectionIndex: sectionIndex)
 					}
-					
+
 				}
 
 				while !newEntities.isEmpty {
 					let sectionName = newEntities.first![self.sectionKey!]!
 					let index = newEntities.stablePartition { $0[self.sectionKey!] == sectionName }
 					let sectionEntities = Array(newEntities[index...])
-					
+
 					newEntities.removeLast(sectionEntities.count)
 
 					let sectionIndex = self.sectionsManager.firstIndexOfSection(withSectionName: sectionName)!
 					self.insert(sectionEntities, toSectionAt: sectionIndex, callDelegateMethods: callDelegateMethods)
 
 				}
-				
+
 
 			}
 
@@ -694,49 +694,49 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 	internal func insertFirstNewSection(with newEntities: [Entity], callDelegateMethods: Bool) {
 		var newEntities = newEntities
-		
+
 		if let sortEntities = self.sortEntities {
 			newEntities.sort(by: sortEntities)
 		}
-		
+
 		let section = self.sectionsManager.newSection(with: newEntities, name: "", indexTitle: nil)
 		self.sectionsManager.append(section)
-		
+
 		if callDelegateMethods {
 			self.modelAssistant(didChange: section, atSectionIndex: nil, for: .insert, newSectionIndex: 0)
 		}
 	}
-	
+
 	internal func insert(_ newEntities: [Entity], toSectionAt sectionIndex: Int, callDelegateMethods: Bool) {
-		
+
 		let result = self.sectionsManager.insert(newEntities, toSectionAt: sectionIndex)
 		if let updated = result.updated, callDelegateMethods {
 			self.modelAssistant(didChange: updated.entities, at: updated.indexPaths, for: .update, newIndexPaths: nil)
 		}
-		
+
 		if let inserted = result.inserted {
-			
+
 			if self.sortEntities == nil {
 				if callDelegateMethods {
 					self.modelAssistant(didChange: inserted.entities, at: nil, for: .insert, newIndexPaths: inserted.indexPaths)
 				}
 			}
 			else {
-				
+
 				_ = self.sectionsManager.sortEntities(atSection: sectionIndex, by: self.sortEntities!)
-				
+
 				if callDelegateMethods {
-					
+
 					let newIndexPaths: [IndexPath] = inserted.entities.compactMap { self.sectionsManager.indexPath(of: $0, atSection: sectionIndex)! }
-					
+
 					self.modelAssistant(didChange: inserted.entities, at: nil, for: .insert, newIndexPaths: newIndexPaths)
 				}
 			}
-			
+
 		}
-		
+
 	}
-	
+
 	//MARK: - Move methods
 
 	/**
@@ -1120,7 +1120,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 		let firstIndex = 0
 		let lastIndex = self.numberOfSections-1
-		
+
 		let isMainThread = Thread.isMainThread
 
 		func sortMethod(forSectionAt sectionIndex: Int) {
@@ -1241,7 +1241,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 	}
 
 	private func filteredEntities(with filter: @escaping ((Entity) -> Bool), synchronous: Bool) -> [Entity] {
-		
+
 		var entities: [Entity] = []
 
 		func filterEntities() {

@@ -45,13 +45,11 @@ struct SectionsManager<Entity: MAEntity & Hashable> {
 		return sections.isEmpty
 	}
 
-	private (set) var sections: [SectionInfo<Entity>] = [] {
-		didSet {
-			self.nameSet = Set(self.sections.compactMap { $0.name })
-		}
-	}
+	private (set) var sections: [SectionInfo<Entity>] = []
 
-	private var nameSet: Set<String> = []
+	private var nameSet: Set<String> {
+		return Set(self.sections.compactMap { $0.name })
+	}
 
 	mutating func insert(_ entities: [Entity], toSectionWithName sectionName: String?) -> (updated: (indexPaths: [IndexPath], entities: [Entity])?, inserted:  (indexPaths: [IndexPath], entities: [Entity])?) {
 
@@ -59,23 +57,22 @@ struct SectionsManager<Entity: MAEntity & Hashable> {
 		if let sectionName = sectionName {
 			sectionIndex = self.firstIndexOfSection(withSectionName: sectionName)!
 		}
-		
-		return insert(entities, toSectionAt: sectionIndex)
 
+		return insert(entities, toSectionAt: sectionIndex)
 	}
-	
+
 	mutating func insert(_ entities: [Entity], toSectionAt sectionIndex: Int) -> (updated: (indexPaths: [IndexPath], entities: [Entity])?, inserted:  (indexPaths: [IndexPath], entities: [Entity])?) {
-		
+
 		guard sectionIndex < numberOfSections else { return (updated: nil, inserted: nil)}
-		
+
 		let result = self.sections[sectionIndex].append(contentsOf: entities)
-		
+
 		let updatedIndexPaths: [IndexPath] = result.updated?.indexes.map { IndexPath(row: $0, section: sectionIndex) } ?? []
 		let insertedIndexPaths: [IndexPath] = result.inserted?.indexes.map { IndexPath(row: $0, section: sectionIndex) } ?? []
-		
+
 		let updated = result.updated != nil ? (indexPaths: updatedIndexPaths, entities: result.updated!.entities) : nil
 		let inserted = result.inserted != nil ? (indexPaths: insertedIndexPaths, entities: result.inserted!.entities) : nil
-		
+
 		return (updated: updated, inserted: inserted)
 	}
 
@@ -115,9 +112,9 @@ struct SectionsManager<Entity: MAEntity & Hashable> {
 	}
 
 	func indexPath(of entity: Entity, withSectionName sectionName: String?) -> IndexPath? {
-		
+
 		guard !self.sections.isEmpty else { return nil }
-		
+
 		if sectionName == nil {
 			if let row = self.sections[0].firstIndex(of: entity) {
 				return IndexPath(row: row, section: 0)
@@ -131,9 +128,9 @@ struct SectionsManager<Entity: MAEntity & Hashable> {
 
 		//Some times the entity has indexPath but the above solutions cant find it.
 		guard let section = (self.sections.first { $0.contains(entity) }) else { return nil }
-		
+
 		let indexPath = IndexPath(row: section.firstIndex(of: entity)!, section: self.firstIndex(of: section)!)
-		
+
 		return indexPath
 	}
 
@@ -245,16 +242,16 @@ struct SectionsManager<Entity: MAEntity & Hashable> {
 	func filteredEntities(atSection sectionIndex: Int, with filter: ((Entity) -> Bool)) -> [Entity] {
 		return self[sectionIndex]?.filter(by: filter) ?? []
 	}
-	
+
 	func filteredEntities(with filter: @escaping ((Entity) -> Bool)) -> [Entity] {
 		let containSections = self.sections.filter { $0.entities.contains(where: filter) }
 		return containSections.flatMap { $0.filter(by: filter) }
 	}
-	
+
 	func allEntities() -> [Entity]  {
 		return self.sections.flatMap { $0.entities }
 	}
-	
+
 	func firstSectionIndex(withSectionIndexTitle title: String) -> Int {
 		return self.sections.firstIndex { $0.indexTitle == title }!
 	}

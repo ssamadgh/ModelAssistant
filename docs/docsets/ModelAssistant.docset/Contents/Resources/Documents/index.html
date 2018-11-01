@@ -22,7 +22,7 @@
         <a class="header-link" href="index.html">
           ModelAssistant Docs
         </a>
-         (92% documented)
+         (91% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -77,6 +77,9 @@
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Extensions/IndexPath.html">IndexPath</a>
               </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Extensions/MutableCollection.html">MutableCollection</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -91,11 +94,26 @@
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/ModelAssistantDelegate.html">ModelAssistantDelegate</a>
               </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/MutableCollectionAlgorithms.html">MutableCollectionAlgorithms</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
             <a class="nav-group-name-link" href="Structs.html">Structures</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/Concatenation.html">Concatenation</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/Concatenation/Index.html">– Index</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/RotatedCollection.html">RotatedCollection</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/RotatedCollection/Index.html">– Index</a>
+              </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/SectionInfo.html">SectionInfo</a>
               </li>
@@ -108,13 +126,16 @@
         <section class="section">
           <div class="section-content">
             
-            <h1 id='modelassistant' class='heading'>ModelAssistant</h1>
-<h3 id='an-assistant-to-manage-the-interactions-between-view-and-model' class='heading'>An assistant to manage the interactions between view and model</h3>
+            <p><img src="HeaderImage/HeaderImage.png" alt="ModelAssistant"></p>
+
+<p>An assistant to manage the interactions between view and model</p>
 
 <p><a href="https://developer.apple.com/swift/"><img src="https://img.shields.io/badge/Swift-4.2-orange.svg?style=flat" alt="Swift 4.2"></a>
 <a href="https://github.com/ssamadgh/ModelAssistant/blob/master/LICENSE"><img src="https://img.shields.io/cocoapods/l/ModelAssistant.svg" alt="license MIT"></a>
 <a href="https://img.shields.io/cocoapods/v/ModelAssistant.svg"><img src="https://img.shields.io/cocoapods/v/ModelAssistant.svg" alt="CocoaPods Compatible"></a>
 <a href="https://ssamadgh.github.io/ModelAssistant"><img src="https://img.shields.io/cocoapods/p/ModelAssistant.svg?style=flat" alt="Platform"></a>
+<a href="https://codebeat.co/projects/github-com-ssamadgh-modelassistant-master"><img src="https://codebeat.co/badges/b9643fd8-9f23-49e6-82ae-f43de233ca8a" alt="codebeat badge"></a>
+<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible"></a>
 <a href="https://twitter.com/ssamadgh"><img src="https://img.shields.io/badge/twitter-@ssamadgh-blue.svg?style=flat" alt="Twitter"></a></p>
 
 <p>ModelAssistant is a mediator between the view and model. This framework is tailored to work in conjunction with views that present collections of objects. 
@@ -188,6 +209,20 @@ These views typically expect their data source to present results as a list of s
 <p>If you are using swift 3, replace <code>pod &#39;ModelAssistant&#39;</code> with this:</p>
 <pre class="highlight ruby"><code><span class="n">pod</span> <span class="s1">'ModelAssistant'</span><span class="p">,</span> <span class="s1">'1.0.0'</span> <span class="c1">#Swift 3</span>
 </code></pre>
+<h3 id='carthage' class='heading'>Carthage</h3>
+
+<p><a href="https://github.com/Carthage/Carthage">Carthage</a> is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.</p>
+
+<p>You can install Carthage with <a href="https://brew.sh/">Homebrew</a> using the following command:</p>
+<pre class="highlight shell"><code><span class="nv">$ </span>brew update
+<span class="nv">$ </span>brew <span class="nb">install </span>carthage
+</code></pre>
+
+<p>To integrate ModelAssistant into your Xcode project using Carthage, specify it in your <code>Cartfile</code>:</p>
+<pre class="highlight plaintext"><code>github "ssamadgh/ModelAssistant"
+</code></pre>
+
+<p>Run <code>carthage update --platform iOS</code> to build the framework and drag the built <code>ModelAssistant.framework</code> into your Xcode project.</p>
 <h3 id='manually' class='heading'>Manually</h3>
 
 <p>If you prefer not to use any of the aforementioned dependency managers, you can integrate ModelAssistant into your project manually.</p>
@@ -270,7 +305,7 @@ As a guide the position of ModelAssistant in some of famous design patterns is a
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2018 <a class="link" href="https://github.com/ssamadgh/ModelAssistant.git" target="_blank" rel="external">Seyed Samad Gholamzadeh</a>. All rights reserved. (Last updated: 2018-10-13)</p>
+      <p>&copy; 2018 <a class="link" href="https://github.com/ssamadgh/ModelAssistant.git" target="_blank" rel="external">Seyed Samad Gholamzadeh</a>. All rights reserved. (Last updated: 2018-11-01)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

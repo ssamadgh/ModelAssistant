@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>IndexPath Extension Reference</title>
+    <title>MutableCollectionAlgorithms Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Extension/IndexPath" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Protocol/MutableCollectionAlgorithms" class="dashAnchor"></a>
 
-    <a title="IndexPath Extension Reference"></a>
+    <a title="MutableCollectionAlgorithms Protocol Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -50,7 +50,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">ModelAssistant Reference</a>
       <img class="carat" src="../img/carat.png" />
-      IndexPath Extension Reference
+      MutableCollectionAlgorithms Protocol Reference
     </p>
 
     <div class="content-wrapper">
@@ -126,14 +126,22 @@
 
         <section class="section">
           <div class="section-content">
-            <h1>IndexPath</h1>
+            <h1>MutableCollectionAlgorithms</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">IndexPath</span> <span class="p">:</span> <span class="kt">ReferenceConvertible</span><span class="p">,</span> <span class="kt">Equatable</span><span class="p">,</span> <span class="kt">Hashable</span><span class="p">,</span> <span class="kt">MutableCollection</span><span class="p">,</span> <span class="kt">RandomAccessCollection</span><span class="p">,</span> <span class="kt">Comparable</span><span class="p">,</span> <span class="kt">ExpressibleByArrayLiteral</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MutableCollectionAlgorithms</span> <span class="p">:</span> <span class="kt">MutableCollection</span>
+  <span class="k">where</span> <span class="kt">SubSequence</span> <span class="p">:</span> <span class="kt">MutableCollectionAlgorithms</span></code></pre>
 
                 </div>
               </div>
-            
+            <p>Provides customization points for <code>MutableCollection</code> algorithms.</p>
+
+<p>If incorporated into the standard library, these requirements would just be
+part of <code>MutableCollection</code>.  In the meantime, you can declare conformance
+of a collection to <code>MutableCollectionAlgorithms</code> to get these customization
+points to be used from other algorithms defined on
+<code>MutableCollectionAlgorithms</code>.</p>
+
           </div>
         </section>
 
@@ -144,9 +152,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:Sx6StrideQa"></a>
-                    <a name="//apple_ref/swift/Alias/Stride" class="dashAnchor"></a>
-                    <a class="token" href="#/s:Sx6StrideQa">Stride</a>
+                    <a name="/s:14ModelAssistant27MutableCollectionAlgorithmsP6rotate15shiftingToStart5IndexQzAG_tF"></a>
+                    <a name="//apple_ref/swift/Method/rotate(shiftingToStart:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14ModelAssistant27MutableCollectionAlgorithmsP6rotate15shiftingToStart5IndexQzAG_tF">rotate(shiftingToStart:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -154,67 +162,28 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>Rotates the elements of the collection so that the element
+at <code>middle</code> ends up first.</p>
+<div class="aside aside-complexity">
+    <p class="aside-title">Complexity</p>
+    O(<em>n</em>)
+
+</div>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">Stride</span> <span class="o">=</span> <span class="kt">Int</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="k">mutating</span> <span class="kd">func</span> <span class="nf">rotate</span><span class="p">(</span><span class="n">shiftingToStart</span> <span class="nv">middle</span><span class="p">:</span> <span class="kt">Index</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Index</span></code></pre>
 
                         </div>
                       </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:Sx8distance2to6StrideQzx_tF"></a>
-                    <a name="//apple_ref/swift/Method/distance(to:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:Sx8distance2to6StrideQzx_tF">distance(to:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">distance</span><span class="p">(</span><span class="n">to</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:Sx8advanced2byx6StrideQz_tF"></a>
-                    <a name="//apple_ref/swift/Method/advanced(by:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:Sx8advanced2byx6StrideQz_tF">advanced(by:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">advanced</span><span class="p">(</span><span class="n">by</span> <span class="nv">n</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">IndexPath</span></code></pre>
-
-                        </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The new index of the element that was first
+pre-rotation.</p>
                       </div>
                     </section>
                   </div>
