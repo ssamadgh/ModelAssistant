@@ -486,7 +486,9 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 		self.addModelAssistantOperation(with: BlockOperation(block: { (finished) in
 
 			self.dispatchQueue.async(flags: .barrier) {
-
+				
+				self.entitiesUniqueValue.insert(newEntity.uniqueValue)
+				
 				let sectionIndex = indexPath.section
 				let diff = self.sectionsManager.numberOfSections - sectionIndex
 
@@ -937,9 +939,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 				let entity = self.sectionsManager.remove(at: indexPath)
 				removedEntity = entity
 
-				if let index = self.entitiesUniqueValue.index(of: entity.uniqueValue) {
-					self.entitiesUniqueValue.remove(at: index)
-				}
+				self.entitiesUniqueValue.remove(entity.uniqueValue)
 
 				if removeEmptySection, let section = self.sectionsManager[sectionIndex], section.isEmpty {
 					let section = self.sectionsManager.remove(at: sectionIndex)
@@ -1027,6 +1027,10 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 			self.dispatchQueue.async(flags: .barrier) {
 
 				let section = self.sectionsManager.remove(at: sectionIndex)
+				section.entities.forEach { (entity) in
+					self.entitiesUniqueValue.remove(entity.uniqueValue)
+				}
+				
 				self.modelAssistant(didChange: section, atSectionIndex: sectionIndex, for: .delete, newSectionIndex: nil)
 				removedSection = section
 				finished()
