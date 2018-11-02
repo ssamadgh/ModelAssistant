@@ -1027,9 +1027,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 			self.dispatchQueue.async(flags: .barrier) {
 
 				let section = self.sectionsManager.remove(at: sectionIndex)
-				section.entities.forEach { (entity) in
-					self.entitiesUniqueValue.remove(entity.uniqueValue)
-				}
+				self.entitiesUniqueValue.subtract(section.entities.compactMap {$0.uniqueValue})
 				
 				self.modelAssistant(didChange: section, atSectionIndex: sectionIndex, for: .delete, newSectionIndex: nil)
 				removedSection = section
