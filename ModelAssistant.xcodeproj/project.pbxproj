@@ -22,6 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		E42353682180CA6E00888C92 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E42353672180CA6E00888C92 /* Foundation.framework */; };
 		E4480DFE2156D3980052DC6D /* ModelAssistant.h in Headers */ = {isa = PBXBuildFile; fileRef = E4480DF02156D3980052DC6D /* ModelAssistant.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E4480E952156D80F0052DC6D /* ModelAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E5C2156D80F0052DC6D /* ModelAssistant.swift */; };
 		E4480E962156D80F0052DC6D /* ModelAssistantProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E5D2156D80F0052DC6D /* ModelAssistantProtocol.swift */; };
@@ -33,14 +34,12 @@
 		E4480E9C2156D80F0052DC6D /* GroupOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E672156D80F0052DC6D /* GroupOperation.swift */; };
 		E4480E9D2156D80F0052DC6D /* AOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E682156D80F0052DC6D /* AOperation.swift */; };
 		E4480E9E2156D80F0052DC6D /* BlockOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E692156D80F0052DC6D /* BlockOperation.swift */; };
-		E4480E9F2156D80F0052DC6D /* URLSessionTaskOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E6A2156D80F0052DC6D /* URLSessionTaskOperation.swift */; };
-		E4480EA02156D80F0052DC6D /* AlertOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E6B2156D80F0052DC6D /* AlertOperation.swift */; };
 		E4480EA12156D80F0052DC6D /* ReachabilityCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E6D2156D80F0052DC6D /* ReachabilityCondition.swift */; };
 		E4480EA22156D80F0052DC6D /* MutuallyExclusive.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E6E2156D80F0052DC6D /* MutuallyExclusive.swift */; };
 		E4480EA32156D80F0052DC6D /* OperationCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E6F2156D80F0052DC6D /* OperationCondition.swift */; };
 		E4480EA42156D80F0052DC6D /* OperationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E702156D80F0052DC6D /* OperationErrors.swift */; };
 		E4480EA52156D80F0052DC6D /* OperationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E722156D80F0052DC6D /* OperationObserver.swift */; };
-		E4480EA62156D80F0052DC6D /* NetworkObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E732156D80F0052DC6D /* NetworkObserver.swift */; };
+		E4480EA62156D80F0052DC6D /* OperationTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E732156D80F0052DC6D /* OperationTimer.swift */; };
 		E4480EA72156D80F0052DC6D /* BlockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E742156D80F0052DC6D /* BlockObserver.swift */; };
 		E4480EA82156D80F0052DC6D /* AOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E762156D80F0052DC6D /* AOperationQueue.swift */; };
 		E4480EA92156D80F0052DC6D /* ExclusivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E772156D80F0052DC6D /* ExclusivityController.swift */; };
@@ -72,6 +71,8 @@
 		E45921A9215A9D3600E6DF7C /* MOCK_DATA_20.json in Resources */ = {isa = PBXBuildFile; fileRef = E4480E4F2156D80F0052DC6D /* MOCK_DATA_20.json */; };
 		E45921AA215A9D3600E6DF7C /* MOCK_DATA_10.json in Resources */ = {isa = PBXBuildFile; fileRef = E4480E502156D80F0052DC6D /* MOCK_DATA_10.json */; };
 		E45921AB215A9D3600E6DF7C /* MOCK_DATA_50.json in Resources */ = {isa = PBXBuildFile; fileRef = E4480E512156D80F0052DC6D /* MOCK_DATA_50.json */; };
+		E4D517F82184FB9E00950FE0 /* Algorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D517F72184FB9E00950FE0 /* Algorithms.swift */; };
+		E4D5181821856B2500950FE0 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D5181721856B2500950FE0 /* Array+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E42353672180CA6E00888C92 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		E4480DED2156D3980052DC6D /* ModelAssistant.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ModelAssistant.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4480DF02156D3980052DC6D /* ModelAssistant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelAssistant.h; sourceTree = "<group>"; };
 		E4480DF12156D3980052DC6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -120,14 +122,12 @@
 		E4480E672156D80F0052DC6D /* GroupOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupOperation.swift; sourceTree = "<group>"; };
 		E4480E682156D80F0052DC6D /* AOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AOperation.swift; sourceTree = "<group>"; };
 		E4480E692156D80F0052DC6D /* BlockOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockOperation.swift; sourceTree = "<group>"; };
-		E4480E6A2156D80F0052DC6D /* URLSessionTaskOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionTaskOperation.swift; sourceTree = "<group>"; };
-		E4480E6B2156D80F0052DC6D /* AlertOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertOperation.swift; sourceTree = "<group>"; };
 		E4480E6D2156D80F0052DC6D /* ReachabilityCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityCondition.swift; sourceTree = "<group>"; };
 		E4480E6E2156D80F0052DC6D /* MutuallyExclusive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MutuallyExclusive.swift; sourceTree = "<group>"; };
 		E4480E6F2156D80F0052DC6D /* OperationCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationCondition.swift; sourceTree = "<group>"; };
 		E4480E702156D80F0052DC6D /* OperationErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationErrors.swift; sourceTree = "<group>"; };
 		E4480E722156D80F0052DC6D /* OperationObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationObserver.swift; sourceTree = "<group>"; };
-		E4480E732156D80F0052DC6D /* NetworkObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkObserver.swift; sourceTree = "<group>"; };
+		E4480E732156D80F0052DC6D /* OperationTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationTimer.swift; sourceTree = "<group>"; };
 		E4480E742156D80F0052DC6D /* BlockObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockObserver.swift; sourceTree = "<group>"; };
 		E4480E762156D80F0052DC6D /* AOperationQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AOperationQueue.swift; sourceTree = "<group>"; };
 		E4480E772156D80F0052DC6D /* ExclusivityController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExclusivityController.swift; sourceTree = "<group>"; };
@@ -138,6 +138,8 @@
 		E459218B215A9C7000E6DF7C /* ModelAssistant iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ModelAssistant iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E459218D215A9C7000E6DF7C /* ModelAssistant_iOS_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelAssistant_iOS_Tests.swift; sourceTree = "<group>"; };
 		E459218F215A9C7000E6DF7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E4D517F72184FB9E00950FE0 /* Algorithms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Algorithms.swift; sourceTree = "<group>"; };
+		E4D5181721856B2500950FE0 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +147,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E42353682180CA6E00888C92 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,6 +162,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E42353662180CA6D00888C92 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E42353672180CA6E00888C92 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E4480DE12156D32A0052DC6D = {
 			isa = PBXGroup;
 			children = (
@@ -166,6 +177,7 @@
 				E4480E3E2156D80F0052DC6D /* Tests */,
 				E459218C215A9C7000E6DF7C /* ModelAssistant iOS Tests */,
 				E4480DEE2156D3980052DC6D /* Products */,
+				E42353662180CA6D00888C92 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -276,6 +288,8 @@
 			isa = PBXGroup;
 			children = (
 				E4480E5F2156D80F0052DC6D /* IndexPath+Extensions.swift */,
+				E4D517F72184FB9E00950FE0 /* Algorithms.swift */,
+				E4D5181721856B2500950FE0 /* Array+Extensions.swift */,
 			);
 			path = Extenseions;
 			sourceTree = "<group>";
@@ -309,8 +323,6 @@
 				E4480E672156D80F0052DC6D /* GroupOperation.swift */,
 				E4480E682156D80F0052DC6D /* AOperation.swift */,
 				E4480E692156D80F0052DC6D /* BlockOperation.swift */,
-				E4480E6A2156D80F0052DC6D /* URLSessionTaskOperation.swift */,
-				E4480E6B2156D80F0052DC6D /* AlertOperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -330,7 +342,7 @@
 			isa = PBXGroup;
 			children = (
 				E4480E722156D80F0052DC6D /* OperationObserver.swift */,
-				E4480E732156D80F0052DC6D /* NetworkObserver.swift */,
+				E4480E732156D80F0052DC6D /* OperationTimer.swift */,
 				E4480E742156D80F0052DC6D /* BlockObserver.swift */,
 			);
 			path = Observers;
@@ -411,7 +423,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1000;
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1010;
 				TargetAttributes = {
 					E4480DEC2156D3980052DC6D = {
 						CreatedOnToolsVersion = 10.0;
@@ -520,6 +532,8 @@
 				E4480EAD2156D80F0052DC6D /* MASectionInfo.swift in Sources */,
 				E4480EAB2156D80F0052DC6D /* SectionsManager.swift in Sources */,
 				E4480E9D2156D80F0052DC6D /* AOperation.swift in Sources */,
+				E4D517F82184FB9E00950FE0 /* Algorithms.swift in Sources */,
+				E4D5181821856B2500950FE0 /* Array+Extensions.swift in Sources */,
 				E4480E9E2156D80F0052DC6D /* BlockOperation.swift in Sources */,
 				E4480EA92156D80F0052DC6D /* ExclusivityController.swift in Sources */,
 				E4480EA82156D80F0052DC6D /* AOperationQueue.swift in Sources */,
@@ -527,16 +541,14 @@
 				E4480E982156D80F0052DC6D /* AOperatinLogger.swift in Sources */,
 				E4480E992156D80F0052DC6D /* NSLock+MyOperations.swift in Sources */,
 				E4480EA52156D80F0052DC6D /* OperationObserver.swift in Sources */,
-				E4480EA02156D80F0052DC6D /* AlertOperation.swift in Sources */,
 				E4480EA72156D80F0052DC6D /* BlockObserver.swift in Sources */,
 				E4480E9A2156D80F0052DC6D /* Foundation.Operation+Operation.swift in Sources */,
-				E4480E9F2156D80F0052DC6D /* URLSessionTaskOperation.swift in Sources */,
 				E4480E9C2156D80F0052DC6D /* GroupOperation.swift in Sources */,
 				E4480E962156D80F0052DC6D /* ModelAssistantProtocol.swift in Sources */,
 				E4480E952156D80F0052DC6D /* ModelAssistant.swift in Sources */,
 				E4480EA42156D80F0052DC6D /* OperationErrors.swift in Sources */,
 				E4480E972156D80F0052DC6D /* IndexPath+Extensions.swift in Sources */,
-				E4480EA62156D80F0052DC6D /* NetworkObserver.swift in Sources */,
+				E4480EA62156D80F0052DC6D /* OperationTimer.swift in Sources */,
 				E4480EA12156D80F0052DC6D /* ReachabilityCondition.swift in Sources */,
 				E4480EAE2156D80F0052DC6D /* MAEntity.swift in Sources */,
 				E4480EA32156D80F0052DC6D /* OperationCondition.swift in Sources */,
@@ -577,12 +589,65 @@
 		E4480DE62156D32A0052DC6D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
 		E4480DE72156D32A0052DC6D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
 		};
@@ -590,6 +655,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -618,13 +684,13 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 2T492Q3SC8;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -657,6 +723,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.samad.ModelAssistant;
 				PRODUCT_NAME = "${PROJECT_NAME}";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -672,6 +739,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -700,13 +768,13 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 2T492Q3SC8;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -732,6 +800,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.samad.ModelAssistant;
 				PRODUCT_NAME = "${PROJECT_NAME}";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -776,11 +845,11 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 2T492Q3SC8;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -809,6 +878,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.samad.ModelAssistant-iOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -849,11 +919,11 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 2T492Q3SC8;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -875,6 +945,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.samad.ModelAssistant-iOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -887,6 +958,7 @@
 		E495A904215C804E009CBB3E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2T492Q3SC8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -896,6 +968,7 @@
 		E495A905215C804E009CBB3E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2T492Q3SC8;
 				PRODUCT_NAME = "$(TARGET_NAME)";

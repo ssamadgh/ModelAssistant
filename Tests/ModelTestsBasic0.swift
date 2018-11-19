@@ -15,7 +15,7 @@ class ModelTestsBasic0: XCTestCase, ModelAssistantDelegate, TestTableViewDataSou
 	var delegateExpect: XCTestExpectation!
 	var updateDelegateExpect: XCTestExpectation!
 	var model: ModelAssistant<Member>!
-	var members: [Member]!
+	var members: [Member] = []
 
 	var sortEntities: ((Member, Member) -> Bool)?
 	var sortSections: ((SectionInfo<Member>, SectionInfo<Member>) -> Bool)?
@@ -93,7 +93,7 @@ class ModelTestsBasic0: XCTestCase, ModelAssistantDelegate, TestTableViewDataSou
         // Put teardown code here. This method is called after the invocation of each test method in the class.
 		XCTAssert(self.delegateCalledBalance == 0)
 		self.model = nil
-		self.members = nil
+		self.members = []
 		self.tableView = nil
 		super.tearDown()
     }
@@ -129,13 +129,13 @@ class ModelTestsBasic0: XCTestCase, ModelAssistantDelegate, TestTableViewDataSou
 			XCTAssertNil(indexPaths)
 			XCTAssertNotNil(newIndexPaths)
 			XCTAssertNotNil(entities)
-			self.tableView.insertRows(at: newIndexPaths!, with: .automatic)
+			self.tableView.insertRows(at: newIndexPaths!)
 
 		case .delete:
 			XCTAssertNotNil(indexPaths)
 			XCTAssertNil(newIndexPaths)
 			XCTAssertNotNil(entities)
-			self.tableView.deleteRows(at: indexPaths!, with: .automatic)
+			self.tableView.deleteRows(at: indexPaths!)
 
 		case .move:
 			XCTAssertNotNil(indexPaths)
@@ -160,13 +160,13 @@ class ModelTestsBasic0: XCTestCase, ModelAssistantDelegate, TestTableViewDataSou
 			XCTAssertNil(sectionIndex)
 			XCTAssertNotNil(newSectionIndex)
 			XCTAssertNotNil(sectionInfo)
-			self.tableView.insertSections(IndexSet(integer: newSectionIndex!), with: .automatic)
+			self.tableView.insertSections(IndexSet(integer: newSectionIndex!))
 
 		case .delete:
 			XCTAssertNotNil(sectionIndex)
 			XCTAssertNil(newSectionIndex)
 			XCTAssertNotNil(sectionInfo)
-			self.tableView.deleteSections(IndexSet(integer: sectionIndex!), with: .automatic)
+			self.tableView.deleteSections(IndexSet(integer: sectionIndex!))
 
 		case .move:
 			XCTAssertNotNil(sectionIndex)

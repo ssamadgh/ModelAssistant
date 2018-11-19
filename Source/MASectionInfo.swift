@@ -43,6 +43,28 @@ public protocol MASectionInfo {
 
 }
 
+public extension MASectionInfo {
+
+	static public  func ==(lhs: Self, rhs: Self) -> Bool {
+		return lhs.name == rhs.name
+	}
+
+	static public func <(lhs: Self, rhs: Self) -> Bool {
+		return lhs.name < rhs.name
+	}
+
+	#if swift(>=4.2)
+	func hash(into hasher: inout Hasher) {
+		hasher.combine(name)
+	}
+	#else
+	var hashValue: Int {
+	return name.hashValue
+	}
+	#endif
+
+}
+
 ///A protocol that defines the interface for section objects vended by a fetched results controller.
 protocol GMASectionInfo: MASectionInfo {
 
@@ -53,16 +75,7 @@ protocol GMASectionInfo: MASectionInfo {
 
 }
 
-public struct SectionInfo<Entity: MAEntity & Hashable>: GMASectionInfo, Equatable, Comparable {
-
-
-	static public  func ==(lhs: SectionInfo<Entity>, rhs: SectionInfo<Entity>) -> Bool {
-		return lhs.name == rhs.name
-	}
-
-	static public func <(lhs: SectionInfo<Entity>, rhs: SectionInfo<Entity>) -> Bool {
-		return lhs.name < rhs.name
-	}
+public struct SectionInfo<Entity: MAEntity & Hashable>: GMASectionInfo, Hashable, Comparable {
 
 	public internal (set) var entities: [Entity] = []
 
@@ -104,29 +117,17 @@ public struct SectionInfo<Entity: MAEntity & Hashable>: GMASectionInfo, Equatabl
 		return self.append(contentsOf: [newEntity])
 	}
 
-	mutating func append(contentsOf newEntities: [Entity]) -> (updated: (indexes: [Int], entities: [Entity])?, inserted:  (indexes: [Int], entities: [Entity])?) {
+	mutating func append<S>(contentsOf newEntities: S) -> (updated: (indexes: [Int], entities: [Entity])?, inserted:  (indexes: [Int], entities: [Entity])?) where S.Element == Entity, S: Sequence {
 
-		var updatedEntities: [Entity] = []
-		var updatedIndexes: [Int] = []
-		var insertedEntities: [Entity] = []
-		var insertedIndexes: [Int] = []
+		var newEntities = Array(newEntities)
+		let startIndex = newEntities.stablePartition(isSuffixElement: { !self.entities.contains($0) })
 
-		for entity in newEntities {
-			if self.entities.contains(entity) {
-				let updatedIndex = self.entities.index(of: entity)!
-
-				updatedEntities.append(entity)
-				updatedIndexes.append(updatedIndex)
-				self.entities[updatedIndex].update(with: entity)
-			}
-			else {
-				insertedEntities.append(entity)
-			}
-		}
-
+		let updatedEntities: [Entity] = Array(newEntities[0..<startIndex])
+		let updatedIndexes: [Int] = updatedEntities.compactMap { self.entities.firstIndex(of: $0) }
+		let insertedEntities: [Entity] = Array(newEntities[startIndex...])
 		let lowerBound = self.entities.count
 		let upperBound = lowerBound + (insertedEntities.count - 1)
-		insertedIndexes = !insertedEntities.isEmpty ? Array(lowerBound ... upperBound) : []
+		let insertedIndexes: [Int] = !insertedEntities.isEmpty ? Array(lowerBound ... upperBound) : []
 		self.entities.append(contentsOf: insertedEntities)
 
 		let updated = !updatedIndexes.isEmpty ? (indexes: updatedIndexes, entities: updatedEntities) : nil
@@ -161,8 +162,8 @@ public struct SectionInfo<Entity: MAEntity & Hashable>: GMASectionInfo, Equatabl
 		self.entities[index] = entity
 	}
 
-	func index(of entity: Entity) -> Int? {
-		return self.entities.index(of: entity)
+	func firstIndex(of entity: Entity) -> Int? {
+		return self.entities.firstIndex(of: entity)
 	}
 
 	mutating func sort(by sort: (Entity, Entity) -> Bool) -> (oldIndexes: [Int], newIndexes: [Int]) {
@@ -176,6 +177,12 @@ public struct SectionInfo<Entity: MAEntity & Hashable>: GMASectionInfo, Equatabl
 	func filter(by filter: ((Entity) -> Bool)) -> [Entity] {
 		return self.entities.filter(filter)
 	}
+
+	func contains(_ entity: Entity) -> Bool {
+		return self.entities.contains(entity)
+	}
+
+
 
 }
 

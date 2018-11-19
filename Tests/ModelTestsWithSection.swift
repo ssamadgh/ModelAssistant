@@ -16,7 +16,7 @@ class ModelTestsWithSection: ModelTestsBasic {
 	}
 
 	override func testModelAfterFetch() {
-		var members = self.members!
+		var members = self.members
 
 		if let filter = self.filter {
 			members = self.members.filter(filter)

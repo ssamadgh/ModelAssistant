@@ -28,14 +28,7 @@ import Foundation
 struct SectionsManager<Entity: MAEntity & Hashable> {
 
 	var sectionIndexTitles: [String] {
-		let allValues =  self.sections.compactMap { $0.indexTitle }
-		var resultValue: [String] = []
-		for value in allValues {
-			if !resultValue.contains(value) {
-				resultValue.append(value)
-			}
-		}
-		return resultValue
+		return self.sections.compactMap { $0.indexTitle }.removingDuplicates()
 	}
 
 	var numberOfSections: Int {
@@ -52,20 +45,25 @@ struct SectionsManager<Entity: MAEntity & Hashable> {
 		return sections.isEmpty
 	}
 
-	private (set) var sections: [SectionInfo<Entity>] = [] {
-		didSet {
-			self.nameSet = Set(self.sections.compactMap { $0.name })
-		}
-	}
+	private (set) var sections: [SectionInfo<Entity>] = []
 
-	private var nameSet: Set<String> = []
+	private var nameSet: Set<String> {
+		return Set(self.sections.compactMap { $0.name })
+	}
 
 	mutating func insert(_ entities: [Entity], toSectionWithName sectionName: String?) -> (updated: (indexPaths: [IndexPath], entities: [Entity])?, inserted:  (indexPaths: [IndexPath], entities: [Entity])?) {
 
 		var sectionIndex = 0
 		if let sectionName = sectionName {
-			sectionIndex = self.indexOfSection(withSectionName: sectionName)!
+			sectionIndex = self.firstIndexOfSection(withSectionName: sectionName)!
 		}
+
+		return insert(entities, toSectionAt: sectionIndex)
+	}
+
+	mutating func insert(_ entities: [Entity], toSectionAt sectionIndex: Int) -> (updated: (indexPaths: [IndexPath], entities: [Entity])?, inserted:  (indexPaths: [IndexPath], entities: [Entity])?) {
+
+		guard sectionIndex < numberOfSections else { return (updated: nil, inserted: nil)}
 
 		let result = self.sections[sectionIndex].append(contentsOf: entities)
 
@@ -76,14 +74,13 @@ struct SectionsManager<Entity: MAEntity & Hashable> {
 		let inserted = result.inserted != nil ? (indexPaths: insertedIndexPaths, entities: result.inserted!.entities) : nil
 
 		return (updated: updated, inserted: inserted)
-
 	}
 
 	mutating func append(_ section: SectionInfo<Entity>) {
 		self.sections.append(section)
 	}
 
-	mutating func append(contentsOf sections: [SectionInfo<Entity>]) {
+	mutating func append<S>(contentsOf sections: S) where S: Sequence, S.Element == SectionInfo<Entity> {
 		self.sections.append(contentsOf: sections)
 	}
 
@@ -115,26 +112,31 @@ struct SectionsManager<Entity: MAEntity & Hashable> {
 	}
 
 	func indexPath(of entity: Entity, withSectionName sectionName: String?) -> IndexPath? {
-		
+
 		guard !self.sections.isEmpty else { return nil }
-		
+
 		if sectionName == nil {
-			if let row = self.sections[0].index(of: entity) {
+			if let row = self.sections[0].firstIndex(of: entity) {
 				return IndexPath(row: row, section: 0)
 			}
 		}
 		else {
-			if let sectionIndex = self.indexOfSection(withSectionName: sectionName!), let row = self.sections[sectionIndex].index(of: entity) {
+			if let sectionIndex = self.firstIndexOfSection(withSectionName: sectionName!), let row = self.sections[sectionIndex].firstIndex(of: entity) {
 				return IndexPath(row: row, section: sectionIndex)
 			}
 		}
 
-		return nil
+		//Some times the entity has indexPath but the above solutions cant find it.
+		guard let section = (self.sections.first { $0.contains(entity) }) else { return nil }
+
+		let indexPath = IndexPath(row: section.firstIndex(of: entity)!, section: self.firstIndex(of: section)!)
+
+		return indexPath
 	}
 
 	func indexPath(of entity: Entity, atSection sectionIndex: Int) -> IndexPath? {
 
-		if let row = self.sections[sectionIndex].index(of: entity) {
+		if let row = self.sections[sectionIndex].firstIndex(of: entity) {
 			return IndexPath(row: row, section: sectionIndex)
 		}
 
@@ -142,16 +144,12 @@ struct SectionsManager<Entity: MAEntity & Hashable> {
 	}
 
 
-	func index(of section: SectionInfo<Entity>) -> Int? {
-		return self.sections.index(of: section)
+	func firstIndex(of section: SectionInfo<Entity>) -> Int? {
+		return self.sections.firstIndex(of: section)
 	}
 
-	func indexOfSection(withSectionName sectionName: String) -> Int? {
-		let filtered = self.sections.filter { $0.name == sectionName }
-		if let section = filtered.first {
-			return self.index(of: section)
-		}
-		return nil
+	func firstIndexOfSection(withSectionName sectionName: String) -> Int? {
+		return self.sections.firstIndex { $0.name == sectionName }
 	}
 
 	subscript(index: Int) -> SectionInfo<Entity>? {
@@ -243,6 +241,19 @@ struct SectionsManager<Entity: MAEntity & Hashable> {
 
 	func filteredEntities(atSection sectionIndex: Int, with filter: ((Entity) -> Bool)) -> [Entity] {
 		return self[sectionIndex]?.filter(by: filter) ?? []
+	}
+
+	func filteredEntities(with filter: @escaping ((Entity) -> Bool)) -> [Entity] {
+		let containSections = self.sections.filter { $0.entities.contains(where: filter) }
+		return containSections.flatMap { $0.filter(by: filter) }
+	}
+
+	func allEntities() -> [Entity]  {
+		return self.sections.flatMap { $0.entities }
+	}
+
+	func firstSectionIndex(withSectionIndexTitle title: String) -> Int {
+		return self.sections.firstIndex { $0.indexTitle == title }!
 	}
 
 }

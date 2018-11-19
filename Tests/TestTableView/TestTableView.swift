@@ -9,25 +9,24 @@
 
 import XCTest
 import Foundation
-import UIKit
 
 protocol TestTableViewProtocol {
 
 	func beginUpdates()
 
-//	func endUpdates()
+	//	func endUpdates()
 
-	func insertRows(at indexPaths: [IndexPath], with animation: UITableView.RowAnimation)
+	func insertRows(at indexPaths: [IndexPath])
 
-	func deleteRows(at indexPaths: [IndexPath], with animation: UITableView.RowAnimation)
+	func deleteRows(at indexPaths: [IndexPath])
 
-	func moveRow(at indexPath: IndexPath, to newIndexPath: IndexPath)
+	func moveRow(at indexPath: IndexPath, to: IndexPath)
 
-	func insertSections(_ sections: IndexSet, with animation: UITableView.RowAnimation)
+	func insertSections(_ sections: IndexSet)
 
-	func deleteSections(_ sections: IndexSet, with animation: UITableView.RowAnimation)
+	func deleteSections(_ sections: IndexSet)
 
-//	func moveSection(_ section: Int, toSection newSection: Int)
+	//	func moveSection(_ section: Int, toSection newSection: Int)
 
 	func performBatchUpdates(_ updates: (() -> Void)?, completion: ((Bool) -> Void)?)
 
@@ -53,12 +52,31 @@ extension TestTableViewDataSource {
 
 }
 
-
+#if canImport(UIKit)
+import UIKit
 
 extension UITableView: TestTableViewProtocol {
 
+	func insertRows(at indexPaths: [IndexPath]) {
+		self.insertRows(at: indexPaths, with: .automatic)
+	}
+
+	func deleteRows(at indexPaths: [IndexPath]) {
+		self.deleteRows(at: indexPaths, with: .automatic)
+	}
+
+	func insertSections(_ sections: IndexSet) {
+		self.insertSections(sections, with: .automatic)
+	}
+
+	func deleteSections(_ sections: IndexSet) {
+		self.deleteSections(sections, with: .automatic)
+	}
 
 }
+
+#endif
+
 
 class TestTableView: XCTestCase, TestTableViewProtocol {
 
@@ -231,11 +249,11 @@ class TestTableView: XCTestCase, TestTableViewProtocol {
 
 	}
 
-	func insertRows(at indexPaths: [IndexPath], with animation: UITableView.RowAnimation) {
+	func insertRows(at indexPaths: [IndexPath]) {
 		self.insertedIndexPaths.append(contentsOf: indexPaths)
 	}
 
-	func deleteRows(at indexPaths: [IndexPath], with animation: UITableView.RowAnimation) {
+	func deleteRows(at indexPaths: [IndexPath]) {
 		self.deletedIndexPaths.append(contentsOf: indexPaths)
 	}
 
@@ -244,11 +262,11 @@ class TestTableView: XCTestCase, TestTableViewProtocol {
 		self.movedOut_IndexPaths.append(indexPath)
 	}
 
-	func insertSections(_ sections: IndexSet, with animation: UITableView.RowAnimation) {
+	func insertSections(_ sections: IndexSet) {
 		self.insertedSections.append(contentsOf: sections)
 	}
 
-	func deleteSections(_ sections: IndexSet, with animation: UITableView.RowAnimation) {
+	func deleteSections(_ sections: IndexSet) {
 		self.deletedSections.append(contentsOf: sections)
 	}
 
@@ -261,7 +279,7 @@ class TestTableView: XCTestCase, TestTableViewProtocol {
 	func updateSectionsErrorMessageFor(inserted: Int, deleted: Int) -> String {
 		let message =
 		"""
-			Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: 'Invalid update: invalid number of sections. The number of sections contained in the table view after the update \(self.numberOfSectionsAfterUpdates ?? 0) must be equal to the number of sections contained in the table view before the update \(self.numberOfSectionsBeforeUpdates ?? 0), plus or minus the number of sections inserted or deleted (\(inserted) inserted, \(deleted) deleted).
+		Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: 'Invalid update: invalid number of sections. The number of sections contained in the table view after the update \(self.numberOfSectionsAfterUpdates ?? 0) must be equal to the number of sections contained in the table view before the update \(self.numberOfSectionsBeforeUpdates ?? 0), plus or minus the number of sections inserted or deleted (\(inserted) inserted, \(deleted) deleted).
 		"""
 		return message
 	}
@@ -272,7 +290,7 @@ class TestTableView: XCTestCase, TestTableViewProtocol {
 
 		let message =
 		"""
-			Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: 'Invalid update: invalid number of rows in section \(section). The number of rows contained in an existing section after the update \(numberOfRowsAfterUpdatesAtSection) must be equal to the number of rows contained in that section before the update \(numberOfRowsBeforeUpdatesAtSection), plus or minus the number of rows inserted or deleted from that section (\(inserted) inserted, \(deleted) deleted) and plus or minus the number of rows moved into or out of that section (\(movedIn) moved in, \(movedOut) moved out).
+		Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: 'Invalid update: invalid number of rows in section \(section). The number of rows contained in an existing section after the update \(numberOfRowsAfterUpdatesAtSection) must be equal to the number of rows contained in that section before the update \(numberOfRowsBeforeUpdatesAtSection), plus or minus the number of rows inserted or deleted from that section (\(inserted) inserted, \(deleted) deleted) and plus or minus the number of rows moved into or out of that section (\(movedIn) moved in, \(movedOut) moved out).
 		"""
 		return message
 	}

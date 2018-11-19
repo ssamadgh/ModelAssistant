@@ -1,11 +1,14 @@
-# ModelAssistant
+![ModelAssistant](HeaderImage/HeaderImage.png)
 
-### An assistant to manage the interactions between view and model
+
+ An assistant to manage the interactions between view and model
 
 [![Swift 4.2](https://img.shields.io/badge/Swift-4.2-orange.svg?style=flat)](https://developer.apple.com/swift/)
 [![license MIT](https://img.shields.io/cocoapods/l/ModelAssistant.svg)](https://github.com/ssamadgh/ModelAssistant/blob/master/LICENSE)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/ModelAssistant.svg)](https://img.shields.io/cocoapods/v/ModelAssistant.svg)
 [![Platform](https://img.shields.io/cocoapods/p/ModelAssistant.svg?style=flat)](https://ssamadgh.github.io/ModelAssistant)
+[![codebeat badge](https://codebeat.co/badges/b9643fd8-9f23-49e6-82ae-f43de233ca8a)](https://codebeat.co/projects/github-com-ssamadgh-modelassistant-master)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Twitter](https://img.shields.io/badge/twitter-@ssamadgh-blue.svg?style=flat)](https://twitter.com/ssamadgh)
 
 ModelAssistant is a mediator between the view and model. This framework is tailored to work in conjunction with views that present collections of objects. 
@@ -78,7 +81,24 @@ pod 'ModelAssistant', '1.0.1' #Swift 4
 ```ruby 
 pod 'ModelAssistant', '1.0.0' #Swift 3
 ```
+### Carthage
 
+[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
+
+You can install Carthage with [Homebrew](https://brew.sh/) using the following command:
+
+```bash
+$ brew update
+$ brew install carthage
+```
+
+To integrate ModelAssistant into your Xcode project using Carthage, specify it in your `Cartfile`:
+
+```ogdl
+github "ssamadgh/ModelAssistant"
+```
+
+Run `carthage update --platform iOS` to build the framework and drag the built `ModelAssistant.framework` into your Xcode project.
 
 ### Manually
 

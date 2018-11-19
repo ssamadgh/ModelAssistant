@@ -6,8 +6,65 @@
 //  Copyright © 2018 Seyed Samad Gholamzadeh. All rights reserved.
 //
 
+
+
 import XCTest
+import Foundation
 @testable import ModelAssistant
+
+
+protocol MAIndexPath {
+
+	var row: Int { get set }
+	var item: Int { get set }
+	var section: Int { get set }
+
+	init(row: Int, section: Int)
+
+	init(item: Int, section: Int)
+
+
+
+}
+
+extension IndexPath: MAIndexPath {
+
+	var row: Int {
+		get {
+			return self[1]
+		}
+		set {
+			self[1] = newValue
+		}
+	}
+
+	var item: Int {
+		get {
+			return self[1]
+		}
+		set {
+			self[1] = newValue
+		}
+	}
+
+	var section: Int {
+		get {
+			return self[0]
+		}
+		set {
+			self[0] = newValue
+		}
+	}
+
+	init(row: Int, section: Int) {
+		self.init(arrayLiteral: section, row)
+	}
+
+	init(item: Int, section: Int) {
+		self.init(arrayLiteral: section, item)
+	}
+
+}
 
 class ModelTestsBasic: ModelTestsBasic0 {
 
@@ -30,7 +87,7 @@ class ModelTestsBasic: ModelTestsBasic0 {
 	}
 
 	func testModelAfterFetch() {
-		var members = self.members!
+		var members = self.members
 
 		if let filter = self.filter {
 			members = members.filter(filter)
@@ -41,7 +98,7 @@ class ModelTestsBasic: ModelTestsBasic0 {
 		}
 
 		XCTAssert(self.model.section(at: 0)!.name == "")
-//		XCTAssert(self.model.section(at: 0)!.entities == members)
+		//		XCTAssert(self.model.section(at: 0)!.entities == members)
 	}
 
 	func testCountOfEntities() {
@@ -109,11 +166,11 @@ class ModelTestsBasic: ModelTestsBasic0 {
 				expectFirstUpdate.fulfill()
 			})
 
-//			self.model.update(at: indexPath, mutate:  { (contact) in
-//				contact.firstName = "Joooooojoooo"
-//			}, completion: {
-//				expectFirstUpdate.fulfill()
-//			})
+			//			self.model.update(at: indexPath, mutate:  { (contact) in
+			//				contact.firstName = "Joooooojoooo"
+			//			}, completion: {
+			//				expectFirstUpdate.fulfill()
+			//			})
 		}
 
 
@@ -294,7 +351,7 @@ class ModelTestsBasic: ModelTestsBasic0 {
 		let afterNumberOfFetchedEntities = self.model.numberOfFetchedEntities
 
 		let difSet = Set(localMembers).subtracting(self.members)
-//		let difSet = localMembers
+		//		let difSet = localMembers
 
 		let difSetCount = difSet.count
 		if let filter = self.filter {
@@ -375,22 +432,22 @@ class ModelTestsBasic: ModelTestsBasic0 {
 	}
 
 	func testInsertAtWrongIndexPath() {
-//		let dic = ["id":232,"first_name":"Jhon","last_name":"AppleSeed","email":"jhon@apple.com","gender":"male","country":"USA"] as [String : Any]
-//		let member = Member(data: dic)!
-//
-//		let section = self.model.numberOfSections - 1
-//		let row = self.model.numberOfEntites(at: section) + 1
-//
-//		let indexPath = IndexPath(row: row, section: section)
-//		self.delegateExpect =  expectation(description: "insert at wrong indexPath Expect")
-//		self.model.insert(member, at: indexPath, completion: nil)
-//		waitForExpectations(timeout: 5, handler: nil)
-//
-//		let memberIndexPath = self.model.indexPath(of: member)
-//
-//		if self.sort == nil {
-//			XCTAssertEqual(memberIndexPath, indexPath)
-//		}
+		//		let dic = ["id":232,"first_name":"Jhon","last_name":"AppleSeed","email":"jhon@apple.com","gender":"male","country":"USA"] as [String : Any]
+		//		let member = Member(data: dic)!
+		//
+		//		let section = self.model.numberOfSections - 1
+		//		let row = self.model.numberOfEntites(at: section) + 1
+		//
+		//		let indexPath = IndexPath(row: row, section: section)
+		//		self.delegateExpect =  expectation(description: "insert at wrong indexPath Expect")
+		//		self.model.insert(member, at: indexPath, completion: nil)
+		//		waitForExpectations(timeout: 5, handler: nil)
+		//
+		//		let memberIndexPath = self.model.indexPath(of: member)
+		//
+		//		if self.sort == nil {
+		//			XCTAssertEqual(memberIndexPath, indexPath)
+		//		}
 	}
 
 	func testMoveEntityFromFirstToLast() {
@@ -599,7 +656,7 @@ class ModelTestsBasic: ModelTestsBasic0 {
 	}
 
 	func testAllEntitiesForExport() {
-		var members = self.members!
+		var members = self.members
 
 		if filter != nil {
 			members = self.members.filter(filter!)

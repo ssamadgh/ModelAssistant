@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>MutableCollectionAlgorithms Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Protocol/MutableCollectionAlgorithms" class="dashAnchor"></a>
+
+    <a title="MutableCollectionAlgorithms Protocol Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          ModelAssistant Docs
+        </a>
+         (91% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/ssamadgh/ModelAssistant">
+            <img class="header-icon" src="../img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fssamadgh%2Fdocsets%2FModelAssistant%2Exml">
+            <img class="header-icon" src="../img/dash.png"/>
+            Install in Dash
+          </a>
+        </p>
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">ModelAssistant Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      MutableCollectionAlgorithms Protocol Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ModelAssistant.html">ModelAssistant</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/ModelAssistantChangeType.html">ModelAssistantChangeType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/IndexPath.html">IndexPath</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/MutableCollection.html">MutableCollection</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/MAEntity.html">MAEntity</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/MASectionInfo.html">MASectionInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ModelAssistantDelegate.html">ModelAssistantDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/MutableCollectionAlgorithms.html">MutableCollectionAlgorithms</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Concatenation.html">Concatenation</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Concatenation/Index.html">– Index</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/RotatedCollection.html">RotatedCollection</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/RotatedCollection/Index.html">– Index</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/SectionInfo.html">SectionInfo</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>MutableCollectionAlgorithms</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MutableCollectionAlgorithms</span> <span class="p">:</span> <span class="kt">MutableCollection</span>
+  <span class="k">where</span> <span class="kt">SubSequence</span> <span class="p">:</span> <span class="kt">MutableCollectionAlgorithms</span></code></pre>
+
+                </div>
+              </div>
+            <p>Provides customization points for <code>MutableCollection</code> algorithms.</p>
+
+<p>If incorporated into the standard library, these requirements would just be
+part of <code>MutableCollection</code>.  In the meantime, you can declare conformance
+of a collection to <code>MutableCollectionAlgorithms</code> to get these customization
+points to be used from other algorithms defined on
+<code>MutableCollectionAlgorithms</code>.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14ModelAssistant27MutableCollectionAlgorithmsP6rotate15shiftingToStart5IndexQzAG_tF"></a>
+                    <a name="//apple_ref/swift/Method/rotate(shiftingToStart:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14ModelAssistant27MutableCollectionAlgorithmsP6rotate15shiftingToStart5IndexQzAG_tF">rotate(shiftingToStart:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Rotates the elements of the collection so that the element
+at <code>middle</code> ends up first.</p>
+<div class="aside aside-complexity">
+    <p class="aside-title">Complexity</p>
+    O(<em>n</em>)
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="k">mutating</span> <span class="kd">func</span> <span class="nf">rotate</span><span class="p">(</span><span class="n">shiftingToStart</span> <span class="nv">middle</span><span class="p">:</span> <span class="kt">Index</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Index</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The new index of the element that was first
+pre-rotation.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2018 <a class="link" href="https://github.com/ssamadgh/ModelAssistant.git" target="_blank" rel="external">Seyed Samad Gholamzadeh</a>. All rights reserved. (Last updated: 2018-11-01)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>
