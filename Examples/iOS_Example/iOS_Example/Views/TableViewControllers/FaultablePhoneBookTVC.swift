@@ -39,7 +39,6 @@ extension Contact: MAFaultable {
 		
 	}
 	
-	
 }
 
 class FaultablePhoneBookTVC: BasicTableViewController {

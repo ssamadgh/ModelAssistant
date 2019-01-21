@@ -1,7 +1,9 @@
 # Advanced Usage
 
+- [MAFaultable](#mafaultable)
 - [MAEntitiy](#maentitiy)
 - [ModelAssistant](#modelassistant)
+
 
 
 ## MAEntitiy
@@ -71,6 +73,46 @@ If you are using swift 4.2 or higher, implement this method:
 		//...
 	}
 ```
+
+## MAFaultable
+
+Use This protocol to give fault ability to your entities.
+Fault means some  entity properties be nill and fire means to retrieve the value of those properties.
+
+The usage of this protocol is when you want to release the part of memory which being occupied by some of entity properties. This protocol at times you  have to large datas in your entity is really useful to have control on memory usage.
+
+To use this protocol just adopt your entity to this protocol. Here is an example of adopting MAFaultable protocol:
+
+```swift
+extension Contact: MAFaultable {
+	
+	var isFoult: Bool {
+		
+		get {
+			return self.image == nil
+		}
+		
+		set(newValue) {
+			
+		}
+	}
+	
+	mutating func fault() {
+		if !self.isFoult {
+			self.image = nil
+		}
+	}
+	
+	mutating func fire() {
+		self.image = getImageFromLocalAddress()
+	}
+	
+}
+```
+In this example we want to set the value of image property to nil as the fault method is called. In the `isFault` property we check if the image is nil or not and return the appropriate Bool value. In the fire method we retrieve image data from local address.
+
+Now you can call this methods by using `func fault(at sectionIndex: Int, in range: Range<Int>)` and `func fire(at sectionIndex: Int, in range: Range<Int>)` methods of modelAssistant and get them the indexes of entities you want make them fault or fire.
+
 
 ## ModelAssistant
 

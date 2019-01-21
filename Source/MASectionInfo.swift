@@ -182,14 +182,14 @@ public struct SectionInfo<Entity: MAEntity & Hashable>: MASectionInfo, Hashable,
 }
 
 extension SectionInfo where Entity: MAFaultable {
-	
+
 	mutating func fault(in range: Range<Int>) {
 		range.forEach{ self.entities[$0].fault() }
 	}
-	
+
 	mutating func fire(in range: Range<Int>) {
 		range.forEach{ self.entities[$0].fire() }
 	}
-	
+
 }
 

@@ -486,9 +486,9 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 		self.addModelAssistantOperation(with: BlockOperation(block: { (finished) in
 
 			self.dispatchQueue.async(flags: .barrier) {
-				
+
 				self.entitiesUniqueValue.insert(newEntity.uniqueValue)
-				
+
 				let sectionIndex = indexPath.section
 				let diff = self.sectionsManager.numberOfSections - sectionIndex
 
@@ -1028,7 +1028,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 				let section = self.sectionsManager.remove(at: sectionIndex)
 				self.entitiesUniqueValue.subtract(section.entities.compactMap {$0.uniqueValue})
-				
+
 				self.modelAssistant(didChange: section, atSectionIndex: sectionIndex, for: .delete, newSectionIndex: nil)
 				removedSection = section
 				finished()
@@ -1543,19 +1543,45 @@ public enum ModelAssistantChangeType {
 }
 
 
+//MARK: - Remove methods
+
 extension ModelAssistant where Entity: MAFaultable {
-	
+
+	/**
+	Faults the entities at the specified section and specified range of indexes.
+
+	This method calls the entities fault() method. Use this method to make the memory free at the low memory state or other situations which needs to The amount of memory usage
+	be controlled.
+
+	- Parameters:
+		- sectionIndex: The section of the range of indexes to be fault.
+		- range:
+		The range of the indexes at the specified section to be fault.
+
+	*/
 	public func fault(at sectionIndex: Int, in range: Range<Int>) {
 		self.dispatchQueue.async(flags: .barrier) {
 		self.sectionsManager.fault(at: sectionIndex, in: range)
 		}
 	}
-	
+
+	/**
+	Faults the entities at the specified section and specified range of indexes.
+
+	This method calls the entities fire() method if their isFault property is true.
+	Use this method to retrieve entities that are in fault state.
+
+	- Parameters:
+		- sectionIndex: The section of the range of indexes to be fire.
+		- range:
+		The range of the indexes at the specified section to be fire.
+
+	*/
 	public func fire(at sectionIndex: Int, in range: Range<Int>) {
 		self.dispatchQueue.async(flags: .barrier) {
 		self.sectionsManager.fire(at: sectionIndex, in: range)
 		}
 	}
-	
+
 }
 

@@ -1,7 +1,8 @@
-![ModelAssistant](HeaderImage/HeaderImage.png)
 
+<p align="center"><img src="HeaderImage/HeaderImage.png" width="800" height="200"/>
 
  An assistant to manage the interactions between view and model
+
 
 [![Swift 4.2](https://img.shields.io/badge/Swift-4.2-orange.svg?style=flat)](https://developer.apple.com/swift/)
 [![license MIT](https://img.shields.io/cocoapods/l/ModelAssistant.svg)](https://github.com/ssamadgh/ModelAssistant/blob/master/LICENSE)
@@ -11,10 +12,12 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Twitter](https://img.shields.io/badge/twitter-@ssamadgh-blue.svg?style=flat)](https://twitter.com/ssamadgh)
 
+
 ModelAssistant is a mediator between the view and model. This framework is tailored to work in conjunction with views that present collections of objects. 
 These views typically expect their data source to present results as a list of sections made up of rows. ModelAssistant can efficiently analyze model objects and categorize them in sections. In addition it updates adopted view to its delegate, based on model objects changes.
 
 - [Features](#features)
+- [What's New](#what's-New)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md)
@@ -36,7 +39,13 @@ These views typically expect their data source to present results as a list of s
 - [x] Compatible with all design patterns
 - [x] **Easy to use**
 - [x] **Thread safe**
+- [x] **Fault Ability**
 - [x] [Complete Documentation](https://ssamadgh.github.io/ModelAssistant/)
+
+##What's New:
+###Version 1.0.8:
+- **Fault Ability:**  Now you can make entities in an specific range fault or fire them. For more information see [Advanced Usage](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/AdvancedUsage.md#mafaultable)
+
 
 ## Requirements
 

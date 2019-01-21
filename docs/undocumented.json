@@ -23,35 +23,42 @@
     },
     {
       "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/MASectionInfo.swift",
-      "line": 48,
+      "line": 31,
+      "symbol": "MASectionInfo.Entity",
+      "symbol_kind": "source.lang.swift.decl.associatedtype",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/MASectionInfo.swift",
+      "line": 53,
       "symbol": "MASectionInfo.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/MASectionInfo.swift",
-      "line": 52,
+      "line": 57,
       "symbol": "MASectionInfo.<(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/MASectionInfo.swift",
-      "line": 57,
+      "line": 62,
       "symbol": "MASectionInfo.hash(into:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/MASectionInfo.swift",
-      "line": 78,
+      "line": 73,
       "symbol": "SectionInfo",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/MASectionInfo.swift",
-      "line": 92,
+      "line": 87,
       "symbol": "SectionInfo.isEmpty",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -65,7 +72,7 @@
     },
     {
       "file": "/Volumes/My_Datas/Xcode_Data/Published_Apps_Backup/ModelAssistant/Source/ModelAssistant.swift",
-      "line": 1448,
+      "line": 1450,
       "symbol": "ModelAssistantDelegate",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"

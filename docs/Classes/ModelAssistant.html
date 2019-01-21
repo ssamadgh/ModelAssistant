@@ -90,6 +90,9 @@
                 <a class="nav-group-task-link" href="../Protocols/MAEntity.html">MAEntity</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/MAFaultable.html">MAFaultable</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/MASectionInfo.html">MASectionInfo</a>
               </li>
               <li class="nav-group-task">
@@ -2324,13 +2327,146 @@ If index path does not describe a valid index path in the model assistant, retur
                 </li>
               </ul>
             </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Remove%20methods2"></a>
+                <a name="//apple_ref/swift/Section/Remove methods" class="dashAnchor"></a>
+                <a href="#/Remove%20methods2">
+                  <h3 class="section-name">Remove methods</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14ModelAssistantAACA2A11MAFaultableRzrlE5fault2at2inySi_SnySiGtF"></a>
+                    <a name="//apple_ref/swift/Method/fault(at:in:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14ModelAssistantAACA2A11MAFaultableRzrlE5fault2at2inySi_SnySiGtF">fault(at:in:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Faults the entities at the specified section and specified range of indexes.</p>
+
+<p>This method calls the entities fault() method. Use this method to make the memory free at the low memory state or other situations which needs to The amount of memory usage
+be controlled.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">fault</span><span class="p">(</span><span class="n">at</span> <span class="nv">sectionIndex</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="k">in</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">Range</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sectionIndex</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The section of the range of indexes to be fault.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The range of the indexes at the specified section to be fault.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14ModelAssistantAACA2A11MAFaultableRzrlE4fire2at2inySi_SnySiGtF"></a>
+                    <a name="//apple_ref/swift/Method/fire(at:in:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14ModelAssistantAACA2A11MAFaultableRzrlE4fire2at2inySi_SnySiGtF">fire(at:in:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Faults the entities at the specified section and specified range of indexes.</p>
+
+<p>This method calls the entities fire() method if their isFault property is true.
+Use this method to retrieve entities that are in fault state.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">fire</span><span class="p">(</span><span class="n">at</span> <span class="nv">sectionIndex</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="k">in</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">Range</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sectionIndex</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The section of the range of indexes to be fire.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The range of the indexes at the specified section to be fire.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
         </section>
 
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2018 <a class="link" href="https://github.com/ssamadgh/ModelAssistant.git" target="_blank" rel="external">Seyed Samad Gholamzadeh</a>. All rights reserved. (Last updated: 2018-11-01)</p>
+      <p>&copy; 2019 <a class="link" href="https://github.com/ssamadgh/ModelAssistant.git" target="_blank" rel="external">Seyed Samad Gholamzadeh</a>. All rights reserved. (Last updated: 2019-01-21)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

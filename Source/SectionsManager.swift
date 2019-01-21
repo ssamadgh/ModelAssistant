@@ -260,13 +260,13 @@ struct SectionsManager<Entity: MAEntity & Hashable> {
 
 
 extension SectionsManager where Entity: MAFaultable {
-	
+
 	mutating func fault(at sectionIndex: Int, in range: Range<Int>) {
 		self.sections[sectionIndex].fault(in: range)
 	}
-	
+
 	mutating func fire(at sectionIndex: Int, in range: Range<Int>) {
 		self.sections[sectionIndex].fire(in: range)
 	}
-	
+
 }
