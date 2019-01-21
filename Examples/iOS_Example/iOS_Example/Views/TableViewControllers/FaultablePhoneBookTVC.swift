@@ -16,6 +16,32 @@ Abstract:
 import UIKit
 import ModelAssistant
 
+extension Contact: MAFaultable {
+	
+	var isFoult: Bool {
+		
+		get {
+			return self.image == nil
+		}
+		
+		set(newValue) {
+			
+		}
+	}
+	
+	mutating func fault() {
+		if !self.isFoult {
+			self.image = nil
+		}
+	}
+	
+	mutating func fire() {
+		
+	}
+	
+	
+}
+
 class FaultablePhoneBookTVC: BasicTableViewController {
 	
 	var manager: ModelAssistantDelegateManager!
@@ -40,6 +66,17 @@ class FaultablePhoneBookTVC: BasicTableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		print(indexPath.row, separator: "\n")
 		return super.tableView(tableView, cellForRowAt: indexPath)
+	}
+	
+	override func didReceiveMemoryWarning() {
+		super.didReceiveMemoryWarning()
+		print("Memory Warning")
+		if let visibleRows = self.tableView.indexPathsForVisibleRows, !visibleRows.isEmpty {
+			let sectionIndex = visibleRows.first!.section
+			let firstRow = visibleRows.first!.row
+			
+			self.assistant.fault(at: sectionIndex, in: 0..<firstRow)
+		}
 	}
 	
 }

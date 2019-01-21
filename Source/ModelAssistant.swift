@@ -1541,3 +1541,21 @@ public enum ModelAssistantChangeType {
 	/// Specifies that an entity was changed.
 	case update
 }
+
+
+extension ModelAssistant where Entity: MAFaultable {
+	
+	public func fault(at sectionIndex: Int, in range: Range<Int>) {
+		self.dispatchQueue.async(flags: .barrier) {
+		self.sectionsManager.fault(at: sectionIndex, in: range)
+		}
+	}
+	
+	public func fire(at sectionIndex: Int, in range: Range<Int>) {
+		self.dispatchQueue.async(flags: .barrier) {
+		self.sectionsManager.fire(at: sectionIndex, in: range)
+		}
+	}
+	
+}
+
