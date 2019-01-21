@@ -28,6 +28,8 @@ import Foundation
 ///A protocol that defines the interface for section objects vended by a fetched results controller.
 public protocol MASectionInfo {
 
+	associatedtype Entity: MAEntity, Hashable
+
 	///The number of entities (rows) in the section.
 	var numberOfEntities: Int { get }
 
@@ -40,6 +42,9 @@ public protocol MASectionInfo {
 	This is used when displaying the index.
 	*/
 	var indexTitle: String?  { get }
+
+	///The array of entities in the section.
+	var entities: [Entity]  { get}
 
 }
 
@@ -65,17 +70,7 @@ public extension MASectionInfo {
 
 }
 
-///A protocol that defines the interface for section objects vended by a fetched results controller.
-protocol GMASectionInfo: MASectionInfo {
-
-	associatedtype Entity: MAEntity, Hashable
-
-	///The array of entities in the section.
-	var entities: [Entity]  { get set}
-
-}
-
-public struct SectionInfo<Entity: MAEntity & Hashable>: GMASectionInfo, Hashable, Comparable {
+public struct SectionInfo<Entity: MAEntity & Hashable>: MASectionInfo, Hashable, Comparable {
 
 	public internal (set) var entities: [Entity] = []
 

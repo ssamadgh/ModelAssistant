@@ -12,7 +12,7 @@ protocol ModelAssistantProtocol {
 
 	associatedtype Entity: MAEntity & Hashable
 
-	associatedtype Section: GMASectionInfo
+	associatedtype Section: MASectionInfo
 
 	associatedtype SortEntities
 
