@@ -46,7 +46,7 @@ public protocol MAFaultable {
 	When you need to check whether your entity is fault, use the isFoult property.
 	Fault means some of the entity properties might be nil and needs to be retrieve.
 	*/
-	var isFoult: Bool { get set }
+	var isFault: Bool { get set }
 
 	/**
 	Use this method to set value of some of entiy properties to nil.

@@ -18,7 +18,7 @@ import ModelAssistant
 
 extension Contact: MAFaultable {
 	
-	var isFoult: Bool {
+	var isFault: Bool {
 		
 		get {
 			return self.image == nil
@@ -30,7 +30,7 @@ extension Contact: MAFaultable {
 	}
 	
 	mutating func fault() {
-		if !self.isFoult {
+		if !self.isFault {
 			self.image = nil
 		}
 	}
