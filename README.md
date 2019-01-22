@@ -42,8 +42,8 @@ These views typically expect their data source to present results as a list of s
 - [x] **Fault Ability**
 - [x] [Complete Documentation](https://ssamadgh.github.io/ModelAssistant/)
 
-##What's New:
-###Version 1.0.8:
+## What's New:
+### Version 1.0.8:
 - **Fault Ability:**  Now you can make entities in an specific range fault or fire them. For more information see [Advanced Usage](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/AdvancedUsage.md#mafaultable)
 
 
