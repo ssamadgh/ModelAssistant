@@ -101,7 +101,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 	//MARK: - Properties
 	/// A DispatchQueue property that used to make implemention of methods thread safe.
-	private let dispatchQueue = DispatchQueue(label: "com.model.ConcirrentGCD.DispatchQueue", attributes: DispatchQueue.Attributes.concurrent)
+	private let dispatchQueue = DispatchQueue(label: "com.model.ConcirrentGCD.DispatchQueue")
 
 	/// An operation queue property that used to Prevents overlaping of delegate methods
 	private let operationQueue = AOperationQueue()
@@ -362,26 +362,6 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 	//MARK: - IndexPath Retrieval
 
-	private func indexPath(for entity: Entity, synchronous: Bool) -> IndexPath? {
-		let sectionName = self.hasSection ? entity[self.sectionKey!] : nil
-		var indexPath: IndexPath?
-
-		func getIndexPath() {
-			indexPath = self.sectionsManager.indexPath(of: entity, withSectionName: sectionName)
-		}
-
-		if synchronous {
-			self.dispatchQueue.sync {
-				getIndexPath()
-			}
-		}
-		else {
-			getIndexPath()
-		}
-
-		return indexPath
-	}
-
 	/**
 	Returns the index path of a given entity.
 
@@ -392,22 +372,14 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 	The index path of entity in the model assistant, or nil if entity could not be found.
 	*/
 	public func indexPath(for entity: Entity) -> IndexPath? {
-		return self.indexPath(for: entity, synchronous: true)
-	}
-
-	/**
-	Returns the index path of a given entity.
-
-	- Parameter entity:
-	An entity in the model assistant.
-
-	- Returns:
-	The index path of entity in the model assistant, or nil if entity could not be found.
-
-	- Important: This method is not synchronous
-	*/
-	private func privateIndexPath(for entity: Entity) -> IndexPath? {
-		return indexPath(for: entity, synchronous: false)
+		let sectionName = self.hasSection ? entity[self.sectionKey!] : nil
+		var indexPath: IndexPath?
+		
+		self.dispatchQueue.sync {
+			indexPath = self.sectionsManager.indexPath(of: entity, withSectionName: sectionName)
+		}
+		
+		return indexPath
 	}
 
 	/**
@@ -422,42 +394,28 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 	- Important: This method is not synchronous
 	*/
 	public func indexPathForEntity(withUniqueValue uniqueValue: Int) -> IndexPath? {
-		return indexPathForEntity(withUniqueValue: uniqueValue, synchronous: true)
-	}
-
-
-	private func privateIndexPathForEntity(withUniqueValue uniqueValue: Int) -> IndexPath? {
-		return indexPathForEntity(withUniqueValue: uniqueValue, synchronous: false)
-	}
-
-	private func indexPathForEntity(withUniqueValue uniqueValue: Int, synchronous: Bool) -> IndexPath? {
 		var indexPath: IndexPath?
-
+		
 		func getIndexPath() {
 			if self.entitiesUniqueValue.contains(uniqueValue) {
-
+				
 				if let sectionIndex = self.sectionsManager.sections.firstIndex(where: { $0.entities.contains { $0.uniqueValue == uniqueValue } }) {
-
+					
 					let section = self.sectionsManager.sections[sectionIndex]
-
+					
 					if let row = section.entities.firstIndex(where: { $0.uniqueValue == uniqueValue }) {
 						indexPath = IndexPath(row: row, section: sectionIndex)
 					}
-
+					
 				}
-
+				
 			}
 		}
-
-		if synchronous {
-			self.dispatchQueue.sync {
-				getIndexPath()
-			}
-		}
-		else {
+		
+		self.dispatchQueue.sync {
 			getIndexPath()
 		}
-
+		
 		return indexPath
 	}
 
@@ -485,7 +443,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 		self.addModelAssistantOperation(with: BlockOperation(block: { (finished) in
 
-			self.dispatchQueue.async(flags: .barrier) {
+			self.dispatchQueue.async {
 
 				self.entitiesUniqueValue.insert(newEntity.uniqueValue)
 
@@ -684,7 +642,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 		}
 
 		self.addModelAssistantOperation(with: BlockOperation(block: { (finished) in
-			self.dispatchQueue.async(flags: .barrier) {
+			self.dispatchQueue.async {
 				inserMethod()
 				finished()
 			}
@@ -773,7 +731,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 		if isUserDriven {
 			self.addModelAssistantOperation(with: BlockOperation(block: { (finished) in
-				self.dispatchQueue.async(flags: .barrier) {
+				self.dispatchQueue.async {
 					moveMethod()
 					finished()
 				}
@@ -784,7 +742,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 		}
 		else {
 			self.addModelAssistantOperation(with: BlockOperation(block: { (finished) in
-				self.dispatchQueue.async(flags: .barrier) {
+				self.dispatchQueue.async {
 					moveMethod()
 					finished()
 				}
@@ -842,7 +800,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 	*/
 	public func update(_ entity: Entity, mutate: @escaping ((inout Entity) -> Void), completion: (() -> Void)?) {
 
-		guard let indexPath = self.privateIndexPath(for: entity) else {
+		guard let indexPath = self.indexPath(for: entity) else {
 			fatalError("entity is Out of access")
 		}
 
@@ -853,19 +811,23 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 	private func update(_ entity: Entity, at indexPath: IndexPath, mutate: @escaping ((inout Entity) -> Void), completion: (() -> Void)?) {
 		let isMainThread = Thread.isMainThread
 
+		func update(_ entity: Entity, at indexPath: IndexPath) {
+			var mutateEntity = entity
+			
+			mutate(&mutateEntity)
+			self.dispatchQueue.sync {
+				self.sectionsManager[indexPath] = mutateEntity
+			}
+			self.modelAssistant(didChange: [mutateEntity], at: [indexPath], for: .update, newIndexPaths: nil)
+		}
+
+		
 		self.addModelAssistantOperation(with: BlockOperation(block: { (finished) in
-			self.dispatchQueue.async(flags: .barrier) {
+//			self.dispatchQueue.async {
 
-				func update(_ entity: Entity, at indexPath: IndexPath) {
-					var mutateEntity = entity
 
-					mutate(&mutateEntity)
-					self.sectionsManager[indexPath] = mutateEntity
-					self.modelAssistant(didChange: [mutateEntity], at: [indexPath], for: .update, newIndexPaths: nil)
-				}
-
-				let afterIndexPath = self.privateIndexPath(for: entity)
-				let afterEntity = self.sectionsManager[indexPath]
+				let afterIndexPath = self.indexPath(for: entity)
+				let afterEntity = self[indexPath]
 
 				if afterEntity == entity, afterIndexPath == indexPath {
 					//State 1: The given entity not changed and not moved
@@ -882,7 +844,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 						if let movedIndexPath = afterIndexPath {
 							//State 3: The given entity has moved
-							let movedEntity = self.sectionsManager[movedIndexPath]!
+							let movedEntity = self[movedIndexPath]!
 							// Continue update with entity
 							update(movedEntity, at: movedIndexPath)
 
@@ -890,8 +852,8 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 						else {
 							//State 4:
 							// Maybe its main infos changed, let find it with its unique value
-							if let movedIndexPath = self.privateIndexPathForEntity(withUniqueValue: entity.uniqueValue) {
-								let movedEntity = self.sectionsManager[movedIndexPath]!
+							if let movedIndexPath = self.indexPathForEntity(withUniqueValue: entity.uniqueValue) {
+								let movedEntity = self[movedIndexPath]!
 								// Continue update with entity
 								update(movedEntity, at: movedIndexPath)
 							}
@@ -902,14 +864,13 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 				finished()
 
-			}
+//			}
 
 		}), callDelegate: false) {
 			self.checkIsMainThread(isMainThread) {
 				completion?()
 			}
 		}
-
 
 	}
 
@@ -932,7 +893,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 		var removedEntity: Entity!
 
 		self.addModelAssistantOperation(with: BlockOperation(block: { (finished) in
-			self.dispatchQueue.async(flags: .barrier) {
+			self.dispatchQueue.async {
 
 				let sectionIndex = indexPath.section
 
@@ -985,7 +946,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 	//
 	//
 	//		self.addModelOperation(with: BlockOperation(block: { (finished) in
-	//			self.dispatchQueue.async(flags: .barrier) {
+	//			self.dispatchQueue.async {
 	//
 	//				let entitiesToRemove = self.sectionsManager[sectionIndex]?.entities ?? []
 	//				let lastIndex = entitiesToRemove.isEmpty ? 0 : entitiesToRemove.count-1
@@ -1024,7 +985,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 		var removedSection: SectionInfo<Entity>!
 
 		self.addModelAssistantOperation(with: BlockOperation(block: { (finished) in
-			self.dispatchQueue.async(flags: .barrier) {
+			self.dispatchQueue.async {
 
 				let section = self.sectionsManager.remove(at: sectionIndex)
 				self.entitiesUniqueValue.subtract(section.entities.compactMap {$0.uniqueValue})
@@ -1058,7 +1019,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 		let isMainThread = Thread.isMainThread
 
 		self.addModelAssistantOperation(with: BlockOperation(block: { (finished) in
-			self.dispatchQueue.async(flags: .barrier) {
+			self.dispatchQueue.async {
 				self.entitiesUniqueValue.removeAll()
 				self.sectionsManager.removeAll()
 				finished()
@@ -1095,7 +1056,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 		}
 
 		self.addModelAssistantOperation(with: BlockOperation(block: { (finished) in
-			self.dispatchQueue.async(flags: .barrier) {
+			self.dispatchQueue.async {
 				sortMethod()
 				finished()
 			}
@@ -1133,7 +1094,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 
 		self.addModelAssistantOperation(with: BlockOperation(block: { (finished) in
-			self.dispatchQueue.async(flags: .barrier) {
+			self.dispatchQueue.async {
 				if lastIndex == 0 {
 					sortMethod(forSectionAt: firstIndex)
 				}
@@ -1182,7 +1143,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 		let isMainThread = Thread.isMainThread
 
 		self.addModelAssistantOperation(with: BlockOperation(block: { (finished) in
-			self.dispatchQueue.async(flags: .barrier) {
+			self.dispatchQueue.async {
 				let oldSections = self.sectionsManager.sections
 
 				let result = self.sectionsManager.sortSections(by: sort)
@@ -1560,7 +1521,7 @@ extension ModelAssistant where Entity: MAFaultable {
 
 	*/
 	public func fault(at sectionIndex: Int, in range: Range<Int>) {
-		self.dispatchQueue.async(flags: .barrier) {
+		self.dispatchQueue.async {
 		self.sectionsManager.fault(at: sectionIndex, in: range)
 		}
 	}
@@ -1578,7 +1539,7 @@ extension ModelAssistant where Entity: MAFaultable {
 
 	*/
 	public func fire(at sectionIndex: Int, in range: Range<Int>) {
-		self.dispatchQueue.async(flags: .barrier) {
+		self.dispatchQueue.async {
 		self.sectionsManager.fire(at: sectionIndex, in: range)
 		}
 	}

@@ -58,9 +58,10 @@ class ThreadSafePhoneBookTVC: BasicTableViewController {
 		}
 		
 		self.dispatchQueue.async {
-			contact.firstName = "Chris"
-			contact.phone = "9342432432"
-			self.assistant.insert(contact, at: firstIndexPath, completion: nil)
+			var contact2 = contact
+			contact2.firstName = "Chris"
+			contact2.phone = "9342432432"
+			self.assistant.insert(contact2, at: firstIndexPath, completion: nil)
 		}
 		
 		self.dispatchQueue.async {
