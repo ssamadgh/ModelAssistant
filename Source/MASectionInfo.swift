@@ -50,11 +50,11 @@ public protocol MASectionInfo {
 
 public extension MASectionInfo {
 
-	static public  func ==(lhs: Self, rhs: Self) -> Bool {
+	static func ==(lhs: Self, rhs: Self) -> Bool {
 		return lhs.name == rhs.name
 	}
 
-	static public func <(lhs: Self, rhs: Self) -> Bool {
+	static func <(lhs: Self, rhs: Self) -> Bool {
 		return lhs.name < rhs.name
 	}
 
@@ -165,7 +165,7 @@ public struct SectionInfo<Entity: MAEntity & Hashable>: MASectionInfo, Hashable,
 		let oldEntities = self.entities
 		self.entities.sort(by: sort)
 		let oldIndexes = Array(0..<oldEntities.count)
-		let newIndexes = oldEntities.map { self.entities.index(of: $0) }
+		let newIndexes = oldEntities.map { self.entities.firstIndex(of: $0) }
 		return (oldIndexes: oldIndexes, newIndexes:newIndexes as! [Int])
 	}
 

@@ -374,11 +374,11 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 	public func indexPath(for entity: Entity) -> IndexPath? {
 		let sectionName = self.hasSection ? entity[self.sectionKey!] : nil
 		var indexPath: IndexPath?
-		
+
 		self.dispatchQueue.sync {
 			indexPath = self.sectionsManager.indexPath(of: entity, withSectionName: sectionName)
 		}
-		
+
 		return indexPath
 	}
 
@@ -395,27 +395,27 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 	*/
 	public func indexPathForEntity(withUniqueValue uniqueValue: Int) -> IndexPath? {
 		var indexPath: IndexPath?
-		
+
 		func getIndexPath() {
 			if self.entitiesUniqueValue.contains(uniqueValue) {
-				
+
 				if let sectionIndex = self.sectionsManager.sections.firstIndex(where: { $0.entities.contains { $0.uniqueValue == uniqueValue } }) {
-					
+
 					let section = self.sectionsManager.sections[sectionIndex]
-					
+
 					if let row = section.entities.firstIndex(where: { $0.uniqueValue == uniqueValue }) {
 						indexPath = IndexPath(row: row, section: sectionIndex)
 					}
-					
+
 				}
-				
+
 			}
 		}
-		
+
 		self.dispatchQueue.sync {
 			getIndexPath()
 		}
-		
+
 		return indexPath
 	}
 
@@ -813,7 +813,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 		func update(_ entity: Entity, at indexPath: IndexPath) {
 			var mutateEntity = entity
-			
+
 			mutate(&mutateEntity)
 			self.dispatchQueue.sync {
 				self.sectionsManager[indexPath] = mutateEntity
@@ -821,7 +821,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 			self.modelAssistant(didChange: [mutateEntity], at: [indexPath], for: .update, newIndexPaths: nil)
 		}
 
-		
+
 		self.addModelAssistantOperation(with: BlockOperation(block: { (finished) in
 //			self.dispatchQueue.async {
 

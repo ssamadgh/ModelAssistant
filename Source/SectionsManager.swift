@@ -235,7 +235,7 @@ struct SectionsManager<Entity: MAEntity & Hashable> {
 		let oldSections = self.sections
 		self.sections.sort(by: sort)
 		let oldIndexes = Array(0..<oldSections.count)
-		let newIndexes = oldSections.map { self.sections.index(of: $0) }
+		let newIndexes = oldSections.map { self.sections.firstIndex(of: $0) }
 		return (oldIndexes: oldIndexes, newIndexes:newIndexes as! [Int])
 	}
 

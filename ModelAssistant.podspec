@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
 #
 	s.name = 'ModelAssistant'
 	
-	s.version = '1.0.8.2'
+	s.version = '1.0.8.3'
 	s.license = { :type => "MIT", :file => 'LICENSE' }
 	s.summary = 'A Mediator Between Model (or Server) and View'
 
@@ -16,5 +16,5 @@ Pod::Spec.new do |s|
 	s.ios.deployment_target = '10.0'
 
 	s.source_files = 'Source/**/*.swift'
-	s.swift_version = '4.2'
+	s.swift_version = '5'
 end

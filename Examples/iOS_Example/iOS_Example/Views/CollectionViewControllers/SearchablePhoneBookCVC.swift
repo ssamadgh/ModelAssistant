@@ -119,7 +119,7 @@ class SearchablePhoneBookCVC: SimplePhoneBookCVC {
 	override func downloaded<T>(_ image: UIImage?, forEntity entity: T) {
 
 		if isSearching {
-			if let index = self.searchResults.index(of: entity as! Contact) {
+			if let index = self.searchResults.firstIndex(of: entity as! Contact) {
 				self.searchResults[index].image = image
 				let indexPath = IndexPath(row: index, section: 0)
 				if let cell = self.collectionView?.cellForItem(at: indexPath) {

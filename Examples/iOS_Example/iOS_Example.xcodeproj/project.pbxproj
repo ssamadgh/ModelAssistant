@@ -508,16 +508,16 @@
 				TargetAttributes = {
 					E4069F10213BE2FF009FCD7A = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 					};
 					E4069F24213BE300009FCD7A = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						TestTargetID = E4069F10213BE2FF009FCD7A;
 					};
 					E4069F2F213BE300009FCD7A = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						TestTargetID = E4069F10213BE2FF009FCD7A;
 					};
 				};
@@ -835,7 +835,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.samad.iOS-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -855,7 +855,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.samad.iOS-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -875,7 +875,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.samad.iOS-ExampleTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS_Example.app/iOS_Example";
 			};
@@ -896,7 +896,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.samad.iOS-ExampleTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS_Example.app/iOS_Example";
 			};
@@ -916,7 +916,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.samad.iOS-ExampleUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = iOS_Example;
 			};
@@ -936,7 +936,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.samad.iOS-ExampleUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = iOS_Example;
 			};
