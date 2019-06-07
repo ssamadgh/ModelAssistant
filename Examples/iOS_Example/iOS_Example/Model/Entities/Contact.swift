@@ -43,8 +43,8 @@ struct Contact: CustomMAEntity & Hashable, Codable {
 		self.imageURLString = data["avatar"] as? String
 	}
 	
-	mutating func update(with newFetechedEntity: MAEntity) {
-		let entity = newFetechedEntity as! Contact
+	mutating func update(with newFetechedEntity: Contact) {
+		let entity = newFetechedEntity
 		self.firstName = entity.firstName
 		self.lastName = entity.lastName
 	}

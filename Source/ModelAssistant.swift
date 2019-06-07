@@ -202,9 +202,9 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 	///The sections for the fetched objects.
 	var sections: [SectionInfo<Entity>] {
 		var sections: [SectionInfo<Entity>]!
-		self.dispatchQueue.sync {
+//        self.dispatchQueue.sync {
 			sections = self.sectionsManager.sections
-		}
+//        }
 		return sections
 	}
 
@@ -212,7 +212,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 
 	/// A set of uniqueValues of fetched entities, that used to check whether the object is new or assistant has one copy of it!
-	private var entitiesUniqueValue: Set<Int> = []
+	private var entitiesUniqueValue: Set<Entity.UniqueValue> = []
 
 	/**
 	A Boolean value indicating whether the assistant is empty.
@@ -393,7 +393,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 	- Important: This method is not synchronous
 	*/
-	public func indexPathForEntity(withUniqueValue uniqueValue: Int) -> IndexPath? {
+	public func indexPathForEntity(withUniqueValue uniqueValue: Entity.UniqueValue) -> IndexPath? {
 		var indexPath: IndexPath?
 
 		func getIndexPath() {
