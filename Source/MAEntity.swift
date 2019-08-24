@@ -84,12 +84,15 @@ Every object the going to be used by model assistant should adopt to this protoc
 */
 public protocol MAEntity {
 
+    /// A Hashable Unique type
+    associatedtype UniqueValue: Hashable
+
 	/**
 	A value that is unique for each entity.
 
 	This property is used by model assistant to distinguish unique entities. Use this property for returning one of entity properties that is unique for all fetched entities.
 	*/
-	var uniqueValue: Int { get }
+	var uniqueValue: UniqueValue { get }
 
 //	init?(data: [String: Any])
 
@@ -113,7 +116,7 @@ public protocol MAEntity {
 
 	- Parameter newFetechedEntity: The given new entity that is same as this entity.
 	*/
-	mutating func update(with newFetechedEntity: MAEntity)
+	mutating func update(with newFetechedEntity: Self)
 
 
 }

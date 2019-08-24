@@ -35,8 +35,8 @@ struct Member: MAEntity, Hashable, Codable {
 		self.country = data["country"] as? String ?? ""
 	}
 	
-	mutating func update(with newFetechedEntity: MAEntity) {
-		let entity = newFetechedEntity as! Member
+	mutating func update(with newFetechedEntity: Member) {
+		let entity = newFetechedEntity
 		self.firstName = entity.firstName
 		self.lastName = entity.lastName
 		self.email = entity.email

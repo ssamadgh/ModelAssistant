@@ -53,8 +53,8 @@ extension ContactEntity: MAEntity {
 		return nil
 	}
 
-	public func update(with newFetechedEntity: MAEntity) {
-		let entity = newFetechedEntity as! ContactEntity
+	public func update(with newFetechedEntity: ContactEntity) {
+		let entity = newFetechedEntity
 		self.firstName = entity.firstName
 		self.lastName = entity.lastName
 
