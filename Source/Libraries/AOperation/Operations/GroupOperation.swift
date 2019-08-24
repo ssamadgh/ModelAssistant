@@ -111,7 +111,9 @@ extension GroupOperation: AOperationQueueDelegate {
         if operation === finishingOperation {
             internalQueue.isSuspended = true
 			self.serialQueue.sync {
-				finish(aggregatedErrors)
+				self.serialQueue.sync {
+					finish(aggregatedErrors)
+				}
 			}
         }
         else if operation !== startingOperation {
