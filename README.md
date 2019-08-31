@@ -162,7 +162,7 @@ Design Pattern  | ModelAssistant Position
 MVC | Controller
 MVP  | Presenter
 MVVM  | ViewModel
-VIPER  | Interactor
+VIPER  | Presenter
 
 
 ## Credits
