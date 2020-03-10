@@ -25,7 +25,7 @@ class PaginationPhoneBookCVC: SectionedPhoneBookCVC {
 		self.assistant.fetchBatchSize = 20
 	}
 	
-	override func fetchEntities() {
+	override func fetchEntities(completion: (() -> Void)? = nil) {
 		self.resourceFileName = "PhoneBook_0"
 		super.fetchEntities()
 	}

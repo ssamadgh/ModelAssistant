@@ -18,8 +18,6 @@ class CoreDataBasicTVC: UITableViewController, ImageDownloaderDelegate {
 	var assistant: ModelAssistant<ContactEntity>!
 	var resourceFileName: String = "PhoneBook"
 	
-	var manager: ModelAssistantDelegateManager!
-
 	var context: NSManagedObjectContext!
 
 	override func viewDidLoad() {
@@ -37,9 +35,7 @@ class CoreDataBasicTVC: UITableViewController, ImageDownloaderDelegate {
 	}
 	
 	func configureModelAssistant(sectionKey: String?) {
-		self.assistant = ModelAssistant<ContactEntity>(sectionKey: sectionKey)
-		self.manager = ModelAssistantDelegateManager(controller: self)
-		self.assistant.delegate = self.manager
+		self.assistant = ModelAssistant<ContactEntity>(collectionController: self, sectionKey: sectionKey)
 	}
 	
 	func fetchEntities() {

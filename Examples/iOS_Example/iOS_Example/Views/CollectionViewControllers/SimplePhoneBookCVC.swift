@@ -17,7 +17,6 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 	
 	var assistant: ModelAssistant<Contact>!
 
-	var manager: ModelAssistantDelegateManager!
 	var resourceFileName: String = "PhoneBook"
 	
 	init() {
@@ -48,18 +47,16 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
     }
 	
 	func configureModelAssistant(sectionKey: String?) {
-		self.assistant = ModelAssistant<Contact>(sectionKey: sectionKey)
-		self.manager = ModelAssistantDelegateManager(controller: self)
-		self.assistant.delegate = self.manager
-
+		self.assistant = ModelAssistant<Contact>(collectionController: self, sectionKey: sectionKey)
 	}
 
-	func fetchEntities() {
+	func fetchEntities(completion: (() -> Void)? = nil) {
 		let url = Bundle.main.url(forResource: resourceFileName, withExtension: "json")!
 		let members: [Contact] = JsonService.getEntities(fromURL: url)
 		
 		self.assistant.fetch(members) {
 			DispatchQueue.main.async {
+				completion?()
 				self.collectionView?.reloadData()
 			}
 		}
@@ -134,10 +131,10 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 		if !self.assistant.isEmpty {
 			let visiblePaths = self.collectionView?.indexPathsForVisibleItems ?? []
 			for indexPath in visiblePaths {
-				let entity = self.assistant[indexPath]
-				if entity?.image == nil // avoid the app icon download if the app already has an icon
+				
+				if let entity = self.assistant[indexPath], entity.image == nil // avoid the app icon download if the app already has an icon
 				{
-					self.startIconDownload(entity!, for: indexPath)
+					self.startIconDownload(entity, for: indexPath)
 				}
 			}
 		}

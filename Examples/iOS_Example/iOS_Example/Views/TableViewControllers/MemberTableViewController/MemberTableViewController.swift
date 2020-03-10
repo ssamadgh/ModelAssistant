@@ -12,7 +12,6 @@ import ModelAssistant
 class MemberTableViewController: UITableViewController {
 	
 	var assistant: ModelAssistant<Member>!
-	var manager: ModelAssistantDelegateManager!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,13 +38,9 @@ class MemberTableViewController: UITableViewController {
 	}
 	
 	func configureModelAssistant(sectionKey: String?) {
-		self.assistant = ModelAssistant<Member>(sectionKey: "country")
+		self.assistant = ModelAssistant<Member>(collectionController: self, sectionKey: "country")
 		self.assistant.sortSections = { $0.name < $1.name }
 		self.assistant.sortEntities = { $0.firstName < $1.firstName }
-
-		self.manager = ModelAssistantDelegateManager(controller: self)
-		self.assistant.delegate = self.manager
-
 	}
 	
 	func fetchEntities() {

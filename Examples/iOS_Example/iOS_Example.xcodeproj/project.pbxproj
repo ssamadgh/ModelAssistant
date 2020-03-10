@@ -14,9 +14,6 @@
 		E4069F2A213BE300009FCD7A /* iOS_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F29213BE300009FCD7A /* iOS_ExampleTests.swift */; };
 		E4069F35213BE300009FCD7A /* iOS_ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F34213BE300009FCD7A /* iOS_ExampleUITests.swift */; };
 		E4069F53213BE6A2009FCD7A /* SimplePhoneBookCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F52213BE6A2009FCD7A /* SimplePhoneBookCVC.swift */; };
-		E4069F55213BE70E009FCD7A /* ModelAssistantDelegateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F54213BE70E009FCD7A /* ModelAssistantDelegateManager.swift */; };
-		E4069F57213C3B78009FCD7A /* UITableViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F56213C3B78009FCD7A /* UITableViewController+Extension.swift */; };
-		E4069F5F213C6753009FCD7A /* UICollectionViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F5E213C6753009FCD7A /* UICollectionViewController+Extension.swift */; };
 		E4069F64213C68CC009FCD7A /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F63213C68CC009FCD7A /* MainTableViewController.swift */; };
 		E4069F66213C7087009FCD7A /* SimplePhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F65213C7087009FCD7A /* SimplePhoneBookTVC.swift */; };
 		E4069F69213C70BB009FCD7A /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4069F68213C70BB009FCD7A /* Contact.swift */; };
@@ -35,12 +32,12 @@
 		E4873547214D31E100BDA8C9 /* ContactDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E4873545214D31E100BDA8C9 /* ContactDataModel.xcdatamodeld */; };
 		E487354D214D582D00BDA8C9 /* ContactEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E487354B214D582D00BDA8C9 /* ContactEntity+CoreDataClass.swift */; };
 		E487354E214D582D00BDA8C9 /* ContactEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E487354C214D582D00BDA8C9 /* ContactEntity+CoreDataProperties.swift */; };
-		E491D6E4215DE1E400888CF2 /* ModelAssistant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E495A8FA215C7A63009CBB3E /* ModelAssistant.framework */; };
-		E491D6E5215DE1E400888CF2 /* ModelAssistant.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E495A8FA215C7A63009CBB3E /* ModelAssistant.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E4B30771214117030034F169 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B3076E214117030034F169 /* ImageDownloader.swift */; };
 		E4B30773214117600034F169 /* CustomMAEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B30772214117600034F169 /* CustomMAEntity.swift */; };
 		E4BDA8C1217362E5003F551A /* FaultablePhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BDA8BE217362E5003F551A /* FaultablePhoneBookTVC.swift */; };
 		E4BDA8C32173648F003F551A /* 1000_PhoneBook.json in Resources */ = {isa = PBXBuildFile; fileRef = E4BDA8C22173648F003F551A /* 1000_PhoneBook.json */; };
+		E4E2C79A24175B2400BA394C /* ModelAssistant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4E2C79924175B2400BA394C /* ModelAssistant.framework */; };
+		E4E2C79B24175B2400BA394C /* ModelAssistant.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E4E2C79924175B2400BA394C /* ModelAssistant.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E4EC83502143DDDD0063B4BB /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC834E2143DDDD0063B4BB /* CollectionViewCell.swift */; };
 		E4EC83512143DDDD0063B4BB /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4EC834F2143DDDD0063B4BB /* CollectionViewCell.xib */; };
 		E4EC83582143EAC50063B4BB /* PhoneBook_5.json in Resources */ = {isa = PBXBuildFile; fileRef = E4EC83522143EAC50063B4BB /* PhoneBook_5.json */; };
@@ -81,27 +78,6 @@
 			remoteGlobalIDString = E4069F10213BE2FF009FCD7A;
 			remoteInfo = iOS_Example;
 		};
-		E491D6E6215DE1E400888CF2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E495A8F4215C7A63009CBB3E /* ModelAssistant.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = E4480DEC2156D3980052DC6D;
-			remoteInfo = "ModelAssistant iOS";
-		};
-		E495A8F9215C7A63009CBB3E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E495A8F4215C7A63009CBB3E /* ModelAssistant.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E4480DED2156D3980052DC6D;
-			remoteInfo = "ModelAssistant iOS";
-		};
-		E495A8FB215C7A63009CBB3E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E495A8F4215C7A63009CBB3E /* ModelAssistant.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E459218B215A9C7000E6DF7C;
-			remoteInfo = "ModelAssistant iOS Tests";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -111,7 +87,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E491D6E5215DE1E400888CF2 /* ModelAssistant.framework in Embed Frameworks */,
+				E4E2C79B24175B2400BA394C /* ModelAssistant.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -132,9 +108,6 @@
 		E4069F34213BE300009FCD7A /* iOS_ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_ExampleUITests.swift; sourceTree = "<group>"; };
 		E4069F36213BE300009FCD7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E4069F52213BE6A2009FCD7A /* SimplePhoneBookCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplePhoneBookCVC.swift; sourceTree = "<group>"; };
-		E4069F54213BE70E009FCD7A /* ModelAssistantDelegateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelAssistantDelegateManager.swift; sourceTree = "<group>"; };
-		E4069F56213C3B78009FCD7A /* UITableViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewController+Extension.swift"; sourceTree = "<group>"; };
-		E4069F5E213C6753009FCD7A /* UICollectionViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewController+Extension.swift"; sourceTree = "<group>"; };
 		E4069F63213C68CC009FCD7A /* MainTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewController.swift; sourceTree = "<group>"; };
 		E4069F65213C7087009FCD7A /* SimplePhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplePhoneBookTVC.swift; sourceTree = "<group>"; };
 		E4069F68213C70BB009FCD7A /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
@@ -153,11 +126,11 @@
 		E4873546214D31E100BDA8C9 /* ContactDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ContactDataModel.xcdatamodel; sourceTree = "<group>"; };
 		E487354B214D582D00BDA8C9 /* ContactEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E487354C214D582D00BDA8C9 /* ContactEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		E495A8F4215C7A63009CBB3E /* ModelAssistant.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ModelAssistant.xcodeproj; path = ../../ModelAssistant.xcodeproj; sourceTree = "<group>"; };
 		E4B3076E214117030034F169 /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 		E4B30772214117600034F169 /* CustomMAEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMAEntity.swift; sourceTree = "<group>"; };
 		E4BDA8BE217362E5003F551A /* FaultablePhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaultablePhoneBookTVC.swift; sourceTree = "<group>"; };
 		E4BDA8C22173648F003F551A /* 1000_PhoneBook.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 1000_PhoneBook.json; sourceTree = "<group>"; };
+		E4E2C79924175B2400BA394C /* ModelAssistant.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ModelAssistant.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4EC834E2143DDDD0063B4BB /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		E4EC834F2143DDDD0063B4BB /* CollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
 		E4EC83522143EAC50063B4BB /* PhoneBook_5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PhoneBook_5.json; sourceTree = "<group>"; };
@@ -188,7 +161,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E491D6E4215DE1E400888CF2 /* ModelAssistant.framework in Frameworks */,
+				E4E2C79A24175B2400BA394C /* ModelAssistant.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,7 +190,6 @@
 				E4069F33213BE300009FCD7A /* iOS_ExampleUITests */,
 				E4069F12213BE2FF009FCD7A /* Products */,
 				E44127A22150B8CC00248152 /* Frameworks */,
-				E495A8F4215C7A63009CBB3E /* ModelAssistant.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -285,6 +257,7 @@
 		E44127A22150B8CC00248152 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E4E2C79924175B2400BA394C /* ModelAssistant.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -318,15 +291,6 @@
 			path = CoreDataEntity;
 			sourceTree = "<group>";
 		};
-		E495A8F5215C7A63009CBB3E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E495A8FA215C7A63009CBB3E /* ModelAssistant.framework */,
-				E495A8FC215C7A63009CBB3E /* ModelAssistant iOS Tests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		E4EC834321424F510063B4BB /* Pagination Phone Book */ = {
 			isa = PBXGroup;
 			children = (
@@ -353,7 +317,6 @@
 		E4EC836C214431E90063B4BB /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				E4069F54213BE70E009FCD7A /* ModelAssistantDelegateManager.swift */,
 				E4EC837421443D4D0063B4BB /* JsonService.swift */,
 				E4B3076E214117030034F169 /* ImageDownloader.swift */,
 			);
@@ -400,7 +363,6 @@
 		E4EC837E2144AFE20063B4BB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E4EC83DE21464A530063B4BB /* Extensions */,
 				E4069F63213C68CC009FCD7A /* MainTableViewController.swift */,
 				E4EC837A2144A9FB0063B4BB /* TableViewControllers */,
 				E4EC837121443A8B0063B4BB /* CollectionViewControllers */,
@@ -429,15 +391,6 @@
 			path = CollectionViewCell;
 			sourceTree = "<group>";
 		};
-		E4EC83DE21464A530063B4BB /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				E4069F56213C3B78009FCD7A /* UITableViewController+Extension.swift */,
-				E4069F5E213C6753009FCD7A /* UICollectionViewController+Extension.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -453,7 +406,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				E491D6E7215DE1E400888CF2 /* PBXTargetDependency */,
 			);
 			name = iOS_Example;
 			productName = iOS_Example;
@@ -533,12 +485,6 @@
 			mainGroup = E4069F08213BE2FF009FCD7A;
 			productRefGroup = E4069F12213BE2FF009FCD7A /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = E495A8F5215C7A63009CBB3E /* Products */;
-					ProjectRef = E495A8F4215C7A63009CBB3E /* ModelAssistant.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				E4069F10213BE2FF009FCD7A /* iOS_Example */,
@@ -547,23 +493,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		E495A8FA215C7A63009CBB3E /* ModelAssistant.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ModelAssistant.framework;
-			remoteRef = E495A8F9215C7A63009CBB3E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		E495A8FC215C7A63009CBB3E /* ModelAssistant iOS Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "ModelAssistant iOS Tests.xctest";
-			remoteRef = E495A8FB215C7A63009CBB3E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		E4069F0F213BE2FF009FCD7A /* Resources */ = {
@@ -614,7 +543,6 @@
 				E45CD46B215188040062143C /* IndexedPhoneBookCVC.swift in Sources */,
 				E4EC83CA2145948B0063B4BB /* MutablePhoneBookTVC.swift in Sources */,
 				E4644CE92150358300841265 /* CoreDataMutablePhoneBookTVC.swift in Sources */,
-				E4069F55213BE70E009FCD7A /* ModelAssistantDelegateManager.swift in Sources */,
 				E4873544214D319900BDA8C9 /* CoreDataController.swift in Sources */,
 				E4EC83DD214642360063B4BB /* MutablePhoneBookCVC.swift in Sources */,
 				E45CD4632151438C0062143C /* IndexedPhoneBookTVC.swift in Sources */,
@@ -623,7 +551,6 @@
 				E4EC8370214437680063B4BB /* SortablePhoneBookTVC.swift in Sources */,
 				E4480DDE2156BF760052DC6D /* MemberTableViewController.swift in Sources */,
 				E4EC83DB21463FD50063B4BB /* SearchablePhoneBookCVC.swift in Sources */,
-				E4069F5F213C6753009FCD7A /* UICollectionViewController+Extension.swift in Sources */,
 				E4B30771214117030034F169 /* ImageDownloader.swift in Sources */,
 				E4EC83E1214687FE0063B4BB /* ThreadSafePhoneBookTVC.swift in Sources */,
 				E4EC83612143EDE20063B4BB /* SectionedPhoneBookCVC.swift in Sources */,
@@ -631,7 +558,6 @@
 				E4EC83D5214638C90063B4BB /* SortablePhoneBookCVC.swift in Sources */,
 				E4069F64213C68CC009FCD7A /* MainTableViewController.swift in Sources */,
 				E424DD8E213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift in Sources */,
-				E4069F57213C3B78009FCD7A /* UITableViewController+Extension.swift in Sources */,
 				E4069F53213BE6A2009FCD7A /* SimplePhoneBookCVC.swift in Sources */,
 				E4BDA8C1217362E5003F551A /* FaultablePhoneBookTVC.swift in Sources */,
 				E4EC83502143DDDD0063B4BB /* CollectionViewCell.swift in Sources */,
@@ -678,11 +604,6 @@
 			isa = PBXTargetDependency;
 			target = E4069F10213BE2FF009FCD7A /* iOS_Example */;
 			targetProxy = E4069F31213BE300009FCD7A /* PBXContainerItemProxy */;
-		};
-		E491D6E7215DE1E400888CF2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "ModelAssistant iOS";
-			targetProxy = E491D6E6215DE1E400888CF2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

@@ -60,17 +60,21 @@ extension SimplePhoneBookTVC: ModelAssistantDelegate {
 		}
 	}
 	
-	func modelAssistant<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelAssistantChangeType, newSectionIndex: Int?) where Entity : MAEntity, Entity : Hashable {
+	func modelAssistant<Entity>(didChange sectionInfos: [SectionInfo<Entity>], atSectionIndexes sectionIndexes: [Int]?, for type: ModelAssistantChangeType, newSectionIndexes: [Int]?) where Entity : MAEntity, Entity : Hashable {
 		
 		switch type {
 		case .insert:
-			self.tableView.insertSections(IndexSet(integer: newSectionIndex!), with: .bottom)
+			self.tableView.insertSections(IndexSet(newSectionIndexes!), with: .bottom)
 			
 		case .delete:
-			self.tableView.deleteSections(IndexSet(integer: newSectionIndex!), with: .bottom)
+			self.tableView.deleteSections(IndexSet(newSectionIndexes!), with: .bottom)
 			
 		case .move:
-			self.tableView.moveSection(sectionIndex!, toSection: newSectionIndex!)
+			for i in sectionIndexes! {
+				let oldIndex = sectionIndexes![i]
+				let newIndexes = newSectionIndexes![i]
+				self.tableView.moveSection(oldIndex, toSection: newIndexes)
+			}
 			
 		case .update:
 			break

@@ -19,9 +19,7 @@ import ModelAssistant
 class ThreadSafePhoneBookTVC: BasicTableViewController {
 	
 	private let dispatchQueue = DispatchQueue(label: "com.ThreadSafePhoneBookTVC.ConcirrentGCD.DispatchQueue", attributes: DispatchQueue.Attributes.concurrent)
-	
-	var manager: ModelAssistantDelegateManager!
-	
+		
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.title = "Thread Safe Phone Book"
@@ -33,9 +31,7 @@ class ThreadSafePhoneBookTVC: BasicTableViewController {
 	}
 	
 	override func configureModelAssistant(sectionKey: String?) {
-		super.configureModelAssistant(sectionKey: sectionKey)
-		self.manager = ModelAssistantDelegateManager(controller: self)
-		self.assistant.delegate = self.manager
+		self.assistant = ModelAssistant(collectionController: self, sectionKey: sectionKey)
 	}
 	
 	@objc func doMagicBarButtonAction(_ sender: UIBarButtonItem) {

@@ -22,6 +22,9 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		E4198C10240BACC30074A7EE /* UICollectionViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4198C0E240BACC30074A7EE /* UICollectionViewController+Extension.swift */; };
+		E4198C11240BACC30074A7EE /* UITableViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4198C0F240BACC30074A7EE /* UITableViewController+Extension.swift */; };
+		E4198C13240BACD90074A7EE /* ModelAssistantDelegateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4198C12240BACD90074A7EE /* ModelAssistantDelegateManager.swift */; };
 		E42353682180CA6E00888C92 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E42353672180CA6E00888C92 /* Foundation.framework */; };
 		E438414A21A2A9BA007E576D /* MAFaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E438414921A2A9BA007E576D /* MAFaultable.swift */; };
 		E4480DFE2156D3980052DC6D /* ModelAssistant.h in Headers */ = {isa = PBXBuildFile; fileRef = E4480DF02156D3980052DC6D /* ModelAssistant.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -84,9 +87,33 @@
 			remoteGlobalIDString = E4480DEC2156D3980052DC6D;
 			remoteInfo = "ModelAssistant iOS";
 		};
+		E4E2C793241742C700BA394C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4E2C78D241742C700BA394C /* iOS_Example.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E4069F11213BE2FF009FCD7A;
+			remoteInfo = iOS_Example;
+		};
+		E4E2C795241742C700BA394C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4E2C78D241742C700BA394C /* iOS_Example.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E4069F25213BE300009FCD7A;
+			remoteInfo = iOS_ExampleTests;
+		};
+		E4E2C797241742C700BA394C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4E2C78D241742C700BA394C /* iOS_Example.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E4069F30213BE300009FCD7A;
+			remoteInfo = iOS_ExampleUITests;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E4198C0E240BACC30074A7EE /* UICollectionViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionViewController+Extension.swift"; sourceTree = "<group>"; };
+		E4198C0F240BACC30074A7EE /* UITableViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewController+Extension.swift"; sourceTree = "<group>"; };
+		E4198C12240BACD90074A7EE /* ModelAssistantDelegateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelAssistantDelegateManager.swift; sourceTree = "<group>"; };
 		E42353672180CA6E00888C92 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		E438414921A2A9BA007E576D /* MAFaultable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MAFaultable.swift; sourceTree = "<group>"; };
 		E4480DED2156D3980052DC6D /* ModelAssistant.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ModelAssistant.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,6 +169,7 @@
 		E459218F215A9C7000E6DF7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E4D517F72184FB9E00950FE0 /* Algorithms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Algorithms.swift; sourceTree = "<group>"; };
 		E4D5181721856B2500950FE0 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
+		E4E2C78D241742C700BA394C /* iOS_Example.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iOS_Example.xcodeproj; path = Examples/iOS_Example/iOS_Example.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +203,7 @@
 		E4480DE12156D32A0052DC6D = {
 			isa = PBXGroup;
 			children = (
+				E4E2C78D241742C700BA394C /* iOS_Example.xcodeproj */,
 				E4480E5B2156D80F0052DC6D /* Source */,
 				E4480E3E2156D80F0052DC6D /* Tests */,
 				E459218C215A9C7000E6DF7C /* ModelAssistant iOS Tests */,
@@ -275,6 +304,7 @@
 			children = (
 				E4480E5C2156D80F0052DC6D /* ModelAssistant.swift */,
 				E4480E5D2156D80F0052DC6D /* ModelAssistantProtocol.swift */,
+				E4198C12240BACD90074A7EE /* ModelAssistantDelegateManager.swift */,
 				E4480E5E2156D80F0052DC6D /* Extenseions */,
 				E4480E602156D80F0052DC6D /* Libraries */,
 				E4480E782156D80F0052DC6D /* ModelAssistantOperation.swift */,
@@ -290,6 +320,8 @@
 		E4480E5E2156D80F0052DC6D /* Extenseions */ = {
 			isa = PBXGroup;
 			children = (
+				E4198C0E240BACC30074A7EE /* UICollectionViewController+Extension.swift */,
+				E4198C0F240BACC30074A7EE /* UITableViewController+Extension.swift */,
 				E4480E5F2156D80F0052DC6D /* IndexPath+Extensions.swift */,
 				E4D517F72184FB9E00950FE0 /* Algorithms.swift */,
 				E4D5181721856B2500950FE0 /* Array+Extensions.swift */,
@@ -367,6 +399,16 @@
 				E459218F215A9C7000E6DF7C /* Info.plist */,
 			);
 			path = "ModelAssistant iOS Tests";
+			sourceTree = "<group>";
+		};
+		E4E2C78E241742C700BA394C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E4E2C794241742C700BA394C /* iOS_Example.app */,
+				E4E2C796241742C700BA394C /* iOS_ExampleTests.xctest */,
+				E4E2C798241742C700BA394C /* iOS_ExampleUITests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -452,6 +494,12 @@
 			mainGroup = E4480DE12156D32A0052DC6D;
 			productRefGroup = E4480DEE2156D3980052DC6D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E4E2C78E241742C700BA394C /* Products */;
+					ProjectRef = E4E2C78D241742C700BA394C /* iOS_Example.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				E4480DEC2156D3980052DC6D /* ModelAssistant iOS */,
@@ -460,6 +508,30 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		E4E2C794241742C700BA394C /* iOS_Example.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = iOS_Example.app;
+			remoteRef = E4E2C793241742C700BA394C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E4E2C796241742C700BA394C /* iOS_ExampleTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = iOS_ExampleTests.xctest;
+			remoteRef = E4E2C795241742C700BA394C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E4E2C798241742C700BA394C /* iOS_ExampleUITests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = iOS_ExampleUITests.xctest;
+			remoteRef = E4E2C797241742C700BA394C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		E4480DEB2156D3980052DC6D /* Resources */ = {
@@ -547,6 +619,7 @@
 				E4480E992156D80F0052DC6D /* NSLock+MyOperations.swift in Sources */,
 				E4480EA52156D80F0052DC6D /* OperationObserver.swift in Sources */,
 				E4480EA72156D80F0052DC6D /* BlockObserver.swift in Sources */,
+				E4198C13240BACD90074A7EE /* ModelAssistantDelegateManager.swift in Sources */,
 				E4480E9A2156D80F0052DC6D /* Foundation.Operation+Operation.swift in Sources */,
 				E4480E9C2156D80F0052DC6D /* GroupOperation.swift in Sources */,
 				E4480E962156D80F0052DC6D /* ModelAssistantProtocol.swift in Sources */,
@@ -557,6 +630,8 @@
 				E438414A21A2A9BA007E576D /* MAFaultable.swift in Sources */,
 				E4480EA12156D80F0052DC6D /* ReachabilityCondition.swift in Sources */,
 				E4480EAE2156D80F0052DC6D /* MAEntity.swift in Sources */,
+				E4198C11240BACC30074A7EE /* UITableViewController+Extension.swift in Sources */,
+				E4198C10240BACC30074A7EE /* UICollectionViewController+Extension.swift in Sources */,
 				E4480EA32156D80F0052DC6D /* OperationCondition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

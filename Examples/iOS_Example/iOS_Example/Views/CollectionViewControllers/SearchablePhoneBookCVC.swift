@@ -11,12 +11,14 @@ import ModelAssistant
 
 class SearchablePhoneBookCVC: SimplePhoneBookCVC {
 	
-	var searchResults: [Contact] = []
-	
-	var isSearching: Bool = false
+	var searchAssistant: ModelAssistant<Contact>!
+
+	let isSearching: Bool = false
 	
 	var searchController: UISearchController!
 
+	var allEntities: [Contact] = []
+	
 	override init() {
 		super.init()
 		(self.collectionViewLayout as! UICollectionViewFlowLayout).headerReferenceSize.height = 40
@@ -48,6 +50,12 @@ class SearchablePhoneBookCVC: SimplePhoneBookCVC {
 		self.assistant.sortSections = { $0.name < $1.name }
 	}
 	
+	override func fetchEntities(completion: (() -> Void)? = nil) {
+		super.fetchEntities {
+			self.allEntities = self.assistant.getAllEntities(sortedBy: nil)
+		}
+	}
+	
 	func configureSearchController() {
 		self.searchController = UISearchController(searchResultsController: nil)
 		self.searchController.searchResultsUpdater = self
@@ -64,6 +72,16 @@ class SearchablePhoneBookCVC: SimplePhoneBookCVC {
 		
 		// We want the search bar visible all the time.
 		navigationItem.hidesSearchBarWhenScrolling = false
+		
+		self.searchAssistant = ModelAssistant(collectionController: self, sectionKey: nil)
+		self.searchAssistant.sortEntities = { $0.firstName < $1.firstName }
+		self.searchAssistant.sortSections = { $0.name < $1.name }
+		self.searchAssistant.fetch([]) {
+			if self.isSearching {
+				self.collectionView.reloadData()
+			}
+		}
+		
 	}
 	
 	// MARK: UICollectionViewDataSource
@@ -71,7 +89,7 @@ class SearchablePhoneBookCVC: SimplePhoneBookCVC {
 	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 		let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as! CollectionReusableView
 		
-		let section = self.assistant[indexPath.section]
+		let section = isSearching ? self.searchAssistant[indexPath.section] : self.assistant[indexPath.section]
 		
 		headerView.titleLabel.text = section?.name
 		
@@ -80,18 +98,20 @@ class SearchablePhoneBookCVC: SimplePhoneBookCVC {
 
 
 	override func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return self.isSearching ? 1 : super.numberOfSections(in: collectionView)
+		return self.isSearching ? self.searchAssistant.numberOfSections : super.numberOfSections(in: collectionView)
 	}
 	
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		// #warning Incomplete implementation, return the number of items
-		return self.isSearching ? self.searchResults.count : super.collectionView(collectionView, numberOfItemsInSection: section)
+		return self.isSearching ? self.searchAssistant.numberOfEntites(at: section) : super.collectionView(collectionView, numberOfItemsInSection: section)
 	}
 	
 	override func configure(_ cell: UICollectionViewCell, at indexPath: IndexPath) {
 		if let cell  = cell as? CollectionViewCell {
-			let entity = self.isSearching ? self.searchResults[indexPath.row] : self.assistant[indexPath]
+			let entity = self.isSearching ? self.searchAssistant![indexPath] : self.assistant[indexPath]
 			
+			if entity == nil { return }
+
 			cell.titleLabel.text = entity?.fullName
 			
 			// Only load cached images; defer new downloads until scrolling ends
@@ -119,13 +139,11 @@ class SearchablePhoneBookCVC: SimplePhoneBookCVC {
 	override func downloaded<T>(_ image: UIImage?, forEntity entity: T) {
 
 		if isSearching {
-			if let index = self.searchResults.firstIndex(of: entity as! Contact) {
-				self.searchResults[index].image = image
-				let indexPath = IndexPath(row: index, section: 0)
-				if let cell = self.collectionView?.cellForItem(at: indexPath) {
-					self.configure(cell, at: indexPath)
-				}
-			}
+			let entity = entity as! Contact
+			self.searchAssistant.update(entity, mutate: { (mutateContact) in
+				mutateContact.image = image
+			}, completion: nil)
+
 		}
 		
 		super.downloaded(image, forEntity: entity)
@@ -137,25 +155,30 @@ class SearchablePhoneBookCVC: SimplePhoneBookCVC {
 extension SearchablePhoneBookCVC: UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
 	
 	func updateSearchResults(for searchController: UISearchController) {
+		
 		if let text = searchController.searchBar.text {
 			if text.isEmpty {
-				self.searchResults = self.assistant.getAllEntities(sortedBy: nil)
+//				let allEntities = self.assistant.getAllEntities(sortedBy: nil)
+				
+				self.assistant.formIntersection(allEntities, completion: nil)
 			}
 			else {
-				self.searchResults = self.assistant.filteredEntities(with: { $0.fullName.contains(text) })
+				let entities = self.allEntities.filter { $0.fullName.contains(text) }
+				self.assistant.formIntersection(entities, completion: nil)
 			}
-			self.collectionView?.reloadData()
 		}
 	}
 	
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-		self.isSearching = false
-		(self.collectionViewLayout as! UICollectionViewFlowLayout).headerReferenceSize.height = 40
+//		self.isSearching = false
+//		(self.collectionViewLayout as! UICollectionViewFlowLayout).headerReferenceSize.height = 40
+//		self.assistant.insert(allEntities, completion: nil)
 	}
 	
 	func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-		self.isSearching = true
-		(self.collectionViewLayout as! UICollectionViewFlowLayout).headerReferenceSize.height = 0
+//		self.isSearching = true
+//		(self.collectionViewLayout as! UICollectionViewFlowLayout).headerReferenceSize.height = 0
+//		self.assistant.remove(allEntities, completion: nil)
 	}
 	
 }

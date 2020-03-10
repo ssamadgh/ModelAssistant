@@ -16,7 +16,10 @@ import ModelAssistant
 
 class SearchablePhoneBookTVC: SimplePhoneBookTVC {
 	
-	var searchResults: [Contact] = []
+	var allEntities: [Contact] = []
+	
+	var searchAssistant: ModelAssistant<Contact>!
+	
 	
 	var isSearching: Bool = false
 	
@@ -30,11 +33,17 @@ class SearchablePhoneBookTVC: SimplePhoneBookTVC {
 	
 	override func configureModelAssistant(sectionKey: String?) {
 		self.configureSearchController()
-		super.configureModelAssistant(sectionKey: "firstName")
-		self.assistant.delegate = self
+		self.assistant = ModelAssistant<Contact>(collectionController: self, sectionKey: sectionKey)
+
 		self.assistant.sortEntities = { $0.firstName < $1.firstName }
 		self.assistant.sortSections = { $0.name < $1.name }
 		
+	}
+	
+	override func fetchEntities(completion: (() -> Void)? = nil) {
+		super.fetchEntities {
+			self.allEntities = self.assistant.getAllEntities(sortedBy: nil)
+		}
 	}
 	
 	func configureSearchController() {
@@ -53,32 +62,37 @@ class SearchablePhoneBookTVC: SimplePhoneBookTVC {
 		
 		// We want the search bar visible all the time.
 		navigationItem.hidesSearchBarWhenScrolling = false
+
 	}
+	
 	
 	
 	// MARK: - Table view data source
 	
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		// #warning Incomplete implementation, return the number of sections
-		return self.isSearching ? 1 : super.numberOfSections(in: tableView)
+		return self.isSearching ? self.searchAssistant.numberOfSections : super.numberOfSections(in: tableView)
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		// #warning Incomplete implementation, return the number of rows
-		return self.isSearching ? self.searchResults.count : super.tableView(tableView, numberOfRowsInSection: section)
+		let numberOfRows = self.assistant.numberOfEntites(at: section)
+		return numberOfRows
 	}
 	
 	
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		let section = self.assistant[section]
-		return isSearching ? nil : section?.name
+		let section = isSearching ? self.searchAssistant[section] : self.assistant[section]
+		return section?.name
 	}
 	
 	override func configure(_ cell: UITableViewCell, at indexPath: IndexPath) {
 		
-		let entity = self.isSearching ? self.searchResults[indexPath.row] : self.assistant[indexPath]
+		let entity = self.assistant[indexPath]
+		if entity == nil { return }
+		
 		// Configure the cell...
-		cell.textLabel?.text =  entity?.fullName
+		cell.textLabel!.text =  entity!.fullName
 		
 		// Only load cached images; defer new downloads until scrolling ends
 		if entity?.image == nil
@@ -99,17 +113,25 @@ class SearchablePhoneBookTVC: SimplePhoneBookTVC {
 		
 	}
 	
+	override func update(_ cell: UITableViewCell, at indexPath: IndexPath) {
+		self.configure(cell, at: indexPath)
+	}
+	
 	// called by our ImageDownloader when an icon is ready to be displayed
 	override func downloaded<T>(_ image: UIImage?, forEntity entity: T) {
-
+		
 		if isSearching {
-			if let index = self.searchResults.firstIndex(of: entity as! Contact) {
-				self.searchResults[index].image = image
-				let indexPath = IndexPath(row: index, section: 0)
-				if let cell = self.tableView.cellForRow(at: indexPath) {
-					self.configure(cell, at: indexPath)
-				}
-			}
+			let entity = entity as! Contact
+			self.assistant.update(entity, mutate: { (mutateContact) in
+				mutateContact.image = image
+			}, completion: nil)
+			//			if let index = self.searchResults.firstIndex(of: entity as! Contact) {
+			//				self.searchResults[index].image = image
+			//				let indexPath = IndexPath(row: index, section: 0)
+			//				if let cell = self.tableView.cellForRow(at: indexPath) {
+			//					self.configure(cell, at: indexPath)
+			//				}
+			//			}
 		}
 		
 		super.downloaded(image, forEntity: entity)
@@ -120,23 +142,29 @@ class SearchablePhoneBookTVC: SimplePhoneBookTVC {
 extension SearchablePhoneBookTVC: UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
 	
 	func updateSearchResults(for searchController: UISearchController) {
+
 		if let text = searchController.searchBar.text {
 			if text.isEmpty {
-				self.searchResults = self.assistant.getAllEntities(sortedBy: nil)
+//				let allEntities = self.assistant.getAllEntities(sortedBy: nil)
+
+				self.assistant.formIntersection(allEntities, completion: nil)
 			}
 			else {
-				self.searchResults = self.assistant.filteredEntities(with: { $0.fullName.contains(text) })
+
+				let entities = self.allEntities.filter { $0.fullName.contains(text) }
+				self.assistant.formIntersection(entities, completion: nil)
+
 			}
 			self.tableView.reloadData()
 		}
 	}
 	
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-		self.isSearching = false
+//		self.isSearching = false
 	}
 	
 	func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-		self.isSearching = true
+//		self.isSearching = true
 	}
 	
 }

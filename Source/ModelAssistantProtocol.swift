@@ -86,7 +86,7 @@ protocol ModelAssistantProtocol {
 
 //	func removeAllEntities(atSection sectionIndex: Int, completion: (() -> ())?)
 
-	func removeSection(at sectionIndex: Int, completion: ((Section) -> ())?)
+	func removeSections(at sectionIndexes: [Int], completion: (([SectionInfo<Entity>]) -> ())?)
 
 	func removeAll(completion: (() -> ())?)
 

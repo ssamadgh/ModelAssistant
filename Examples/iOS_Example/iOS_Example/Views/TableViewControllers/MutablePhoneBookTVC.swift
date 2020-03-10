@@ -35,7 +35,7 @@ class MutablePhoneBookTVC: SimplePhoneBookTVC {
 		self.assistant.delegate = self
 	}
 	
-	override func fetchEntities() {
+	override func fetchEntities(completion: (() -> Void)? = nil) {
 		self.resourceFileName = "PhoneBook"
 
 		let documenturl = JsonService.documentURL.appendingPathComponent(self.resourceFileName + ".json")

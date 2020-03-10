@@ -10,13 +10,13 @@ Abstract:
 	In this file we created a mechanism to use `performBatchUpdates(_:completion:)` method for implementing ModelAssistantDelegate methods
 */
 
-import ModelAssistant
+
 
 /**
 	The CollectionController protocol is an abstract of methods that each collection view needs for interacting with its datasource. This protocol makes ModelAssistantDelegateManager class independent of ViewControllers.
 	Any ViewController that uses ModelAssistantDelegateManager to implement ModelAssistantDelegate methods, must adopt this protocol.
 */
-protocol CollectionController: class {
+public protocol CollectionController: class {
 	
 	func insert(at indexPaths: [IndexPath])
 	
@@ -26,23 +26,24 @@ protocol CollectionController: class {
 	
 	func update(at indexPath: IndexPath)
 	
-	func insertSection(_ section: Int)
+	func insertSections(_ sections: IndexSet)
 	
-	func deleteSection(_ section: Int)
+	func deleteSections(_ sections: IndexSet)
 	
 	func moveSection(_ section: Int, toSection newSection: Int)
 	
-	func reloadSection(_ section: Int)
+	func reloadSections(_ sections: IndexSet)
 	
 	func performBatchUpdates(_ updates: (() -> Void)?, completion: ((Bool) -> Void)?)
 }
+
 
 /**
 The ModelAssistantDelegateManager class uses `performBatchUpdates(_:completion:)` to implement ModelAssistantDelegate methods. The way it works is that, we collect all the notifications sending to ModelAssistantDelegate as BlockOperation in an array. Then, when modelAssistantDidChangeContent() called, we execute these blocks into the `performBatchUpdates(_:completion:)` updates block.
 */
 class ModelAssistantDelegateManager: ModelAssistantDelegate {
 	
-	var blockOperations: [BlockOperation] = []
+	var blockOperations: [Foundation.BlockOperation] = []
 	
 	unowned var controller: CollectionController
 	
@@ -53,19 +54,19 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 	
 	func addToBlockOperation(_ operation: @escaping () -> Void) {
 		
-		let operation = BlockOperation {
+		let operation = Foundation.BlockOperation {
 			operation()
 		}
 		
 		blockOperations.append(operation)
 	}
 	
-	func modelAssistantWillChangeContent() {
+	public func modelAssistantWillChangeContent() {
 		
 	}
 	
 	
-	func modelAssistant<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelAssistantChangeType, newIndexPaths: [IndexPath]?) where Entity : MAEntity, Entity : Hashable {
+	public func modelAssistant<Entity>(didChange entities: [Entity], at indexPaths: [IndexPath]?, for type: ModelAssistantChangeType, newIndexPaths: [IndexPath]?) where Entity : MAEntity, Entity : Hashable {
 		switch type {
 			
 		case .insert:
@@ -111,15 +112,14 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 			
 		}
 	}
-	
-	func modelAssistant<Entity>(didChange sectionInfo: SectionInfo<Entity>, atSectionIndex sectionIndex: Int?, for type: ModelAssistantChangeType, newSectionIndex: Int?) where Entity : MAEntity, Entity : Hashable {
+	func modelAssistant<Entity>(didChange sectionInfos: [SectionInfo<Entity>], atSectionIndexes sectionIndexes: [Int]?, for type: ModelAssistantChangeType, newSectionIndexes: [Int]?) where Entity : MAEntity, Entity : Hashable {
 		switch type {
 		case .insert:
 			
 			self.addToBlockOperation { [weak self] in
 				guard let `self` = self else { return }
-				if let newIndex = newSectionIndex {
-					self.controller.insertSection(newIndex)
+				if let newIndexes = newSectionIndexes {
+					self.controller.insertSections(IndexSet(newIndexes))
 				}
 			}
 			
@@ -127,8 +127,8 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 			
 			self.addToBlockOperation { [weak self] in
 				guard let `self` = self else { return }
-				if let section = sectionIndex {
-					self.controller.reloadSection(section)
+				if let indexes = sectionIndexes {
+					self.controller.reloadSections(IndexSet(indexes))
 				}
 			}
 			
@@ -136,8 +136,14 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 			
 			self.addToBlockOperation { [weak self] in
 				guard let `self` = self else { return }
-				if let index = sectionIndex, let newIndex = newSectionIndex {
-					self.controller.moveSection(index, toSection: newIndex)
+				if let indexes = sectionIndexes, let newIndexes = newSectionIndexes {
+					
+					for i in indexes {
+						let oldIndex = indexes[i]
+						let newIndex = newIndexes[i]
+						self.controller.moveSection(oldIndex, toSection: newIndex)
+					}
+					
 				}
 			}
 			
@@ -145,17 +151,17 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 			
 			self.addToBlockOperation { [weak self] in
 				guard let `self` = self else { return }
-				if let index = sectionIndex {
-					self.controller.deleteSection(index)
+				if let indexes = sectionIndexes {
+					self.controller.deleteSections(IndexSet(indexes))
 				}
 			}
 			
 		}
 	}
 	
-	func modelAssistantDidChangeContent() {		
+	public func modelAssistantDidChangeContent() {
 		self.controller.performBatchUpdates({
-			for operation: BlockOperation in self.blockOperations {
+			for operation: Foundation.BlockOperation in self.blockOperations {
 				
 				// We directly call `start()` method of BlockOperations instead of adding them to a queue, so they execute in the main thread.
 				operation.start()
@@ -166,7 +172,7 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 		}
 	}
 	
-	func modelAssistant(sectionIndexTitleForSectionName sectionName: String) -> String? {
+	public func modelAssistant(sectionIndexTitleForSectionName sectionName: String) -> String? {
 		return String(Array(sectionName)[0]).uppercased()
 	}
 	

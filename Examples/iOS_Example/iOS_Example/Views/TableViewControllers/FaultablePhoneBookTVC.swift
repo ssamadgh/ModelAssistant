@@ -42,9 +42,7 @@ extension Contact: MAFaultable {
 }
 
 class FaultablePhoneBookTVC: BasicTableViewController {
-	
-	var manager: ModelAssistantDelegateManager!
-	
+		
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.title = "Fault able Phone Book"
@@ -52,12 +50,10 @@ class FaultablePhoneBookTVC: BasicTableViewController {
 	}
 	
 	override func configureModelAssistant(sectionKey: String?) {
-		super.configureModelAssistant(sectionKey: sectionKey)
-		self.manager = ModelAssistantDelegateManager(controller: self)
-		self.assistant.delegate = self.manager
+		self.assistant = ModelAssistant(collectionController: self, sectionKey: sectionKey)
 	}
 	
-	override func fetchEntities() {
+	override func fetchEntities(completion: (() -> Void)? = nil) {
 		self.resourceFileName = "1000_PhoneBook"
 		super.fetchEntities()
 	}

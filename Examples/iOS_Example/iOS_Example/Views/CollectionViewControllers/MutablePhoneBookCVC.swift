@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ModelAssistant
 
 class MutablePhoneBookCVC: SimplePhoneBookCVC {
 
@@ -26,12 +27,10 @@ class MutablePhoneBookCVC: SimplePhoneBookCVC {
 	}
 	
 	override func configureModelAssistant(sectionKey: String?) {
-		super.configureModelAssistant(sectionKey: sectionKey)
-		self.manager = ModelAssistantDelegateManager(controller: self)
-		self.assistant.delegate = self.manager
+		self.assistant = ModelAssistant<Contact>(collectionController: self, sectionKey: sectionKey)
 	}
 	
-	override func fetchEntities() {
+	override func fetchEntities(completion: (() -> Void)? = nil) {
 		let documenturl = JsonService.documentURL.appendingPathComponent(self.resourceFileName + ".json")
 		
 		let url: URL

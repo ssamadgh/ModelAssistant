@@ -27,5 +27,5 @@ import Foundation
 
 struct AOperatinLogger {
 
-	static var logOperationsTrack: Bool = false
+	static var logOperationsTrack: Bool = true
 }

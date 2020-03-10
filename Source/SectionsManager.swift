@@ -103,8 +103,10 @@ struct SectionsManager<Entity: MAEntity & Hashable> {
 	}
 
 	@discardableResult
-	mutating func remove(at sectionIndex: Int) -> SectionInfo<Entity> {
-		return self.sections.remove(at: sectionIndex)
+	mutating func remove(sectionIndexes: [Int]) -> [SectionInfo<Entity>] {
+		let sections = sectionIndexes.map { self.sections[$0] }
+		_ = sectionIndexes.sorted(by: >).map { self.sections.remove(at: $0) }
+		return sections
 	}
 
 	mutating func removeAll() {

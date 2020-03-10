@@ -18,7 +18,6 @@ class PaginationPhoneBookTVC: BasicTableViewController {
 	
 	var insertingNewEntities = false
 	
-	var manager: ModelAssistantDelegateManager!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -26,15 +25,13 @@ class PaginationPhoneBookTVC: BasicTableViewController {
 	}
 	
 	override func configureModelAssistant(sectionKey: String?) {
-		super.configureModelAssistant(sectionKey: "firstName")
-		self.manager = ModelAssistantDelegateManager(controller: self)
-		self.assistant.delegate = self.manager
+		self.assistant = ModelAssistant<Contact>(collectionController: self, sectionKey: sectionKey)
 		self.assistant.fetchBatchSize = 20
 		self.assistant.sortEntities = { $0.firstName < $1.firstName }
 		self.assistant.sortSections = { $0.name < $1.name }
 	}
 	
-	override func fetchEntities() {
+	override func fetchEntities(completion: (() -> Void)? = nil) {
 		self.resourceFileName = "PhoneBook_0"
 		super.fetchEntities()
 	}
