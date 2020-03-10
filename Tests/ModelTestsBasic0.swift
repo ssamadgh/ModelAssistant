@@ -110,7 +110,7 @@ class ModelTestsBasic0: XCTestCase, ModelAssistantDelegate, TestTableViewDataSou
 
 
 	//MARK: - Model delegate Methods
-	func modelAssistantWillChangeContent(_ modelAssistant: ModelAssistant)() {
+	func modelAssistantWillChangeContent() {
 		XCTAssert(self.delegateCalledBalance >= 0)
 		self.delegateCalledBalance += 1
 		self.tableView.beginUpdates()

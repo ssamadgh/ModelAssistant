@@ -623,7 +623,7 @@ class ModelTestsBasic: ModelTestsBasic0 {
 
 		self.delegateExpect = expectation(description: "remove all entities at Section")
 
-		self.model.removeSection(at: sectionIndex, completion: nil)
+		self.model.removeSections(at: [sectionIndex], completion: nil)
 
 		waitForExpectations(timeout: 5, handler: nil)
 

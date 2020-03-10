@@ -27,7 +27,7 @@ protocol TestTableViewProtocol {
 	func deleteSections(_ sections: IndexSet)
 
 	//	func moveSection(_ section: Int, toSection newSection: Int)
-
+	@available(iOS 11.0, *)
 	func performBatchUpdates(_ updates: (() -> Void)?, completion: ((Bool) -> Void)?)
 
 }
