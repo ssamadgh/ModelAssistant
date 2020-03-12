@@ -16,7 +16,7 @@ import Foundation
 	The CollectionController protocol is an abstract of methods that each collection view needs for interacting with its datasource. This protocol makes ModelAssistantDelegateManager class independent of ViewControllers.
 	Any ViewController that uses ModelAssistantDelegateManager to implement ModelAssistantDelegate methods, must adopt this protocol.
 */
-public protocol CollectionController: class {
+public protocol MACollectionController: class {
 
 	func insert(at indexPaths: [IndexPath])
 
@@ -45,9 +45,9 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 
 	var blockOperations: [Foundation.BlockOperation] = []
 
-	unowned var controller: CollectionController
+	unowned var controller: MACollectionController
 
-	init(controller: CollectionController) {
+	init(controller: MACollectionController) {
 		self.controller = controller
 	}
 

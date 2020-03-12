@@ -9,7 +9,7 @@
 
 import UIKit
 
-public protocol MATableViewContainer: CollectionController {
+public protocol MATableViewContainer: MACollectionController {
 
 	var tableView: UITableView! { get set }
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol MACollectionViewContainer: CollectionController {
+public protocol MACollectionViewContainer: MACollectionController {
 
 	var collectionView: UICollectionView! { get set }
 

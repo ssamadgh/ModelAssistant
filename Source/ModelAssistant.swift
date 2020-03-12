@@ -101,7 +101,7 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 	var delegateManager: ModelAssistantDelegateManager?
 
-	public convenience init(collectionController: CollectionController, sectionKey: String?) {
+	public convenience init(collectionController: MACollectionController, sectionKey: String?) {
 		self.init(sectionKey: sectionKey)
 		self.delegateManager = ModelAssistantDelegateManager(controller: collectionController)
 		self.delegate = delegateManager
