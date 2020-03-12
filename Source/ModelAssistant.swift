@@ -703,23 +703,23 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 
 	}
 
-	public func formIntersection(_ entities: [Entity], completion: (() -> ())?) {
+	public func applyingDifference(from others: [Entity], completion: (() -> ())?) {
 		let callDelegate = true
-
+		
 		let isMainThread = Thread.isMainThread
-
+		
 		let allEntities = self.getAllEntities(sortedBy: nil)
 		let setAllEntities = Set(allEntities)
-
+		
 		self.addModelAssistantOperation(with: BlockOperation(block: { (finished) in
 			self.dispatchQueue.async {
-
-				let setNewEntites = Set(entities)
-
-
-				let shouldRemoveEntities = Array(setAllEntities.subtracting(entities))
+				
+				let setNewEntites = Set(others)
+				
+				
+				let shouldRemoveEntities = Array(setAllEntities.subtracting(others))
 				let shouldInsertEntities = Array(setNewEntites.subtracting(setAllEntities))
-
+				
 				self.removeEntitiesBlock(shouldRemoveEntities, removeEmptySection: true)
 				self.inserEntitiesBlock(shouldInsertEntities, callDelegateMethods: callDelegate)
 				finished()
@@ -727,8 +727,8 @@ public final class ModelAssistant<Entity: MAEntity & Hashable>: NSObject, ModelA
 		}), callDelegate: callDelegate) {
 			self.checkIsMainThread(isMainThread, completion: completion)
 		}
-
-
+		
+		
 	}
 
 

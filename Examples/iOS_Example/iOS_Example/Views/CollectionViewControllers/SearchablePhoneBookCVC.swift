@@ -159,12 +159,11 @@ extension SearchablePhoneBookCVC: UISearchBarDelegate, UISearchControllerDelegat
 		if let text = searchController.searchBar.text {
 			if text.isEmpty {
 //				let allEntities = self.assistant.getAllEntities(sortedBy: nil)
-				
-				self.assistant.formIntersection(allEntities, completion: nil)
+				self.assistant.applyingDifference(from: allEntities, completion: nil)
 			}
 			else {
 				let entities = self.allEntities.filter { $0.fullName.contains(text) }
-				self.assistant.formIntersection(entities, completion: nil)
+				self.assistant.applyingDifference(from: entities, completion: nil)
 			}
 		}
 	}

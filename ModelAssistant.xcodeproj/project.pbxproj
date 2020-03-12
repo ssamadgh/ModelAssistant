@@ -87,27 +87,6 @@
 			remoteGlobalIDString = E4480DEC2156D3980052DC6D;
 			remoteInfo = "ModelAssistant iOS";
 		};
-		E4E2C793241742C700BA394C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E4E2C78D241742C700BA394C /* iOS_Example.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E4069F11213BE2FF009FCD7A;
-			remoteInfo = iOS_Example;
-		};
-		E4E2C795241742C700BA394C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E4E2C78D241742C700BA394C /* iOS_Example.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E4069F25213BE300009FCD7A;
-			remoteInfo = iOS_ExampleTests;
-		};
-		E4E2C797241742C700BA394C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E4E2C78D241742C700BA394C /* iOS_Example.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E4069F30213BE300009FCD7A;
-			remoteInfo = iOS_ExampleUITests;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -169,7 +148,6 @@
 		E459218F215A9C7000E6DF7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E4D517F72184FB9E00950FE0 /* Algorithms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Algorithms.swift; sourceTree = "<group>"; };
 		E4D5181721856B2500950FE0 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
-		E4E2C78D241742C700BA394C /* iOS_Example.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iOS_Example.xcodeproj; path = Examples/iOS_Example/iOS_Example.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,7 +181,6 @@
 		E4480DE12156D32A0052DC6D = {
 			isa = PBXGroup;
 			children = (
-				E4E2C78D241742C700BA394C /* iOS_Example.xcodeproj */,
 				E4480E5B2156D80F0052DC6D /* Source */,
 				E4480E3D2156D7C00052DC6D /* Supporting Files */,
 				E4480E3E2156D80F0052DC6D /* Tests */,
@@ -401,16 +378,6 @@
 			path = "ModelAssistant iOS Tests";
 			sourceTree = "<group>";
 		};
-		E4E2C78E241742C700BA394C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E4E2C794241742C700BA394C /* iOS_Example.app */,
-				E4E2C796241742C700BA394C /* iOS_ExampleTests.xctest */,
-				E4E2C798241742C700BA394C /* iOS_ExampleUITests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -494,12 +461,6 @@
 			mainGroup = E4480DE12156D32A0052DC6D;
 			productRefGroup = E4480DEE2156D3980052DC6D /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = E4E2C78E241742C700BA394C /* Products */;
-					ProjectRef = E4E2C78D241742C700BA394C /* iOS_Example.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				E4480DEC2156D3980052DC6D /* ModelAssistant iOS */,
@@ -508,30 +469,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		E4E2C794241742C700BA394C /* iOS_Example.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = iOS_Example.app;
-			remoteRef = E4E2C793241742C700BA394C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		E4E2C796241742C700BA394C /* iOS_ExampleTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = iOS_ExampleTests.xctest;
-			remoteRef = E4E2C795241742C700BA394C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		E4E2C798241742C700BA394C /* iOS_ExampleUITests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = iOS_ExampleUITests.xctest;
-			remoteRef = E4E2C797241742C700BA394C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		E4480DEB2156D3980052DC6D /* Resources */ = {
