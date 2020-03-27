@@ -17,42 +17,42 @@ public protocol MACollectionViewContainer: MACollectionController {
 
 extension MACollectionViewContainer {
 
-	public func insert(at indexPaths: [IndexPath]) {
+	public func maInsert(at indexPaths: [IndexPath]) {
 		self.collectionView?.insertItems(at: indexPaths)
 	}
 
-	public func update(at indexPath: IndexPath) {
+	public func maUpdate(at indexPath: IndexPath) {
 		if let cell = self.collectionView?.cellForItem(at: indexPath) {
 			self.update(cell, at: indexPath)
 
 		}
 	}
 
-	public func delete(at indexPaths: [IndexPath]) {
+	public func maDelete(at indexPaths: [IndexPath]) {
 		self.collectionView?.deleteItems(at: indexPaths)
 	}
 
-	public func move(at indexPath: IndexPath, to newIndexPath: IndexPath) {
+	public func maMove(at indexPath: IndexPath, to newIndexPath: IndexPath) {
 		self.collectionView?.moveItem(at: indexPath, to: newIndexPath)
 	}
 
-	public func insertSections(_ sections: IndexSet) {
+	public func maInsertSections(_ sections: IndexSet) {
 		self.collectionView?.insertSections(sections)
 	}
 
-	public func deleteSections(_ sections: IndexSet) {
+	public func maDeleteSections(_ sections: IndexSet) {
 		self.collectionView?.deleteSections(sections)
 	}
 
-	public func moveSection(_ section: Int, toSection newSection: Int) {
+	public func maMoveSection(_ section: Int, toSection newSection: Int) {
 		self.collectionView?.moveSection(section, toSection: newSection)
 	}
 
-	public func reloadSections(_ sections: IndexSet) {
+	public func maReloadSections(_ sections: IndexSet) {
 		self.collectionView?.reloadSections(sections)
 	}
 
-	public func performBatchUpdates(_ updates: (() -> Void)?, completion: ((Bool) -> Void)?) {
+	public func maPerformBatchUpdates(_ updates: (() -> Void)?, completion: ((Bool) -> Void)?) {
 		self.collectionView?.performBatchUpdates(updates, completion: completion)
 	}
 

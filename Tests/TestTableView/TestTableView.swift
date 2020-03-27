@@ -65,11 +65,11 @@ extension UITableView: TestTableViewProtocol {
 		self.deleteRows(at: indexPaths, with: .automatic)
 	}
 
-	func insertSections(_ sections: IndexSet) {
+	func maInsertSections(_ sections: IndexSet) {
 		self.insertSections(sections, with: .automatic)
 	}
 
-	func deleteSections(_ sections: IndexSet) {
+	func maDeleteSections(_ sections: IndexSet) {
 		self.deleteSections(sections, with: .automatic)
 	}
 

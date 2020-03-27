@@ -18,23 +18,23 @@ import Foundation
 */
 public protocol MACollectionController: class {
 
-	func insert(at indexPaths: [IndexPath])
+	func maInsert(at indexPaths: [IndexPath])
 
-	func delete(at indexPaths: [IndexPath])
+	func maDelete(at indexPaths: [IndexPath])
 
-	func move(at indexPath: IndexPath, to newIndexPath: IndexPath)
+	func maMove(at indexPath: IndexPath, to newIndexPath: IndexPath)
 
-	func update(at indexPath: IndexPath)
+	func maUpdate(at indexPath: IndexPath)
 
-	func insertSections(_ sections: IndexSet)
+	func maInsertSections(_ sections: IndexSet)
 
-	func deleteSections(_ sections: IndexSet)
+	func maDeleteSections(_ sections: IndexSet)
 
-	func moveSection(_ section: Int, toSection newSection: Int)
+	func maMoveSection(_ section: Int, toSection newSection: Int)
 
-	func reloadSections(_ sections: IndexSet)
+	func maReloadSections(_ sections: IndexSet)
 
-	func performBatchUpdates(_ updates: (() -> Void)?, completion: ((Bool) -> Void)?)
+	func maPerformBatchUpdates(_ updates: (() -> Void)?, completion: ((Bool) -> Void)?)
 }
 
 
@@ -74,7 +74,7 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 			self.addToBlockOperation { [weak self] in
 				guard let `self` = self else { return }
 				if let newIndexPaths = newIndexPaths {
-					self.controller.insert(at: newIndexPaths)
+					self.controller.maInsert(at: newIndexPaths)
 				}
 			}
 
@@ -82,7 +82,7 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 
 			if let indexPaths = indexPaths {
 				for indexPath in indexPaths {
-					self.controller.update(at: indexPath)
+					self.controller.maUpdate(at: indexPath)
 				}
 			}
 
@@ -95,7 +95,7 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 					for i in 0..<indexPaths.count {
 						let indexPath = indexPaths[i]
 						let newIndexPath = newIndexPaths![i]
-						self.controller.move(at: indexPath, to: newIndexPath)
+						self.controller.maMove(at: indexPath, to: newIndexPath)
 					}
 				}
 
@@ -106,7 +106,7 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 			self.addToBlockOperation { [weak self] in
 				guard let `self` = self else { return }
 				if let indexPaths = indexPaths {
-					self.controller.delete(at: indexPaths)
+					self.controller.maDelete(at: indexPaths)
 				}
 			}
 
@@ -119,7 +119,7 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 			self.addToBlockOperation { [weak self] in
 				guard let `self` = self else { return }
 				if let newIndexes = newSectionIndexes {
-					self.controller.insertSections(IndexSet(newIndexes))
+					self.controller.maInsertSections(IndexSet(newIndexes))
 				}
 			}
 
@@ -128,7 +128,7 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 			self.addToBlockOperation { [weak self] in
 				guard let `self` = self else { return }
 				if let indexes = sectionIndexes {
-					self.controller.reloadSections(IndexSet(indexes))
+					self.controller.maReloadSections(IndexSet(indexes))
 				}
 			}
 
@@ -141,7 +141,7 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 					for i in indexes {
 						let oldIndex = indexes[i]
 						let newIndex = newIndexes[i]
-						self.controller.moveSection(oldIndex, toSection: newIndex)
+						self.controller.maMoveSection(oldIndex, toSection: newIndex)
 					}
 
 				}
@@ -152,7 +152,7 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 			self.addToBlockOperation { [weak self] in
 				guard let `self` = self else { return }
 				if let indexes = sectionIndexes {
-					self.controller.deleteSections(IndexSet(indexes))
+					self.controller.maDeleteSections(IndexSet(indexes))
 				}
 			}
 
@@ -160,7 +160,7 @@ class ModelAssistantDelegateManager: ModelAssistantDelegate {
 	}
 
 	public func modelAssistantDidChangeContent() {
-		self.controller.performBatchUpdates({
+		self.controller.maPerformBatchUpdates({
 			for operation: Foundation.BlockOperation in self.blockOperations {
 
 				// We directly call `start()` method of BlockOperations instead of adding them to a queue, so they execute in the main thread.

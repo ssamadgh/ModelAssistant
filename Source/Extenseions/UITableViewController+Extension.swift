@@ -19,42 +19,42 @@ public protocol MATableViewContainer: MACollectionController {
 
 extension MATableViewContainer {
 
-	public func insert(at indexPaths: [IndexPath]) {
+	public func maInsert(at indexPaths: [IndexPath]) {
 		self.tableView.insertRows(at: indexPaths, with: .bottom)
 	}
 
-	public func update(at indexPath: IndexPath) {
+	public func maUpdate(at indexPath: IndexPath) {
 		if let cell = self.tableView.cellForRow(at: indexPath) {
 			self.update(cell, at: indexPath)
 
 		}
 	}
 
-	public func delete(at indexPaths: [IndexPath]) {
+	public func maDelete(at indexPaths: [IndexPath]) {
 		self.tableView.deleteRows(at: indexPaths, with: .top)
 	}
 
-	public func move(at indexPath: IndexPath, to newIndexPath: IndexPath) {
+	public func maMove(at indexPath: IndexPath, to newIndexPath: IndexPath) {
 		self.tableView.moveRow(at: indexPath, to: newIndexPath)
 	}
 
-	public func insertSections(_ sections: IndexSet) {
+	public func maInsertSections(_ sections: IndexSet) {
 		self.tableView.insertSections(sections, with: .bottom)
 	}
 
-	public func deleteSections(_ sections: IndexSet) {
+	public func maDeleteSections(_ sections: IndexSet) {
 		self.tableView.deleteSections(sections, with: .top)
 	}
 
-	public func moveSection(_ section: Int, toSection newSection: Int) {
+	public func maMoveSection(_ section: Int, toSection newSection: Int) {
 		self.tableView.moveSection(section, toSection: newSection)
 	}
 
-	public func reloadSections(_ sections: IndexSet) {
+	public func maReloadSections(_ sections: IndexSet) {
 		self.tableView.reloadSections(sections, with: .fade)
 	}
 
-	public func performBatchUpdates(_ updates: (() -> Void)?, completion: ((Bool) -> Void)?) {
+	public func maPerformBatchUpdates(_ updates: (() -> Void)?, completion: ((Bool) -> Void)?) {
 		if #available(iOS 11.0, *) {
 			self.tableView.performBatchUpdates(updates, completion: completion)
 		} else {

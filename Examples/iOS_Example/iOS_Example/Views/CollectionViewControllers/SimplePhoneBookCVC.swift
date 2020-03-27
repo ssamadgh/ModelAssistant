@@ -143,7 +143,7 @@ class SimplePhoneBookCVC: UICollectionViewController, ImageDownloaderDelegate {
 	// called by our ImageDownloader when an icon is ready to be displayed
 	func downloaded<T>(_ image: UIImage?, forEntity entity: T) {
 		let entity = entity as! Contact
-		let indexPath = self.assistant.indexPath(for: entity)!
+		guard let indexPath = self.assistant.indexPath(for: entity) else { return }
 		self.assistant.update(at: indexPath, mutate: { (contact) in
 			contact.image = image
 		}, completion: nil)
