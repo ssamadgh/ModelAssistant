@@ -124,37 +124,37 @@ At the time you initialize ModelAssistant instance, you can set more configurati
 You can configure model assistant to sort entities in a given order, by `setEntities` property:
 
 ```swift
-assistant.setEntities = {  (entity1, entity2) -> Bool in
+assistant.sortEntities = {  (entity1, entity2) -> Bool in
 	// Some sort algorithm
 }
 ```
-> If you changed these property after calling `fetch(_:completion:)` method, you should call `reorderEntities(completion:)` method, to reorder entities with new sort.
+> If you changed these property after imported entities, you should call `reorderEntities(completion:)` method, to reorder entities with new sort.
 
 #### Filter
 
 You can configure model assistant to constraint given entities with a given condition, by `filter` property:
 
 ```swift
-assistant.setEntities = {  (entity) -> Bool in
+assistant.filter = {  (entity) -> Bool in
 	// Some filter algorithm
 }
 ```
 Note that by setting this filter your model assistant just contains the entities that satisfied the filter closure conditions.
 
-> **Warning**: Do not change this property after calling `fetch(_:completion:)` method
+> **Warning**: Do not change this property after imported entities
 
 
 #### Sort Sections
 You can configure model assistant to sort sections in a given order, by `setSections` property:
 
 ```swift
-assistant.setEntities = {  (section1, section2) -> Bool in
+assistant.sortSections = {  (section1, section2) -> Bool in
 	// Some sort algorithm
 }
 ```
 > - If you do not activate multiple sections on model assistant this property doesn't do anything.
 
-> - If you changed these property after calling `fetch(_:completion:)` method, you should call `reorderSections(completion:)` method, to reorder sections with new sort.
+> - If you changed these property after importing entities, you should call `reorderSections(completion:)` method, to reorder sections with new sort.
 
 
 ### Export Entities

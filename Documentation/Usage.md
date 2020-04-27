@@ -122,7 +122,7 @@ leave this method blank, if you do not want to use this feature to update existe
 
 ### Preparing View
 
-#### Creating a Model Assistant
+#### Creating a ModelAssistant
 
 Before preparing view you should create an instance of ModelAssistant as an instance variable of your view and configure it. ModelAssistant is a generic class, so you should typecast its generic parameter. This parameter tells to ModelAssistant, for which entity type you use it. For example, for Contact type we create a ModelAssistant instance like this:
 
@@ -133,21 +133,47 @@ var assistant = ModelAssistant<Contact>!
 Then we initialize ModelAssistant. This initialization can take place in the [viewDidLoad](https://developer.apple.com/documentation/uikit/uiviewcontroller/1621495-viewdidload) or [viewWillAppear:](https://developer.apple.com/documentation/uikit/uiviewcontroller/1621510-viewwillappear) methods, or at another logical point in the life cycle of the view controller.
 
 ```swift
-assistant = ModelAssistant(sectionKey: nil)
-assistant.delegate = self
+assistant = ModelAssistant(collectionController: controller, sectionKey: nil)
 ```
+
+The `collectionController` accepts UIViewControllers are implemented `MACollectionController` protocol. `UITableViewController` and `UICollectionViewController` are implemented `MACollectionController` by default.
+For other `UIViewController` subclasses 
+
+- if they are using `UITableView` you can confirm them to `MATableViewContainer`.
+
+- If they are using `UICollectionView` you can confirm them to `MACollectionViewContainer`
+
+- For more advanced situations you should implement `ModelAssistantDelegate` by an object and set it to `modelAssistant.delegate`. 
 
 The `sectionKey` property is optional, so by setting it to `nil` ModelAssistant gathers all the entities in one section. After the ModelAssistant is initialized, we assign it a delegate. The delegate notifies the view when any changes have occurred to the ModelAssistants entities. Here we set the view as delegate of ModelAssistant. 
 
-Now its time to fetch entities to ModelAssistant. These entities can be from a webservice or a persistent store. In any way all we need is an array of entities and we call `fetch(_:completion:)` method on assistant to retrieve initial entities to ModelAssistant. This method does not notify delegate for the changes of ModelAssistant, so we should update view manually in the completion of this method. In the example below we asked tableView to reload its data:
+#### Import entities to ModelAssistant
+
+
+Now its time to import entities to ModelAssistant. These entities can be from a webservice or a persistent store. In any way all we need is an array of entities.
+
+By calling either `insert(_:, completion:)` or `applyingDifference(from:, completion:)` you can add your entities to CollectionView with animation.
+
+```swift
+	assistant.applyingDifference(from: emotions, completion: nil)
+```
+Or
+
+```swift
+	assistant.insert(entities, completion: nil)
+```
+
+`applyingDifference(from:, completion:)` is used to update `ModelAssistant` entities with a new array of entities.
+
+`insert(_:, completion:)` is used to insert an array of some new entities to current exist entities in `ModelAssistant`.
+
+ For a situation of adding entities to `ModelAssistant` without updating `UICollectionView` just use `fetch(_:completion:)` method on assistant to retrieve initial entities to ModelAssistant. This method does not notify delegate for the changes of ModelAssistant, so you should update view manually in the completion of this method. In the example below we asked a tableView to reload its data:
 
 ```swift
         self.assistant.fetch(contacts) {
             self.tableView.reloadData()
         }
 ```
-
-> At the time we initialize ModelAssistant, the view may not have received the initial information of the model yet. So calling delegate methods may lead to crash. Therefore, at this time we use `fetch(_:completion:)` method wich doesn't notify delegate and update the view manually to notify it get the model initial informations.
 
 #### Integrating the Model Assistant with the View Data Source
 
@@ -186,12 +212,29 @@ As shown in each `UITableViewDataSource` method above, the integration with the 
 So far you have been working with a table view that has only one section, which represents all of the data that needs to be displayed in the table view. If you are working with a large number of Employee objects, it can be advantageous to divide the table view into multiple sections. Grouping the contacts by first letter of their last names makes the list of contacts more manageable. Without Model Assistant, a table view with multiple sections would involve an array of arrays, or perhaps an even more complicated data structure. With Model Assistant, you make a simple change to the construction of it.
 
 ```swift
-assistant = ModelAssistant(sectionKey: "lastName")
+assistant = ModelAssistant(collectionController: controller, sectionKey: "lastName")
 ```
 
 Here we added a section key to ModelAssistant. The ModelAssistant uses this key to break apart the data into multiple sections. On the other hand you should define in the typecasted entity, that what to returns in the result of section key ( See [Preparing model object](#preparing-model-object) ).
 
 For example if we define uppercased first letter of lastname as the reurning value of section key in the Contact, this change causes the ModelAssistant to break the returning Contact instances into multiple sections based on the first letter of the lastname that each Contact instance has. 
+
+### Manual ModelAssistantDelegate implementation
+
+
+There is another initial method for `ModelAssistant` which is:
+
+```swift
+assistant = ModelAssistant(sectionKey: nil)
+```
+By using this method you should set and implement `ModelAssistantDelegate` manually.
+
+```swift
+assistant.delegate = self
+```
+
+So If you do not want to use default implementation fo `ModelAssistantDelegate` and you want to implement your own version of `ModelAssistantDelegate` implementation use the below instruction:
+
 
 ### Preparing Delegate
 

@@ -43,6 +43,14 @@ These views typically expect their data source to present results as a list of s
 - [x] [Complete Documentation](https://ssamadgh.github.io/ModelAssistant/)
 
 ## What's New:
+
+### Version 1.1.3:
+
+Now using modelAssitant is really easy with just two lines of codes, and delegates will be implement automatically to your collection view.
+
+See [Usage](https://github.com/ssamadgh/ModelAssistant/blob/master/Documentation/Usage.md) for new way of implementing modelAssistant.
+
+
 ### Version 1.0.8.3:
 
 Upgraded to Swift 5
