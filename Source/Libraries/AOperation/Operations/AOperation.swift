@@ -253,7 +253,7 @@ class AOperation: Foundation.Operation {
 				observer.operationDidStart(self)
 			}
 
-			if AOperatinLogger.logOperationsTrack {
+			if AssistantDebugger.printOperationsTrack {
 				print("AOperation \(self.name ?? "has no name") executed")
 			}
 
@@ -276,7 +276,7 @@ class AOperation: Foundation.Operation {
 	*/
 	func execute() {
 
-		if AOperatinLogger.logOperationsTrack {
+		if AssistantDebugger.printOperationsTrack {
 			print("\(type(of: self)) must override `execute()`.")
 		}
 
@@ -332,7 +332,7 @@ class AOperation: Foundation.Operation {
 			let combinedErrors = _internalErrors + errors
 			finished(combinedErrors)
 
-			if AOperatinLogger.logOperationsTrack {
+			if AssistantDebugger.printOperationsTrack {
 				print("AOperation \(self.name ?? "has no name") finished")
 			}
 

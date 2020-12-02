@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
 #
 	s.name = 'ModelAssistant'
 	
-	s.version = '1.1.3'
+	s.version = '1.1.31'
 	s.license = { :type => "MIT", :file => 'LICENSE' }
 	s.summary = 'A Mediator Between Model (or Server) and View'
 

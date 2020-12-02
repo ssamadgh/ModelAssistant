@@ -32,6 +32,8 @@
 		E4873547214D31E100BDA8C9 /* ContactDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E4873545214D31E100BDA8C9 /* ContactDataModel.xcdatamodeld */; };
 		E487354D214D582D00BDA8C9 /* ContactEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E487354B214D582D00BDA8C9 /* ContactEntity+CoreDataClass.swift */; };
 		E487354E214D582D00BDA8C9 /* ContactEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E487354C214D582D00BDA8C9 /* ContactEntity+CoreDataProperties.swift */; };
+		E4B199CA2554157E00A96C7B /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B199C92554157E00A96C7B /* FooterView.swift */; };
+		E4B199CE2554158C00A96C7B /* FooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4B199CD2554158C00A96C7B /* FooterView.xib */; };
 		E4B30771214117030034F169 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B3076E214117030034F169 /* ImageDownloader.swift */; };
 		E4B30773214117600034F169 /* CustomMAEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B30772214117600034F169 /* CustomMAEntity.swift */; };
 		E4BDA8C1217362E5003F551A /* FaultablePhoneBookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BDA8BE217362E5003F551A /* FaultablePhoneBookTVC.swift */; };
@@ -126,6 +128,8 @@
 		E4873546214D31E100BDA8C9 /* ContactDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ContactDataModel.xcdatamodel; sourceTree = "<group>"; };
 		E487354B214D582D00BDA8C9 /* ContactEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E487354C214D582D00BDA8C9 /* ContactEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E4B199C92554157E00A96C7B /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
+		E4B199CD2554158C00A96C7B /* FooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FooterView.xib; sourceTree = "<group>"; };
 		E4B3076E214117030034F169 /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 		E4B30772214117600034F169 /* CustomMAEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMAEntity.swift; sourceTree = "<group>"; };
 		E4BDA8BE217362E5003F551A /* FaultablePhoneBookTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaultablePhoneBookTVC.swift; sourceTree = "<group>"; };
@@ -369,6 +373,8 @@
 				E4069F18213BE2FF009FCD7A /* Main.storyboard */,
 				E4069F1B213BE300009FCD7A /* Assets.xcassets */,
 				E4069F1D213BE300009FCD7A /* LaunchScreen.storyboard */,
+				E4B199C92554157E00A96C7B /* FooterView.swift */,
+				E4B199CD2554158C00A96C7B /* FooterView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -508,6 +514,7 @@
 				E4069F1F213BE300009FCD7A /* LaunchScreen.storyboard in Resources */,
 				E4069F1C213BE300009FCD7A /* Assets.xcassets in Resources */,
 				E4EC835D2143EAC50063B4BB /* PhoneBook_2.json in Resources */,
+				E4B199CE2554158C00A96C7B /* FooterView.xib in Resources */,
 				E4069F1A213BE2FF009FCD7A /* Main.storyboard in Resources */,
 				E4EC83582143EAC50063B4BB /* PhoneBook_5.json in Resources */,
 				E4EC83592143EAC50063B4BB /* PhoneBook_1.json in Resources */,
@@ -559,6 +566,7 @@
 				E4069F64213C68CC009FCD7A /* MainTableViewController.swift in Sources */,
 				E424DD8E213E7FCD002E20D8 /* PaginationPhoneBookTVC.swift in Sources */,
 				E4069F53213BE6A2009FCD7A /* SimplePhoneBookCVC.swift in Sources */,
+				E4B199CA2554157E00A96C7B /* FooterView.swift in Sources */,
 				E4BDA8C1217362E5003F551A /* FaultablePhoneBookTVC.swift in Sources */,
 				E4EC83502143DDDD0063B4BB /* CollectionViewCell.swift in Sources */,
 				E4EC837521443D4D0063B4BB /* JsonService.swift in Sources */,

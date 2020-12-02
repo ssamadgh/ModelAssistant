@@ -82,13 +82,29 @@ class PaginationPhoneBookTVC: BasicTableViewController {
 	override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
 		super.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
 		if !decelerate {
-			self.insertEntities(from: "PhoneBook_\(self.assistant.nextFetchIndex)")
+			self.tableView.tableFooterView = Bundle.main.loadNibNamed("FooterView", owner: nil, options: nil)?.first as? UIView
+			DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+				self.insertEntities(from: "PhoneBook_\(self.assistant.nextFetchIndex)")
+				self.tableView.tableFooterView = nil
+			}
 		}
 	}
 	
 	override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 		super.scrollViewDidEndDecelerating(scrollView)
-		self.insertEntities(from: "PhoneBook_\(self.assistant.nextFetchIndex)")
+		let view = Bundle.main.loadNibNamed("FooterView", owner: nil, options: nil)?.first as? UIView
+		view?.frame = CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: 50)
+		self.tableView.tableFooterView = view
+		var offset = self.tableView.contentOffset
+		offset.y += 50
+		self.tableView.setContentOffset(offset, animated: true)
+		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+			self.insertEntities(from: "PhoneBook_\(self.assistant.nextFetchIndex)")
+			self.tableView.tableFooterView = nil
+			var offset = self.tableView.contentOffset
+			self.tableView.setContentOffset(offset, animated: true)
+
+		}
 	}
 	
 }

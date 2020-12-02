@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 import Foundation
 
-struct AOperatinLogger {
+public struct AssistantDebugger {
 
-	static var logOperationsTrack: Bool = true
+	public static var printOperationsTrack: Bool = false
 }

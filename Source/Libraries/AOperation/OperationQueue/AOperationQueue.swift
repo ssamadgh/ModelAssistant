@@ -104,7 +104,7 @@ class AOperationQueue: Foundation.OperationQueue {
 
         delegate?.operationQueue?(self, willAddOperation: op)
 
-		if AOperatinLogger.logOperationsTrack {
+		if AssistantDebugger.printOperationsTrack {
 			print("AOperation \"\(op.name ?? "has no name")\" added to queue")
 		}
 

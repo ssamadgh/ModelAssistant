@@ -31,7 +31,7 @@
 		E4480E952156D80F0052DC6D /* ModelAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E5C2156D80F0052DC6D /* ModelAssistant.swift */; };
 		E4480E962156D80F0052DC6D /* ModelAssistantProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E5D2156D80F0052DC6D /* ModelAssistantProtocol.swift */; };
 		E4480E972156D80F0052DC6D /* IndexPath+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E5F2156D80F0052DC6D /* IndexPath+Extensions.swift */; };
-		E4480E982156D80F0052DC6D /* AOperatinLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E612156D80F0052DC6D /* AOperatinLogger.swift */; };
+		E4480E982156D80F0052DC6D /* AssistantDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E612156D80F0052DC6D /* AssistantDebugger.swift */; };
 		E4480E992156D80F0052DC6D /* NSLock+MyOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E632156D80F0052DC6D /* NSLock+MyOperations.swift */; };
 		E4480E9A2156D80F0052DC6D /* Foundation.Operation+Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E642156D80F0052DC6D /* Foundation.Operation+Operation.swift */; };
 		E4480E9B2156D80F0052DC6D /* URLSessionTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4480E662156D80F0052DC6D /* URLSessionTaskManager.swift */; };
@@ -123,7 +123,7 @@
 		E4480E5C2156D80F0052DC6D /* ModelAssistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelAssistant.swift; sourceTree = "<group>"; };
 		E4480E5D2156D80F0052DC6D /* ModelAssistantProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelAssistantProtocol.swift; sourceTree = "<group>"; };
 		E4480E5F2156D80F0052DC6D /* IndexPath+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IndexPath+Extensions.swift"; sourceTree = "<group>"; };
-		E4480E612156D80F0052DC6D /* AOperatinLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AOperatinLogger.swift; sourceTree = "<group>"; };
+		E4480E612156D80F0052DC6D /* AssistantDebugger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssistantDebugger.swift; sourceTree = "<group>"; };
 		E4480E632156D80F0052DC6D /* NSLock+MyOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLock+MyOperations.swift"; sourceTree = "<group>"; };
 		E4480E642156D80F0052DC6D /* Foundation.Operation+Operation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Foundation.Operation+Operation.swift"; sourceTree = "<group>"; };
 		E4480E662156D80F0052DC6D /* URLSessionTaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionTaskManager.swift; sourceTree = "<group>"; };
@@ -309,7 +309,7 @@
 		E4480E602156D80F0052DC6D /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				E4480E612156D80F0052DC6D /* AOperatinLogger.swift */,
+				E4480E612156D80F0052DC6D /* AssistantDebugger.swift */,
 				E4480E622156D80F0052DC6D /* AOperation */,
 			);
 			path = Libraries;
@@ -552,7 +552,7 @@
 				E4480EA92156D80F0052DC6D /* ExclusivityController.swift in Sources */,
 				E4480EA82156D80F0052DC6D /* AOperationQueue.swift in Sources */,
 				E4480EAA2156D80F0052DC6D /* ModelAssistantOperation.swift in Sources */,
-				E4480E982156D80F0052DC6D /* AOperatinLogger.swift in Sources */,
+				E4480E982156D80F0052DC6D /* AssistantDebugger.swift in Sources */,
 				E4480E992156D80F0052DC6D /* NSLock+MyOperations.swift in Sources */,
 				E4480EA52156D80F0052DC6D /* OperationObserver.swift in Sources */,
 				E4480EA72156D80F0052DC6D /* BlockObserver.swift in Sources */,
